@@ -3,16 +3,9 @@
 class CreateFolder extends UnitTestCase {
 
     function testCreateFolder() {
-        $selenium = new Testing_Selenium("*firefox", $GLOBALS['host']);
-        $selenium->start();
-        $selenium->open("/");
-        $selenium->click("link=My Personal Page");
-        $selenium->waitForPageToLoad("30000");
-        $selenium->click("expertContentHeading");
-        $selenium->type("form_loginname", $GLOBALS['user']);
-        $selenium->type("form_pw", $GLOBALS['password']);
-        $selenium->click("login");
-        $selenium->waitForPageToLoad("30000");
+        $controller = BrowserController::getInstance();
+        $controller->login();
+        $selenium = $controller->getSelenium();
         $selenium->open("/projects/".$GLOBALS['project']);
         $selenium->waitForPageToLoad("30000");
         $selenium->click("link=Documents");
@@ -53,7 +46,6 @@ class CreateFolder extends UnitTestCase {
             $selenium->click("confirm");
             $selenium->waitForPageToLoad("30000");
         }
-        $selenium->stop();
     }
 
 }

@@ -1,7 +1,7 @@
 <?php
 
 require_once 'include/simpletest/autorun.php';
-require_once 'Testing/Selenium.php';
+require_once 'include/BrowserController.class.php';
 require_once 'set.php';
 
 class AllTests extends TestSuite {
@@ -22,6 +22,11 @@ class AllTests extends TestSuite {
                 }
             }
         }
+    }
+
+    function run($reporter) {
+        parent::run($reporter);
+        BrowserController::stop();
     }
 
 }
