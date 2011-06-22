@@ -16,42 +16,39 @@
  * along with this code. If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once 'simpletest/autorun.php';
-require_once 'IntegrationTests.class.php';
+require_once('CustomHtmlReporter.class.php');
+require_once 'BrowserController.class.php';
+require_once 'simpletest/unit_tester.php';
+require_once 'set.php';
 
 /**
- * This class runs all available tests.
+ * Class that launches selected tests
  */
-class AllTests extends IntegrationTests {
+class IntegrationTests extends TestSuite {
 
     /**
-     * Constructor of the class
+     * Add given files to the test suite
+     *
+     * @param Array $files array of file path of tests to add to test suite
      *
      * @return void
      */
-    function AllTests() {
-        $this->TestSuite('Selenium Test Suite');
-        $this->addFiles('../tests');
+    function addFiles($files) {
+        foreach ($files as $file) {
+                    $this->addFile($file);
+        }
     }
 
     /**
-     * Collect all tests that are under tests directory
-     *
-     * @param String $path tests directory
+     * Run the test suite then close the browser
      *
      * @return void
+     *
+     * @see simpletest/TestSuite::run()
      */
-    function addFiles($path) {
-        $testFiles = new DirectoryIterator($path);
-        foreach ($testFiles as $node) {
-            if (!$node->isDot()) {
-                if ($node->isDir()) {
-                    $this->addFiles($node->getPathName());
-                } else {
-                    $this->addFile($node->getPathName());
-                }
-            }
-        }
+    function run($reporter) {
+        parent::run($reporter);
+        BrowserController::stop();
     }
 
 }

@@ -1,4 +1,20 @@
 <?php
+/**
+ * Copyright (c) STMicroelectronics 2011. All rights reserved
+ *
+ * This code is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This code is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this code. If not, see <http://www.gnu.org/licenses/>.
+ */
 
 ini_set('display_errors', 'on');
 ini_set('max_execution_time', 0);
@@ -10,6 +26,15 @@ header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
+/**
+ * Search test files recursively
+ *
+ * @param String $dir   path to directory containing test files
+ * @param Array  $tab   Array of collected tests
+ * @param String $entry path to test file
+ *
+ * @return void
+ */
 function search_tests_rec($dir, &$tab, $entry) {
     if (is_dir($dir)) {
         if ($dh = opendir($dir)) {
@@ -27,11 +52,27 @@ function search_tests_rec($dir, &$tab, $entry) {
     }
 }
 
+/**
+ * Search all available tests
+ *
+ * @param String $entry path to directory containing test files
+ *
+ * @return Array
+ */
 function search_tests($entry) {
     search_tests_rec($entry, $tests, $entry);
     return $tests;
 }
 
+/**
+ * Show the list of collected test files with hierarchy
+ *
+ * @param Array  $tests  Array of collected tests
+ * @param String $categ  Type of the node
+ * @param Array  $params metadata
+ *
+ * @retrun void
+ */
 function display_tests($tests, $categ, $params) {
     $prefixe  = ($params['is_cat'] && $categ !== "_tests") ? $params['prefixe'] .'['. $categ .']' : $params['prefixe'];
     if ($params['is_cat']) {
@@ -60,6 +101,15 @@ function display_tests($tests, $categ, $params) {
     }
 }
 
+/**
+ * Add javascript to the list of tests
+ *
+ * @param Array  $tests  Array of collected tests
+ * @param String $categ  Type of the node
+ * @param Array  $params metadata
+ *
+ * @return void
+ */
 function display_tests_as_javascript($tests, $categ, $params) {
     if ($params['is_cat']) {
         if ($categ !== "_tests") {
@@ -77,6 +127,14 @@ function display_tests_as_javascript($tests, $categ, $params) {
     }
 }
 
+/**
+ * Collect selected files to be executed
+ *
+ * @param Array  $files  Array of selected tests
+ * @param String $prefix Path to the directory containing the file
+ * 
+ * @return Array
+ */
 function prepare_files($filesArray, $prefix) {
     $files = array();
     foreach ($filesArray as $key => $node) {
@@ -248,8 +306,8 @@ function prepare_files($filesArray, $prefix) {
                         flush();
                         if (isset($_REQUEST['tests_to_run'])) {
                             // manage request
-                            require_once '../include/TuleapIntegrationTests.class.php';
-                            $suite = new TuleapIntegrationTests();
+                            require_once '../include/IntegrationTests.class.php';
+                            $suite = new IntegrationTests();
                             $files = prepare_files($_REQUEST['tests_to_run'], '../tests');
                             $suite->addFiles($files);
                             $reporter = $suite->run(new CustomHtmlReporter());
