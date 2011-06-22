@@ -2,13 +2,14 @@
 
 require_once 'simpletest/autorun.php';
 require_once 'BrowserController.class.php';
+require_once('CustomHtmlReporter.class.php');
 require_once 'set.php';
 
 class AllTests extends TestSuite {
 
     function AllTests() {
         $this->TestSuite('Selenium Test Suite');
-        $this->collectFiles('tests');
+        $this->collectFiles('../tests');
     }
 
     function collectFiles($path) {

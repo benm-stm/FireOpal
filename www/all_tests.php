@@ -1,6 +1,6 @@
 <?php
 
-require_once('../include/TuleapIntegrationTests.class.php');
+require_once('../include/AllTests.class.php');
 
 $dd = new AllTests();
 
