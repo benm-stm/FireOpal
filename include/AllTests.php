@@ -1,7 +1,7 @@
 <?php
 
-require_once 'include/simpletest/autorun.php';
-require_once 'include/BrowserController.class.php';
+require_once 'simpletest/autorun.php';
+require_once 'BrowserController.class.php';
 require_once 'set.php';
 
 class AllTests extends TestSuite {

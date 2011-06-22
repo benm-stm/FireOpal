@@ -1,6 +1,6 @@
 <?php
 
-$GLOBALS['host']             = 'http://tunlx107.tun.st.com:8999';
+$GLOBALS['host']             = 'http://tunlx007.tun.st.com:8999';
 $GLOBALS['user']             = 'asma';
 $GLOBALS['password']         = 'asmaasma';
 $GLOBALS['project']          = 'selenium';
