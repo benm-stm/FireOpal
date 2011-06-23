@@ -65,6 +65,22 @@ function search_tests($entry) {
 }
 
 /**
+ * Get tests of the last run
+ *
+ * @return Array
+ */
+function get_last_run() {
+    $lastRun = array();
+    if (file_exists('../log/last_run')) {
+        $lastRunArray = file('../log/last_run');
+        foreach ($lastRunArray as $line) {
+            $lastRun[substr($line, 0, -1)] = true;
+        }
+    }
+    return $lastRun;
+}
+
+/**
  * Show the list of collected test files with hierarchy
  *
  * @param Array  $tests  Array of collected tests
@@ -73,7 +89,7 @@ function search_tests($entry) {
  *
  * @retrun void
  */
-function display_tests($tests, $categ, $params) {
+function display_tests($tests, $categ, $params, $lastRun) {
     $prefixe  = ($params['is_cat'] && $categ !== "_tests") ? $params['prefixe'] .'['. $categ .']' : $params['prefixe'];
     if ($params['is_cat']) {
         if ($categ !== "_tests") {
@@ -85,7 +101,7 @@ function display_tests($tests, $categ, $params) {
         }
         if (is_array($tests)) {
         foreach($tests as $c => $t) {
-            display_tests($t, $c, array('is_cat' => ($categ !== "_tests"), 'prefixe' => $prefixe, 'checked' => ($params['checked'] && $categ !== "_tests" ? $params['checked'][$categ] : $params['checked'])));
+            display_tests($t, $c, array('is_cat' => ($categ !== "_tests"), 'prefixe' => $prefixe, 'checked' => ($params['checked'] && $categ !== "_tests" ? $params['checked'][$categ] : $params['checked'])), $lastRun);
         }}
         
         if ($categ !== "_tests") {
@@ -95,7 +111,7 @@ function display_tests($tests, $categ, $params) {
     } else {
         echo '<li>';
         echo '<input type="hidden"   name="'. $prefixe .'['. $tests .']" value="0" />';
-        echo '<input type="checkbox" name="'. $prefixe .'['. $tests .']" value="1" '. ($params['checked'] && $params['checked'][$tests] ? 'checked="checked"' : '') .' />';
+        echo '<input type="checkbox" name="'. $prefixe .'['. $tests .']" value="1" '. (($params['checked'] && $params['checked'][$tests]) || (isset($lastRun[$tests]) && $lastRun[$tests]) ? 'checked="checked"' : '') .' />';
         echo $tests;
         echo '</li>';
     }
@@ -283,8 +299,9 @@ function prepare_files($filesArray, $prefix) {
                             <ul id="menu">
                             <?php
                                 $tests = search_tests('../tests');
+                                $lastRun = get_last_run();
                                 foreach($tests as $c => $t) {
-                                    display_tests($t, $c, array('is_cat' => true, 'prefixe' => 'tests_to_run', 'checked' => @$_REQUEST['tests_to_run']));
+                                    display_tests($t, $c, array('is_cat' => true, 'prefixe' => 'tests_to_run', 'checked' => @$_REQUEST['tests_to_run']), $lastRun);
                                 }
                             ?>
                             <script type="text/javascript">

@@ -34,9 +34,16 @@ class IntegrationTests extends TestSuite {
      * @return void
      */
     function addFiles($files) {
-        foreach ($files as $file) {
-                    $this->addFile($file);
+        if (file_exists('../log/last_run')) {
+            rename('../log/last_run', '../log/integration_tests_'.time());
         }
+        $fp = fopen('../log/last_run', 'a');
+        fwrite($fp, "Run on ".date('l jS \of F Y h:i:s A')."\n");
+        foreach ($files as $file) {
+            $this->addFile($file);
+            fwrite($fp, basename($file)."\n");
+        }
+        fclose($fp);
     }
 
     /**
