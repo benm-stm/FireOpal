@@ -16,60 +16,19 @@
  * along with this code. If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once 'Testing/Selenium.php';
+require_once "PHPUnit/Autoload.php";
 
 /**
  * Use SeleniumRC to control the browser
  * Uses singleton pattern
  */
-class BrowserController {
+class BrowserController extends PHPUnit_Extensions_SeleniumTestCase {
 
     static $instance;
 
-    static $selenium;
+    public static $browsers = array(array('name' => 'Bozo', 'browser' => '*iexplore', 'host' => '10.157.15.160'));
 
     static $started = false;
-
-    /**
-     * We don't permit an explicit call of the constructor! (like $controller = new BrowserController())
-     *
-     * @return void
-     */
-    private function __construct() {
-    }
-
-    /**
-     * We don't permit cloning the singleton (like $browserController = clone $controller)
-     *
-     * @return void
-     */
-    private function __clone() {
-    }
-
-    /**
-     * Return the instance of BrowserController
-     *
-     * @param String $browser browser to be launched (default : Firefox)
-     *
-     * @return BrowserController
-     */
-    function getInstance($browser = "*firefox") {
-        if (self::$instance === null) {
-            self::$instance = new self();
-            self::$selenium = new Testing_Selenium($browser, $GLOBALS['host']);
-        }
-        self::start();
-        return self::$instance;
-    }
-
-    /**
-     * Return the SeleniumRC controller instance
-     *
-     * @return Testing_Selenium
-     */
-    function getSelenium() {
-        return self::$selenium;
-    }
 
     /**
      * Launch the browser
@@ -78,7 +37,7 @@ class BrowserController {
      */
     function start() {
         if (!self::$started) {
-            self::$selenium->start();
+            parent::start();
         }
         self::$started = true;
     }
@@ -90,7 +49,7 @@ class BrowserController {
      */
     function stop() {
         if (self::$started) {
-            self::$selenium->stop();
+            parent::stop();
         }
         self::$started = false;
     }
@@ -101,16 +60,17 @@ class BrowserController {
      * @return void
      */
     function login() {
-        self::$selenium->open("/");
-        self::$selenium->waitForPageToLoad("30000");
-        $loggedIn = self::$selenium->isTextPresent("Logged In:");
+        $this->start();
+        $this->open("/");
+        $this->waitForPageToLoad("30000");
+        $loggedIn = $this->isTextPresent("Logged In:");
         if (!$loggedIn) {
-            self::$selenium->open("/account/login.php");
-            self::$selenium->waitForPageToLoad("30000");
-            self::$selenium->type("form_loginname", $GLOBALS['user']);
-            self::$selenium->type("form_pw", $GLOBALS['password']);
-            self::$selenium->click("login");
-            self::$selenium->waitForPageToLoad("30000");
+            $this->open("/account/login.php");
+            $this->waitForPageToLoad("30000");
+            $this->type("form_loginname", $GLOBALS['user']);
+            $this->type("form_pw", $GLOBALS['password']);
+            $this->click("login");
+            $this->waitForPageToLoad("30000");
         }
     }
 

@@ -324,10 +324,13 @@ function prepare_files($filesArray, $prefix) {
                         if (isset($_REQUEST['tests_to_run'])) {
                             // manage request
                             require_once '../include/IntegrationTests.class.php';
+                            require_once '../include/CustomResultPrinter.class.php';
                             $suite = new IntegrationTests();
                             $files = prepare_files($_REQUEST['tests_to_run'], '../tests');
                             $suite->addFiles($files);
-                            $reporter = $suite->run(new CustomHtmlReporter());
+                            $result = $suite->run(new PHPUnit_Framework_TestResult());
+                            $reporter = new CustomResultPrinter();
+                            echo $reporter->printResult($result);
                         }
                         ?>
                     </fieldset>

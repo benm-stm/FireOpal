@@ -11,20 +11,32 @@ This code is distributed under the GPL v2 Licence. See the file COPYING for deta
 
 INSTALLATION
 ============
-This code requires the installation of PEAR 1.9.2 by typing
+
+Befor installing, you need to understand that this code deals with three different machines:
+1- The machine from which you may launch tests having a webserver on which this code is deployed. Let's call it "Launcher machine".
+2- The machine on which web application to be tested is deployed. Let's call it "Server machine".
+3- The machine from which tests will be launched, we use a web browser installed on it. Let's call it "Client machine".
+
+On Launcher machine:
+
+Install PEAR 1.9.2 by typing
 
 > pear install PEAR-1.9.2
 
-Then install Testing_Selenium 0.4.3 by typing
+Then install PHPUnit :
 
-> pear install channel://pear.php.net/Testing_Selenium-0.4.3
+> pear install phpunit/PHPUnit-3.5.6
+this would install Selenium extention with it.
 
-For the Selenium part you need to download selenium-server-standalone-2.0b3.jar from http://seleniumhq.org/download
+On Client machine:
 
-Then create a Firefox profile for selenium (you may need to delete extentions.rdf for addons popup)
+You need to download selenium-server-standalone-2.0b3.jar from http://seleniumhq.org/download
+
+If you use firefox for tests then create a Firefox profile for selenium (you may need to delete extentions.rdf for addons popup)
 
 After that and before trying to run any tests you need to open the platform to be tested by the firefox profile and accept the certificate
 
 Then run Selenium by
 
 > java -jar selenium-server-standalone-2.0b3.jar -singlewindow -firefoxProfileTemplate "/path/to/firefox/profile/"
+Selenium RC must be always running on client machine as a service to make launching tests from launcher machine possible.

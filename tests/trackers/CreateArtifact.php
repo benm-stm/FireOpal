@@ -19,23 +19,21 @@
 class CreateArtifact extends UnitTestCase {
 
     function testCreateArtifact() {
-        $controller = BrowserController::getInstance();
-        $controller->login();
-        $selenium = $controller->getSelenium();
-        $selenium->open("/projects/".$GLOBALS['project']);
-        $selenium->waitForPageToLoad("30000");
-        $selenium->click("link=Trackers");
-        $selenium->waitForPageToLoad("30000");
-        $selenium->click("link=".$GLOBALS['tracker']);
-        $selenium->waitForPageToLoad("30000");
-        $selenium->click("link=Submit A New ".$GLOBALS['trackerName']);
-        $selenium->waitForPageToLoad("30000");
-        $selenium->select("severity", "label=9 - Critical");
-        $selenium->type("summary", "selenium test ".time());
-        $selenium->type("tracker_details", "some text");
-        $selenium->click("SUBMIT");
-        $selenium->waitForPageToLoad("30000");
-        $this->assertTrue($selenium->isTextPresent("Artifact Successfully Created (".$GLOBALS['trackerShortName']." #"), "Artifact not created");
+        $this->login();
+        $this->open("/projects/".$GLOBALS['project']);
+        $this->waitForPageToLoad("30000");
+        $this->click("link=Trackers");
+        $this->waitForPageToLoad("30000");
+        $this->click("link=".$GLOBALS['tracker']);
+        $this->waitForPageToLoad("30000");
+        $this->click("link=Submit A New ".$GLOBALS['trackerName']);
+        $this->waitForPageToLoad("30000");
+        $this->select("severity", "label=9 - Critical");
+        $this->type("summary", "selenium test ".time());
+        $this->type("tracker_details", "some text");
+        $this->click("SUBMIT");
+        $this->waitForPageToLoad("30000");
+        $this->assertTrue($this->isTextPresent("Artifact Successfully Created (".$GLOBALS['trackerShortName']." #"), "Artifact not created");
     }
 
 }

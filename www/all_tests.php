@@ -20,6 +20,6 @@ require_once('../include/AllTests.class.php');
 
 $allTests = new AllTests();
 
-$reporter = $allTests->run(new CustomHtmlReporter());
+$reporter = $allTests->run(new PHPUnit_Framework_TestResult());
 
 ?>

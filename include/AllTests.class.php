@@ -16,7 +16,6 @@
  * along with this code. If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once 'simpletest/autorun.php';
 require_once 'IntegrationTests.class.php';
 
 /**
@@ -48,7 +47,7 @@ class AllTests extends IntegrationTests {
                 if ($node->isDir()) {
                     $this->addFiles($node->getPathName());
                 } else {
-                    $this->addFile($node->getPathName());
+                    $this->addTestFile($node->getPathName());
                 }
             }
         }

@@ -16,15 +16,14 @@
  * along with this code. If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once('CustomHtmlReporter.class.php');
 require_once 'BrowserController.class.php';
-require_once 'simpletest/unit_tester.php';
+require_once "PHPUnit/Autoload.php";
 require_once 'set.php';
 
 /**
  * Class that launches selected tests
  */
-class IntegrationTests extends TestSuite {
+class IntegrationTests extends PHPUnit_Framework_TestSuite {
 
     /**
      * Add given files to the test suite
@@ -40,7 +39,7 @@ class IntegrationTests extends TestSuite {
         $fp = fopen('../log/last_run', 'a');
         fwrite($fp, "Run on ".date('l jS \of F Y h:i:s A')."\n");
         foreach ($files as $file) {
-            $this->addFile($file);
+            $this->addTestFile($file);
             fwrite($fp, basename($file)."\n");
         }
         fclose($fp);
@@ -49,13 +48,14 @@ class IntegrationTests extends TestSuite {
     /**
      * Run the test suite then close the browser
      *
-     * @return void
+     * @params PHPUnit_Framework_TestResult $result
      *
-     * @see simpletest/TestSuite::run()
+     * @return ???
      */
-    function run($reporter) {
-        parent::run($reporter);
+    function run(PHPUnit_Framework_TestResult $result = NULL) {
+        $result = parent::run($result);
         BrowserController::stop();
+        return $result;
     }
 
 }

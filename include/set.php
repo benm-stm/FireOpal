@@ -16,8 +16,11 @@
  * along with this code. If not, see <http://www.gnu.org/licenses/>.
  */
 
-// Hostname of the server to be tested
+// Hostname/ip address of the server to be tested
 $GLOBALS['host']             = 'http://tunlx007.tun.st.com:8999';
+
+// Hostname/ip address of the client holding Selenium RC & the controlled browser
+$GLOBALS['client']             = '10.157.15.160';
 
 // Primary user that will be used to run tests
 $GLOBALS['user']             = 'asma';
