@@ -26,7 +26,11 @@ class BrowserController extends PHPUnit_Extensions_SeleniumTestCase {
 
     static $started = false;
 
-
+    /**
+     * Set Parameters
+     *
+     * @return void
+     */
     function setUp() {
         $this->setBrowserUrl($GLOBALS['host']);
         $this->setHost($GLOBALS['client']);
