@@ -16,7 +16,7 @@
  * along with this code. If not, see <http://www.gnu.org/licenses/>.
  */
 
-class CreateArtifact extends UnitTestCase {
+class CreateArtifact extends BrowserController {
 
     function testCreateArtifact() {
         $this->login();

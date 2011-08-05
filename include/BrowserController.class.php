@@ -24,11 +24,14 @@ require_once "PHPUnit/Autoload.php";
  */
 class BrowserController extends PHPUnit_Extensions_SeleniumTestCase {
 
-    static $instance;
-
-    public static $browsers = array(array('name' => 'Bozo', 'browser' => '*iexplore', 'host' => '10.157.15.160'));
-
     static $started = false;
+
+
+    function setUp() {
+        $this->setBrowserUrl($GLOBALS['host']);
+        $this->setHost($GLOBALS['client']);
+        $this->setBrowser($GLOBALS['browser']);
+    }
 
     /**
      * Launch the browser

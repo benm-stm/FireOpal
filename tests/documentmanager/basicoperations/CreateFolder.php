@@ -18,10 +18,6 @@
 
 class CreateFolder extends BrowserController {
 
-    function setUp() {
-        $this->setBrowserUrl($GLOBALS['host']);
-    }
-
     function testCreateFolder() {
         $this->login();
         $this->open("/projects/".$GLOBALS['project']);

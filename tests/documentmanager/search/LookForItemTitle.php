@@ -18,10 +18,6 @@
 
 class LookForItemTitle extends BrowserController {
 
-    function setUp() {
-        $this->setBrowserUrl($GLOBALS['host']);
-    }
-
     function testSearchItem() {
         $this->login();
         $this->open("/projects/".$GLOBALS['project']);
