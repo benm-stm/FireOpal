@@ -28,8 +28,8 @@ class AllTests extends IntegrationTests {
      *
      * @return void
      */
-    function AllTests() {
-        $this->TestSuite('Selenium Test Suite');
+    function __construct() {
+        parent::__construct('Selenium Test Suite');
         $this->addFiles('../tests');
     }
 
