@@ -29,7 +29,6 @@ class AllTests extends IntegrationTests {
      * @return void
      */
     function AllTests() {
-        $this->TestSuite('Selenium Test Suite');
         $this->addFiles('../tests');
     }
 

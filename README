@@ -41,7 +41,7 @@ Then run Selenium by
 > java -jar selenium-server-standalone-2.0b3.jar -singlewindow -firefoxProfileTemplate "/path/to/firefox/profile/"
 Selenium RC must be always running on client machine as a service to make launching tests from launcher machine possible.
 
-For browsers other than firefox the first test may case an SSL certificate issue.
+For browsers other than firefox the first test may cause an SSL certificate issue.
 For that add the option -trustAllSSLCertificates when you run Selenium
 
 To keep the same session for all tests add the option -browserSessionReuse
