@@ -18,7 +18,7 @@
 
 require_once 'BrowserController.class.php';
 
-class LookForItemTitle extends BrowserController {
+class LookForItemTitleTest extends BrowserController {
 
     function testSearchItem() {
         $this->login();
