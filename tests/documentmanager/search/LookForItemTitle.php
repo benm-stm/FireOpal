@@ -16,6 +16,8 @@
  * along with this code. If not, see <http://www.gnu.org/licenses/>.
  */
 
+require_once 'BrowserController.class.php';
+
 class LookForItemTitle extends BrowserController {
 
     function testSearchItem() {

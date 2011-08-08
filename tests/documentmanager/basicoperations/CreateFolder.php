@@ -16,6 +16,10 @@
  * along with this code. If not, see <http://www.gnu.org/licenses/>.
  */
 
+//require_once dirname(__FILE__).'/../../../include/BrowserController.class.php';
+
+require_once 'BrowserController.class.php';
+
 class CreateFolder extends BrowserController {
 
     function testCreateFolder() {
