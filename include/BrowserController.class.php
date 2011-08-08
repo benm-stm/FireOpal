@@ -17,6 +17,7 @@
  */
 
 require_once "PHPUnit/Autoload.php";
+require_once "set.php";
 
 /**
  * Use SeleniumRC to control the browser
