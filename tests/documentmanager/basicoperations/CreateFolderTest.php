@@ -16,7 +16,9 @@
  * along with this code. If not, see <http://www.gnu.org/licenses/>.
  */
 
-class CreateFolder extends BrowserController {
+require_once 'BrowserController.class.php';
+
+class CreateFolderTest extends BrowserController {
 
     function testCreateFolder() {
         $this->login();
