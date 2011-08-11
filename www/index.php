@@ -19,6 +19,7 @@
 ini_set('display_errors', 'on');
 ini_set('max_execution_time', 0);
 ini_set('memory_limit', -1);
+ini_set('include_path', ini_get('include_path').':'.dirname(__FILE__).'/../include/');
 
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
@@ -291,10 +292,6 @@ function prepare_files($filesArray, $prefix) {
                     <form action="" method="POST">
                         <div id="submit_panel"><input type="submit" value="Run !" /></div>
                         <fieldset>
-                            <legend>Options</legend>
-                            <input type="checkbox" id="show_pass" name="show_pass" value="1" <?= isset($_REQUEST['show_pass']) ? 'checked="checked"' : '' ?> /><label for="show_pass">Show pass</label>
-                        </fieldset>
-                        <fieldset>
                             <legend>Tests</legend>
                             <ul id="menu">
                             <?php
@@ -319,6 +316,7 @@ function prepare_files($filesArray, $prefix) {
                 <td width="90%">
                     <fieldset>
                         <legend>Results</legend>
+                        <pre>
                         <?php
                         flush();
                         if (isset($_REQUEST['tests_to_run'])) {
@@ -329,10 +327,11 @@ function prepare_files($filesArray, $prefix) {
                             $files = prepare_files($_REQUEST['tests_to_run'], '../tests');
                             $suite->addFiles($files);
                             $result = $suite->run(new PHPUnit_Framework_TestResult());
-                            $reporter = new CustomResultPrinter();
+                            $reporter = new PHPUnit_TextUI_ResultPrinter();
                             echo $reporter->printResult($result);
                         }
                         ?>
+                        </pre>
                     </fieldset>
                 </td>
             </tr>

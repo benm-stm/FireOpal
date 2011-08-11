@@ -17,12 +17,9 @@
  */
 
 require_once('../include/AllTests.class.php');
-require_once '../include/CustomResultPrinter.class.php';
 
 $allTests = new AllTests();
 
 $result = $allTests->run(new PHPUnit_Framework_TestResult());
-$reporter = new CustomResultPrinter();
-echo $reporter->printResult($result);
 
 ?>
