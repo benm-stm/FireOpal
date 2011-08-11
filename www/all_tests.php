@@ -16,7 +16,8 @@
  * along with this code. If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once('../include/AllTests.class.php');
+ini_set('include_path', ini_get('include_path').':'.dirname(__FILE__).'/../include/');
+require_once('AllTests.class.php');
 
 $allTests = new AllTests();
 
