@@ -38,7 +38,7 @@ class CreateFolderTest extends BrowserController {
             $this->type("description", "description1 ".time());
             $this->click("//input[@value='Create folder']");
             $this->waitForPageToLoad("30000");
-            $this->assertTrue($this->isTextPresent("Document successfully created."), 'Folder not created');
+            $this->verifyTextPresent("Document successfully created.", 'Folder not created');
             $this->click("//a[@id='docman_item_show_menu_".$GLOBALS['docman_root_id']."']/img");
             $this->click("link=New folder");
             $this->waitForPageToLoad("30000");
@@ -47,7 +47,7 @@ class CreateFolderTest extends BrowserController {
             $this->type("description", "description2 ".time());
             $this->click("//input[@value='Create folder']");
             $this->waitForPageToLoad("30000");
-            $this->assertTrue($this->isTextPresent("Document successfully created."), 'Folder not created');
+            $this->verifyTextPresent("Document successfully created.", 'Folder not created');
 
             preg_match('/docman_item_title_link_([0-9]+)/', $this->getAttribute("xpath=(//a[text()='".$title1."'])[1]@id"), $id1);
             preg_match('/docman_item_title_link_([0-9]+)/', $this->getAttribute("xpath=(//a[text()='".$title2."'])[1]@id"), $id2);

@@ -35,7 +35,7 @@ class CreateArtifactTest extends BrowserController {
         $this->type("tracker_details", "some text");
         $this->click("SUBMIT");
         $this->waitForPageToLoad("30000");
-        $this->assertTrue($this->isTextPresent("Artifact Successfully Created (".$GLOBALS['trackerShortName']." #"), "Artifact not created");
+        $this->verifyTextPresent("Artifact Successfully Created (".$GLOBALS['trackerShortName']." #", "Artifact not created");
     }
 
 }

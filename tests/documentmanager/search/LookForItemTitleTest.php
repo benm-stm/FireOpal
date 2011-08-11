@@ -39,27 +39,27 @@ class LookForItemTitleTest extends BrowserController {
             $this->click("item_item_type_6");
             $this->click("//input[@value='Create document']");
             $this->waitForPageToLoad("30000");
-            $this->assertTrue($this->isTextPresent("Document successfully created."), 'Folder not created');
+            $this->verifyTextPresent("Document successfully created.", 'Folder not created');
             $this->click("docman_toggle_filters");
             $this->type("global_txt", $title);
             $this->click("docman_report_submit");
             $this->waitForPageToLoad("30000");
-            $this->assertTrue($this->isTextPresent($title), 'Search didn\'t found "'.$title.'" with pattern"'.$title.'"');
+            $this->verifyTextPresent($title, 'Search didn\'t found "'.$title.'" with pattern"'.$title.'"');
             $pattern = "*".substr($title, 1);
             $this->type("global_txt", $pattern);
             $this->click("docman_report_submit");
             $this->waitForPageToLoad("30000");
-            $this->assertTrue($this->isTextPresent($title), 'Search didn\'t found "'.$title.'" with pattern"'.$pattern.'"');
+            $this->verifyTextPresent($title, 'Search didn\'t found "'.$title.'" with pattern"'.$pattern.'"');
             $pattern = substr($title, 0, -1)."*";
             $this->type("global_txt", $pattern);
             $this->click("docman_report_submit");
             $this->waitForPageToLoad("30000");
-            $this->assertTrue($this->isTextPresent($title), 'Search didn\'t found "'.$title.'" with pattern"'.$pattern.'"');
+            $this->verifyTextPresent($title, 'Search didn\'t found "'.$title.'" with pattern"'.$pattern.'"');
             $pattern = "*".substr(substr($title, 1), 0, -1)."*";
             $this->type("global_txt", $pattern);
             $this->click("docman_report_submit");
             $this->waitForPageToLoad("30000");
-            $this->assertTrue($this->isTextPresent($title), 'Search didn\'t found "'.$title.'" with pattern"'.$pattern.'"');
+            $this->verifyTextPresent($title, 'Search didn\'t found "'.$title.'" with pattern"'.$pattern.'"');
 
             $this->click("//a[text()='".$title."']");
             $this->waitForPageToLoad("30000");
@@ -71,7 +71,7 @@ class LookForItemTitleTest extends BrowserController {
             $this->waitForPageToLoad("30000");
             $this->click("confirm");
             $this->waitForPageToLoad("30000");
-            $this->assertTrue($this->isTextPresent("Item successfully deleted."), 'Document not deleted');
+            $this->verifyTextPresent("Item successfully deleted.", 'Document not deleted');
         }
     }
 
