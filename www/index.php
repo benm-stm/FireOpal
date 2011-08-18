@@ -26,6 +26,198 @@ header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
+require_once '../include/setup.class.php';
+
+/**
+ * Host configuration
+ */
+class host extends confElement {
+    public $title = 'host';
+    public function doPost() {
+    //@todo : validate input here
+    return true;
+    }
+    public function getIHM() {
+     $input = '<li class=""><label  for="host">host:</label> <input  type="text" id="host" name="host" ';
+     $defaultValue = isset($_REQUEST['host']) ? 'value= "'.$_REQUEST['host'].'"' : 'value="http://tunlx007.tun.st.com:4999"';
+     $input .= $defaultValue.'/></li>';
+     return $input;
+    }
+}
+
+/**
+ * Client configuration
+ */
+class client extends confElement {
+    public $title = 'client';
+    public function doPost() {
+    //@todo : validate input here
+      return true;
+    }
+    public function getIHM() {
+     $input = '<li class=""><label  for="client">client:</label> <input  type="text" id="client" name="client" ';
+     $defaultValue = isset($_REQUEST['client']) ? 'value= "'.$_REQUEST['client'].'"' : 'value="10.157.12.161"';
+     $input .= $defaultValue.'/></li>';
+     return $input;
+    }
+}
+
+/**
+ * Browser configuration
+ */
+class browser extends confElement {
+    public $title = 'browser';
+    public function doPost() {
+    //@todo : validate input here
+      return true;
+    
+    }
+    public function getIHM() {
+     $input = '<li class=""><label  for="client">client:</label> 
+               <select type="text" id="browser" name="browser" />
+               <option value="*firefox" selected="selected">Firefox</option>
+               <option value="*iexplore">Internet Explorer</option>
+               <option value="*chrome">Chrome</option>
+               </select></li>';
+     return $input;
+    }
+}
+
+/**
+ * User configuration
+ */
+class user extends confElement {
+    public $title = 'user';
+    public function doPost() {
+    //@todo : validate input here
+    return true;
+    }
+    public function getIHM() {
+     $input = '<li class=""><label  for="user">user:</label> <input  type="text" id="user" name="user" ';
+     $defaultValue = isset($_REQUEST['user']) ? 'value= "'.$_REQUEST['user'].'"' : 'value="asma"';
+     $input .= $defaultValue.'/></li>';
+     return $input;
+    }
+}
+
+/**
+ * Password configuration
+ */
+class password extends confElement {
+    public $title = 'password';
+    public function doPost() {
+    //@todo : validate input here
+    return true;
+    }
+    public function getIHM() {
+     $input = '<li class=""><label  for="password">password:</label> <input  type="password" id="password" name="password" ';
+     $defaultValue = isset($_REQUEST['password']) ? 'value= "'.$_REQUEST['password'].'"' : 'value="asmaasma"';
+     $input .= $defaultValue.'/></li>';
+     return $input;
+    }
+}
+
+/**
+ * Project configuration
+ */
+class project extends confElement {
+    public $title = 'project';
+    public function doPost() {
+    //@todo : validate input here
+    return true;
+    }
+    public function getIHM() {
+     $input = '<li class=""><label  for="project">project:</label> <input  type="text" id="project" name="project" ';
+     $defaultValue = isset($_REQUEST['project']) ? 'value= "'.$_REQUEST['project'].'"' : 'value="selenium"';
+     $input .= $defaultValue.'/></li>';
+     return $input;
+    }
+}
+
+/**
+ * Project ID configuration
+ */
+class projectId extends confElement {
+    public $title = 'projectId';
+    public function doPost() {
+    //@todo : validate input here
+    return true;
+    }
+    public function getIHM() {
+     $input = '<li class=""><label  for="projectId">project ID:</label> <input  type="text" id="projectId" name="projectId" ';
+     $defaultValue = isset($_REQUEST['projectId']) ? 'value= "'.$_REQUEST['projectId'].'"' : 'value="115"';
+     $input .= $defaultValue.'/></li>';
+     return $input;
+    }
+}
+
+/**
+ * Tracker configuration
+ */
+class tracker extends confElement {
+    public $title = 'tracker';
+    public function doPost() {
+    //@todo : validate input here
+    return true;
+    }
+    public function getIHM() {
+     $input = '<li class=""><label  for="tracker">tracker:</label> <input  type="text" id="tracker" name="tracker" ';
+     $defaultValue = isset($_REQUEST['tracker']) ? 'value= "'.$_REQUEST['tracker'].'"' : 'value="Bugs"';
+     $input .= $defaultValue.'/></li>';
+     return $input;
+    }
+}
+
+/**
+ * Tracker Name configuration
+ */
+class trackerName extends confElement {
+    public $title = 'trackerName';
+    public function doPost() {
+    //@todo : validate input here
+    return true;
+    }
+    public function getIHM() {
+     $input = '<li class=""><label  for="trackerName">tracker Name:</label> <input  type="text" id="trackerName" name="trackerName" ';
+     $defaultValue = isset($_REQUEST['trackerName']) ? 'value= "'.$_REQUEST['trackerName'].'"' : 'value="Bug"';
+     $input .= $defaultValue.'/></li>';
+     return $input;
+    }
+}
+
+/**
+ * Tracker Short Name configuration
+ */
+class trackerShortName extends confElement {
+    public $title = 'trackerShortName';
+    public function doPost() {
+    //@todo : validate input here
+    return true;
+    }
+    public function getIHM() {
+     $input = '<li class=""><label  for="trackerShortName">tracker Short Name:</label> <input  type="text" id="trackerShortName" name="trackerShortName" ';
+     $defaultValue = isset($_REQUEST['trackerShortName']) ? 'value= "'.$_REQUEST['trackerShortName'].'"' : 'value="bug"';
+     $input .= $defaultValue.'/></li>';
+     return $input;
+    }
+}
+
+/**
+ * Docman Root ID configuration
+ */
+class docmanRootId extends confElement {
+    public $title = 'docmanRootId';
+    public function doPost() {
+    //@todo : validate input here
+    return true;
+    }
+    public function getIHM() {
+     $input = '<li class=""><label  for="docmanRootId">docman Root ID:</label> <input  type="text" id="docmanRootId" name="docmanRootId" ';
+     $defaultValue = isset($_REQUEST['docmanRootId']) ? 'value= "'.$_REQUEST['docmanRootId'].'"' : 'value="43"';
+     $input .= $defaultValue.'/></li>';
+     return $input;
+    }
+}
 
 /**
  * Search test files recursively
@@ -200,6 +392,10 @@ function prepare_files($filesArray, $prefix) {
             font-size:2em;
             width:200px;;
         }
+        label {
+            display:block;
+            width: 150px;
+        }
         tr {
             vertical-align:top;
         }
@@ -291,6 +487,27 @@ function prepare_files($filesArray, $prefix) {
                 <td width="10%" nowrap="nowrap">
                     <form action="" method="POST">
                         <div id="submit_panel"><input type="submit" value="Run !" /></div>
+                       <fieldset>
+                            <legend>Config</legend>
+                            <ul id="menu"><li class="">
+                            <?php
+                                setup::getInstance()->addConfigurationEelement(new host());
+                                setup::getInstance()->addConfigurationEelement(new client());
+                                setup::getInstance()->addConfigurationEelement(new browser());
+                                setup::getInstance()->addConfigurationEelement(new user());
+                                setup::getInstance()->addConfigurationEelement(new password());
+
+                                setup::getInstance()->addConfigurationEelement(new project());
+                                setup::getInstance()->addConfigurationEelement(new projectId());
+                                setup::getInstance()->addConfigurationEelement(new tracker());
+                                setup::getInstance()->addConfigurationEelement(new trackerName());
+                                setup::getInstance()->addConfigurationEelement(new trackerShortName());
+                                setup::getInstance()->addConfigurationEelement(new docmanRootId());
+
+                                setup::getInstance()->__toString();
+                            ?>
+                            </ul> 
+                        </fieldset> 
                         <fieldset>
                             <legend>Tests</legend>
                             <ul id="menu">
@@ -318,8 +535,16 @@ function prepare_files($filesArray, $prefix) {
                         <legend>Results</legend>
                         <pre>
                         <?php
-                        flush();
+                        //flush();
+                        ob_start('flushHandler');
                         if (isset($_REQUEST['tests_to_run'])) {
+                            // Update set.php
+                           // try {
+                            setup::getInstance()->updateConfigFile();
+                          /*  } catch (Exception $e) {
+                                echo "** Caught exception during setup: ".$e->getMessage()."\n";
+                                //exit(0);
+                            }*/
                             // manage request
                             require_once 'IntegrationTests.class.php';
                             $suite = new IntegrationTests();
