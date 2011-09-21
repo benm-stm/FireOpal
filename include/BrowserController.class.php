@@ -27,6 +27,10 @@ class BrowserController extends PHPUnit_Extensions_SeleniumTestCase {
 
     static $started = false;
 
+    protected $captureScreenshotOnFailure = TRUE;
+    protected $screenshotPath = '/tmp/';
+    protected $screenshotUrl = '/tmp/screenshots';
+
     /**
      * Set Parameters
      *
@@ -36,6 +40,7 @@ class BrowserController extends PHPUnit_Extensions_SeleniumTestCase {
         $this->setBrowserUrl($GLOBALS['host']);
         $this->setHost($GLOBALS['client']);
         $this->setBrowser($GLOBALS['browser']);
+        $this->loggedInUser = false;
     }
 
     /**
@@ -67,7 +72,18 @@ class BrowserController extends PHPUnit_Extensions_SeleniumTestCase {
      *
      * @return void
      */
-    function login() {
+    function login($user=false, $pass=false) {
+        if (!$user) {
+            $user = $GLOBALS['user'];
+        }
+        if (!$pass) {
+            $pass = $GLOBALS['password'];
+        }
+
+        if ($this->loggedInUser && $user != $this->loggedInUser) {
+            $this->logout();
+        }
+
         $this->start();
         $this->open("/");
         $this->waitForPageToLoad("30000");
@@ -75,13 +91,30 @@ class BrowserController extends PHPUnit_Extensions_SeleniumTestCase {
         if (!$loggedIn) {
             $this->open("/account/login.php");
             $this->waitForPageToLoad("30000");
-            $this->type("form_loginname", $GLOBALS['user']);
-            $this->type("form_pw", $GLOBALS['password']);
+            $this->type("form_loginname", $user);
+            $this->type("form_pw", $pass);
             $this->click("login");
             $this->waitForPageToLoad("30000");
+            $this->loggedInUser = $user;
         }
     }
 
+    function logout() {
+        $this->start();
+        $this->open("/");
+        $this->waitForPageToLoad("30000");
+        $loggedIn = $this->isTextPresent("Logged In:");
+        if ($loggedIn) {
+            $this->click("link=Logout");
+            $this->waitForPageToLoad("30000");
+            $this->loggedInUser = false;
+        }
+    }
+
+    function waitForPageToLoad($stuff) {
+        parent::waitForPageToLoad($stuff);
+        $this->assertElementNotPresent('css=ul.feedback_error');
+    }
 }
 
 ?>
