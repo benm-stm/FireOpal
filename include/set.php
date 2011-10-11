@@ -32,7 +32,7 @@ $GLOBALS['user'] = 'admin';
 $GLOBALS['password'] = 'siteadmin';
 
 // Primary project that will be used for tests
-$GLOBALS['project'] = 'selenium';
+$GLOBALS['project'] = 'prjfake';
 
 // ID of the primary project
 $GLOBALS['project_id'] = '103';

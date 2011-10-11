@@ -550,6 +550,7 @@ function prepare_files($filesArray, $prefix) {
                             $suite = new IntegrationTests();
                             $files = prepare_files($_REQUEST['tests_to_run'], '../tests');
                             $suite->addFiles($files);
+                            $suite->log4Selemnium($files);
                             $result = $suite->run(new PHPUnit_Framework_TestResult());
                             $reporter = new PHPUnit_TextUI_ResultPrinter();
                             echo $reporter->printResult($result);

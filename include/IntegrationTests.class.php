@@ -17,6 +17,7 @@
  */
 
 require_once 'BrowserController.class.php';
+require_once 'logger.class.php';
 require_once "PHPUnit/Autoload.php";
 require_once 'set.php';
 
@@ -43,6 +44,17 @@ class IntegrationTests extends PHPUnit_Framework_TestSuite {
             fwrite($fp, basename($file)."\n");
         }
         fclose($fp);
+    }
+
+     function log4Selemnium($message) {
+    $logFile = '../log/last_run';
+    //chmod($logFile, 777);
+    $logger = new logger( $logFile);
+    $logger->write("=> Run on ".date('l jS \of F Y h:i:s A')."\n");
+   foreach ($message as $element) {
+            $logger->write(basename($element)."\n");
+        }
+    
     }
 
     /**
