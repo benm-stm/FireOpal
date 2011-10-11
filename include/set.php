@@ -17,7 +17,7 @@
  */
 
 // Hostname/ip address of the server to be tested
-$GLOBALS['host'] = 'http://tunlx007.tun.st.com:8999';
+$GLOBALS['host'] = 'http://tunlx007.tun.st.com:4999';
 
 // Hostname/ip address of the client holding Selenium RC & the controlled browser
 $GLOBALS['client'] = '10.157.12.161';
@@ -26,19 +26,19 @@ $GLOBALS['client'] = '10.157.12.161';
 $GLOBALS['browser'] = '*firefox';
 
 // Primary user that will be used to run tests
-$GLOBALS['user'] = 'asma';
+$GLOBALS['user'] = 'admin';
 
 // Password of the primary user
-$GLOBALS['password'] = 'asmaasma';
+$GLOBALS['password'] = 'siteadmin';
 
 // Primary project that will be used for tests
 $GLOBALS['project'] = 'selenium';
 
 // ID of the primary project
-$GLOBALS['project_id'] = '115';
+$GLOBALS['project_id'] = '103';
 
 // Docman root id of the primary project
-$GLOBALS['docman_root_id'] = '43';
+$GLOBALS['docman_root_id'] = '36';
 
 // Primary tracker that will be used for the tests
 $GLOBALS['tracker'] = 'Bugs';
