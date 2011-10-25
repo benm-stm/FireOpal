@@ -16,15 +16,12 @@
  * along with this code. If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once 'BrowserController.class.php';
-require_once 'logger.class.php';
-require_once "PHPUnit/Autoload.php";
-require_once 'set.php';
-
 /**
  * Class that launches selected tests
  */
-class IntegrationTests extends PHPUnit_Framework_TestSuite {
+class IntegrationTests {
+
+    var $files = array();
 
     /**
      * Add given files to the test suite
@@ -40,21 +37,14 @@ class IntegrationTests extends PHPUnit_Framework_TestSuite {
         $fp = fopen('../log/last_run', 'a');
         fwrite($fp, "Run on ".date('l jS \of F Y h:i:s A')."\n");
         foreach ($files as $file) {
-            $this->addTestFile($file);
+            $this->files[] = $file;
             fwrite($fp, basename($file)."\n");
         }
         fclose($fp);
     }
 
-     function log4Selemnium($message) {
-    $logFile = '../log/last_run';
-    //chmod($logFile, 777);
-    $logger = new logger( $logFile);
-    $logger->write("=> Run on ".date('l jS \of F Y h:i:s A')."\n");
-   foreach ($message as $element) {
-            $logger->write(basename($element)."\n");
-        }
-    
+    function addTestFile($path) {
+        $this->files[] = $path;
     }
 
     /**
@@ -62,11 +52,13 @@ class IntegrationTests extends PHPUnit_Framework_TestSuite {
      *
      * @params PHPUnit_Framework_TestResult $result
      *
-     * @return ???
+     * @return Array
      */
-    function run(PHPUnit_Framework_TestResult $result = NULL) {
-        $result = parent::run($result);
-        BrowserController::stop();
+    function run() {
+        foreach ($this->files as $file) {
+            $result[] = $file;
+            exec('python '.$file.' 2>&1', $result);
+        }
         return $result;
     }
 

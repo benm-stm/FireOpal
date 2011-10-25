@@ -26,198 +26,24 @@ header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
-require_once '../include/setup.class.php';
+require_once 'set.php';
 
-/**
- * Host configuration
- */
-class host extends confElement {
-    public $title = 'host';
-    public function doPost() {
-    //@todo : validate input here
-    return true;
-    }
-    public function getIHM() {
-     $input = '<li class=""><label  for="host">host:</label> <input  type="text" id="host" name="host" ';
-     $defaultValue = isset($_REQUEST['host']) ? 'value= "'.$_REQUEST['host'].'"' : 'value="http://tunlx007.tun.st.com:4999"';
-     $input .= $defaultValue.'/></li>';
-     return $input;
-    }
-}
-
-/**
- * Client configuration
- */
-class client extends confElement {
-    public $title = 'client';
-    public function doPost() {
-    //@todo : validate input here
-      return true;
-    }
-    public function getIHM() {
-     $input = '<li class=""><label  for="client">client:</label> <input  type="text" id="client" name="client" ';
-     $defaultValue = isset($_REQUEST['client']) ? 'value= "'.$_REQUEST['client'].'"' : 'value="10.157.12.161"';
-     $input .= $defaultValue.'/></li>';
-     return $input;
-    }
-}
-
-/**
- * Browser configuration
- */
-class browser extends confElement {
-    public $title = 'browser';
-    public function doPost() {
-    //@todo : validate input here
-      return true;
-    
-    }
-    public function getIHM() {
-     $input = '<li class=""><label  for="client">client:</label> 
+$input = '<li class=""><label  for="host">host:</label> <input  type="text" id="host" name="host" value="'.$GLOBALS['host'].'" /></li>';
+$input .= '<li class=""><label  for="client">client:</label> <input  type="text" id="client" name="client" value="'.$GLOBALS['client'].'" /></li>';
+$input .= '<li class=""><label  for="client">client:</label> 
                <select type="text" id="browser" name="browser" />
                <option value="*firefox" selected="selected">Firefox</option>
                <option value="*iexplore">Internet Explorer</option>
                <option value="*chrome">Chrome</option>
                </select></li>';
-     return $input;
-    }
-}
-
-/**
- * User configuration
- */
-class user extends confElement {
-    public $title = 'user';
-    public function doPost() {
-    //@todo : validate input here
-    return true;
-    }
-    public function getIHM() {
-     $input = '<li class=""><label  for="user">user:</label> <input  type="text" id="user" name="user" ';
-     $defaultValue = isset($_REQUEST['user']) ? 'value= "'.$_REQUEST['user'].'"' : 'value="asma"';
-     $input .= $defaultValue.'/></li>';
-     return $input;
-    }
-}
-
-/**
- * Password configuration
- */
-class password extends confElement {
-    public $title = 'password';
-    public function doPost() {
-    //@todo : validate input here
-    return true;
-    }
-    public function getIHM() {
-     $input = '<li class=""><label  for="password">password:</label> <input  type="password" id="password" name="password" ';
-     $defaultValue = isset($_REQUEST['password']) ? 'value= "'.$_REQUEST['password'].'"' : 'value="asmaasma"';
-     $input .= $defaultValue.'/></li>';
-     return $input;
-    }
-}
-
-/**
- * Project configuration
- */
-class project extends confElement {
-    public $title = 'project';
-    public function doPost() {
-    //@todo : validate input here
-    return true;
-    }
-    public function getIHM() {
-     $input = '<li class=""><label  for="project">project:</label> <input  type="text" id="project" name="project" ';
-     $defaultValue = isset($_REQUEST['project']) ? 'value= "'.$_REQUEST['project'].'"' : 'value="selenium"';
-     $input .= $defaultValue.'/></li>';
-     return $input;
-    }
-}
-
-/**
- * Project ID configuration
- */
-class projectId extends confElement {
-    public $title = 'projectId';
-    public function doPost() {
-    //@todo : validate input here
-    return true;
-    }
-    public function getIHM() {
-     $input = '<li class=""><label  for="projectId">project ID:</label> <input  type="text" id="projectId" name="projectId" ';
-     $defaultValue = isset($_REQUEST['projectId']) ? 'value= "'.$_REQUEST['projectId'].'"' : 'value="115"';
-     $input .= $defaultValue.'/></li>';
-     return $input;
-    }
-}
-
-/**
- * Tracker configuration
- */
-class tracker extends confElement {
-    public $title = 'tracker';
-    public function doPost() {
-    //@todo : validate input here
-    return true;
-    }
-    public function getIHM() {
-     $input = '<li class=""><label  for="tracker">tracker:</label> <input  type="text" id="tracker" name="tracker" ';
-     $defaultValue = isset($_REQUEST['tracker']) ? 'value= "'.$_REQUEST['tracker'].'"' : 'value="Bugs"';
-     $input .= $defaultValue.'/></li>';
-     return $input;
-    }
-}
-
-/**
- * Tracker Name configuration
- */
-class trackerName extends confElement {
-    public $title = 'trackerName';
-    public function doPost() {
-    //@todo : validate input here
-    return true;
-    }
-    public function getIHM() {
-     $input = '<li class=""><label  for="trackerName">tracker Name:</label> <input  type="text" id="trackerName" name="trackerName" ';
-     $defaultValue = isset($_REQUEST['trackerName']) ? 'value= "'.$_REQUEST['trackerName'].'"' : 'value="Bug"';
-     $input .= $defaultValue.'/></li>';
-     return $input;
-    }
-}
-
-/**
- * Tracker Short Name configuration
- */
-class trackerShortName extends confElement {
-    public $title = 'trackerShortName';
-    public function doPost() {
-    //@todo : validate input here
-    return true;
-    }
-    public function getIHM() {
-     $input = '<li class=""><label  for="trackerShortName">tracker Short Name:</label> <input  type="text" id="trackerShortName" name="trackerShortName" ';
-     $defaultValue = isset($_REQUEST['trackerShortName']) ? 'value= "'.$_REQUEST['trackerShortName'].'"' : 'value="bug"';
-     $input .= $defaultValue.'/></li>';
-     return $input;
-    }
-}
-
-/**
- * Docman Root ID configuration
- */
-class docmanRootId extends confElement {
-    public $title = 'docmanRootId';
-    public function doPost() {
-    //@todo : validate input here
-    return true;
-    }
-    public function getIHM() {
-     $input = '<li class=""><label  for="docmanRootId">docman Root ID:</label> <input  type="text" id="docmanRootId" name="docmanRootId" ';
-     $defaultValue = isset($_REQUEST['docmanRootId']) ? 'value= "'.$_REQUEST['docmanRootId'].'"' : 'value="43"';
-     $input .= $defaultValue.'/></li>';
-     return $input;
-    }
-}
+$input .= '<li class=""><label  for="user">user:</label> <input  type="text" id="user" name="user" value="'.$GLOBALS['user'].'" /></li>';
+$input .= '<li class=""><label  for="password">password:</label> <input  type="password" id="password" name="password" value="'.$GLOBALS['password'].'" /></li>';
+$input .= '<li class=""><label  for="project">project:</label> <input  type="text" id="project" name="project" value="'.$GLOBALS['project'].'" /></li>';
+$input .= '<li class=""><label  for="projectId">project ID:</label> <input  type="text" id="projectId" name="projectId" value="'.$GLOBALS['project_id'].'" /></li>';
+$input .= '<li class=""><label  for="tracker">tracker:</label> <input  type="text" id="tracker" name="tracker" value="'.$GLOBALS['tracker'].'" /></li>';
+$input .= '<li class=""><label  for="trackerName">tracker Name:</label> <input  type="text" id="trackerName" name="trackerName" value="'.$GLOBALS['trackerName'].'" /></li>';
+$input .= '<li class=""><label  for="trackerShortName">tracker Short Name:</label> <input  type="text" id="trackerShortName" name="trackerShortName" value="'.$GLOBALS['trackerShortName'].'" /></li>';
+$input .= '<li class=""><label  for="docmanRootId">docman Root ID:</label> <input  type="text" id="docmanRootId" name="docmanRootId" value="'.$GLOBALS['docman_root_id'].'" /></li>';
 
 /**
  * Search test files recursively
@@ -345,6 +171,9 @@ function display_tests_as_javascript($tests, $categ, $params) {
  * @return Array
  */
 function prepare_files($filesArray, $prefix) {
+    if (substr($prefix, -1) == '/') {
+        $prefix = substr($prefix,0,-1); ;
+    }
     $files = array();
     foreach ($filesArray as $key => $node) {
         if ($key == 'Tuleap') {
@@ -491,20 +320,7 @@ function prepare_files($filesArray, $prefix) {
                             <legend>Config</legend>
                             <ul id="menu"><li class="">
                             <?php
-                                setup::getInstance()->addConfigurationEelement(new host());
-                                setup::getInstance()->addConfigurationEelement(new client());
-                                setup::getInstance()->addConfigurationEelement(new browser());
-                                setup::getInstance()->addConfigurationEelement(new user());
-                                setup::getInstance()->addConfigurationEelement(new password());
-
-                                setup::getInstance()->addConfigurationEelement(new project());
-                                setup::getInstance()->addConfigurationEelement(new projectId());
-                                setup::getInstance()->addConfigurationEelement(new tracker());
-                                setup::getInstance()->addConfigurationEelement(new trackerName());
-                                setup::getInstance()->addConfigurationEelement(new trackerShortName());
-                                setup::getInstance()->addConfigurationEelement(new docmanRootId());
-
-                                setup::getInstance()->__toString();
+                                echo $input;
                             ?>
                             </ul> 
                         </fieldset> 
@@ -518,42 +334,26 @@ function prepare_files($filesArray, $prefix) {
                                     display_tests($t, $c, array('is_cat' => true, 'prefixe' => 'tests_to_run', 'checked' => @$_REQUEST['tests_to_run']), $lastRun);
                                 }
                             ?>
-                            <script type="text/javascript">
-                            //<!--
-                            var tests_to_run = {
-                            <?php foreach($tests as $c => $t) {
-                                display_tests_as_javascript($t, $c, array('is_cat' => true));
-                            } ?>
-                            };
-                            //-->
-                            </script>
+                            </ul>
                         </fieldset>
                     </form>
                 </td>
                 <td width="90%">
                     <fieldset>
                         <legend>Results</legend>
-                        <pre>
-                        <?php
+                        <pre><?php
                         //flush();
                         ob_start('flushHandler');
                         if (isset($_REQUEST['tests_to_run'])) {
-                            // Update set.php
-                           // try {
-                            setup::getInstance()->updateConfigFile();
-                          /*  } catch (Exception $e) {
-                                echo "** Caught exception during setup: ".$e->getMessage()."\n";
-                                //exit(0);
-                            }*/
                             // manage request
                             require_once 'IntegrationTests.class.php';
                             $suite = new IntegrationTests();
                             $files = prepare_files($_REQUEST['tests_to_run'], '../tests');
                             $suite->addFiles($files);
-                            $suite->log4Selemnium($files);
-                            $result = $suite->run(new PHPUnit_Framework_TestResult());
-                            $reporter = new PHPUnit_TextUI_ResultPrinter();
-                            echo $reporter->printResult($result);
+                            $result = $suite->run();
+                            foreach ($result as $line) {
+                                echo $line."\n";
+                            }
                         }
                         ?>
                         </pre>
@@ -562,4 +362,13 @@ function prepare_files($filesArray, $prefix) {
             </tr>
         </table>
     </body>
+    <script type="text/javascript">
+    //<!--
+    var tests_to_run = {
+    <?php foreach($tests as $c => $t) {
+        display_tests_as_javascript($t, $c, array('is_cat' => true));
+    } ?>
+    };
+    //-->
+    </script>
 </html>

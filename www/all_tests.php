@@ -21,6 +21,6 @@ require_once('AllTests.class.php');
 
 $allTests = new AllTests();
 
-$result = $allTests->run(new PHPUnit_Framework_TestResult());
+$result = $allTests->run();
 
 ?>
