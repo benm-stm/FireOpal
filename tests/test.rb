@@ -11,7 +11,7 @@ include Capybara::DSL
     Capybara.app_host = 'http://codex.cro.st.com'
     Capybara.run_server = false
     Capybara.register_driver :selenium do |app|
-      Capybara::Selenium::Driver.new(app, {:browser => :remote, :url => "http://10.157.15.160:4444"})
+      Capybara::Selenium::Driver.new(app, {:browser => :remote, :url => "http://10.157.15.160:4444/wd/hub"})
     end
     visit('/')
   end
