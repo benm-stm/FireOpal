@@ -194,53 +194,7 @@ function prepare_files($filesArray, $prefix) {
 <html>
     <head>
         <title>Tuleap integration tests</title>
-        <style type="text/css">
-        body {
-            margin:0;
-            padding:0;
-        }
-        body, th, td {
-            font-family: Verdana, Arial, sans-serif;
-            font-size:10pt;
-        }
-        #menu,
-        #menu ul {
-            list-style-type:none;
-            padding-left:0px;
-        }
-        #menu ul li {
-            padding-left:40px;
-        }
-        #menu ul li.categ {
-            padding-left:24px;
-        }
-        #submit_panel {
-            text-align:center;
-        }
-        #submit_panel input {
-            font-size:2em;
-            width:200px;;
-        }
-        label {
-            display:block;
-            width: 150px;
-        }
-        tr {
-            vertical-align:top;
-        }
-        .fail { 
-            color: red; 
-        } 
-        .pass { 
-            color: green; 
-        } 
-        pre { 
-            background-color: lightgray; 
-        }
-        a img {
-            border:none;
-        }
-        </style>
+        <link href="include/css/index.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="/scripts/prototype/prototype.js"></script>
         <script type="text/javascript" src="/scripts/scriptaculous/scriptaculous.js"></script>
         <script type="text/javascript">
