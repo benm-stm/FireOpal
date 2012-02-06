@@ -62,6 +62,12 @@ class IntegrationTests {
         return $result;
     }
 
+    public function runTestSuite() {
+        $testCasesLauncher = new testCasesLauncher();
+        $testSuite = new testSuite($this->files);
+        $testSuite->attach($testCasesLauncher);
+        $testSuite->runTestCases();
+    }
 }
 
 ?>
