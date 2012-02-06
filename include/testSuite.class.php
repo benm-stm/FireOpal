@@ -16,32 +16,71 @@
  * along with this code. If not, see <http://www.gnu.org/licenses/>.
  */
  
-class testSuite extends SplObjectStorage {
+class testSuite implements SplSubject {
 
-    private $testSuiteMap = array();
+    private $_testCases;
+    private $_observers;
+    private $_currentTestCase;
 
-    /**
-     * Add a testCase to the testSuite
-     *
-     * @param testCase $testCase
-     */
-    public function attach($testCase) {
-        /*if (!$testCase instanceof testCase) {
-              throw new Exception('Unable to attach test case!');
-        }*/
-        return parent::attach($testCase);
+    public function __construct(array $testCases) {
+        $this->_testCases = $testCases;
+        $this->_observers = array();
+        //@TODO   Better prefer dependency injection here. use SplObjectStorage
+        //$this->_observers = new SplObjectStorage();
     }
 
     /**
-     * Remove a testCase from the testSuite
-     *
-     * @param testCase $testCase
+     * Launch test Suite...
      */
-    public function detach($testCase) {
-        /*if (!$testCase instanceof testCase) {
-              throw new Exception('Unable to delete test case!');
-        }*/
-        return parent::detach($testCase);
+    public function runTestCases() {
+        foreach ($this->_testCases as $testCase) {
+            $this->_currentTestCase = $testCase;
+            //@TODO update here
+            $this->notify();
+        }
+        $this->_currentTestCase = null;
     }
- }
+
+    /**
+     * Returns the testCase currently being updated
+     *
+     * @return $testCase
+     */
+    public function getCurrent() {
+        return $this->_currentTestCase;
+    }
+
+    /**
+     * Attach an observer
+     *
+     * @param SplObserver $observer
+     */
+    public function attach(SplObserver $observer) {
+        array_push($this->_observers, $observer);
+    }
+
+    /**
+     * Detach an observer
+     *
+     * @param SplObserver $observer
+     */
+    public function detach(SplObserver $observer) {
+        foreach ($this->_observers as $key => $item)
+        {
+            if ($observer == $item) {
+                unset($this->_observers[$key]);
+            }
+        }
+    }
+
+    /**
+     * Send notification to all observers
+     */
+    public function notify() {
+        foreach ($this->_observers as $key => $item) {
+            $item->update($this);
+        }
+    }
+} 
+
  ?>
