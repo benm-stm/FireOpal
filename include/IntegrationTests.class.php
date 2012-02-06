@@ -57,7 +57,7 @@ class IntegrationTests {
     function run() {
         foreach ($this->files as $file) {
             $result[] = $file;
-            exec('python '.$file.' 2>&1', $result);
+            exec('ruby '.$file.' 2>&1', $result);
         }
         return $result;
     }
