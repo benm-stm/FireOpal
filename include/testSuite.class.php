@@ -21,21 +21,34 @@ class testSuite implements SplSubject {
     private $_testCases;
     private $_observers;
     private $_currentTestCase;
+	private $_result;
 
     public function __construct(array $testCases) {
         $this->_testCases = $testCases;
         $this->_observers = array();
+        $this->_result   = array();
         //@TODO   Better prefer dependency injection here. use SplObjectStorage
         //$this->_observers = new SplObjectStorage();
     }
 
     /**
      * Launch test Suite...
+     * exec('ruby file_treatement_written_ruby'. $testSuite.'2>&1' , $this->_result); 
+     */
+    public function runTestSuite() {
+        }
+
+    /**
+     * Launch test Cases...
+     *
+     * @Deprecated
      */
     public function runTestCases() {
         foreach ($this->_testCases as $testCase) {
             $this->_currentTestCase = $testCase;
             //@TODO update here
+            $this->_result = $testCase;
+            exec('ruby '.$testCase.' 2>&1', $this->_result);
             $this->notify();
         }
         $this->_currentTestCase = null;
@@ -82,5 +95,4 @@ class testSuite implements SplSubject {
         }
     }
 } 
-
  ?>
