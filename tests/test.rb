@@ -1,13 +1,14 @@
 require 'rubygems'
 require 'selenium-webdriver'
+require 'rspec/autorun'
 
 class Test
     def run()
-        driver = Selenium::WebDriver.for :remote, :url => "http://server:4444/wd/hub", :desired_capabilities => :ie
-        driver.get "http://codex"
+        driver = Selenium::WebDriver.for :remote, :url => "http://10.157.15.160:4444/wd/hub", :desired_capabilities => :firefox
+        driver.get "http://tunlx007.tun.st.com:8999"
         describe "Test logging in" do
-            driver.find_element(:name, "form_loginname").send_keys "login"
-            driver.find_element(:name, "form_pw").send_keys "password"
+            driver.find_element(:name, "form_loginname").send_keys "ounis"
+            driver.find_element(:name, "form_pw").send_keys "ounisounis"
             driver.find_element(:name, "login").click
             it "Test the wrong title of the page" do 
                 (driver.title).should == "wrong title"
