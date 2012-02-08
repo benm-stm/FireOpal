@@ -31,27 +31,15 @@ class testSuite implements SplSubject {
         //$this->_observers = new SplObjectStorage();
     }
 
-    /**
-     * Launch test Suite...
-     * exec('ruby file_treatement_written_ruby'. $testSuite.'2>&1' , $this->_result); 
-     */
-    public function runTestSuite() {
-        }
-
-    /**
-     * Launch test Cases...
+     /**
+     * Launch test Suite
      *
      * @Deprecated
      */
-    public function runTestCases() {
-        foreach ($this->_testCases as $testCase) {
-            $this->_currentTestCase = $testCase;
-            //@TODO update here
-            $this->_result = $testCase;
-            exec('ruby '.$testCase.' 2>&1', $this->_result);
-            $this->notify();
-        }
-        $this->_currentTestCase = null;
+    public function run() {
+         $this->generateWebDriverTestSuite($this->_testCases);
+         $rspecTestSuiteFile = $this->generateRspecTestSuite($this->_testCases);
+         exec('rspec '.$rspecTestSuiteFile.' --format documentation --out '.$resultFile.' 2>&1', $this->_result);
     }
 
     /**
@@ -94,5 +82,30 @@ class testSuite implements SplSubject {
             $item->update($this);
         }
     }
+
+    /**
+     * Add given files to the test suite
+     *
+     * @param Array $files array of file path of tests to add to test suite
+     *
+     * @return void
+     */
+    function addFiles($files) {
+        if (file_exists('../log/last_run')) {
+            rename('../log/last_run', '../log/integration_tests_'.time());
+        }
+        $fp = fopen('../log/last_run', 'a');
+        fwrite($fp, "Run on ".date('l jS \of F Y h:i:s A')."\n");
+        foreach ($files as $file) {
+            $this->files[] = $file;
+            fwrite($fp, basename($file)."\n");
+        }
+        fclose($fp);
+    }
+
+    function addTestFile($path) {
+        $this->files[] = $path;
+    }
+
 } 
  ?>
