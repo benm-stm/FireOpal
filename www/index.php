@@ -300,14 +300,12 @@ function prepare_files($filesArray, $prefix) {
                         ob_start('flushHandler');
                         if (isset($_REQUEST['tests_to_run'])) {
                             // manage request
-                            require_once 'IntegrationTests.class.php';
-                            $suite = new IntegrationTests();
+                            require_once 'testSuite.class.php';
+                            $suite = new testSuite(array());
                             $files = prepare_files($_REQUEST['tests_to_run'], '../tests');
-                            $suite->addFiles($files);
                             $result = $suite->run();
-                            foreach ($result as $line) {
-                                echo $line."\n";
-                            }
+                            echo "Result file stored"."\n";
+                           
                         }
                         ?>
                         </pre>
