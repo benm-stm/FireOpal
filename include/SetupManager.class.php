@@ -34,6 +34,8 @@ class SetupManager {
             foreach ($request as $name => $value) {
                 if (isset($value)) {
                     switch ($name) {
+                        case "delete" :
+                            break;
                         case "new_name" :
                             if ($value != 'new_name' &&
                                 $value != 'new_type' &&
@@ -111,26 +113,27 @@ class SetupManager {
     }
 
     /*
-     * Delete a setup item
+     * Delete setup items
      *
-     * @param String $name Name of the item to delete
+     * @param Array $items Names of items to delete
      *
      * @return Boolean
      */
-    function deleteItem($name) {
+    function delete($names) {
         $set = $this->load();
-        if (isset($set[$name]) &&
-            $name != 'host' &&
-            $name != 'client' &&
-            $name != 'browser' &&
-            $name != 'user' &&
-            $name != 'password' &&
-            $name != 'project' &&
-            $name != 'project_id') {
-            unset($set[$name]);
-            return file_put_contents(dirname(__FILE__).'/../conf/set.ini', json_encode($set));
+        foreach ($names as $name) {
+            if (isset($set[$name]) &&
+                $name != 'host' &&
+                $name != 'client' &&
+                $name != 'browser' &&
+                $name != 'user' &&
+                $name != 'password' &&
+                $name != 'project' &&
+                $name != 'project_id') {
+                unset($set[$name]);
+            }
         }
-        return true;
+        return file_put_contents(dirname(__FILE__).'/../conf/set.ini', json_encode($set));
     }
 
     /*
@@ -156,7 +159,7 @@ class SetupManager {
         $content = '';
         $set = $this->load();
         foreach ($set as $name => $element) {
-            $content .= '<li><span title="'.$element['description'].'"><label for="'.$name.'">'.$name.':</label><input id='.$name.' type='.$element['type'].' name="'.$name.'" value="'.$element['value'].'" '.$readOnly.' /></span>';
+            $content .= '<li><span title="'.$element['description'].'"><label for="'.$name.'">'.$name.':</label><input id="'.$name.'" type="'.$element['type'].'" name="'.$name.'" value="'.$element['value'].'" '.$readOnly.' /></span>';
             if (!$readOnly &&
                 $name != 'host' &&
                 $name != 'client' &&
@@ -165,7 +168,7 @@ class SetupManager {
                 $name != 'password' &&
                 $name != 'project' &&
                 $name != 'project_id') {
-                $content .= '<a href="set.php?delete='.$name.'" >Delete</a>';
+                $content .= ' delete<input type="checkbox" name="delete[]" value="'.$name.'" />';
             }
             $content .= '</li>';
         }
