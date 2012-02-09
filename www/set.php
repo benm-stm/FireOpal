@@ -39,6 +39,23 @@ echo '
                     '.$form.'
                 </ul> 
             </fieldset>
+            <fieldset>
+                <legend>New value</legend>
+                <table>
+                    <tr>
+                        <td>Name</td>
+                        <td><input name="new_name" /></td>
+                    </tr>
+                    <tr>
+                        <td>Type</td>
+                        <td><input name="new_type" /></td>
+                    </tr>
+                    <tr>
+                        <td>Description</td>
+                        <td><input name="new_description" /></td>
+                    </tr>
+                </table>
+            </fieldset>
             <div id="submit_panel"><input type="submit" value="Update config !" /></div>
         </form>
     </body>
