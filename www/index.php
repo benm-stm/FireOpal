@@ -259,7 +259,7 @@ function prepare_files($filesArray, $prefix) {
                             <ul id="menu"><li class="">
                             <?php
                                 $setupManager = new SetupManager();
-                                echo $setupManager->display(array());
+                                echo $setupManager->display();
                             ?>
                             </ul> 
                         </fieldset> 

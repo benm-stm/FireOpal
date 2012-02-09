@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) STMicroelectronics 2011. All rights reserved
+ * Copyright (c) STMicroelectronics 2012. All rights reserved
  *
  * This code is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ class SetupManager {
      * @return Boolean
      */
     function store($set) {
-        // TODO: Store $set into a file (could be into a DB in a near future)
+        file_put_contents(dirname(__FILE__).'/../conf/set.php', serialize($set));
         return true;
     }
 
@@ -36,8 +36,8 @@ class SetupManager {
      * @return Array
      */
     function load() {
-        // TODO: Loead the setup from /conf/set.php
-        return array();
+        $set = unserialize(file_get_contents(dirname(__FILE__).'/../conf/set.php'));
+        return $set;
     }
 
     /*
@@ -47,19 +47,15 @@ class SetupManager {
      *
      * @return String
      */
-    function display($set) {
-        // TODO: Make this thing dynamic
-        return '<li class=""><label  for="host">Host:</label> <input  type="text" id="host" name="host" value="http://codex" /></li>
-        <li class=""><label  for="client">Client:</label> <input  type="text" id="client" name="client" value="client" /></li>
-        <li class=""><label  for="client">Browser:</label> <input  type="text" id="client" name="client" value="firefox" /></li>
-        <li class=""><label  for="user">User:</label> <input  type="text" id="user" name="user" value="login" /></li>
-        <li class=""><label  for="password">Password:</label> <input  type="password" id="password" name="password" value="password" /></li>
-        <li class=""><label  for="project">Project:</label> <input  type="text" id="project" name="project" value="project" /></li>
-        <li class=""><label  for="projectId">Project ID:</label> <input  type="text" id="projectId" name="projectId" value="1" /></li>
-        <li class=""><label  for="tracker">Tracker:</label> <input  type="text" id="tracker" name="tracker" value="tracker" /></li>
-        <li class=""><label  for="trackerName">Tracker name:</label> <input  type="text" id="trackerName" name="trackerName" value="trackerName" /></li>
-        <li class=""><label  for="trackerShortName">Tracker short name:</label> <input  type="text" id="trackerShortName" name="trackerShortName" value="trk" /></li>
-        <li class=""><label  for="docmanRootId">Docman root ID:</label> <input  type="text" id="docmanRootId" name="docmanRootId" value="1" /></li>';
+    function display() {
+        $content = '';
+        $set = $this->load();
+        foreach ($set as $element) {
+            if (true) {
+                $content .= '<li <span title="'.$element['description'].'"></span><label for="'.$element['name'].'">'.$element['name'].': </label><input id='.$element['name'].' type='.$element['type'].' name="'.$element['name'].'" value="'.$element['value'].'" /></li>';
+            }
+        }
+        return $content;
     }
 
 }
