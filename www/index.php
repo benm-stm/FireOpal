@@ -291,7 +291,8 @@ function prepare_files($filesArray, $prefix) {
                             $testCasesLauncher = new testCasesLauncher();
 							$suite = new testSuite($files);
                             $suite->attach($testCasesLauncher);
-                            $result = $suite->run();
+                            //$result = $suite->run();
+                            $result = $suite->runTestCases();
                             echo "Result file stored"."\n";                           
                         }
                         ?>
