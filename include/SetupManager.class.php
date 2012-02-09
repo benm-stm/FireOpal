@@ -26,11 +26,30 @@ class SetupManager {
      * @return Array
      */
     function extractSetup($request) {
-        $set = $this->load();
+        $set            = $this->load();
+        $newName        = null;
+        $newType        = null;
+        $newDescription = null;
         if ($request && is_array($request)) {
             foreach ($request as $name => $value) {
                 if (isset($value)) {
                     switch ($name) {
+                        case "new_name" :
+                            if ($value != 'new_name' &&
+                                $value != 'new_type' &&
+                                $value != 'new_description' &&
+                                !array_key_exists($value, $set)) {
+                                $newName = $value;
+                            }
+                            break;
+                        case "new_type" :
+                            if ($value == 'text' || $value == 'password') {
+                                $newType = $value;
+                            }
+                            break;
+                        case "new_description" :
+                            $newDescription = $value;
+                            break;
                         case "host"   :
                             if (preg_match('|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $value)) {
                                 $set[$name]['value'] = $value;
@@ -69,6 +88,9 @@ class SetupManager {
                     }
                 }
             }
+        }
+        if ($newName && $newType && $newDescription) {
+            $set[$newName] = array("value" => "", "description" => $newDesciption, "type" => $newType);
         }
         return $set;
     }
