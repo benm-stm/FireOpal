@@ -42,6 +42,21 @@ class testSuite implements SplSubject {
          exec('rspec '.$rspecTestSuiteFile.' --format documentation --out '.$resultFile.' 2>&1', $this->_result);
     }
 
+   /**
+         * Launch test Cases...
+         * @Deprecated	 
+         */
+    public function runTestCases() {
+        foreach ($this->_testCases as $testCase) {
+            $this->_currentTestCase = $testCase;
+            //@TODO update here
+			$this->_result = $testCase;		
+			exec('ruby '.$testCase.' 2>&1', $this->_result);		
+            $this->notify();
+        }
+        $this->_currentTestCase = null;
+    }
+
     /**
      * Returns the testCase currently being updated
      *
