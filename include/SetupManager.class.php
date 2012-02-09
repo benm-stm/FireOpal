@@ -82,7 +82,7 @@ class SetupManager {
      */
     function store($request) {
         if ($set = $this->extractSetup($request)) {
-            return file_put_contents(dirname(__FILE__).'/../conf/set.ini', serialize($set));
+            return file_put_contents(dirname(__FILE__).'/../conf/set.ini', json_encode($set));
         }
         return false;
     }
@@ -93,8 +93,7 @@ class SetupManager {
      * @return Array
      */
     function load() {
-        $set = unserialize(file_get_contents(dirname(__FILE__).'/../conf/set.ini'));
-        return $set;
+        return json_decode(file_get_contents(dirname(__FILE__).'/../conf/set.ini'), true);
     }
 
     /*
