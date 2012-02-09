@@ -286,8 +286,8 @@ function prepare_files($filesArray, $prefix) {
                         if (isset($_REQUEST['tests_to_run'])) {
                             // manage request
                             require_once 'testSuite.class.php';
-                            $suite = new testSuite(array());
                             $files = prepare_files($_REQUEST['tests_to_run'], '../tests');
+							$suite = new testSuite($files);
                             $result = $suite->run();
                             echo "Result file stored"."\n";
                            
