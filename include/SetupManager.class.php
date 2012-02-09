@@ -26,7 +26,7 @@ class SetupManager {
      * @return Boolean
      */
     function store($set) {
-        file_put_contents(dirname(__FILE__).'/../conf/set.php', serialize($set));
+        file_put_contents(dirname(__FILE__).'/../conf/set.ini', serialize($set));
         return true;
     }
 
@@ -36,7 +36,7 @@ class SetupManager {
      * @return Array
      */
     function load() {
-        $set = unserialize(file_get_contents(dirname(__FILE__).'/../conf/set.php'));
+        $set = unserialize(file_get_contents(dirname(__FILE__).'/../conf/set.ini'));
         return $set;
     }
 
