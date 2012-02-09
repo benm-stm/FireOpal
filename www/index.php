@@ -250,7 +250,6 @@ function prepare_files($filesArray, $prefix) {
         <table width="100%">
             <tr>
                 <td width="10%" nowrap="nowrap">
-                    <div id="submit_panel"><input type="submit" value="Run !" /></div>
                         <fieldset>
                             <legend>Config</legend>
                             <a href="set">Update config</a>
@@ -263,6 +262,7 @@ function prepare_files($filesArray, $prefix) {
                             </ul> 
                         </fieldset>
                         <form action="" method="POST">
+                        <div id="submit_panel"><input type="submit" value="Run !" /></div>
                         <fieldset>
                             <legend>Tests</legend>
                             <ul id="menu">
