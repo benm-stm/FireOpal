@@ -21,7 +21,7 @@ class testSuite implements SplSubject {
     private $_testCases;
     private $_observers;
     private $_currentTestCase;
-	private $_result;
+    private $_result;
 
     public function __construct(array $testCases) {
         $this->_testCases = $testCases;
