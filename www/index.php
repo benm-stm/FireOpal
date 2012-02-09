@@ -285,12 +285,14 @@ function prepare_files($filesArray, $prefix) {
                         ob_start('flushHandler');
                         if (isset($_REQUEST['tests_to_run'])) {
                             // manage request
-                            require_once 'TestSuite.class.php';
+                            require_once dirname(__FILE__).'/../include/testSuite.class.php';
+                            require_once dirname(__FILE__).'/../include/testCaseLauncher.class.php';
                             $files = prepare_files($_REQUEST['tests_to_run'], '../tests');
+                            $testCasesLauncher = new testCasesLauncher();
 							$suite = new testSuite($files);
+                            $suite->attach($testCasesLauncher);
                             $result = $suite->run();
-                            echo "Result file stored"."\n";
-                           
+                            echo "Result file stored"."\n";                           
                         }
                         ?>
                         </pre>
