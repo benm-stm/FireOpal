@@ -38,6 +38,7 @@ class SetupManager {
                             if ($value != 'new_name' &&
                                 $value != 'new_type' &&
                                 $value != 'new_description' &&
+                                $value != 'delete' &&
                                 !array_key_exists($value, $set)) {
                                 $newName = $value;
                             }
@@ -110,6 +111,29 @@ class SetupManager {
     }
 
     /*
+     * Delete a setup item
+     *
+     * @param String $name Name of the item to delete
+     *
+     * @return Boolean
+     */
+    function deleteItem($name) {
+        $set = $this->load();
+        if (isset($set[$name]) &&
+            $name != 'host' &&
+            $name != 'client' &&
+            $name != 'browser' &&
+            $name != 'user' &&
+            $name != 'password' &&
+            $name != 'project' &&
+            $name != 'project_id') {
+            unset($set[$name]);
+            return file_put_contents(dirname(__FILE__).'/../conf/set.ini', json_encode($set));
+        }
+        return true;
+    }
+
+    /*
      * Load the setup
      *
      * @return Array
@@ -128,15 +152,22 @@ class SetupManager {
     function display($readOnly = false) {
         if ($readOnly) {
             $readOnly = 'readonly="readonly"';
-        } else {
-            $readonly = '';
         }
         $content = '';
         $set = $this->load();
         foreach ($set as $name => $element) {
-            if (true) {
-                $content .= '<li <span title="'.$element['description'].'"></span><label for="'.$name.'">'.$name.': </label><input id='.$name.' type='.$element['type'].' name="'.$name.'" value="'.$element['value'].'" '.$readOnly.' /></li>';
+            $content .= '<li><span title="'.$element['description'].'"><label for="'.$name.'">'.$name.':</label><input id='.$name.' type='.$element['type'].' name="'.$name.'" value="'.$element['value'].'" '.$readOnly.' /></span>';
+            if (!$readOnly &&
+                $name != 'host' &&
+                $name != 'client' &&
+                $name != 'browser' &&
+                $name != 'user' &&
+                $name != 'password' &&
+                $name != 'project' &&
+                $name != 'project_id') {
+                $content .= '<a href="set.php?delete='.$name.'" >Delete</a>';
             }
+            $content .= '</li>';
         }
         return $content;
     }
