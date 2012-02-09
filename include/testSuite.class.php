@@ -21,24 +21,25 @@ class testSuite implements SplSubject {
     private $_testCases;
     private $_observers;
     private $_currentTestCase;
+	private $_result;
 
     public function __construct(array $testCases) {
         $this->_testCases = $testCases;
         $this->_observers = array();
+        $this->_result   = array();
         //@TODO   Better prefer dependency injection here. use SplObjectStorage
         //$this->_observers = new SplObjectStorage();
     }
 
-    /**
-     * Launch test Suite...
+     /**
+     * Launch test Suite
+     *
+     * @Deprecated
      */
-    public function runTestCases() {
-        foreach ($this->_testCases as $testCase) {
-            $this->_currentTestCase = $testCase;
-            //@TODO update here
-            $this->notify();
-        }
-        $this->_currentTestCase = null;
+    public function run() {
+         $this->generateWebDriverTestSuite($this->_testCases);
+         $rspecTestSuiteFile = $this->generateRspecTestSuite($this->_testCases);
+         exec('rspec '.$rspecTestSuiteFile.' --format documentation --out '.$resultFile.' 2>&1', $this->_result);
     }
 
     /**
@@ -81,6 +82,30 @@ class testSuite implements SplSubject {
             $item->update($this);
         }
     }
-} 
 
+    /**
+     * Add given files to the test suite
+     *
+     * @param Array $files array of file path of tests to add to test suite
+     *
+     * @return void
+     */
+    function addFiles($files) {
+        if (file_exists('../log/last_run')) {
+            rename('../log/last_run', '../log/integration_tests_'.time());
+        }
+        $fp = fopen('../log/last_run', 'a');
+        fwrite($fp, "Run on ".date('l jS \of F Y h:i:s A')."\n");
+        foreach ($files as $file) {
+            $this->files[] = $file;
+            fwrite($fp, basename($file)."\n");
+        }
+        fclose($fp);
+    }
+
+    function addTestFile($path) {
+        $this->files[] = $path;
+    }
+
+} 
  ?>

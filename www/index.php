@@ -28,22 +28,17 @@ header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 require_once 'set.php';
 
-$input = '<li class=""><label  for="host">host:</label> <input  type="text" id="host" name="host" value="'.$GLOBALS['host'].'" /></li>';
-$input .= '<li class=""><label  for="client">client:</label> <input  type="text" id="client" name="client" value="'.$GLOBALS['client'].'" /></li>';
-$input .= '<li class=""><label  for="client">client:</label> 
-               <select type="text" id="browser" name="browser" />
-               <option value="*firefox" selected="selected">Firefox</option>
-               <option value="*iexplore">Internet Explorer</option>
-               <option value="*chrome">Chrome</option>
-               </select></li>';
-$input .= '<li class=""><label  for="user">user:</label> <input  type="text" id="user" name="user" value="'.$GLOBALS['user'].'" /></li>';
-$input .= '<li class=""><label  for="password">password:</label> <input  type="password" id="password" name="password" value="'.$GLOBALS['password'].'" /></li>';
-$input .= '<li class=""><label  for="project">project:</label> <input  type="text" id="project" name="project" value="'.$GLOBALS['project'].'" /></li>';
-$input .= '<li class=""><label  for="projectId">project ID:</label> <input  type="text" id="projectId" name="projectId" value="'.$GLOBALS['project_id'].'" /></li>';
-$input .= '<li class=""><label  for="tracker">tracker:</label> <input  type="text" id="tracker" name="tracker" value="'.$GLOBALS['tracker'].'" /></li>';
-$input .= '<li class=""><label  for="trackerName">tracker Name:</label> <input  type="text" id="trackerName" name="trackerName" value="'.$GLOBALS['trackerName'].'" /></li>';
-$input .= '<li class=""><label  for="trackerShortName">tracker Short Name:</label> <input  type="text" id="trackerShortName" name="trackerShortName" value="'.$GLOBALS['trackerShortName'].'" /></li>';
-$input .= '<li class=""><label  for="docmanRootId">docman Root ID:</label> <input  type="text" id="docmanRootId" name="docmanRootId" value="'.$GLOBALS['docman_root_id'].'" /></li>';
+$input = '<li class=""><label  for="host">Host:</label> <input  type="text" id="host" name="host" value="'.$GLOBALS['host'].'" /></li>';
+$input .= '<li class=""><label  for="client">Client:</label> <input  type="text" id="client" name="client" value="'.$GLOBALS['client'].'" /></li>';
+$input .= '<li class=""><label  for="client">Browser:</label> <input  type="text" id="client" name="client" value="'.$GLOBALS['browser'].'" /></li>';
+$input .= '<li class=""><label  for="user">User:</label> <input  type="text" id="user" name="user" value="'.$GLOBALS['user'].'" /></li>';
+$input .= '<li class=""><label  for="password">Password:</label> <input  type="password" id="password" name="password" value="'.$GLOBALS['password'].'" /></li>';
+$input .= '<li class=""><label  for="project">Project:</label> <input  type="text" id="project" name="project" value="'.$GLOBALS['project'].'" /></li>';
+$input .= '<li class=""><label  for="projectId">Project ID:</label> <input  type="text" id="projectId" name="projectId" value="'.$GLOBALS['project_id'].'" /></li>';
+$input .= '<li class=""><label  for="tracker">Tracker:</label> <input  type="text" id="tracker" name="tracker" value="'.$GLOBALS['tracker'].'" /></li>';
+$input .= '<li class=""><label  for="trackerName">Tracker name:</label> <input  type="text" id="trackerName" name="trackerName" value="'.$GLOBALS['trackerName'].'" /></li>';
+$input .= '<li class=""><label  for="trackerShortName">Tracker short name:</label> <input  type="text" id="trackerShortName" name="trackerShortName" value="'.$GLOBALS['trackerShortName'].'" /></li>';
+$input .= '<li class=""><label  for="docmanRootId">Docman root ID:</label> <input  type="text" id="docmanRootId" name="docmanRootId" value="'.$GLOBALS['docman_root_id'].'" /></li>';
 
 /**
  * Search test files recursively
@@ -300,14 +295,12 @@ function prepare_files($filesArray, $prefix) {
                         ob_start('flushHandler');
                         if (isset($_REQUEST['tests_to_run'])) {
                             // manage request
-                            require_once 'IntegrationTests.class.php';
-                            $suite = new IntegrationTests();
+                            require_once 'testSuite.class.php';
+                            $suite = new testSuite(array());
                             $files = prepare_files($_REQUEST['tests_to_run'], '../tests');
-                            $suite->addFiles($files);
                             $result = $suite->run();
-                            foreach ($result as $line) {
-                                echo $line."\n";
-                            }
+                            echo "Result file stored"."\n";
+                           
                         }
                         ?>
                         </pre>
