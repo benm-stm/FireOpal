@@ -65,7 +65,7 @@ class SetupManager {
                             }
                             break;
                         default:
-                            
+                            $set[$name]['value'] = $value;
                     }
                 }
             }
