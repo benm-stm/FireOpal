@@ -22,6 +22,7 @@ class testSuite implements SplSubject {
     private $_observers;
     private $_currentTestCase;
     private $_result;
+    private $_webDriverTestSuiteFile;
 
     public function __construct(array $testCases) {
         $this->_testCases = $testCases;
@@ -47,6 +48,7 @@ class testSuite implements SplSubject {
          * @Deprecated	 
          */
     public function runTestCases() {
+        $this->generateWebDriverTestSuite();
         foreach ($this->_testCases as $testCase) {
             $this->_currentTestCase = $testCase;
             //@TODO update here

@@ -285,8 +285,8 @@ function prepare_files($filesArray, $prefix) {
                         ob_start('flushHandler');
                         if (isset($_REQUEST['tests_to_run'])) {
                             // manage request
-                            require_once dirname(__FILE__).'/../include/testSuite.class.php';
-                            require_once dirname(__FILE__).'/../include/testCaseLauncher.class.php';
+                            require_once dirname(__FILE__).'/../include/TestSuite.class.php';
+                            require_once dirname(__FILE__).'/../include/TestCaseLauncher.class.php';
                             $files = prepare_files($_REQUEST['tests_to_run'], '../tests');
                             $testCasesLauncher = new testCasesLauncher();
 							$suite = new testSuite($files);
