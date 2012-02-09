@@ -20,6 +20,7 @@ ini_set('display_errors', 'on');
 ini_set('max_execution_time', 0);
 ini_set('memory_limit', -1);
 ini_set('include_path', ini_get('include_path').':'.dirname(__FILE__).'/../include/');
+ini_set('include_path', ini_get('include_path').':'.dirname(__FILE__).'/../conf/');
 
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
