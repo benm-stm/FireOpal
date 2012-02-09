@@ -1,0 +1,47 @@
+<?php
+/**
+ * Copyright (c) STMicroelectronics 2012. All rights reserved
+ *
+ * This code is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This code is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this code. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+ini_set('include_path', ini_get('include_path').':'.dirname(__FILE__).'/../include/');
+require_once 'SetupManager.class.php';
+$setupManager = new SetupManager();
+if (!empty($_REQUEST)) {
+    $setupManager->store($_REQUEST);
+}
+$form = $setupManager->display();
+
+echo '
+<html>
+    <head>
+        <title>Codex integration tests (update config)</title>
+        <link href="include/css/index.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <a href="index"><< Go back</a>
+        <form action="" method="POST">
+            <fieldset>
+                <legend>Config</legend>
+                <ul id="menu"><li class="">
+                    '.$form.'
+                </ul> 
+            </fieldset>
+            <div id="submit_panel"><input type="submit" value="Update config !" /></div>
+        </form>
+    </body>
+</html>';
+
+?>

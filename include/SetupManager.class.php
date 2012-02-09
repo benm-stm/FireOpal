@@ -19,15 +19,72 @@
 class SetupManager {
 
     /*
-     * Store the setup
+     * Extract the setup values from HTTP request and validate them
      *
-     * @param Array $set Setup to store
+     * @param Array $request Request containing setup values
+     *
+     * @return Array
+     */
+    function extractSetup($request) {
+        $set = $this->load();
+        if ($request && is_array($request)) {
+            foreach ($request as $name => $value) {
+                if (isset($value)) {
+                    switch ($name) {
+                        case "host"   :
+                            if (preg_match('|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $value)) {
+                                $set[$name]['value'] = $value;
+                            }
+                        case "client" :
+                            if (preg_match('|^[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?$|i', $value)) {
+                                $set[$name]['value'] = $value;
+                            }
+                            break;
+                        case "browser" :
+                            // TODO: add more possible browsers
+                            if ($value == "firefox" || $value == "ie" || $value == "chrome") {
+                                $set[$name]['value'] = $value;
+                            }
+                            break;
+                        case "user"     :
+                        case "password" :
+                        case "project"  :
+                            if (is_string($value) &&
+                                strrpos($value,' ') === false &&
+                                strspn($value,"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ") != 0 &&
+                                strspn($value,"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.") === strlen($value) &&
+                                strpos($value, 0x0A) === false &&
+                                strpos($value, 0x0D) === false &&
+                                strpos($value, 0x00) === false) {
+                                $set[$name]['value'] = $value;
+                            }
+                            break;
+                        case "project_id" :
+                            if (preg_match("/^\d+$/", $value)) {
+                                $set[$name]['value'] = $value;
+                            }
+                            break;
+                        default:
+                            
+                    }
+                }
+            }
+        }
+        return $set;
+    }
+
+    /*
+     * Store the setup passed in HTTP request
+     *
+     * @param Array $request Request containing setup values
      *
      * @return Boolean
      */
-    function store($set) {
-        file_put_contents(dirname(__FILE__).'/../conf/set.ini', serialize($set));
-        return true;
+    function store($request) {
+        if ($set = $this->extractSetup($request)) {
+            return file_put_contents(dirname(__FILE__).'/../conf/set.ini', serialize($set));
+        }
+        return false;
     }
 
     /*
@@ -43,16 +100,21 @@ class SetupManager {
     /*
      * Display setup form
      *
-     * @param Array $set Setup to display
+     * @param Boolean $readOnly Dsplay in read only if true
      *
      * @return String
      */
-    function display() {
+    function display($readOnly = false) {
+        if ($readOnly) {
+            $readOnly = 'readonly="readonly"';
+        } else {
+            $readonly = '';
+        }
         $content = '';
         $set = $this->load();
-        foreach ($set as $element) {
+        foreach ($set as $name => $element) {
             if (true) {
-                $content .= '<li <span title="'.$element['description'].'"></span><label for="'.$element['name'].'">'.$element['name'].': </label><input id='.$element['name'].' type='.$element['type'].' name="'.$element['name'].'" value="'.$element['value'].'" /></li>';
+                $content .= '<li <span title="'.$element['description'].'"></span><label for="'.$name.'">'.$name.': </label><input id='.$name.' type='.$element['type'].' name="'.$name.'" value="'.$element['value'].'" '.$readOnly.' /></li>';
             }
         }
         return $content;

@@ -20,14 +20,12 @@ ini_set('display_errors', 'on');
 ini_set('max_execution_time', 0);
 ini_set('memory_limit', -1);
 ini_set('include_path', ini_get('include_path').':'.dirname(__FILE__).'/../include/');
-ini_set('include_path', ini_get('include_path').':'.dirname(__FILE__).'/../conf/');
 
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
-require_once 'SetupManager.class.php';
 
 /**
  * Search test files recursively
@@ -44,9 +42,9 @@ function search_tests_rec($dir, &$tab, $entry) {
             while (($file = readdir($dh)) !== false) {
                 if (!in_array($file, array('.', '..'))) {
                     if (is_dir("$dir/$file")) {
-                        search_tests_rec("$dir/$file", $tab[($entry == '../tests'?'Tuleap':$entry)], $file);
+                        search_tests_rec("$dir/$file", $tab[($entry == '../tests'?'Codex':$entry)], $file);
                     } else {
-                        $tab[($entry == '../tests'?'Tuleap':$entry)]['_tests'][] = $file;
+                        $tab[($entry == '../tests'?'Codex':$entry)]['_tests'][] = $file;
                     }
                 }
             }
@@ -160,7 +158,7 @@ function prepare_files($filesArray, $prefix) {
     }
     $files = array();
     foreach ($filesArray as $key => $node) {
-        if ($key == 'Tuleap') {
+        if ($key == 'Codex') {
             $key = '';
         }
         if (is_array($node)) {
@@ -177,7 +175,7 @@ function prepare_files($filesArray, $prefix) {
 ?>
 <html>
     <head>
-        <title>Tuleap integration tests</title>
+        <title>Codex integration tests</title>
         <link href="include/css/index.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="/scripts/prototype/prototype.js"></script>
         <script type="text/javascript" src="/scripts/scriptaculous/scriptaculous.js"></script>
@@ -252,17 +250,18 @@ function prepare_files($filesArray, $prefix) {
         <table width="100%">
             <tr>
                 <td width="10%" nowrap="nowrap">
-                    <form action="" method="POST">
-                        <div id="submit_panel"><input type="submit" value="Run !" /></div>
-                       <fieldset>
+                        <fieldset>
                             <legend>Config</legend>
+                            <a href="set">Update config</a>
                             <ul id="menu"><li class="">
                             <?php
+                                require_once 'SetupManager.class.php';
                                 $setupManager = new SetupManager();
-                                echo $setupManager->display();
+                                echo $setupManager->display(true);
                             ?>
                             </ul> 
-                        </fieldset> 
+                        </fieldset>
+                        <form action="" method="POST">
                         <fieldset>
                             <legend>Tests</legend>
                             <ul id="menu">
@@ -275,6 +274,7 @@ function prepare_files($filesArray, $prefix) {
                             ?>
                             </ul>
                         </fieldset>
+                        <div id="submit_panel"><input type="submit" value="Run !" /></div>
                     </form>
                 </td>
                 <td width="90%">
@@ -285,7 +285,7 @@ function prepare_files($filesArray, $prefix) {
                         ob_start('flushHandler');
                         if (isset($_REQUEST['tests_to_run'])) {
                             // manage request
-                            require_once 'testSuite.class.php';
+                            require_once 'TestSuite.class.php';
                             $files = prepare_files($_REQUEST['tests_to_run'], '../tests');
 							$suite = new testSuite($files);
                             $result = $suite->run();
