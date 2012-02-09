@@ -43,6 +43,19 @@ class testSuite implements SplSubject {
          exec('rspec '.$rspecTestSuiteFile.' --format documentation --out '.$resultFile.' 2>&1', $this->_result);
     }
 
+    public function generateWebDriverTestSuite($testCases = null) {
+        try {
+            $webDriverFile = new SplFileInfo(dirname(__FILE__).'/../tests/fooBar.rb');
+        } catch (RuntimeException $e) {
+            echo $e;
+            // @TODO Specify here what i'm supposed to render if i'm not able to create the ruby file...
+        }        
+        $fileobj = $webDriverFile->openFile('a');
+        if ($webDriverFile->isWritable()) {
+           $fileobj->fwrite("require 'selenium-webdriver'");
+        }
+    }
+    
    /**
          * Launch test Cases...
          * @Deprecated	 
