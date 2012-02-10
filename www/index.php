@@ -257,7 +257,8 @@ function prepare_files($filesArray, $prefix) {
                             <?php
                                 require_once 'SetupManager.class.php';
                                 $setupManager = new SetupManager();
-                                echo $setupManager->display(true);
+                                $content = $setupManager->display(true);
+                                echo $content['form'];
                             ?>
                             </ul> 
                         </fieldset>
