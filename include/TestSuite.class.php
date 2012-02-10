@@ -55,7 +55,7 @@ class testSuite implements SplSubject {
         }
         $webDriverFileObj = $webDriverFile->openFile('a');
         if ($webDriverFile->isWritable()) {
-            $webDriverFileObj->fwrite("#--- Put Conf in setup here");
+            $webDriverFileObj->fwrite("#--- Put Conf in setup here\n");
         }
         foreach ($this->_testCases as $testCase) {
             try {
@@ -93,41 +93,42 @@ class testSuite implements SplSubject {
                 #### Class definition turned on describe
                 #### setup, teardown & login call
                 $pattern = '/class (\w+)/i';
-                $replacement = 'describe ${1} do
-	                                before(:each) do
-	                                    @bowling = ${1}.new 
-	                                    @bowling.setup() 
-                                        @bowling.login()
-	                                end
+                $replacement = '
+describe ${1} do
+    before(:each) do
+        @testClass = ${1}.new 
+        @testClass.setup() 
+        @testClass.login()
+    end
 
-	                                after(:each) do
-	                                    @bowling.teardown()
-	                                end';
+    after(:each) do
+        @testClass.teardown()
+    end';
 
                 $fileContent .= preg_replace($pattern, $replacement, $file);
 
-                $pattern ='/def setup\s(.*)end/isUe';
-                $fileContent = preg_replace($pattern, '"\n"', $fileContent);
+                $pattern      ='/def setup\s(.*)end/isUe';
+                $fileContent  = preg_replace($pattern, '"\n"', $fileContent);
 
                 #### teardown
-                $pattern ='/def teardown\s(.*)\send/isUe';
+                $pattern     ='/def teardown\s(.*)\send/isUe';
                 $fileContent = preg_replace($pattern, '"\n"', $fileContent);
 
                 #### login
-                $pattern ='/def login\s(.*)\send/isUe';
+                $pattern     ='/def login\s(.*)\send/isUe';
                 $fileContent = preg_replace($pattern, '"\n"', $fileContent);
 
-
-                $pattern ='/def (\w+)\s(.*)\send/isUe';
-                $replacement = '"describe \"test case 1\" do
-	                            it \"should $1\" do
-                                    @bowling.$1()
-                                    end
-                                end"';
+                $pattern     ='/def (\w+)\s(.*)\send/isUe';
+                $replacement = '"
+    describe \"test case 1\" do
+        it \"should $1\" do
+            @testClass.$1()
+        end
+    end"';
                 $fileContent = preg_replace($pattern, $replacement, $fileContent);
-				
-				$fileContent = preg_replace('/\s+\n/', "\n", $fileContent);
-				
+
+                $fileContent = preg_replace('/\s+\n/', "\n", $fileContent);
+
                 $rspecFileObj = $webDriverFile->openFile('a');
                 $rspecFileObj->fwrite($fileContent);
             } catch (RuntimeException $e) {
