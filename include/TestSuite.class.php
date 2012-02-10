@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this code. If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 class testSuite implements SplSubject {
 
     private $_testCases;
@@ -24,6 +24,9 @@ class testSuite implements SplSubject {
     private $_result;
     private $_webDriverTestSuiteFile;
 
+    /**
+     *
+     */
     public function __construct(array $testCases) {
         $this->_testCases = $testCases;
         $this->_observers = array();
@@ -32,7 +35,7 @@ class testSuite implements SplSubject {
         //$this->_observers = new SplObjectStorage();
     }
 
-     /**
+    /**
      * Launch test Suite
      *
      * @Deprecated
@@ -42,43 +45,43 @@ class testSuite implements SplSubject {
          $rspecTestSuiteFile = $this->generateRspecTestSuite($this->_testCases);
          exec('rspec '.$rspecTestSuiteFile.' --format documentation --out '.$resultFile.' 2>&1', $this->_result);
     }
-    
+
     public function generateWebDriverTestSuite($testCases = null) {
         try {
             $webDriverFile = new SplFileInfo(dirname(__FILE__).'/../tests/fooBar.rb');
         } catch (RuntimeException $e) {
             echo $e->getMessage();
             // @TODO Specify here what i'm supposed to render if i'm not able to create the ruby file...
-        }        
+        }
         $webDriverFileObj = $webDriverFile->openFile('a');
         if ($webDriverFile->isWritable()) {
            $webDriverFileObj->fwrite("#--- Put Conf in setup here");
-        }		
-		foreach ($this->_testCases as $testCase) {
-		try {
-		    $testCaseFileObj = new SplFileObject($testCase);
-		    while($testCaseFileObj->valid()) {
-               //May be you need a verbose echo $file->current().'<br />';
-                $webDriverFileObj->fwrite($testCaseFileObj->current());
-                $testCaseFileObj->next();
+        }
+        foreach ($this->_testCases as $testCase) {
+            try {
+                $testCaseFileObj = new SplFileObject($testCase);
+                while($testCaseFileObj->valid()) {
+                    //May be you need a verbose echo $file->current().'<br />';
+                    $webDriverFileObj->fwrite($testCaseFileObj->current());
+                    $testCaseFileObj->next();
                 }
             } catch (Exception $e) {
                 echo $e->getMessage();
-            }		
-		}
+            }
+        }
     }
-    
+
    /**
-         * Launch test Cases...
-         * @Deprecated	 
-         */
+    * Launch test Cases...
+    * @Deprecated
+    */
     public function runTestCases() {
         $this->generateWebDriverTestSuite();
         foreach ($this->_testCases as $testCase) {
             $this->_currentTestCase = $testCase;
             //@TODO update here
-			$this->_result = $testCase;		
-			exec('ruby '.$testCase.' 2>&1', $this->_result);		
+            $this->_result = $testCase;
+            exec('ruby '.$testCase.' 2>&1', $this->_result);
             $this->notify();
         }
         $this->_currentTestCase = null;
@@ -145,9 +148,13 @@ class testSuite implements SplSubject {
         fclose($fp);
     }
 
+    /**
+     *
+     */
     function addTestFile($path) {
         $this->files[] = $path;
     }
 
-} 
- ?>
+}
+
+?>
