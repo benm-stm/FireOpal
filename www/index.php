@@ -175,7 +175,7 @@ function prepare_files($filesArray, $prefix) {
 ?>
 <html>
     <head>
-        <title>Codex integration tests</title>
+        <title>Codex automatic validation</title>
         <link href="include/css/index.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="/scripts/prototype/prototype.js"></script>
         <script type="text/javascript" src="/scripts/scriptaculous/scriptaculous.js"></script>

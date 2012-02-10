@@ -33,7 +33,7 @@ $error   = implode("<br />", $content['error']);
 echo '
 <html>
     <head>
-        <title>Codex integration tests (update config)</title>
+        <title>Codex automatic validation (update config)</title>
         <link href="include/css/index.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
