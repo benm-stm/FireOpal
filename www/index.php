@@ -289,7 +289,7 @@ function prepare_files($filesArray, $prefix) {
                             require_once dirname(__FILE__).'/../include/TestCaseLauncher.class.php';
                             $files = prepare_files($_REQUEST['tests_to_run'], '../tests');
                             $testCasesLauncher = new testCasesLauncher();
-							$suite = new testSuite($files);
+                            $suite = new testSuite($files);
                             $suite->attach($testCasesLauncher);
                             //$result = $suite->run();
                             $result = $suite->runTestCases();
