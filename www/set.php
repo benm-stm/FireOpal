@@ -26,7 +26,9 @@ if (!empty($_REQUEST)) {
     }
 }
 
-$form = $setupManager->display();
+$content = $setupManager->display();
+$form    = $content['form'];
+$error   = implode("<br />", $content['error']);
 
 echo '
 <html>
@@ -36,6 +38,11 @@ echo '
     </head>
     <body>
         <table>
+            <tr>
+                <td nowrap>
+                    <font color="red">'.$error.'</font>
+                </td>
+            </tr>
             <tr>
                 <td nowrap>
                     <a href="index"><< Go back</a>

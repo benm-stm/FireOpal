@@ -18,6 +18,8 @@
 
 class SetupManager {
 
+    private $error = array();
+
     /*
      * Extract the setup values from HTTP request and validate them
      *
@@ -43,11 +45,17 @@ class SetupManager {
                                 $value != 'delete' &&
                                 !array_key_exists($value, $set)) {
                                 $newName = $value;
+                            } else {
+                                $this->error[] = "Name is reserved or already exist";
                             }
                             break;
                         case "new_type" :
-                            if ($value == 'text' || $value == 'password') {
-                                $newType = $value;
+                            if (!empty($value)) {
+                                if ($value == 'text' || $value == 'password') {
+                                    $newType = $value;
+                                } else {
+                                    $this->error[] = "Type must be either 'text' or 'password' '".$value."' ".$name;
+                                }
                             }
                             break;
                         case "new_description" :
@@ -56,16 +64,23 @@ class SetupManager {
                         case "host"   :
                             if (preg_match('|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $value)) {
                                 $set[$name]['value'] = $value;
+                            } else {
+                                $this->error[] = "Invalid host";
                             }
+                            break;
                         case "client" :
                             if (preg_match('|^[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?$|i', $value)) {
                                 $set[$name]['value'] = $value;
+                            } else {
+                                $this->error[] = "Invalid client";
                             }
                             break;
                         case "browser" :
                             // TODO: add more possible browsers
                             if ($value == "firefox" || $value == "ie" || $value == "chrome") {
                                 $set[$name]['value'] = $value;
+                            } else {
+                                $this->error[] = "Invalid browser, must be 'firefox', 'ie' or 'chrome'";
                             }
                             break;
                         case "user"     :
@@ -79,18 +94,26 @@ class SetupManager {
                                 strpos($value, 0x0D) === false &&
                                 strpos($value, 0x00) === false) {
                                 $set[$name]['value'] = $value;
+                            } else {
+                                $this->error[] = "Invalid ".$name;
                             }
                             break;
                         case "project_id" :
                             if (preg_match("/^\d+$/", $value)) {
                                 $set[$name]['value'] = $value;
+                            } else {
+                                $this->error[] = "Invalid ".$name;
                             }
                             break;
                         default:
                             $set[$name]['value'] = $value;
                     }
+                } else {
+                    $this->error[] = "No value for '".$name."'";
                 }
             }
+        } else {
+            $this->error[] = "Invalid request";
         }
         if ($newName && $newType && $newDescription) {
             $set[$newName] = array("value" => "", "description" => $newDescription, "type" => $newType);
@@ -107,9 +130,16 @@ class SetupManager {
      */
     function store($request) {
         if ($set = $this->extractSetup($request)) {
-            rename (dirname(__FILE__).'/../conf/set.ini', dirname(__FILE__).'/../conf/set.ini_'.time());
-            return file_put_contents(dirname(__FILE__).'/../conf/set.ini', json_encode($set));
+            if (!rename (dirname(__FILE__).'/../conf/set.ini', dirname(__FILE__).'/../conf/set.ini_'.time())) {
+                $this->error[] = "Impossible to archive old conf";
+            }
+            if(file_put_contents(dirname(__FILE__).'/../conf/set.ini', json_encode($set)) === false) {
+                $this->error[] = "Impossible to save new conf";
+                return false;
+            }
+            return true;
         }
+        $this->error[] = "Empty setup";
         return false;
     }
 
@@ -132,10 +162,18 @@ class SetupManager {
                 $name != 'project' &&
                 $name != 'project_id') {
                 unset($set[$name]);
+            } else {
+                $this->error[] = "Impossible to delete ".$name;
             }
         }
-        rename (dirname(__FILE__).'/../conf/set.ini', dirname(__FILE__).'/../conf/set.ini_'.time());
-        return file_put_contents(dirname(__FILE__).'/../conf/set.ini', json_encode($set));
+        if (!rename (dirname(__FILE__).'/../conf/set.ini', dirname(__FILE__).'/../conf/set.ini_'.time())) {
+            $this->error[] = "Impossible to archive old conf";
+        }
+        if(file_put_contents(dirname(__FILE__).'/../conf/set.ini', json_encode($set)) === false) {
+            $this->error[] = "Impossible to save new conf";
+            return false;
+        }
+        return true;
     }
 
     /*
@@ -144,7 +182,11 @@ class SetupManager {
      * @return Array
      */
     function load() {
-        return json_decode(file_get_contents(dirname(__FILE__).'/../conf/set.ini'), true);
+        if ($set = json_decode(file_get_contents(dirname(__FILE__).'/../conf/set.ini'), true)) {
+            return $set;
+        }
+        $this->error[] = "Impossible to load conf from file";
+        return false;
     }
 
     /*
@@ -174,7 +216,7 @@ class SetupManager {
             }
             $content .= '</li>';
         }
-        return $content;
+        return array("form" => $content, "error" => $this->error);
     }
 
 }
