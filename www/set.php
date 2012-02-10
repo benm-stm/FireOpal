@@ -35,33 +35,39 @@ echo '
         <link href="include/css/index.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
-        <a href="index"><< Go back</a>
-        <form action="" method="POST">
-            <fieldset>
-                <legend>Config</legend>
-                <ul id="menu"><li class="">
-                    '.$form.'
-                </ul> 
-            </fieldset>
-            <fieldset>
-                <legend>New value</legend>
-                <table>
-                    <tr>
-                        <td>Name</td>
-                        <td><input name="new_name" /></td>
-                    </tr>
-                    <tr>
-                        <td>Type</td>
-                        <td><input name="new_type" /></td>
-                    </tr>
-                    <tr>
-                        <td>Description</td>
-                        <td><input name="new_description" /></td>
-                    </tr>
-                </table>
-            </fieldset>
-            <div id="submit_panel"><input type="submit" value="Update config !" /></div>
-        </form>
+        <table>
+            <tr>
+                <td nowrap>
+                    <a href="index"><< Go back</a>
+                    <form action="" method="POST">
+                        <fieldset>
+                            <legend>Config</legend>
+                            <ul id="menu"><li class="">
+                                '.$form.'
+                            </ul> 
+                        </fieldset>
+                        <fieldset>
+                            <legend>New value</legend>
+                            <table>
+                                <tr>
+                                    <td>Name</td>
+                                    <td><input name="new_name" /></td>
+                                </tr>
+                                <tr>
+                                    <td>Type</td>
+                                    <td><input name="new_type" /></td>
+                                </tr>
+                                <tr>
+                                    <td>Description</td>
+                                    <td><input name="new_description" /></td>
+                                </tr>
+                            </table>
+                        </fieldset>
+                        <div id="submit_panel"><input type="submit" value="Update config !" /></div>
+                    </form>
+                </td>
+            </tr>
+        </table>
     </body>
 </html>';
 
