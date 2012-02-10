@@ -15,13 +15,13 @@ $fileContent .= "require '".$className."'\n";
 $pattern     = '/class (\w+)/i';
 $replacement = 'describe ${1} do 	
     before(:each) do
-        @bowling = ${1}.new 
-        @bowling.setup() 
-        @bowling.login()
+        @testClass = ${1}.new 
+        @testClass.setup() 
+        @testClass.login()
     end
 
     after(:each) do
-        @bowling.teardown()
+        @testClass.teardown()
     end';
 
 $fileContent .= preg_replace($pattern, $replacement, $file);
