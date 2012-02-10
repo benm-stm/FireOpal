@@ -17,39 +17,41 @@ Before installing, you need to understand that this code deals with three differ
 2- The machine on which web application to be tested is deployed. Let's call it "Server machine".
 3- The machine from which tests will be launched, we use a web browser installed on it. Let's call it "Client machine".
 
-To make it simple as a first installation please consider having 1- & 3- on the same machine: your desktop and 2- as are remote web server.
-You will install pear, phpunit & selenium on your desktop and run the tests again your server.
-
 On Launcher machine:
 
-Make sure python & python-pip are installed.
-Then install selenium by
+    Install a webserver that supports php
+    Install ruby & rubygems
+    Then install RSpec & selenium-webdriver by
 
-> pip install [-proxy=user:password@proxy_host:port] selenium
+    > gem install selenium-webdriver
+    > gem install rspec
+
+    Put this code on that machine and point the root of the webserver on "www" folder
 
 On Client machine:
 
-You need to download selenium-server-standalone-2.0b3.jar from http://seleniumhq.org/download
+    You need to download selenium-server-standalone-x.y.z.jar from http://seleniumhq.org/download
 
-If you use firefox for tests then create a Firefox profile for selenium (you may need to delete extentions.rdf for addons popup)
+    If you use firefox for tests then create a Firefox profile for selenium (you may need to delete extentions.rdf for addons popup)
 
-After that and before trying to run any tests you need to open the platform to be tested by the firefox profile and accept the certificate
+    After that and before trying to run any tests you need to open the platform to be tested by the firefox profile and accept the certificate
 
-Then run Selenium by
+    Then run Selenium by
 
-> java -jar selenium-server-standalone-2.3.0.jar -singlewindow -firefoxProfileTemplate "/path/to/firefox/profile/"
-Selenium RC must be always running on client machine as a service to make launching tests from launcher machine possible.
+    > java -jar selenium-server-standalone-x.y.z.jar -singlewindow -firefoxProfileTemplate "/path/to/firefox/profile/"
+    Selenium RC must be always running on client machine as a service to make launching tests from launcher machine possible.
 
-For browsers other than firefox the first test may cause an SSL certificate issue.
-For that add the option -trustAllSSLCertificates when you run Selenium
+    For browsers other than firefox the first test may cause an SSL certificate issue.
+    For that add the option -trustAllSSLCertificates when you run Selenium
 
-To keep the same session for all tests add the option -browserSessionReuse
+    To keep the same session for all tests add the option -browserSessionReuse
 
 RUN TESTS
 =========
 
-You probably need to modify tests settings in include/set.php file.
+You probably need to modify tests settings in conf/set.php file. (Not used for the moment)
 
-Then You can run tests in command line by just typing:
-> phpunit --include-path include tests/
+You can run a testsuite in command line by just typing:
+> ruby testsuite.rb
 
+Or using web interface by selecting the testsuite you want to run then Run

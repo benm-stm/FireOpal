@@ -1,5 +1,5 @@
-    require "rubygems"
-    require "selenium-webdriver"
+require "rubygems"
+require "selenium-webdriver"
 
 class TuleapValidation
 
@@ -7,7 +7,7 @@ class TuleapValidation
     Selenium::WebDriver::Firefox.path = "/usr/bin/firefox"
     @driver = Selenium::WebDriver.for :firefox
     @driver.manage.timeouts.implicit_wait = 30
-    @driver.get "https://tunlx007.tun.st.com:5000/"
+    @driver.get "http://codex"
     @verification_errors = []
   end
   
@@ -19,11 +19,11 @@ class TuleapValidation
   def login
     @driver.find_element(:link, "My Personal Page").click
     @driver.find_element(:name, "form_loginname").clear
-    @driver.find_element(:name, "form_loginname").send_keys "hosniah"
+    @driver.find_element(:name, "form_loginname").send_keys "wrong_login"
     @driver.find_element(:name, "form_loginname").clear
-    @driver.find_element(:name, "form_loginname").send_keys "admin"
+    @driver.find_element(:name, "form_loginname").send_keys "login"
     @driver.find_element(:name, "form_pw").clear
-    @driver.find_element(:name, "form_pw").send_keys "siteadmin"
+    @driver.find_element(:name, "form_pw").send_keys "password"
     @driver.find_element(:name, "login").click
   end
   

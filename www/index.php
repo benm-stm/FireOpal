@@ -26,19 +26,6 @@ header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
-require_once 'set.php';
-
-$input = '<li class=""><label  for="host">Host:</label> <input  type="text" id="host" name="host" value="'.$GLOBALS['host'].'" /></li>';
-$input .= '<li class=""><label  for="client">Client:</label> <input  type="text" id="client" name="client" value="'.$GLOBALS['client'].'" /></li>';
-$input .= '<li class=""><label  for="client">Browser:</label> <input  type="text" id="client" name="client" value="'.$GLOBALS['browser'].'" /></li>';
-$input .= '<li class=""><label  for="user">User:</label> <input  type="text" id="user" name="user" value="'.$GLOBALS['user'].'" /></li>';
-$input .= '<li class=""><label  for="password">Password:</label> <input  type="password" id="password" name="password" value="'.$GLOBALS['password'].'" /></li>';
-$input .= '<li class=""><label  for="project">Project:</label> <input  type="text" id="project" name="project" value="'.$GLOBALS['project'].'" /></li>';
-$input .= '<li class=""><label  for="projectId">Project ID:</label> <input  type="text" id="projectId" name="projectId" value="'.$GLOBALS['project_id'].'" /></li>';
-$input .= '<li class=""><label  for="tracker">Tracker:</label> <input  type="text" id="tracker" name="tracker" value="'.$GLOBALS['tracker'].'" /></li>';
-$input .= '<li class=""><label  for="trackerName">Tracker name:</label> <input  type="text" id="trackerName" name="trackerName" value="'.$GLOBALS['trackerName'].'" /></li>';
-$input .= '<li class=""><label  for="trackerShortName">Tracker short name:</label> <input  type="text" id="trackerShortName" name="trackerShortName" value="'.$GLOBALS['trackerShortName'].'" /></li>';
-$input .= '<li class=""><label  for="docmanRootId">Docman root ID:</label> <input  type="text" id="docmanRootId" name="docmanRootId" value="'.$GLOBALS['docman_root_id'].'" /></li>';
 
 /**
  * Search test files recursively
@@ -55,9 +42,9 @@ function search_tests_rec($dir, &$tab, $entry) {
             while (($file = readdir($dh)) !== false) {
                 if (!in_array($file, array('.', '..'))) {
                     if (is_dir("$dir/$file")) {
-                        search_tests_rec("$dir/$file", $tab[($entry == '../tests'?'Tuleap':$entry)], $file);
+                        search_tests_rec("$dir/$file", $tab[($entry == '../tests'?'Codex':$entry)], $file);
                     } else {
-                        $tab[($entry == '../tests'?'Tuleap':$entry)]['_tests'][] = $file;
+                        $tab[($entry == '../tests'?'Codex':$entry)]['_tests'][] = $file;
                     }
                 }
             }
@@ -171,7 +158,7 @@ function prepare_files($filesArray, $prefix) {
     }
     $files = array();
     foreach ($filesArray as $key => $node) {
-        if ($key == 'Tuleap') {
+        if ($key == 'Codex') {
             $key = '';
         }
         if (is_array($node)) {
@@ -188,7 +175,7 @@ function prepare_files($filesArray, $prefix) {
 ?>
 <html>
     <head>
-        <title>Tuleap integration tests</title>
+        <title>Codex automatic validation</title>
         <link href="include/css/index.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="/scripts/prototype/prototype.js"></script>
         <script type="text/javascript" src="/scripts/scriptaculous/scriptaculous.js"></script>
@@ -263,16 +250,20 @@ function prepare_files($filesArray, $prefix) {
         <table width="100%">
             <tr>
                 <td width="10%" nowrap="nowrap">
-                    <form action="" method="POST">
-                        <div id="submit_panel"><input type="submit" value="Run !" /></div>
-                       <fieldset>
+                        <fieldset>
                             <legend>Config</legend>
+                            <a href="set">Update config</a>
                             <ul id="menu"><li class="">
                             <?php
-                                echo $input;
+                                require_once 'SetupManager.class.php';
+                                $setupManager = new SetupManager();
+                                $content = $setupManager->display(true);
+                                echo $content['form'];
                             ?>
                             </ul> 
-                        </fieldset> 
+                        </fieldset>
+                        <form action="" method="POST">
+                        <div id="submit_panel"><input type="submit" value="Run !" /></div>
                         <fieldset>
                             <legend>Tests</legend>
                             <ul id="menu">
@@ -295,12 +286,15 @@ function prepare_files($filesArray, $prefix) {
                         ob_start('flushHandler');
                         if (isset($_REQUEST['tests_to_run'])) {
                             // manage request
-                            require_once 'testSuite.class.php';
-                            $suite = new testSuite(array());
+                            require_once dirname(__FILE__).'/../include/TestSuite.class.php';
+                            require_once dirname(__FILE__).'/../include/TestCaseLauncher.class.php';
                             $files = prepare_files($_REQUEST['tests_to_run'], '../tests');
-                            $result = $suite->run();
-                            echo "Result file stored"."\n";
-                           
+                            $testCasesLauncher = new testCasesLauncher();
+                            $suite = new testSuite($files);
+                            $suite->attach($testCasesLauncher);
+                            //$result = $suite->run();
+                            $result = $suite->runTestCases();
+                            echo "Result file stored"."\n";                           
                         }
                         ?>
                         </pre>
