@@ -62,7 +62,12 @@ echo '
                                 </tr>
                                 <tr>
                                     <td>Type</td>
-                                    <td><input name="new_type" /></td>
+                                    <td>
+                                        <select name="new_type">
+                                            <option value="text" >Text</option>
+                                            <option value="password" >Password</option>
+                                        </select>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Description</td>
