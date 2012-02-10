@@ -12,7 +12,7 @@ $fileContent .= "require '".$className."'\n";
 
 #### Class definition turned on describe
 #### setup, teardown & login call
-$pattern = '/class (\w+)/i';
+$pattern     = '/class (\w+)/i';
 $replacement = 'describe ${1} do 	
     before(:each) do
         @bowling = ${1}.new 
@@ -26,7 +26,7 @@ $replacement = 'describe ${1} do
 
 $fileContent .= preg_replace($pattern, $replacement, $file);
 
-$pattern = '/def setup(.*)\send/isUe';
+$pattern     = '/def setup(.*)\send/isUe';
 $fileContent = preg_replace($pattern, '', $fileContent);
 
 #### teardown
