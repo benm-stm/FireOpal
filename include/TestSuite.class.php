@@ -41,9 +41,9 @@ class testSuite implements SplSubject {
      * @Deprecated
      */
     public function run() {
-         $this->generateWebDriverTestSuite($this->_testCases);
-         $rspecTestSuiteFile = $this->generateRspecTestSuite($this->_testCases);
-         exec('rspec '.$rspecTestSuiteFile.' --format documentation --out '.$resultFile.' 2>&1', $this->_result);
+        $this->generateWebDriverTestSuite($this->_testCases);
+        $rspecTestSuiteFile = $this->generateRspecTestSuite();
+        exec('rspec '.$rspecTestSuiteFile.' --format documentation --out '.$resultFile.' 2>&1', $this->_result);
     }
 
     public function generateWebDriverTestSuite($testCases = null) {
@@ -55,7 +55,7 @@ class testSuite implements SplSubject {
         }
         $webDriverFileObj = $webDriverFile->openFile('a');
         if ($webDriverFile->isWritable()) {
-           $webDriverFileObj->fwrite("#--- Put Conf in setup here");
+            $webDriverFileObj->fwrite("#--- Put Conf in setup here");
         }
         foreach ($this->_testCases as $testCase) {
             try {
@@ -71,20 +71,71 @@ class testSuite implements SplSubject {
         }
     }
 
-   /**
-    * Launch test Cases...
-    * @Deprecated
-    */
-    public function runTestCases() {
-        $this->generateWebDriverTestSuite();
-        foreach ($this->_testCases as $testCase) {
-            $this->_currentTestCase = $testCase;
-            //@TODO update here
-            $this->_result = $testCase;
-            exec('ruby '.$testCase.' 2>&1', $this->_result);
-            $this->notify();
+    /**
+     * Generate RSPEC testSuite from Webdriver testSuite
+     *
+     */
+    public function generateRspecTestSuite($testCases = null) {
+        try {
+            $webDriverFile = new SplFileInfo(dirname(__FILE__).'/../tests/tuleap.rb');
+
+            $className = $webDriverFile->getBasename('.rb');
+            try {
+                $rspecFile = new SplFileInfo(dirname(__FILE__).'/../tests/'.$className.'_spec.rb');
+                $file = $webDriverFile->__toString();
+
+                #### Include & require
+                $fileContent = "require \"rubygems\"\n";
+                $fileContent .= "gem \"rspec\"\n";
+                $fileContent .= "require \"rspec/autorun\"\n";
+                $fileContent .= "require '".$className."'\n";
+
+                #### Class definition turned on describe
+                #### setup, teardown & login call
+                $pattern = '/class (\w+)/i';
+                $replacement = 'describe ${1} do
+	                                before(:each) do
+	                                    @bowling = ${1}.new 
+	                                    @bowling.setup() 
+                                        @bowling.login()
+	                                end
+
+	                                after(:each) do
+	                                    @bowling.teardown()
+	                                end';
+
+                $fileContent .= preg_replace($pattern, $replacement, $file);
+
+                $pattern ='/def setup\s(.*)end/isUe';
+                $fileContent = preg_replace($pattern, '"\n"', $fileContent);
+
+                #### teardown
+                $pattern ='/def teardown\s(.*)\send/isUe';
+                $fileContent = preg_replace($pattern, '"\n"', $fileContent);
+
+                #### login
+                $pattern ='/def login\s(.*)\send/isUe';
+                $fileContent = preg_replace($pattern, '"\n"', $fileContent);
+
+
+                $pattern ='/def (\w+)\s(.*)\send/isUe';
+                $replacement = '"describe \"test case 1\" do
+	                            it \"should $1\" do
+                                    @bowling.$1()
+                                    end
+                                end"';
+                $fileContent = preg_replace($pattern, $replacement, $fileContent);
+				
+				$fileContent = preg_replace('/\s+\n/', "\n", $fileContent);
+				
+                $rspecFileObj = $webDriverFile->openFile('a');
+                $rspecFileObj->fwrite($fileContent);
+            } catch (RuntimeException $e) {
+                echo $e->getMessage();
+            }
+        } catch (RuntimeException $e) {
+            echo $e->getMessage();
         }
-        $this->_currentTestCase = null;
     }
 
     /**
