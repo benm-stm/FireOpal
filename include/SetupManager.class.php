@@ -93,7 +93,7 @@ class SetupManager {
             }
         }
         if ($newName && $newType && $newDescription) {
-            $set[$newName] = array("value" => "", "description" => $newDesciption, "type" => $newType);
+            $set[$newName] = array("value" => "", "description" => $newDescription, "type" => $newType);
         }
         return $set;
     }
@@ -107,6 +107,7 @@ class SetupManager {
      */
     function store($request) {
         if ($set = $this->extractSetup($request)) {
+            rename (dirname(__FILE__).'/../conf/set.ini', dirname(__FILE__).'/../conf/set.ini_'.time());
             return file_put_contents(dirname(__FILE__).'/../conf/set.ini', json_encode($set));
         }
         return false;
@@ -133,6 +134,7 @@ class SetupManager {
                 unset($set[$name]);
             }
         }
+        rename (dirname(__FILE__).'/../conf/set.ini', dirname(__FILE__).'/../conf/set.ini_'.time());
         return file_put_contents(dirname(__FILE__).'/../conf/set.ini', json_encode($set));
     }
 
