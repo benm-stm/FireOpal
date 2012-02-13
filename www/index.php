@@ -62,7 +62,6 @@ function search_testsuites($dir) {
             <tr>
                 <td width="10%" nowrap="nowrap">
                     <form action="" method="POST">
-                        <input type="hidden" name="run" />
                         <div id="submit_panel"><input type="submit" value="Run !" /></div>
                         <a href="cases">Manage testsuites</a>
                         <fieldset>
@@ -71,7 +70,7 @@ function search_testsuites($dir) {
                             <?php
                                 $testsuites = search_testsuites('../testsuites');
                                 foreach($testsuites as $t) {
-                                    echo '<li><input type="radio" name="'.$t.'" />'.$t.'</li>';
+                                    echo '<li><input type="radio" name="run" value="'.$t.'" />'.$t.'</li>';
                                 }
                             ?>
                             </ul>
