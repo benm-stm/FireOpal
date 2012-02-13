@@ -42,9 +42,9 @@ function search_tests_rec($dir, &$tab, $entry) {
             while (($file = readdir($dh)) !== false) {
                 if (!in_array($file, array('.', '..'))) {
                     if (is_dir("$dir/$file")) {
-                        search_tests_rec("$dir/$file", $tab[($entry == '../tests'?'Codex':$entry)], $file);
+                        search_tests_rec("$dir/$file", $tab[($entry == '../testcases'?'Codex':$entry)], $file);
                     } else {
-                        $tab[($entry == '../tests'?'Codex':$entry)]['_tests'][] = $file;
+                        $tab[($entry == '../testcases'?'Codex':$entry)]['_tests'][] = $file;
                     }
                 }
             }
@@ -159,7 +159,7 @@ function prepare_files($filesArray, $prefix) {
 $output = '';
 if (isset($_REQUEST['tests_to_run'])) {
     // manage request
-    $files = prepare_files($_REQUEST['tests_to_run'], '../tests');
+    $files = prepare_files($_REQUEST['tests_to_run'], '../testcases');
     // TODO: Generate test suite
     $output = "Testsuite stored";
 }
@@ -263,10 +263,10 @@ if (isset($_REQUEST['tests_to_run'])) {
                         <form action="" method="POST">
                         <div id="submit_panel"><input type="submit" value="Generate !" /></div>
                         <fieldset>
-                            <legend>Tests</legend>
+                            <legend>Testcases</legend>
                             <ul id="menu">
                             <?php
-                                $tests = search_tests('../tests');
+                                $tests = search_tests('../testcases');
                                 foreach($tests as $c => $t) {
                                     display_tests($t, $c, array('is_cat' => true, 'prefixe' => 'tests_to_run', 'checked' => @$_REQUEST['tests_to_run']));
                                 }
