@@ -70,12 +70,28 @@ function search_testsuites($dir) {
                             <?php
                                 $testsuites = search_testsuites('../testsuites');
                                 foreach($testsuites as $t) {
-                                    echo '<li><input type="radio" name="run" value="'.$t.'" />'.$t.'</li>';
+                                    echo '<li>
+                                              <input type="radio" name="run" value="'.$t.'" />'.$t.'
+                                              <a href="/?details='.$t.'"> Details</a>
+                                          </li>';
                                 }
                             ?>
                             </ul>
                         </fieldset>
                     </form>
+                    <?php
+                    if (isset($_REQUEST['details'])) {
+                    // TODO: Check if the testsuite exists, is valid, etc.
+                    echo '
+                        <fieldset>
+                        <legend>'.$_REQUEST['details'].' details</legend>
+                        <ul id="menu">';
+                    // TODO: Display testsuite details
+                    echo '
+                        </ul>
+                    </fieldset>';
+                    }
+                    ?>
                 </td>
                 <td width="90%">
                     <fieldset>
