@@ -45,7 +45,7 @@ echo '
             </tr>
             <tr>
                 <td nowrap>
-                    <a href="index"><< Go back</a>
+                    <a href="cases"><< Go back</a>
                     <form action="" method="POST">
                         <fieldset>
                             <legend>Config</legend>
@@ -75,7 +75,7 @@ echo '
                                 </tr>
                             </table>
                         </fieldset>
-                        <div id="submit_panel"><input type="submit" value="Update config !" /></div>
+                        <div id="submit_panel"><input type="submit" value="Update !" /></div>
                     </form>
                 </td>
             </tr>
