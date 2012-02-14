@@ -55,6 +55,11 @@ class testSuite implements SplSubject {
         exec('rspec '.$this->_testSuiteFile.' --format documentation --out resultFile_'.time().' 2>&1', $this->_result);
     }
 
+    /**
+     * Include binded test files within the header of the ruby test Suite file.
+     * @param SplFileObject $rspecFileObj
+     *
+     **/
     public function bindTestSuiteRequirements($rspecFileObj) {
         if ($rspecFileObj->isWritable()) {
             foreach ($this->_testCases as $testCase) {
@@ -71,6 +76,11 @@ class testSuite implements SplSubject {
         }
     }
 
+    /**
+     * Build RSpec code examples from binded test cases
+     * @param SplFileObject $rspecFileObj
+     *
+     **/
     public function bindTestCases($rspecFileObj) {
         if ($rspecFileObj->isWritable()) {
             foreach ($this->_testCases as $key => $testCase) {
@@ -106,6 +116,10 @@ class testSuite implements SplSubject {
         }
     }
 
+    /**
+     * Build a test suite from binded test cases and apply a given conf
+     *
+     **/
     public function loadTestSuite() {
         try {
             $fileObj = $this->_testSuiteFile->openFile('a');
