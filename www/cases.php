@@ -158,13 +158,17 @@ function prepare_files($filesArray, $prefix) {
 
 $output = '';
 if (isset($_REQUEST['tests_to_run'])) {
+    require_once dirname(__FILE__).'/../include/TestSuite.class.php';
+    require_once dirname(__FILE__).'/../include/TestCaseLauncher.class.php';
     // manage request
     $files = prepare_files($_REQUEST['tests_to_run'], '../testcases');
     //@TODO: validate params here
     // TODO: Generate test suite
     $testSuite = new TestSuite($files, $_REQUEST['testsuite_name']);
     $testSuite->storeConfIntotestSuite($_REQUEST);
-    
+    $testCasesLauncher = new testCasesLauncher();
+    $testSuite->attach($testCasesLauncher);
+    $result = $testSuite->loadTestSuite();
     $output = "Testsuite stored";
 }
 
