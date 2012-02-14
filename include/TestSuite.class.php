@@ -99,6 +99,18 @@ class testSuite implements SplSubject {
         }
     }
 
+    public function bindConfigurationElements($request) {
+        try {
+            $testSuiteFileObj = $this->_testSuiteFile->openFile('a');
+            if ($this->_testSuiteFile->isWritable()) {
+                $setupManager = new SetupManager();
+                $set = $setupManager->extractSetup($request);
+            }
+        } catch (RuntimeException $e) {
+            echo $e->getMessage();
+        }
+}
+
     /**
      * Store conf in the correponding testsuite
      * @param  String $request
