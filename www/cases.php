@@ -261,7 +261,19 @@ if (isset($_REQUEST['tests_to_run'])) {
                             </ul> 
                         </fieldset>
                         <form action="" method="POST">
-                        <div id="submit_panel"><input type="submit" value="Generate !" /></div>
+                        <fieldset>
+                            <legend>Testsuite</legend>
+                            <table nowrap>
+                                <tr>
+                                    <td>Name:</td>
+                                    <td><input name="testsuite_name" /></td>
+                                </tr>
+                                <tr>
+                                    <td>Description:</td>
+                                    <td><textarea name="testsuite_description"></textarea></td>
+                                </tr>
+                            </table> 
+                        </fieldset>
                         <fieldset>
                             <legend>Testcases</legend>
                             <ul id="menu">
@@ -273,6 +285,9 @@ if (isset($_REQUEST['tests_to_run'])) {
                             ?>
                             </ul>
                         </fieldset>
+                        <div id="submit_panel">
+                            <input type="submit" value="Generate !" />
+                        </div>
                     </form>
                 </td>
             </tr>
