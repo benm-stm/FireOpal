@@ -18,6 +18,7 @@
 
 class testSuite implements SplSubject {
 
+    private $name;
     private $_testCases;
     private $_observers;
     private $_currentTestCase;
@@ -28,6 +29,7 @@ class testSuite implements SplSubject {
      *
      */
     public function __construct(array $testCases) {
+        $this->_testCases = "fuubar";
         $this->_testCases = $testCases;
         $this->_observers = array();
         $this->_result   = array();
@@ -44,6 +46,19 @@ class testSuite implements SplSubject {
         $this->generateWebDriverTestSuite($this->_testCases);
         $rspecTestSuiteFile = $this->generateRspecTestSuite();
         exec('rspec '.$rspecTestSuiteFile.' --format documentation --out '.$resultFile.' 2>&1', $this->_result);
+    }
+
+    public function bindTestSuiteRequirements($rspecFileObj) {
+        if ($rspecFileObj->isWritable()) {
+            foreach ($this->_testCases as $testCase) {
+                try {
+                    $testCaseFileObj = new SplFileObject($testCase);
+                    $rspecFileObj->fwrite("require '".$testCaseFileObj->getBasename('.rb')."'\n");
+                } catch (Exception $e) {
+                    echo $e->getMessage();
+                }
+            }
+        }
     }
 
     public function generateWebDriverTestSuite($testCases = null) {
