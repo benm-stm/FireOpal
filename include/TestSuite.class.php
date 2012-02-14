@@ -94,11 +94,8 @@ class testSuite implements SplSubject {
             $this->_testSuiteFile = new SplFileInfo(dirname(__FILE__).'/../testsuites/'.$this->name.'_'.time().'.rb');
             $testSuiteFileObj = $this->_testSuiteFile->openFile('a');
             if ($this->_testSuiteFile->isWritable()) {
-                $testSuiteFileObj->fwrite("#--- Start Conf in setup here\n");
-                $testSuiteFileObj->fwrite("#");
                 $setupManager = new SetupManager();
-                $setupManager->store($request, $this->_testSuiteFile->getPathname());
-                $testSuiteFileObj->fwrite("#--- End Conf\n");
+                $setupManager->storeConf($request, $this->_testSuiteFile->getPathname());
             }
         } catch (RuntimeException $e) {
             echo $e->getMessage();

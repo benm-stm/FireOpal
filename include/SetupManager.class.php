@@ -120,7 +120,22 @@ class SetupManager {
         }
         return $set;
     }
-
+    
+    /*
+     * Store the setup passed in HTTP request for the testSuite
+     *
+     * @param Array  $request Request containing setup values
+     * @param String $filePath
+     *
+     * @return Boolean
+     */
+    function storeConf($request, $filePath) {
+        if ($set = $this->extractSetup($request)) {
+            return (file_put_contents($filePath, '#'.json_encode($set), FILE_APPEND)) ;
+        }
+        return false;
+    }
+    
     /*
      * Store the setup passed in HTTP request
      *
