@@ -16,6 +16,7 @@
  * along with this code. If not, see <http://www.gnu.org/licenses/>.
  */
 
+require_once 'SetupManager.class.php';
 class testSuite implements SplSubject {
 
     private $name;
@@ -23,7 +24,7 @@ class testSuite implements SplSubject {
     private $_observers;
     private $_currentTestCase;
     private $_result;
-    private $_webDriverTestSuiteFile;
+    private $_testSuiteFile;
 
     /**
      *
@@ -43,9 +44,8 @@ class testSuite implements SplSubject {
      * @Deprecated
      */
     public function run() {
-        $this->generateWebDriverTestSuite($this->_testCases);
-        $rspecTestSuiteFile = $this->generateRspecTestSuite();
-        exec('rspec '.$rspecTestSuiteFile.' --format documentation --out '.$resultFile.' 2>&1', $this->_result);
+        #$rspecTestSuiteFile = $this->generateRspecTestSuite();
+        #exec('rspec '.$rspecTestSuiteFile.' --format documentation --out '.$resultFile.' 2>&1', $this->_result);
     }
 
     public function bindTestSuiteRequirements($rspecFileObj) {
@@ -58,6 +58,28 @@ class testSuite implements SplSubject {
                     echo $e->getMessage();
                 }
             }
+        }
+    }
+
+    /**
+     * Store conf in the correponding testsuite
+     * @param  String $request
+     * @param  String $testSuiteName
+     *
+     **/
+    function storeConfIntoTestSuite($request, $testSuiteName) {
+        try {
+            $this->_testSuiteFile = new SplFileInfo(dirname(__FILE__).'/../tests/'.$testSuiteName.'_'.time().'.rb');
+            $testSuiteFileObj = $this->_testSuiteFile->openFile('a');
+            if ($this->_testSuiteFile->isWritable()) {
+                $testSuiteFileObj->fwrite("#--- Start Conf in setup here\n");
+                $testSuiteFileObj->fwrite("#");
+                $setupManager = new SetupManager();
+                $setupManager->store($request, $this->_testSuiteFile->getPathname());
+                $testSuiteFileObj->fwrite("#--- End Conf\n");
+            }
+        } catch (RuntimeException $e) {
+            echo $e->getMessage();
         }
     }
 
@@ -225,3 +247,4 @@ describe ${1} do
 }
 
 ?>
+

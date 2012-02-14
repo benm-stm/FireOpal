@@ -124,16 +124,14 @@ class SetupManager {
     /*
      * Store the setup passed in HTTP request
      *
-     * @param Array $request Request containing setup values
+     * @param Array  $request Request containing setup values
+     * @param String $filePath 
      *
      * @return Boolean
      */
-    function store($request) {
+    function store($request, $filePath) {
         if ($set = $this->extractSetup($request)) {
-            if (!rename (dirname(__FILE__).'/../conf/set.ini', dirname(__FILE__).'/../conf/set.ini_'.time())) {
-                $this->error[] = "Impossible to archive old conf";
-            }
-            if(file_put_contents(dirname(__FILE__).'/../conf/set.ini', json_encode($set)) === false) {
+            if(file_put_contents($filePath, json_encode($set)) === false) {
                 $this->error[] = "Impossible to save new conf";
                 return false;
             }
@@ -222,3 +220,4 @@ class SetupManager {
 }
 
 ?>
+
