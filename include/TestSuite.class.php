@@ -88,7 +88,7 @@ class testSuite implements SplSubject {
      **/
     function storeConfIntoTestSuite($request, $testSuiteName) {
         try {
-            $this->_testSuiteFile = new SplFileInfo(dirname(__FILE__).'/../tests/'.$testSuiteName.'_'.time().'.rb');
+            $this->_testSuiteFile = new SplFileInfo(dirname(__FILE__).'/../testsuites/'.$testSuiteName.'_'.time().'.rb');
             $testSuiteFileObj = $this->_testSuiteFile->openFile('a');
             if ($this->_testSuiteFile->isWritable()) {
                 $testSuiteFileObj->fwrite("#--- Start Conf in setup here\n");
@@ -100,6 +100,22 @@ class testSuite implements SplSubject {
         } catch (RuntimeException $e) {
             echo $e->getMessage();
         }
+    }
+
+    public function loadTestSuite() {
+        try {
+            $webDriverFile = new SplFileInfo(dirname(__FILE__).'/../testcases/fooBar.rb');
+        } catch (RuntimeException $e) {
+            echo $e->getMessage();
+            // @TODO Specify here what i'm supposed to render if i'm not able to create the ruby file...
+        }
+        $webDriverFileObj = $webDriverFile->openFile('a');
+        if ($webDriverFile->isWritable()) {
+            $webDriverFileObj->fwrite("#--- Put Conf in setup here\n");
+        }
+        $this->bindTestSuiteRequirements($webDriverFileObj);
+        $this->bindTestCases($webDriverFileObj);
+        $webDriverFileObj->fwrite("    end\n");
     }
 
     public function generateWebDriverTestSuite($testCases = null) {

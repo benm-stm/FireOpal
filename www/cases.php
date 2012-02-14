@@ -163,6 +163,7 @@ if (isset($_REQUEST['tests_to_run'])) {
     // TODO: Generate test suite
     $testSuite = new TestSuite(array());
     $testSuite->storeConfIntotestSuite($_REQUEST, $_REQUEST['testsuite_name']);
+    
     $output = "Testsuite stored";
 }
 
