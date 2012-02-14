@@ -37,6 +37,9 @@ class SetupManager {
                 if (isset($value)) {
                     switch ($name) {
                         case "delete" :
+                        case "testsuite_name" :
+                        case "testsuite_description" :
+                        case "tests_to_run" :
                             break;
                         case "new_name" :
                             if ($value != 'new_name' &&
@@ -131,7 +134,12 @@ class SetupManager {
      */
     function storeConf($request, $filePath) {
         if ($set = $this->extractSetup($request)) {
-            return (file_put_contents($filePath, '#'.json_encode($set), FILE_APPEND)) ;
+            $content = "#--- Start Conf in setup here\n";
+            foreach ($set as $name => $entry) {
+                $content .= "# ".$name." = ".$entry['value']." ( ".$entry['description']." )\n";
+            }
+            $content .= "#--- End Conf\n";
+            return (file_put_contents($filePath, $content)) ;
         }
         return false;
     }
