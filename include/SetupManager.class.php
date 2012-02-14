@@ -164,9 +164,6 @@ class SetupManager {
                 $this->error[] = "Impossible to delete ".$name;
             }
         }
-        if (!rename (dirname(__FILE__).'/../conf/set.ini', dirname(__FILE__).'/../conf/set.ini_'.time())) {
-            $this->error[] = "Impossible to archive old conf";
-        }
         if(file_put_contents(dirname(__FILE__).'/../conf/set.ini', json_encode($set)) === false) {
             $this->error[] = "Impossible to save new conf";
             return false;
