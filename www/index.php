@@ -20,6 +20,7 @@ ini_set('display_errors', 'on');
 ini_set('max_execution_time', 0);
 ini_set('memory_limit', -1);
 ini_set('include_path', ini_get('include_path').':'.dirname(__FILE__).'/../include/');
+require_once('TestSuite.class.php');
 
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
@@ -101,7 +102,7 @@ function search_testsuites($dir) {
                         ob_start('flushHandler');
                         if (isset($_REQUEST['run'])) {
                             // manage request
-                            $testSuite = new TestSuite(array(), substr($_REQUEST['details'], 0, -3));
+                            $testSuite = new TestSuite(array(), substr($_REQUEST['run'], 0, -3));
                             $testSuite->run();
                             echo "Result file stored";
                         }
