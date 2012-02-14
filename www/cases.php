@@ -169,7 +169,7 @@ if (isset($_REQUEST['tests_to_run'])) {
     $testCasesLauncher = new testCasesLauncher();
     $testSuite->attach($testCasesLauncher);
     $result = $testSuite->loadTestSuite();
-    $testSuite->bindConfigurationElements($request);
+    $testSuite->bindConfigurationElements($_REQUEST);
     $output = "Testsuite stored";
 }
 
