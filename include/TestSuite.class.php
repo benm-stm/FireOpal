@@ -46,8 +46,8 @@ class testSuite implements SplSubject {
      * Launch test Suite
      *
      */
-    public function run($testSuiteFile) {
-        exec('rspec '.$testSuiteFile.' --format documentation --out resultFile_'.time().' 2>&1', $this->_result);
+    public function run() {
+        exec('rspec '.$this->_testSuiteFile.' --format documentation --out resultFile_'.time().' 2>&1', $this->_result);
     }
 
     public function bindTestSuiteRequirements($rspecFileObj) {

@@ -101,7 +101,8 @@ function search_testsuites($dir) {
                         ob_start('flushHandler');
                         if (isset($_REQUEST['run'])) {
                             // manage request
-                            // TODO: Run testsuite
+                            $testSuite = new TestSuite(array(), substr($_REQUEST['details'], 0, -3));
+                            $testSuite->run();
                             echo "Result file stored";
                         }
                         ?>
