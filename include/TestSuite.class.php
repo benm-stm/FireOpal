@@ -19,6 +19,11 @@
 require_once 'SetupManager.class.php';
 class testSuite implements SplSubject {
 
+    const RSPEC_HTML_FORMATTER = 1;
+    const RSPEC_PROGRESS_FORMATTER = 2;
+    const RSPEC_DOCUMENTATION_FORMATTER = 6;
+    const RSPEC_COLOR = 8;
+
     private $name;
     private $_testCases;
     private $_observers;
