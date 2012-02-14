@@ -38,7 +38,7 @@ class testSuite implements SplSubject {
         if (!empty($testSuiteName)) {
             $this->name = $testSuiteName;
         } else {
-        $this->name       = "fuubar";
+        $this->name     = 'noName_'.time();
         }
         $this->_testCases = $testCases;
         $this->_observers = array();
