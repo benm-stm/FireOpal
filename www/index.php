@@ -82,15 +82,15 @@ function search_testsuites($dir) {
                     </form>
                     <?php
                     if (isset($_REQUEST['details'])) {
-                    // TODO: Check if the testsuite exists, is valid, etc.
-                    echo '
-                        <fieldset>
+                        // TODO: Check if the testsuite exists, is valid, etc.
+                        echo '
+                    <fieldset>
                         <legend>'.$_REQUEST['details'].' details</legend>
-                        <ul id="menu">';
-                    // TODO: Display testsuite details
-                    echo '
-                        </ul>
-                    </fieldset>';
+                        <pre>';
+                        $testSuite = new TestSuite(array(), substr($_REQUEST['details'], 0, -3));
+                        echo $testSuite->displayDetails();
+                        echo "</pre>
+                    </fieldset>\n";
                     }
                     ?>
                 </td>

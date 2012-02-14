@@ -203,6 +203,18 @@ class testSuite implements SplSubject {
         $this->files[] = $path;
     }
 
+    /**
+     * 
+     *
+     * @param ?
+     *
+     * @return String
+     */
+    function displayDetails() {
+        // TODO: Extract details from testsuite
+        return "";
+    }
+
 }
 
 ?>
