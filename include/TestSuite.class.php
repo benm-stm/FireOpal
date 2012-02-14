@@ -102,18 +102,17 @@ class testSuite implements SplSubject {
 
     public function loadTestSuite() {
         try {
-            $webDriverFile = $this->_testSuiteFile;
+            $fileObj = $this->_testSuiteFile->openFile('a');
+            if ($this->_testSuiteFile->isWritable()) {
+                $this->bindTestSuiteRequirements($fileObj);
+                $this->bindTestCases($fileObj);
+                $fileObj->fwrite("end\n");
+            }
+
         } catch (RuntimeException $e) {
             echo $e->getMessage();
             // @TODO Specify here what i'm supposed to render if i'm not able to create the ruby file...
         }
-        $webDriverFileObj = $webDriverFile->openFile('a');
-        if ($webDriverFile->isWritable()) {
-            $webDriverFileObj->fwrite("#--- Put Conf in setup here\n");
-        }
-        $this->bindTestSuiteRequirements($webDriverFileObj);
-        $this->bindTestCases($webDriverFileObj);
-        $webDriverFileObj->fwrite("    end\n");
     }
 
     /**
