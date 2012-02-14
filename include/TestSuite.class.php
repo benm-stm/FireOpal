@@ -30,10 +30,10 @@ class testSuite implements SplSubject {
      *
      */
     public function __construct(array $testCases) {
-        $this->_testCases = "fuubar";
+        $this->name       = "fuubar";
         $this->_testCases = $testCases;
         $this->_observers = array();
-        $this->_result   = array();
+        $this->_result    = array();
         //@TODO   Better prefer dependency injection here. use SplObjectStorage
         //$this->_observers = new SplObjectStorage();
     }
@@ -54,6 +54,25 @@ class testSuite implements SplSubject {
                 try {
                     $testCaseFileObj = new SplFileObject($testCase);
                     $rspecFileObj->fwrite("require '".$testCaseFileObj->getBasename('.rb')."'\n");
+                } catch (Exception $e) {
+                    echo $e->getMessage();
+                }
+            }
+            $rspecFileObj->fwrite("describe ".$this->name." do\n");
+            //$rspecFileObj->fwrite("    it ".$this->name." do\n");
+        }
+    }
+
+    public function bindTestCases($rspecFileObj) {
+        if ($rspecFileObj->isWritable()) {
+            foreach ($this->_testCases as $key => $testCase) {
+                try {
+                //For the moment, we suppose that the class name and the test file name are the same.
+                    $testCaseFileObj = new SplFileObject($testCase);
+                    $rspecFileObj->fwrite("    it \"Run testcase ".$testCaseFileObj->getBasename('.rb')."\" do\n");
+                    $rspecFileObj->fwrite("        test_".$key." = ".$testCaseFileObj->getBasename('.rb').".new\n");
+                    $rspecFileObj->fwrite("        test_".$key.".run()\n");
+                    $rspecFileObj->fwrite("    end\n\n");
                 } catch (Exception $e) {
                     echo $e->getMessage();
                 }
