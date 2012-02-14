@@ -102,7 +102,7 @@ class testSuite implements SplSubject {
 
     public function loadTestSuite() {
         try {
-            $webDriverFile = new SplFileInfo(dirname(__FILE__).'/../testcases/fooBar.rb');
+            $webDriverFile = $this->_testSuiteFile;
         } catch (RuntimeException $e) {
             echo $e->getMessage();
             // @TODO Specify here what i'm supposed to render if i'm not able to create the ruby file...
