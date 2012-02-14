@@ -29,8 +29,12 @@ class testSuite implements SplSubject {
     /**
      *
      */
-    public function __construct(array $testCases) {
+    public function __construct(array $testCases, $testSuiteName) {
+        if (!empty($testSuiteName)) {
+            $this->name = $testSuiteName;
+        } else {
         $this->name       = "fuubar";
+        }
         $this->_testCases = $testCases;
         $this->_observers = array();
         $this->_result    = array();
