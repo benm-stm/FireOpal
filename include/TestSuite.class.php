@@ -204,9 +204,7 @@ class testSuite implements SplSubject {
     }
 
     /**
-     * 
-     *
-     * @param ?
+     * Display setup of the testsuite and assosciated testcases
      *
      * @return String
      */
