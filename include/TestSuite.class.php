@@ -87,12 +87,11 @@ class testSuite implements SplSubject {
     /**
      * Store conf in the correponding testsuite
      * @param  String $request
-     * @param  String $testSuiteName
      *
      **/
-    function storeConfIntoTestSuite($request, $testSuiteName) {
+    function storeConfIntoTestSuite($request) {
         try {
-            $this->_testSuiteFile = new SplFileInfo(dirname(__FILE__).'/../testsuites/'.$testSuiteName.'_'.time().'.rb');
+            $this->_testSuiteFile = new SplFileInfo(dirname(__FILE__).'/../testsuites/'.$this->name.'_'.time().'.rb');
             $testSuiteFileObj = $this->_testSuiteFile->openFile('a');
             if ($this->_testSuiteFile->isWritable()) {
                 $testSuiteFileObj->fwrite("#--- Start Conf in setup here\n");
