@@ -136,7 +136,9 @@ class SetupManager {
         if ($set = $this->extractSetup($request)) {
             $content = "#--- Start Conf in setup here\n";
             foreach ($set as $name => $entry) {
-                $content .= "# ".$name." = ".$entry['value']." ( ".$entry['description']." )\n";
+                if ($entry['type'] != 'password') {
+                    $content .= "# ".$name." = ".$entry['value']." ( ".$entry['description']." )\n";
+                }
             }
             $content .= "#--- End Conf\n\n";
             return (file_put_contents($filePath, $content)) ;
