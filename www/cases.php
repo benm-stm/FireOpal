@@ -160,8 +160,9 @@ $output = '';
 if (isset($_REQUEST['tests_to_run'])) {
     // manage request
     $files = prepare_files($_REQUEST['tests_to_run'], '../testcases');
+    //@TODO: validate params here
     // TODO: Generate test suite
-    $testSuite = new TestSuite(array());
+    $testSuite = new TestSuite($files, $_REQUEST['testsuite_name']);
     $testSuite->storeConfIntotestSuite($_REQUEST, $_REQUEST['testsuite_name']);
     
     $output = "Testsuite stored";
