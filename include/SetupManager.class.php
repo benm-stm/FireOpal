@@ -20,7 +20,7 @@ class SetupManager {
 
     private $error = array();
 
-    /*
+    /**
      * Extract the setup values from HTTP request and validate them
      *
      * @param Array $request Request containing setup values
@@ -124,7 +124,7 @@ class SetupManager {
         return $set;
     }
     
-    /*
+    /**
      * Store the setup passed in HTTP request for the testSuite
      *
      * @param Array  $request Request containing setup values
@@ -138,13 +138,13 @@ class SetupManager {
             foreach ($set as $name => $entry) {
                 $content .= "# ".$name." = ".$entry['value']." ( ".$entry['description']." )\n";
             }
-            $content .= "#--- End Conf\n";
+            $content .= "#--- End Conf\n\n";
             return (file_put_contents($filePath, $content)) ;
         }
         return false;
     }
     
-    /*
+    /**
      * Store the setup passed in HTTP request
      *
      * @param Array  $request Request containing setup values
@@ -164,7 +164,7 @@ class SetupManager {
         return false;
     }
 
-    /*
+    /**
      * Delete setup items
      *
      * @param Array $items Names of items to delete
@@ -194,7 +194,7 @@ class SetupManager {
         return true;
     }
 
-    /*
+    /**
      * Load the setup
      *
      * @return Array
@@ -207,7 +207,7 @@ class SetupManager {
         return false;
     }
 
-    /*
+    /**
      * Display setup form
      *
      * @param Boolean $readOnly Dsplay in read only if true
