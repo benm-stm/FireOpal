@@ -38,8 +38,9 @@ class testSuite implements SplSubject {
         if (!empty($testSuiteName)) {
             $this->name = $testSuiteName;
         } else {
-        $this->name     = 'noName_'.time();
+        $this->name     = 'noName';
         }
+        $this->_testSuiteFile = new SplFileInfo(dirname(__FILE__).'/../testsuites/'.$this->name.'_'.time().'.rb');
         $this->_testCases = $testCases;
         $this->_observers = array();
         $this->_result    = array();
@@ -105,7 +106,6 @@ class testSuite implements SplSubject {
      **/
     function storeConfIntoTestSuite($request) {
         try {
-            $this->_testSuiteFile = new SplFileInfo(dirname(__FILE__).'/../testsuites/'.$this->name.'_'.time().'.rb');
             $testSuiteFileObj = $this->_testSuiteFile->openFile('a');
             if ($this->_testSuiteFile->isWritable()) {
                 $setupManager = new SetupManager();
