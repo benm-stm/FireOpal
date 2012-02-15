@@ -291,18 +291,20 @@ if (isset($_REQUEST['delete_testsuites'])) {
                 <td nowrap>
                     <a href="/"><< Go back</a>
                     <a href="set">Update config</a>
-                        <fieldset>
-                            <legend>Config</legend>
-                            <ul id="menu"><li class="">
-                            <?php
-                                require_once 'SetupManager.class.php';
-                                $setupManager = new SetupManager();
-                                $content = $setupManager->display(true);
-                                echo $content['form'];
-                            ?>
-                            </ul> 
-                        </fieldset>
-                        <form action="" method="POST">
+                    <fieldset>
+                        <legend>Config</legend>
+                        <ul id="menu"><li class="">
+                        <?php
+                            require_once 'SetupManager.class.php';
+                            $setupManager = new SetupManager();
+                            $content = $setupManager->display(true);
+                            echo $content['form'];
+                        ?>
+                        </ul> 
+                    </fieldset>
+                </td>
+                <td>
+                    <form action="" method="POST">
                         <fieldset>
                             <legend>Testsuite</legend>
                             <table nowrap>
@@ -332,12 +334,10 @@ if (isset($_REQUEST['delete_testsuites'])) {
                         </div>
                     </form>
                 </td>
-            </tr>
             <?php
             $testsuites = search_testsuites(dirname(__FILE__).'/../testsuites');
             if (!empty($testsuites)) {
             echo '
-            <tr>
                 <td>
                     <form action="" method="POST">
                         <fieldset>
