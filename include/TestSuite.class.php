@@ -279,26 +279,6 @@ class testSuite implements SplSubject {
     }
 
     /**
-     * Add given files to the test suite
-     *
-     * @param Array $files array of file path of tests to add to test suite
-     *
-     * @return void
-     */
-    function addFiles($files) {
-        if (file_exists('../log/last_run')) {
-            rename('../log/last_run', '../log/integration_tests_'.time());
-        }
-        $fp = fopen('../log/last_run', 'a');
-        fwrite($fp, "Run on ".date('l jS \of F Y h:i:s A')."\n");
-        foreach ($files as $file) {
-            $this->files[] = $file;
-            fwrite($fp, basename($file)."\n");
-        }
-        fclose($fp);
-    }
-
-    /**
      *
      */
     function addTestFile($path) {
@@ -316,7 +296,7 @@ class testSuite implements SplSubject {
         $file = $this->_testSuiteFile->openFile('r');
         while (!$file->eof()) {
             $line = $file->fgets();
-            if ($inSetup && $line == "#--- End Conf\n") {
+            if ($inSetup && $line == "##--- Test Cases End ---\n") {
                 $inSetup = false;
             }
             if ($inSetup) {
