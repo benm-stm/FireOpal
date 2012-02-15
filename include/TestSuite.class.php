@@ -114,7 +114,7 @@ class testSuite implements SplSubject {
     public function bindRspecTearDown($rspecFileObj) {
         if ($rspecFileObj->isWritable()) {
             $rspecFileObj->fwrite("    after(:each) do\n");
-            $rspecFileObj->fwrite("        //@valid.logout()\n");
+            $rspecFileObj->fwrite("        #@valid.logout()\n");
             $rspecFileObj->fwrite("        @valid.teardown()\n");
             $rspecFileObj->fwrite("    end\n\n");
         }
