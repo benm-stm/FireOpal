@@ -66,16 +66,16 @@ class testSuite implements SplSubject {
             foreach ($this->_testCases as $testCase) {
                 try {
                     $testCaseFileObj = new SplFileObject($testCase);
-                    $rspecFileObj->fwrite("describe \"".$testCaseFileObj->getBasename('.rb')."\" do");
+                    $rspecFileObj->fwrite("    describe \"".$testCaseFileObj->getBasename('.rb')."\" do");
                     while ($testCaseFileObj->valid()) {
                         if ((strrpos($testCaseFileObj->current(), 'require') === false) && (strrpos($testCaseFileObj->current(), 'gem') === false)) {
-                            $rspecFileObj->fwrite("    ".$testCaseFileObj->current());
+                            $rspecFileObj->fwrite("        ".$testCaseFileObj->current());
                             $testCaseFileObj->next();
                         } else {
                             $testCaseFileObj->next();
                         }
                     }
-                    $rspecFileObj->fwrite("\nend\n");
+                    $rspecFileObj->fwrite("\n    end\n");
                 } catch (Exception $e) {
                     echo $e->getMessage();
                 }
