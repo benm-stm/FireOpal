@@ -117,6 +117,7 @@ class testSuite implements SplSubject {
                 if($set = $setupManager->extractSetup($request)) {
                     $testSuiteFileObj->fwrite("class Configuration\n\n");
                     $testSuiteFileObj->fwrite("    def setup\n");
+                    $tearDown = "    def teardown\n        driver.quit\n    end\n\n";
                     $driver = "        driver = Selenium::WebDriver.for :remote,";
                     foreach ($set as $name => $entry) {
                         switch ($name) {
@@ -131,14 +132,26 @@ class testSuite implements SplSubject {
                             //whatever you want, i'll launch ff
                             $driver .= ":desired_capabilities => :firefox\n";
                             break;
+                            /*case "user" :
+                            $testSuiteFileObj->fwrite(" def setup\n");
+                            break;
+                            case "password" :
+                            
+                            break;
+                            case "project" :
+                            
+                            break;
+                            case "project_id" :
+                            
+                            break;*/
                             default:
                        }
                  }
                 $testSuiteFileObj->fwrite($driver);
                 $testSuiteFileObj->fwrite($target);
                 $testSuiteFileObj->fwrite("        @driver.manage.timeouts.implicit_wait = 30\n");
-                $testSuiteFileObj->fwrite("    end\n");
-
+                $testSuiteFileObj->fwrite("    end\n\n");
+                $testSuiteFileObj->fwrite($tearDown);
                 $testSuiteFileObj->fwrite("end\n\n");
                 }
             }

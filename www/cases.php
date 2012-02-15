@@ -168,8 +168,8 @@ if (isset($_REQUEST['tests_to_run'])) {
     $testSuite->storeConfIntotestSuite($_REQUEST);
     $testCasesLauncher = new testCasesLauncher();
     $testSuite->attach($testCasesLauncher);
-    $result = $testSuite->loadTestSuite();
     $testSuite->bindConfigurationElements($_REQUEST);
+    $result = $testSuite->loadTestSuite();
     $output = "Testsuite stored";
 }
 
