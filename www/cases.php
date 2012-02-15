@@ -190,7 +190,7 @@ if (isset($_REQUEST['tests_to_run'])) {
     //@TODO: validate params here
     // TODO: Generate test suite
     $testSuite = new TestSuite($files, $_REQUEST['testsuite_name']);
-    $testSuite->storeConfIntotestSuite($_REQUEST);
+    $testSuite->storeTestSuiteDetails($_REQUEST);
     $testCasesLauncher = new testCasesLauncher();
     $testSuite->attach($testCasesLauncher);
     $testSuite->bindConfigurationElements($_REQUEST);

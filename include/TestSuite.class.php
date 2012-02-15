@@ -187,12 +187,20 @@ class testSuite implements SplSubject {
      * @param  String $request
      *
      **/
-    function storeConfIntoTestSuite($request) {
+    function storeTestSuiteDetails($request) {
         try {
             $testSuiteFileObj = $this->_testSuiteFile->openFile('a');
             if ($this->_testSuiteFile->isWritable()) {
+				//Conf storage
                 $setupManager = new SetupManager();
                 $setupManager->storeConf($request, $this->_testSuiteFile->getPathname());
+                //Test Cases storage
+                $testSuiteFileObj->fwrite("#--- Test Cases list ---\n");
+                foreach ($this->_testCases as $testCase) {
+                    $this->_currentTestCase = $testCase;
+                    $testSuiteFileObj->fwrite("#".$testCase."\n");
+                }
+                $testSuiteFileObj->fwrite("#--- Test Cases End ---\n");
             }
         } catch (RuntimeException $e) {
             echo $e->getMessage();
