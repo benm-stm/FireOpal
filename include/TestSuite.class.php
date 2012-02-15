@@ -218,7 +218,7 @@ class testSuite implements SplSubject {
                     $this->_currentTestCase = $testCase;
                     $testSuiteFileObj->fwrite("# ".str_replace(substr(dirname(__FILE__), 0, -7).'www/../testcases/', ' ', $testCase)."\n");
                 }
-                $testSuiteFileObj->fwrite("#--- Test Cases End ---\n");
+                $testSuiteFileObj->fwrite("#--- Test Cases End ---\n\n");
             }
         } catch (RuntimeException $e) {
             echo $e->getMessage();
