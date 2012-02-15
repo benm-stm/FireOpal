@@ -66,7 +66,10 @@ class testSuite implements SplSubject {
             foreach ($this->_testCases as $testCase) {
                 try {
                     $testCaseFileObj = new SplFileObject($testCase);
-                    $rspecFileObj->fwrite("require '".$testCaseFileObj->getRealPath()."'\n");
+                    while ($testCaseFileObj->valid()) {
+                    $rspecFileObj->fwrite($testCaseFileObj->current());
+                    $testCaseFileObj->next();
+                    }
                 } catch (Exception $e) {
                     echo $e->getMessage();
                 }
@@ -223,7 +226,7 @@ class testSuite implements SplSubject {
         try {
             $fileObj = $this->_testSuiteFile->openFile('a');
             if ($this->_testSuiteFile->isWritable()) {
-                //$this->bindTestSuiteRequirements($fileObj);
+                $this->bindTestSuiteRequirements($fileObj);
                 $fileObj->fwrite("# Here Comes RSpec examples \n\n");
                 $this->bindRspecSetUp($fileObj);
                 $this->bindTestCases($fileObj);
