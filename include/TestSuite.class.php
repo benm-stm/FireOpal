@@ -102,18 +102,22 @@ class testSuite implements SplSubject {
     }
 
     public function bindRspecSetUp($rspecFileObj) {
-        $rspecSetUp = "before(:each) do
-            @valid = Configuration.new
-            @valid.setup()
-            @valid.login()
-            end";
+        if ($rspecFileObj->isWritable()) {
+            $rspecFileObj->fwrite("    before(:each) do\n");
+            $rspecFileObj->fwrite("        @valid = Configuration.new\n");
+            $rspecFileObj->fwrite("        @valid.setup()\n");
+            $rspecFileObj->fwrite("        @valid.login()\n");
+            $rspecFileObj->fwrite("    end\n\n");
+        }
     }
 
     public function bindRspecTearDown($rspecFileObj) {
-        $rspecTearDown = "after(:each) do
-            //@valid.logout()
-            @valid.teardown()
-            end";
+        if ($rspecFileObj->isWritable()) {
+            $rspecFileObj->fwrite("    after(:each) do\n");
+            $rspecFileObj->fwrite("        //@valid.logout()\n");
+            $rspecFileObj->fwrite("        @valid.teardown()\n");
+            $rspecFileObj->fwrite("    end\n\n");
+        }
     }
 
     /**
