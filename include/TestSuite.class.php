@@ -40,7 +40,7 @@ class testSuite implements SplSubject {
         } else {
         $this->name     = 'noName';
         }
-        $this->_testSuiteFile = new SplFileInfo(dirname(__FILE__).'/../testsuites/'.$this->name.'_'.time().'.rb');
+        $this->_testSuiteFile = new SplFileInfo(dirname(__FILE__).'/../testsuites/'.$this->name.'.rb');
         $this->_testCases = $testCases;
         $this->_observers = array();
         $this->_result    = array();

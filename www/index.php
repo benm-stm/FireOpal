@@ -88,7 +88,7 @@ function search_testsuites($dir) {
                     <fieldset>
                         <legend>'.$_REQUEST['details'].' details</legend>
                         <pre>';
-                        $testSuite = new TestSuite(array(), $_REQUEST['details']);
+                        $testSuite = new TestSuite(array(), substr($_REQUEST['details'], 0, -3));
                         echo $testSuite->displayDetails();
                         echo "</pre>
                     </fieldset>\n";
