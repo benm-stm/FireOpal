@@ -216,7 +216,7 @@ class testSuite implements SplSubject {
                 $testSuiteFileObj->fwrite("#--- Test Cases list ---\n");
                 foreach ($this->_testCases as $testCase) {
                     $this->_currentTestCase = $testCase;
-                    $testSuiteFileObj->fwrite("#".$testCase."\n");
+                    $testSuiteFileObj->fwrite("# ".str_replace(substr(dirname(__FILE__), 0, -7).'www/../testcases/', ' ', $testCase)."\n");
                 }
                 $testSuiteFileObj->fwrite("#--- Test Cases End ---\n");
             }
