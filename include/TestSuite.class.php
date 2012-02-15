@@ -53,7 +53,7 @@ class testSuite implements SplSubject {
      *
      */
     public function run() {
-        exec('rspec '.$this->_testSuiteFile.' --format documentation --out resultFile_'.time().' 2>&1', $this->_result);
+        exec('rspec '.$this->_testSuiteFile.' --format documentation --out ../log/resultFile_'.time().' 2>&1', $this->_result);
     }
 
     /**
