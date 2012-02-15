@@ -67,7 +67,7 @@ class testSuite implements SplSubject {
                 try {
                     $testCaseFileObj = new SplFileObject($testCase);
                     while ($testCaseFileObj->valid()) {
-                    if (strrpos($testCaseFileObj->current(), 'require') === false) {
+                    if ((strrpos($testCaseFileObj->current(), 'require') === false) && (strrpos($testCaseFileObj->current(), 'gem') === false)) {
                     $rspecFileObj->fwrite($testCaseFileObj->current());
                     $testCaseFileObj->next();
                     } else {
