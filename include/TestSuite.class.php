@@ -208,6 +208,8 @@ class testSuite implements SplSubject {
             $fileObj = $this->_testSuiteFile->openFile('a');
             if ($this->_testSuiteFile->isWritable()) {
                 $this->bindTestSuiteRequirements($fileObj);
+                $this->bindRspecSetUp($fileObj);
+                $this->bindRspecTearDown($fileObj);
                 $this->bindTestCases($fileObj);
                 $fileObj->fwrite("end\n");
             }
