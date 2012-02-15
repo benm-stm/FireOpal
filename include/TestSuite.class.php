@@ -169,7 +169,7 @@ class testSuite implements SplSubject {
                  }
                 $testSuiteFileObj->fwrite($driver);
                 $testSuiteFileObj->fwrite($target);
-                $testSuiteFileObj->fwrite("        @driver.manage.timeouts.implicit_wait = 30\n");
+                $testSuiteFileObj->fwrite("        driver.manage.timeouts.implicit_wait = 30\n");
                 $testSuiteFileObj->fwrite("    end\n\n");
                 $testSuiteFileObj->fwrite($tearDown);
                 $testSuiteFileObj->fwrite($login);
