@@ -136,29 +136,29 @@ class testSuite implements SplSubject {
                 if($set = $setupManager->extractSetup($request)) {
                     $testSuiteFileObj->fwrite("class Configuration\n\n");
                     $testSuiteFileObj->fwrite("    def setup\n");
-                    $tearDown = "    def teardown\n        driver.quit\n    end\n\n";
+                    $tearDown = "    def teardown\n        @driver.quit\n    end\n\n";
                     $login    = "    def login\n";
-                    $loginActionPerformed = "        driver.find_element(:name, \"login\").click\n    end\n\n";
-                    $driver   = "        driver = Selenium::WebDriver.for :remote,";
+                    $loginActionPerformed = "        @driver.find_element(:name, \"login\").click\n    end\n\n";
+                    $driver   = "        @driver = Selenium::WebDriver.for :remote,";
                     foreach ($set as $name => $entry) {
                         switch ($name) {
                             case "host" :
                             //web application to be tested
-                            $target = "        driver.get '".$entry['value']."'\n";
+                            $target = "        @driver.get '".$entry['value']."'\n";
                             break;
                             case "client" :
-                            $driver .= " :url => 'http://".$entry['value'].":4444/wd/hub', ";
+                            $driver .= " :url => 'http://".$entry['value'].":4444/wd/hub',";
                             break;
                             case "browser" :
                             //whatever you want, i'll launch ff
                             $driver .= " :desired_capabilities => :firefox\n";
                             break;
                             case "user" :
-                            $login .= "        driver.find_element(:name, \"form_loginname\").send_keys \"".$entry['value']."\"\n";
+                            $login .= "        @driver.find_element(:name, \"form_loginname\").send_keys \"".$entry['value']."\"\n";
                             break;
                             case "password" :
                             //@TODO  ^__^"
-                            $login .= "        driver.find_element(:name, \"form_pw\").send_keys \"".$entry['value']."\"\n";
+                            $login .= "        @driver.find_element(:name, \"form_pw\").send_keys \"".$entry['value']."\"\n";
                             break;
                             case "project" :
                             break;
@@ -169,7 +169,7 @@ class testSuite implements SplSubject {
                  }
                 $testSuiteFileObj->fwrite($driver);
                 $testSuiteFileObj->fwrite($target);
-                $testSuiteFileObj->fwrite("        driver.manage.timeouts.implicit_wait = 30\n");
+                $testSuiteFileObj->fwrite("        @driver.manage.timeouts.implicit_wait = 30\n");
                 $testSuiteFileObj->fwrite("    end\n\n");
                 $testSuiteFileObj->fwrite($tearDown);
                 $testSuiteFileObj->fwrite($login);
