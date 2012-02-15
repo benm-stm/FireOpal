@@ -147,6 +147,9 @@ class testSuite implements SplSubject {
         try {
             $testSuiteFileObj = $this->_testSuiteFile->openFile('a');
             if ($this->_testSuiteFile->isWritable()) {
+            $testSuiteFileObj->fwrite("require 'rubygems'\n");
+            $testSuiteFileObj->fwrite("require 'selenium-webdriver'\n");
+            $testSuiteFileObj->fwrite("require 'rspec/autorun'\n\n");
                 $setupManager = new SetupManager();
                 if($set = $setupManager->extractSetup($request)) {
                     $testSuiteFileObj->fwrite("class Configuration\n\n");
@@ -231,7 +234,7 @@ class testSuite implements SplSubject {
             $fileObj = $this->_testSuiteFile->openFile('a');
             if ($this->_testSuiteFile->isWritable()) {
                 $this->bindTestSuiteRequirements($fileObj);
-                $fileObj->fwrite("# Here Comes RSpec examples \n\n");
+                $fileObj->fwrite("\n# Here Comes RSpec examples \n\n");
                 $this->bindRspecSetUp($fileObj);
                 $this->bindTestCases($fileObj);
                 $fileObj->fwrite("end\n");
