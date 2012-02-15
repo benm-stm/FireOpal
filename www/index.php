@@ -29,9 +29,10 @@ header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
 /**
- * Search testcases files
+ * Search testsuites files
+ * @TODO: Don't duplicate this but put it in a class like TestSuiteManager
  *
- * @param String $dir   path to directory containing testcases files
+ * @param String $dir   path to directory containing testsuites files
  *
  * @return Array
  */

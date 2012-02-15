@@ -129,6 +129,31 @@ function display_tests_as_javascript($tests, $categ, $params) {
 }
 
 /**
+ * Search testsuites files
+ * @TODO: Don't duplicate this but put it in a class like TestSuiteManager
+ *
+ * @param String $dir   path to directory containing testsuites files
+ *
+ * @return Array
+ */
+function search_testsuites($dir) {
+    $testsuites = array();
+    if (is_dir($dir)) {
+        if ($dh = opendir($dir)) {
+            while (($file = readdir($dh)) !== false) {
+                if (!in_array($file, array('.', '..'))) {
+                    if (!is_dir("$dir/$file")) {
+                        $testsuites[] = $file;
+                    }
+                }
+            }
+            closedir($dh);
+        }
+    }
+    return $testsuites;
+}
+
+/**
  * Collect selected files to be executed
  *
  * @param Array  $files  Array of selected tests
@@ -161,7 +186,7 @@ if (isset($_REQUEST['tests_to_run'])) {
     require_once dirname(__FILE__).'/../include/TestSuite.class.php';
     require_once dirname(__FILE__).'/../include/TestCaseLauncher.class.php';
     // manage request
-    $files = prepare_files($_REQUEST['tests_to_run'], '../testcases');
+    $files = prepare_files($_REQUEST['tests_to_run'], dirname(__FILE__).'/../testcases');
     //@TODO: validate params here
     // TODO: Generate test suite
     $testSuite = new TestSuite($files, $_REQUEST['testsuite_name']);
@@ -171,6 +196,14 @@ if (isset($_REQUEST['tests_to_run'])) {
     $testSuite->bindConfigurationElements($_REQUEST);
     $result = $testSuite->loadTestSuite();
     $output = "Testsuite stored";
+}
+
+if (isset($_REQUEST['delete_testsuites'])) {
+    // TODO: make deletion in a class like TestSuiteManager
+    foreach ($_REQUEST['delete_testsuites'] as $testsuite) {
+        // TODO: Handle errors
+        unlink(dirname(__FILE__).'/../testsuites/'.$testsuite);
+    }
 }
 
 ?>
@@ -281,7 +314,7 @@ if (isset($_REQUEST['tests_to_run'])) {
                                     <td>Description:</td>
                                     <td><textarea name="testsuite_description"></textarea></td>
                                 </tr>
-                            </table> 
+                            </table>
                         </fieldset>
                         <fieldset>
                             <legend>Testcases</legend>
@@ -300,6 +333,31 @@ if (isset($_REQUEST['tests_to_run'])) {
                     </form>
                 </td>
             </tr>
+            <?php
+            $testsuites = search_testsuites(dirname(__FILE__).'/../testsuites');
+            if (!empty($testsuites)) {
+            echo '
+            <tr>
+                <td>
+                    <form action="" method="POST">
+                        <fieldset>
+                            <legend>Delete testsuites</legend>
+                            <table nowrap>';
+                                foreach($testsuites as $t) {
+                                    echo '<tr>
+                                              <td>'.$t.'</td>
+                                              <td><input type="checkbox" name="delete_testsuites[]'.$t.'" value="'.$t.'" /></td>
+                                          </tr>';
+                                }
+            echo '
+                            </table>
+                        </fieldset>
+                        <div id="submit_panel"><input type="submit" value="Delete !" /></div>
+                    </form>
+                </td>
+            </tr>';
+            }
+            ?>
         </table>
     </body>
     <script type="text/javascript">
