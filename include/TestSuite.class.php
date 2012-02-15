@@ -101,6 +101,21 @@ class testSuite implements SplSubject {
         }
     }
 
+    public function bindRspecSetUp($rspecFileObj) {
+        $rspecSetUp = "before(:each) do
+            @valid = Configuration.new
+            @valid.setup()
+            @valid.login()
+            end";
+    }
+
+    public function bindRspecTearDown($rspecFileObj) {
+        $rspecTearDown = "after(:each) do
+            //@valid.logout()
+            @valid.teardown()
+            end";
+    }
+
     /**
      * Apply conf parameters to the generated test Suite,
      * Using Ruby syntax, add a conf class then  add Setup, teardown and login methods
@@ -142,10 +157,8 @@ class testSuite implements SplSubject {
                             $login .= "        driver.find_element(:name, \"form_pw\").send_keys \"".$entry['value']."\"\n";
                             break;
                             case "project" :
-                            
                             break;
                             case "project_id" :
-                            
                             break;
                             default:
                        }
