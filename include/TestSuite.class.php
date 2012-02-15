@@ -66,13 +66,13 @@ class testSuite implements SplSubject {
             foreach ($this->_testCases as $testCase) {
                 try {
                     $testCaseFileObj = new SplFileObject($testCase);
-                    $rspecFileObj->fwrite("require '".$testCaseFileObj->getBasename('.rb')."'\n");
+                    $rspecFileObj->fwrite("require '".$testCaseFileObj->getRealPath()."'\n");
                 } catch (Exception $e) {
                     echo $e->getMessage();
                 }
             }
             $rspecFileObj->fwrite("\n");
-            $rspecFileObj->fwrite("describe ".$this->name." do\n\n");
+            $rspecFileObj->fwrite("describe \"".$this->name."\" do\n\n");
             //$rspecFileObj->fwrite("    it ".$this->name." do\n");
         }
     }
@@ -147,11 +147,11 @@ class testSuite implements SplSubject {
                             $target = "        driver.get '".$entry['value']."'\n";
                             break;
                             case "client" :
-                            $driver .= ":url => '".$entry['value']."',";
+                            $driver .= " :url => 'http://".$entry['value'].":4444/wd/hub', ";
                             break;
                             case "browser" :
                             //whatever you want, i'll launch ff
-                            $driver .= ":desired_capabilities => :firefox\n";
+                            $driver .= " :desired_capabilities => :firefox\n";
                             break;
                             case "user" :
                             $login .= "        driver.find_element(:name, \"form_loginname\").send_keys \"".$entry['value']."\"\n";
