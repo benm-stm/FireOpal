@@ -72,7 +72,7 @@ class testSuite implements SplSubject {
                 }
             }
             $rspecFileObj->fwrite("\n");
-            $rspecFileObj->fwrite("describe ".$this->name." do\n");
+            $rspecFileObj->fwrite("describe ".$this->name." do\n\n");
             //$rspecFileObj->fwrite("    it ".$this->name." do\n");
         }
     }
