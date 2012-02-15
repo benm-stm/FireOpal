@@ -257,9 +257,14 @@ class testSuite implements SplSubject {
      * @return String
      */
     function displayDetails() {
-        // TODO: Extract details from testsuite
-        return "";
-    }
+        $setup   = "";
+        $content = "";
+        $file = $this->_testSuiteFile->openFile('r');
+        while (!$file->eof()) {
+            $content .= $file->fgets();
+        }
+        return $content;
+     }
 
 }
 
