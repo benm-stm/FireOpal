@@ -45,7 +45,7 @@ class testSuite implements SplSubject {
         $this->_observers = array();
         $this->_result    = array();
         //@TODO   Better prefer dependency injection here. use SplObjectStorage
-        //$this->_observers = new SplObjectStorage();
+        //$this->_testCases = new SplObjectStorage();
     }
 
     /**
@@ -66,14 +66,16 @@ class testSuite implements SplSubject {
             foreach ($this->_testCases as $testCase) {
                 try {
                     $testCaseFileObj = new SplFileObject($testCase);
+                    $rspecFileObj->fwrite("describe \"".$testCaseFileObj->getBasename('.rb')."\" do");
                     while ($testCaseFileObj->valid()) {
                         if ((strrpos($testCaseFileObj->current(), 'require') === false) && (strrpos($testCaseFileObj->current(), 'gem') === false)) {
-                            $rspecFileObj->fwrite($testCaseFileObj->current());
+                            $rspecFileObj->fwrite("    ".$testCaseFileObj->current());
                             $testCaseFileObj->next();
                         } else {
                             $testCaseFileObj->next();
                         }
                     }
+                    $rspecFileObj->fwrite("\nend\n");
                 } catch (Exception $e) {
                     echo $e->getMessage();
                 }
@@ -90,21 +92,8 @@ class testSuite implements SplSubject {
         if ($rspecFileObj->isWritable()) {
             $rspecFileObj->fwrite("\n");
             $rspecFileObj->fwrite("describe \"".$this->name."\" do\n\n");
-            //$rspecFileObj->fwrite("    it ".$this->name." do\n");
-            foreach ($this->_testCases as $key => $testCase) {
-                try {
-                    $this->_currentTestCase = $testCase;
-                    //For the moment, we suppose that the class name and the test file name are the same.
-                    $testCaseFileObj = new SplFileObject($testCase);
-                    $rspecFileObj->fwrite("    it \"Run testcase ".$testCaseFileObj->getBasename('.rb')."\" do\n");
-                    $rspecFileObj->fwrite("        test_".$key." = ".$testCaseFileObj->getBasename('.rb').".new\n");
-                    $rspecFileObj->fwrite("        test_".$key.".run()\n");
-                    $rspecFileObj->fwrite("    end\n\n");
-                    $this->notify();
-                } catch (Exception $e) {
-                    echo $e->getMessage();
-                }
-            }
+            $this->bindTestSuiteRequirements($rspecFileObj);
+                    $rspecFileObj->fwrite("end\n\n");
         }
     }
 
@@ -233,17 +222,14 @@ class testSuite implements SplSubject {
         try {
             $fileObj = $this->_testSuiteFile->openFile('a');
             if ($this->_testSuiteFile->isWritable()) {
-                $this->bindTestSuiteRequirements($fileObj);
                 $fileObj->fwrite("\n# Here Comes RSpec examples \n\n");
                 $this->bindRspecSetUp($fileObj);
                 $this->bindTestCases($fileObj);
-                $fileObj->fwrite("end\n");
                 $this->bindRspecTearDown($fileObj);
             }
 
         } catch (RuntimeException $e) {
             echo $e->getMessage();
-            // @TODO Specify here what i'm supposed to render if i'm not able to create the ruby file...
         }
     }
 
