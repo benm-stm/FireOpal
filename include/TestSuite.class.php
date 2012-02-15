@@ -270,11 +270,20 @@ class testSuite implements SplSubject {
      * @return String
      */
     function displayDetails() {
-        $setup   = "";
+        $inSetup = false;
         $content = "";
         $file = $this->_testSuiteFile->openFile('r');
         while (!$file->eof()) {
-            $content .= $file->fgets();
+            $line = $file->fgets();
+            if ($inSetup && $line == "#--- End Conf\n") {
+                $inSetup = false;
+            }
+            if ($inSetup) {
+                $content .= $line;
+            }
+            if (!$inSetup && $line == "#--- Start Conf in setup here\n") {
+                $inSetup = true;
+            }
         }
         return $content;
      }
