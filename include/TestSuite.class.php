@@ -103,28 +103,28 @@ class testSuite implements SplSubject {
 
     public function bindRspecSetUp($rspecFileObj) {
         if ($rspecFileObj->isWritable()) {
-            $rspecFileObj->fwrite("    describe \"Configuration preprocess\" do\n");
-            $rspecFileObj->fwrite("        it \"Should prepare test suite configuration\" do\n");
-            $rspecFileObj->fwrite("            before(:each) do\n");
-            $rspecFileObj->fwrite("                @valid = Configuration.new\n");
-            $rspecFileObj->fwrite("                @valid.setup()\n");
-            $rspecFileObj->fwrite("                @valid.login()\n");
-            $rspecFileObj->fwrite("            end\n");
+            $rspecFileObj->fwrite("describe \"Configuration preprocess\" do\n");
+            $rspecFileObj->fwrite("    it \"Should prepare test suite configuration\" do\n");
+            $rspecFileObj->fwrite("        before(:each) do\n");
+            $rspecFileObj->fwrite("            @valid = Configuration.new\n");
+            $rspecFileObj->fwrite("            @valid.setup()\n");
+            $rspecFileObj->fwrite("            @valid.login()\n");
             $rspecFileObj->fwrite("        end\n");
-            $rspecFileObj->fwrite("    end\n\n");
+            $rspecFileObj->fwrite("    end\n");
+            $rspecFileObj->fwrite("end\n\n");
         }
     }
 
     public function bindRspecTearDown($rspecFileObj) {
         if ($rspecFileObj->isWritable()) {
-            $rspecFileObj->fwrite("    describe \"Teardown process\" do\n");
-            $rspecFileObj->fwrite("        it \"Should Cleanup after test suite runtime\" do\n");
-            $rspecFileObj->fwrite("            after(:each) do\n");
-            $rspecFileObj->fwrite("                #@valid.logout()\n");
-            $rspecFileObj->fwrite("                @valid.teardown()\n");
-            $rspecFileObj->fwrite("            end\n");
+            $rspecFileObj->fwrite("describe \"Teardown process\" do\n");
+            $rspecFileObj->fwrite("    it \"Should Cleanup after test suite runtime\" do\n");
+            $rspecFileObj->fwrite("        after(:each) do\n");
+            $rspecFileObj->fwrite("            #@valid.logout()\n");
+            $rspecFileObj->fwrite("            @valid.teardown()\n");
             $rspecFileObj->fwrite("        end\n");
-            $rspecFileObj->fwrite("    end\n\n");
+            $rspecFileObj->fwrite("    end\n");
+            $rspecFileObj->fwrite("end\n\n");
         }
     }
 
@@ -224,7 +224,7 @@ class testSuite implements SplSubject {
             $fileObj = $this->_testSuiteFile->openFile('a');
             if ($this->_testSuiteFile->isWritable()) {
                 //$this->bindTestSuiteRequirements($fileObj);
-                $fileObj->fwrite("# Here Come RSpec examples \n\n");
+                $fileObj->fwrite("# Here Comes RSpec examples \n\n");
                 $this->bindRspecSetUp($fileObj);
                 $this->bindTestCases($fileObj);
                 $fileObj->fwrite("end\n");
