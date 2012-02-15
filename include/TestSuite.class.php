@@ -299,7 +299,7 @@ class testSuite implements SplSubject {
         $file = $this->_testSuiteFile->openFile('r');
         while (!$file->eof()) {
             $line = $file->fgets();
-            if ($inSetup && $line == "##--- Test Cases End ---\n") {
+            if ($inSetup && $line == "#--- Test Cases End ---\n") {
                 $inSetup = false;
             }
             if ($inSetup) {
