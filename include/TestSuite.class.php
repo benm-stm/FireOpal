@@ -97,7 +97,7 @@ class TestSuite {
     /**
      * Build RSpec code examples from binded test cases
      *
-     * @param SplFileObject $rspecFileObj ???
+     * @param SplFileObject $rspecFileObj The file object of the test suite
      *
      * @return Void
      */
@@ -265,17 +265,6 @@ class TestSuite {
      */
     public function getCurrent() {
         return $this->_currentTestCase;
-    }
-
-    /**
-     * ???
-     *
-     * @param String $path Path of the file to add
-     *
-     * @return Void
-     */
-    function addTestFile($path) {
-        $this->files[] = $path;
     }
 
     /**
