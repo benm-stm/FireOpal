@@ -21,6 +21,7 @@ ini_set('max_execution_time', 0);
 ini_set('memory_limit', -1);
 ini_set('include_path', ini_get('include_path').':'.dirname(__FILE__).'/../include/');
 require_once('TestSuite.class.php');
+require_once('TestSuiteManager.class.php');
 
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
@@ -70,7 +71,8 @@ function search_testsuites($dir) {
                             <legend>Testsuites</legend>
                             <ul id="menu">
                             <?php
-                                $testsuites = search_testsuites('../testsuites');
+                                $testSuiteManager = new TestSuiteManager();
+                                $testsuites = $testSuiteManager->searchTestsuites();
                                 foreach($testsuites as $t) {
                                     echo '<li>
                                               <input type="radio" name="run" value="'.$t.'" />'.$t.'

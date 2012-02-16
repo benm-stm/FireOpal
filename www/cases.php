@@ -20,7 +20,11 @@ ini_set('display_errors', 'on');
 ini_set('max_execution_time', 0);
 ini_set('memory_limit', -1);
 ini_set('include_path', ini_get('include_path').':'.dirname(__FILE__).'/../include/');
+
 require_once 'TestSuite.class.php';
+require_once 'TestSuiteManager.class.php';
+$testSuiteManager = new TestSuiteManager();
+
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate");
@@ -129,31 +133,6 @@ function display_tests_as_javascript($tests, $categ, $params) {
 }
 
 /**
- * Search testsuites files
- * @TODO: Don't duplicate this but put it in a class like TestSuiteManager
- *
- * @param String $dir   path to directory containing testsuites files
- *
- * @return Array
- */
-function search_testsuites($dir) {
-    $testsuites = array();
-    if (is_dir($dir)) {
-        if ($dh = opendir($dir)) {
-            while (($file = readdir($dh)) !== false) {
-                if (!in_array($file, array('.', '..'))) {
-                    if (!is_dir("$dir/$file")) {
-                        $testsuites[] = $file;
-                    }
-                }
-            }
-            closedir($dh);
-        }
-    }
-    return $testsuites;
-}
-
-/**
  * Collect selected files to be executed
  *
  * @param Array  $files  Array of selected tests
@@ -197,11 +176,7 @@ if (isset($_REQUEST['tests_to_run'])) {
 }
 
 if (isset($_REQUEST['delete_testsuites'])) {
-    // TODO: make deletion in a class like TestSuiteManager
-    foreach ($_REQUEST['delete_testsuites'] as $testsuite) {
-        // TODO: Handle errors
-        unlink(dirname(__FILE__).'/../testsuites/'.$testsuite);
-    }
+    $testSuiteManager->delete($_REQUEST['delete_testsuites']);
 }
 
 ?>
@@ -333,7 +308,7 @@ if (isset($_REQUEST['delete_testsuites'])) {
                     </form>
                 </td>
             <?php
-            $testsuites = search_testsuites(dirname(__FILE__).'/../testsuites');
+            $testsuites = $testSuiteManager->searchTestsuites();
             if (!empty($testsuites)) {
             echo '
                 <td>
