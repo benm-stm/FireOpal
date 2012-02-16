@@ -44,7 +44,7 @@ class TestCase {
         $testCaseFileContent = "";
         if ($testCaseFileObj->isReadable()) {
             while ($testCaseFileObj->valid()) {
-                $testCaseFileContent .= $testCaseFileObj->fgets()."\n";
+                $testCaseFileContent .= "        ".$testCaseFileObj->fgets()."\n";
             }
         }
         return $testCaseFileContent;
@@ -55,7 +55,7 @@ class TestCase {
 	*/
     public function retrieveRspecExampleGroup() {
         $exampleGroup  = "    describe \"".$this->name."\" do\n\n";
-        $exampleGroup .= "        ".$this->getContent();
+        $exampleGroup .= $this->getContent();
         $exampleGroup .= "    end\n";
         return $exampleGroup;
     }
