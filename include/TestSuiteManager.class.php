@@ -60,8 +60,8 @@ class testSuiteManager {
      * Populate the collection of test case objects of a given test Suite
      * from an array that contains test cased path
      *
-     * @param testSuite $testSuite target test suite to populate
-     * @param Array
+     * @param TestSuite $testSuite     Target test suite to populate
+     * @param Array     $testCaseArray ???
      *
      * @return Boolean
      */
