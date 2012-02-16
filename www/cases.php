@@ -191,8 +191,6 @@ if (isset($_REQUEST['tests_to_run'])) {
     // TODO: Generate test suite
     $testSuite = new TestSuite($files, $_REQUEST['testsuite_name']);
     $testSuite->storeTestSuiteDetails($_REQUEST);
-    $testCasesLauncher = new testCasesLauncher();
-    $testSuite->attach($testCasesLauncher);
     $testSuite->bindConfigurationElements($_REQUEST);
     $result = $testSuite->loadTestSuite();
     $output = "Testsuite stored";
