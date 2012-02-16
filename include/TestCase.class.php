@@ -44,7 +44,7 @@ class TestCase {
         $testCaseFileContent = "";
         if ($testCaseFileObj->isReadable()) {
             while ($testCaseFileObj->valid()) {
-                $testCaseFileContent .= "        ".$testCaseFileObj->fgets()."\n";
+                $testCaseFileContent .= "        ".$testCaseFileObj->fgets();
             }
         }
         return $testCaseFileContent;
