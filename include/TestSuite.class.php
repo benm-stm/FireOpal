@@ -228,9 +228,8 @@ class TestSuite {
                 $setupManager->storeConf($request, $this->_testSuiteFile->getPathname());
                 //Test Cases storage
                 $content = "#--- Test Cases list ---\n";
-                foreach ($this->_testCases as $testCase) {
-                    $this->_currentTestCase = $testCase;
-                    $content .= "# ".str_replace(substr(dirname(__FILE__), 0, -7).'www/../testcases/', ' ', $testCase)."\n";
+                foreach ($this->_testCasesMap as $testCase) {
+                    $content .= "# ".str_replace(substr(dirname(__FILE__), 0, -7).'www/../testcases/', ' ', $testCase->_testCaseFile)."\n";
                 }
                 $content .= "#--- Test Cases End ---\n\n";
                 $testSuiteFileObj->fwrite($content);
