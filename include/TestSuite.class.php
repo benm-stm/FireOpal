@@ -272,7 +272,7 @@ class testSuite {
     /**
      * Returns the testCase currently being updated
      *
-     * @return $testCase
+     * @return TestCase
      */
     public function getCurrent() {
         return $this->_currentTestCase;
