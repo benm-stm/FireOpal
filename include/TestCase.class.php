@@ -22,26 +22,47 @@ class testCase {
     private $name;
     private $_dependenciesMap;
     private $_flagsMap;
+    private $file;
 
     /**
      * Constructor
      */
-    public function __construct() {
+    public function __construct($name, $fileinfo = null) {
         $this->id = "";
-        $this->name = "";
+        $this->name = $name;
         $this->_dependenciesMap = array();
+        $this->_flagsMap = array();
+        if (!empty($fileinfo)) {
+        $this->_testCaseFile = $fileinfo;
+        } else {
+        $this->_testCaseFile = new SplFileInfo(dirname(__FILE__).'/../testcases/'.$this->name.'.rb');
+        }
     }
 
     public function getContent() {
         return true;
     }
 
+    public function retrieveRspecExampleGroup() {
+        $exampleGroup = "    describe \"".$this->name."\" do\n\n";
+        $exampleGroup .= $this->getContent();
+        $exampleGroup .= "    end\n";
+        return $exampleGroup;
+    }
     protected function getDependencies() {
         return $this->_dependenciesMap;
     }
 
     protected function setDependencies($dependenciesArray) {
         $this->_dependenciesMap = $dependenciesArray;
+    }
+
+    protected function getFlags() {
+        return $this->$_flagsMap;
+    }
+
+    protected function setFlags($flagsArray) {
+        $this->$_flagsMap = $flagsArray;
     }
 }
 ?>
