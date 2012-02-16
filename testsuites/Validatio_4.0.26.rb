@@ -1,6 +1,6 @@
 #--- Start Conf in setup here
-# host = http://tunlx007.tun.st.com:8999 ( Web application to be tested )
-# client = 10.157.15.160 ( Ip address of the client machine )
+# host = http://codex ( Web application to be tested )
+# client = client ( Ip address of the client machine )
 # browser = firefox ( Browser to be launched )
 # user = login ( Login of a user )
 # project = project ( Unix name of a project )
@@ -21,8 +21,8 @@ require 'rspec/autorun'
 class Configuration
 
     def setup
-        @driver = Selenium::WebDriver.for :remote, :url => 'http://10.157.15.160:4444/wd/hub', :desired_capabilities => :firefox
-        @driver.get 'http://tunlx007.tun.st.com:8999'
+        @driver = Selenium::WebDriver.for :remote, :url => 'http://client:4444/wd/hub', :desired_capabilities => :firefox
+        @driver.get 'http://codex'
         @driver.manage.timeouts.implicit_wait = 30
     end
 
