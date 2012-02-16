@@ -33,9 +33,9 @@ class testCase {
         $this->_dependenciesMap = array();
         $this->_flagsMap = array();
         if (!empty($fileinfo)) {
-        $this->_testCaseFile = $fileinfo;
+            $this->_testCaseFile = $fileinfo;
         } else {
-        $this->_testCaseFile = new SplFileInfo(dirname(__FILE__).'/../testcases/'.$this->name.'.rb');
+            $this->_testCaseFile = new SplFileInfo(dirname(__FILE__).'/../testcases/'.$this->name.'.rb');
         }
     }
 
@@ -49,6 +49,7 @@ class testCase {
         $exampleGroup .= "    end\n";
         return $exampleGroup;
     }
+
     protected function getDependencies() {
         return $this->_dependenciesMap;
     }
@@ -64,5 +65,7 @@ class testCase {
     protected function setFlags($flagsArray) {
         $this->$_flagsMap = $flagsArray;
     }
+
 }
+
 ?>
