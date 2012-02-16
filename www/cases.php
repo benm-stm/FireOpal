@@ -253,6 +253,10 @@ if (isset($_REQUEST['delete_testsuites'])) {
         }
         Event.observe(window, 'load', init, true);
         </script>
+        <div id="header">
+            <a href="/" class="community"><< Go back</a>
+            <a href="set.php" class="community">Update config</a>
+        </div>
     </head>
     <body>
         <table>
@@ -263,8 +267,6 @@ if (isset($_REQUEST['delete_testsuites'])) {
             </tr>
             <tr>
                 <td nowrap>
-                    <a href="/"><< Go back</a>
-                    <a href="set">Update config</a>
                     <fieldset>
                         <legend>Config</legend>
                         <ul id="menu"><li class="">
