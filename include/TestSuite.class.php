@@ -80,19 +80,13 @@ class TestSuite {
      */
     public function bindTestSuiteRequirements($rspecFileObj) {
         if ($rspecFileObj->isWritable()) {
-            foreach ($this->_testCases as $testCase) {
+            foreach ($this->_testCasesMap as $testCase) {
                 try {
-                    $testCaseFileObj = new SplFileObject($testCase);
-                    $rspecFileObj->fwrite("    describe \"".$testCaseFileObj->getBasename('.rb')."\" do\n");
-                    while ($testCaseFileObj->valid()) {
-                        if ((strrpos($testCaseFileObj->current(), 'require') === false) && (strrpos($testCaseFileObj->current(), 'gem') === false)) {
-                            $rspecFileObj->fwrite("        ".$testCaseFileObj->current());
-                            $testCaseFileObj->next();
-                        } else {
-                            $testCaseFileObj->next();
-                        }
-                    }
-                    $rspecFileObj->fwrite("\n    end\n\n");
+                    
+                    $testCaseFileObj = new SplFileObject($testCase->_testCaseFile);
+                    $rspecFileObj->fwrite("    describe \"".$testCase->name."\" do\n");
+                    $rspecFileObj->fwrite($testCase->getContent());
+                    $rspecFileObj->fwrite("    end\n\n");
                 } catch (Exception $e) {
                     echo $e->getMessage();
                 }

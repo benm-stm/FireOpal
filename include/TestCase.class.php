@@ -50,6 +50,9 @@ class TestCase {
         return $testCaseFileContent;
     }
 
+	/*
+	*
+	*/
     public function retrieveRspecExampleGroup() {
         $exampleGroup = "    describe \"".$this->name."\" do\n\n";
         $exampleGroup .= $this->getContent();
