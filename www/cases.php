@@ -163,11 +163,18 @@ function prepare_files($filesArray, $prefix) {
 $output = '';
 if (isset($_REQUEST['tests_to_run'])) {
     require_once dirname(__FILE__).'/../include/TestSuite.class.php';
+	require_once dirname(__FILE__).'/../include/TestCase.class.php';
     // manage request
     $files = prepare_files($_REQUEST['tests_to_run'], dirname(__FILE__).'/../testcases');
     //@TODO: validate params here
     // TODO: Generate test suite
     $testSuite = new TestSuite($files, $_REQUEST['testsuite_name']);
+	// populating test cases map
+    foreach ($files as $test) {
+        $testCaseFile = new SplFileInfo($test);
+        $testCase     = new testCase($testCaseFile->getBasename('.rb'),$testCaseFile);
+        $testSuite->attach($testCase);
+    }
     $testSuite->storeTestSuiteDetails($_REQUEST);
     $testSuite->bindConfigurationElements($_REQUEST);
     $result = $testSuite->loadTestSuite();
