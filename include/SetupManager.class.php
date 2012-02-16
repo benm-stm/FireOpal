@@ -141,8 +141,13 @@ class SetupManager {
                 }
             }
             $content .= "#--- End Conf\n\n";
-            return (file_put_contents($filePath, $content)) ;
+            if (file_put_contents($filePath, $content) === false) {
+                $this->error[] = "Impossible to save conf in testsuite";
+                return false;
+            }
+            return true;
         }
+        $this->error[] = "Empty setup";
         return false;
     }
     
