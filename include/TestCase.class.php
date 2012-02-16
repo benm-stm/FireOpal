@@ -16,7 +16,7 @@
  * along with this code. If not, see <http://www.gnu.org/licenses/>.
  */
 
-class testCase {
+class TestCase {
 
     public $id;
     public $name;

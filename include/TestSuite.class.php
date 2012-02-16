@@ -17,7 +17,7 @@
  */
 
 require_once 'SetupManager.class.php';
-class testSuite {
+class TestSuite {
 
     const RSPEC_HTML_FORMATTER          = 1;
     const RSPEC_PROGRESS_FORMATTER      = 2;

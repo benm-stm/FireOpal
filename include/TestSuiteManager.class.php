@@ -16,7 +16,7 @@
  * along with this code. If not, see <http://www.gnu.org/licenses/>.
  */
 
-class testSuiteManager {
+class TestSuiteManager {
 
     /**
      * Search testsuite files
@@ -68,7 +68,7 @@ class testSuiteManager {
     function populateTestSuite($testSuite, $testCasesArray) {
         foreach ($testCasesArray as $test) {
             $testCaseFile = new SplFileInfo($test);
-            $testCase     = new testCase($testCaseFile->getBasename('.rb'),$testCaseFile);
+            $testCase     = new TestCase($testCaseFile->getBasename('.rb'),$testCaseFile);
             $testSuite->attach($testCase);
         }
         return true;
