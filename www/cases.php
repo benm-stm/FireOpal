@@ -259,6 +259,7 @@ if (isset($_REQUEST['delete_testsuites'])) {
         </div>
     </head>
     <body>
+        <div id="body_skin">
         <table>
             <tr>
                 <td nowrap>
@@ -335,6 +336,7 @@ if (isset($_REQUEST['delete_testsuites'])) {
             }
             ?>
         </table>
+        </div>
     </body>
     <script type="text/javascript">
     //<!--
