@@ -147,12 +147,10 @@ class TestSuite {
     public function bindRspecTearDown($rspecFileObj) {
         if ($rspecFileObj->isWritable()) {
             $content = "describe \"Teardown process\" do\n";
-            $content .= "    it \"Should Cleanup after test suite runtime\" do\n";
             $content .= "        after(:each) do\n";
             $content .= "            #@valid.logout()\n";
             $content .= "            @valid.teardown()\n";
             $content .= "        end\n";
-            $content .= "    end\n";
             $content .= "end\n\n";
             $rspecFileObj->fwrite($content);
         }
