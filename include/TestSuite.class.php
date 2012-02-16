@@ -40,9 +40,10 @@ class testSuite {
         $this->name     = 'noName';
         }
         $this->_testSuiteFile = new SplFileInfo(dirname(__FILE__).'/../testsuites/'.$this->name.'.rb');
-        $this->_testCases     = $testCases;
-        $this->_result        = array();
-        $this->_testCasesMap  = new SplObjectStorage();
+        //@TODO   use test case objects collection instead
+        $this->_testCases = $testCases;
+        $this->_result    = array();
+        $this->_testCasesMap = new SplObjectStorage();
     }
 
     /**
@@ -51,6 +52,15 @@ class testSuite {
      */
     public function run() {
         exec('rspec '.$this->_testSuiteFile.' --format documentation --out ../log/resultFile_'.time().' 2>&1', $this->_result);
+    }
+
+    /**
+     * Attach a Given test case to the test suite
+     *
+     * @param testCase $testCase
+     */
+    public function attach($testCase) {
+        $this->_testCasesMap->attach($testCase);
     }
 
     /**
