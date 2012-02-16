@@ -28,10 +28,10 @@ class testCase {
      * Constructor
      */
     public function __construct($name, $fileinfo = null) {
-        $this->id = "";
-        $this->name = $name;
+        $this->id               = "";
+        $this->name             = $name;
         $this->_dependenciesMap = array();
-        $this->_flagsMap = array();
+        $this->_flagsMap        = array();
         if (!empty($fileinfo)) {
             $this->_testCaseFile = $fileinfo;
         } else {
