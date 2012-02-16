@@ -104,7 +104,9 @@ class TestSuite {
     public function bindTestCases($rspecFileObj) {
         if ($rspecFileObj->isWritable()) {
             $rspecFileObj->fwrite("\ndescribe \"".$this->name."\" do\n\n");
+            $this->bindRspecSetUp($rspecFileObj);
             $this->bindTestSuiteRequirements($rspecFileObj);
+            $this->bindRspecTearDown($rspecFileObj);
             $rspecFileObj->fwrite("end\n\n");
         }
     }
@@ -118,13 +120,11 @@ class TestSuite {
      */
     public function bindRspecSetUp($rspecFileObj) {
         if ($rspecFileObj->isWritable()) {
-            $content = "describe \"Configuration preprocess\" do\n";
-            $content .= "    before(:each) do\n";
+            $content = "    before(:all) do\n";
             $content .= "        @valid = Configuration.new\n";
             $content .= "        @valid.setup()\n";
             $content .= "        @valid.login()\n";
-            $content .= "    end\n";
-            $content .= "end\n\n";
+            $content .= "    end\n\n";
             $rspecFileObj->fwrite($content);
         }
     }
@@ -138,11 +138,9 @@ class TestSuite {
      */
     public function bindRspecTearDown($rspecFileObj) {
         if ($rspecFileObj->isWritable()) {
-            $content = "describe \"Teardown process\" do\n";
-            $content .= "    after(:each) do\n";
+            $content = "    after(:all) do\n";
             $content .= "        @valid.teardown()\n";
-            $content .= "    end\n";
-            $content .= "end\n\n";
+            $content .= "    end\n\n";
             $rspecFileObj->fwrite($content);
         }
     }
@@ -252,9 +250,7 @@ class TestSuite {
             $fileObj = $this->_testSuiteFile->openFile('a');
             if ($this->_testSuiteFile->isWritable()) {
                 $fileObj->fwrite("\n# Here Comes RSpec examples \n\n");
-                $this->bindRspecSetUp($fileObj);
                 $this->bindTestCases($fileObj);
-                $this->bindRspecTearDown($fileObj);
             }
 
         } catch (RuntimeException $e) {
