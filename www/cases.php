@@ -163,7 +163,6 @@ function prepare_files($filesArray, $prefix) {
 $output = '';
 if (isset($_REQUEST['tests_to_run'])) {
     require_once dirname(__FILE__).'/../include/TestSuite.class.php';
-    require_once dirname(__FILE__).'/../include/TestCaseLauncher.class.php';
     // manage request
     $files = prepare_files($_REQUEST['tests_to_run'], dirname(__FILE__).'/../testcases');
     //@TODO: validate params here
