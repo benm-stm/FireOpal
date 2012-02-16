@@ -19,10 +19,10 @@
 require_once 'SetupManager.class.php';
 class testSuite {
 
-    const RSPEC_HTML_FORMATTER = 1;
-    const RSPEC_PROGRESS_FORMATTER = 2;
+    const RSPEC_HTML_FORMATTER          = 1;
+    const RSPEC_PROGRESS_FORMATTER      = 2;
     const RSPEC_DOCUMENTATION_FORMATTER = 6;
-    const RSPEC_COLOR = 8;
+    const RSPEC_COLOR                   = 8;
 
     private $name;
     private $_testCases;
@@ -111,7 +111,7 @@ class testSuite {
         if ($rspecFileObj->isWritable()) {
             $rspecFileObj->fwrite("\ndescribe \"".$this->name."\" do\n\n");
             $this->bindTestSuiteRequirements($rspecFileObj);
-                    $rspecFileObj->fwrite("end\n\n");
+            $rspecFileObj->fwrite("end\n\n");
         }
     }
 
@@ -124,15 +124,16 @@ class testSuite {
      */
     public function bindRspecSetUp($rspecFileObj) {
         if ($rspecFileObj->isWritable()) {
-            $rspecFileObj->fwrite("describe \"Configuration preprocess\" do\n");
-            //$rspecFileObj->fwrite("    it \"Should prepare test suite configuration\" do\n");
-            $rspecFileObj->fwrite("        before(:each) do\n");
-            $rspecFileObj->fwrite("            @valid = Configuration.new\n");
-            $rspecFileObj->fwrite("            @valid.setup()\n");
-            $rspecFileObj->fwrite("            @valid.login()\n");
-            $rspecFileObj->fwrite("        end\n");
-            //$rspecFileObj->fwrite("    end\n");
-            $rspecFileObj->fwrite("end\n\n");
+            $content = "describe \"Configuration preprocess\" do\n";
+            //$content .= "    it \"Should prepare test suite configuration\" do\n";
+            $content .= "        before(:each) do\n";
+            $content .= "            @valid = Configuration.new\n";
+            $content .= "            @valid.setup()\n";
+            $content .= "            @valid.login()\n";
+            $content .= "        end\n";
+            //$content .= "    end\n";
+            $content .= "end\n\n";
+            $rspecFileObj->fwrite($content);
         }
     }
 
@@ -145,14 +146,15 @@ class testSuite {
      */
     public function bindRspecTearDown($rspecFileObj) {
         if ($rspecFileObj->isWritable()) {
-            $rspecFileObj->fwrite("describe \"Teardown process\" do\n");
-            $rspecFileObj->fwrite("    it \"Should Cleanup after test suite runtime\" do\n");
-            $rspecFileObj->fwrite("        after(:each) do\n");
-            $rspecFileObj->fwrite("            #@valid.logout()\n");
-            $rspecFileObj->fwrite("            @valid.teardown()\n");
-            $rspecFileObj->fwrite("        end\n");
-            $rspecFileObj->fwrite("    end\n");
-            $rspecFileObj->fwrite("end\n\n");
+            $content = "describe \"Teardown process\" do\n";
+            $content .= "    it \"Should Cleanup after test suite runtime\" do\n";
+            $content .= "        after(:each) do\n";
+            $content .= "            #@valid.logout()\n";
+            $content .= "            @valid.teardown()\n";
+            $content .= "        end\n";
+            $content .= "    end\n";
+            $content .= "end\n\n";
+            $rspecFileObj->fwrite($content);
         }
     }
 
@@ -169,13 +171,13 @@ class testSuite {
         try {
             $testSuiteFileObj = $this->_testSuiteFile->openFile('a');
             if ($this->_testSuiteFile->isWritable()) {
-                $testSuiteFileObj->fwrite("require 'rubygems'\n");
-                $testSuiteFileObj->fwrite("require 'selenium-webdriver'\n");
-                $testSuiteFileObj->fwrite("require 'rspec/autorun'\n\n");
+                $content = "require 'rubygems'\n";
+                $content .= "require 'selenium-webdriver'\n";
+                $content .= "require 'rspec/autorun'\n\n";
                 $setupManager = new SetupManager();
                 if($set = $setupManager->extractSetup($request)) {
-                    $testSuiteFileObj->fwrite("class Configuration\n\n");
-                    $testSuiteFileObj->fwrite("    def setup\n");
+                    $content .= "class Configuration\n\n";
+                    $content .= "    def setup\n";
                     $tearDown             = "    def teardown\n        @driver.quit\n    end\n\n";
                     $login                = "    def login\n";
                     $loginActionPerformed = "        @driver.find_element(:name, \"login\").click\n    end\n\n";
@@ -207,14 +209,15 @@ class testSuite {
                             default:
                         }
                     }
-                    $testSuiteFileObj->fwrite($driver);
-                    $testSuiteFileObj->fwrite($target);
-                    $testSuiteFileObj->fwrite("        @driver.manage.timeouts.implicit_wait = 30\n");
-                    $testSuiteFileObj->fwrite("    end\n\n");
-                    $testSuiteFileObj->fwrite($tearDown);
-                    $testSuiteFileObj->fwrite($login);
-                    $testSuiteFileObj->fwrite($loginActionPerformed);
-                    $testSuiteFileObj->fwrite("end\n\n");
+                    $content .= $driver;
+                    $content .= $target;
+                    $content .= "        @driver.manage.timeouts.implicit_wait = 30\n";
+                    $content .= "    end\n\n";
+                    $content .= $tearDown;
+                    $content .= $login;
+                    $content .= $loginActionPerformed;
+                    $content .= "end\n\n";
+                    $testSuiteFileObj->fwrite($content);
                 }
             }
         } catch (RuntimeException $e) {
@@ -237,12 +240,13 @@ class testSuite {
                 $setupManager = new SetupManager();
                 $setupManager->storeConf($request, $this->_testSuiteFile->getPathname());
                 //Test Cases storage
-                $testSuiteFileObj->fwrite("#--- Test Cases list ---\n");
+                $content = "#--- Test Cases list ---\n";
                 foreach ($this->_testCases as $testCase) {
                     $this->_currentTestCase = $testCase;
-                    $testSuiteFileObj->fwrite("# ".str_replace(substr(dirname(__FILE__), 0, -7).'www/../testcases/', ' ', $testCase)."\n");
+                    $content .= "# ".str_replace(substr(dirname(__FILE__), 0, -7).'www/../testcases/', ' ', $testCase)."\n";
                 }
-                $testSuiteFileObj->fwrite("#--- Test Cases End ---\n\n");
+                $content .= "#--- Test Cases End ---\n\n";
+                $testSuiteFileObj->fwrite($content);
             }
         } catch (RuntimeException $e) {
             echo $e->getMessage();
