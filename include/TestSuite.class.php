@@ -125,13 +125,13 @@ class testSuite {
     public function bindRspecSetUp($rspecFileObj) {
         if ($rspecFileObj->isWritable()) {
             $rspecFileObj->fwrite("describe \"Configuration preprocess\" do\n");
-            $rspecFileObj->fwrite("    it \"Should prepare test suite configuration\" do\n");
+            //$rspecFileObj->fwrite("    it \"Should prepare test suite configuration\" do\n");
             $rspecFileObj->fwrite("        before(:each) do\n");
             $rspecFileObj->fwrite("            @valid = Configuration.new\n");
             $rspecFileObj->fwrite("            @valid.setup()\n");
             $rspecFileObj->fwrite("            @valid.login()\n");
             $rspecFileObj->fwrite("        end\n");
-            $rspecFileObj->fwrite("    end\n");
+            //$rspecFileObj->fwrite("    end\n");
             $rspecFileObj->fwrite("end\n\n");
         }
     }
