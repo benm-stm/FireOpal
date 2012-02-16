@@ -54,8 +54,8 @@ class TestCase {
 	*
 	*/
     public function retrieveRspecExampleGroup() {
-        $exampleGroup = "    describe \"".$this->name."\" do\n\n";
-        $exampleGroup .= $this->getContent();
+        $exampleGroup  = "    describe \"".$this->name."\" do\n\n";
+        $exampleGroup .= "        ".$this->getContent();
         $exampleGroup .= "    end\n";
         return $exampleGroup;
     }
