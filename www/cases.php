@@ -168,7 +168,7 @@ if (isset($_REQUEST['tests_to_run'])) {
     $files = prepare_files($_REQUEST['tests_to_run'], dirname(__FILE__).'/../testcases');
     //@TODO: validate params here
     // TODO: Generate test suite
-    $testSuite = new TestSuite($files, $_REQUEST['testsuite_name']);
+    $testSuite = new TestSuite($_REQUEST['testsuite_name']);
 	$testSuiteManager->populateTestSuite($testSuite, $files);
     $testSuite->storeTestSuiteDetails($_REQUEST);
     $testSuite->bindConfigurationElements($_REQUEST);

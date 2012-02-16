@@ -38,15 +38,13 @@ class TestSuite {
      *
      * @return Void
      */
-    public function __construct(array $testCases, $testSuiteName) {
+    public function __construct($testSuiteName) {
         if (!empty($testSuiteName)) {
             $this->name = $testSuiteName;
         } else {
             $this->name = 'noName';
         }
         $this->_testSuiteFile = new SplFileInfo(dirname(__FILE__).'/../testsuites/'.$this->name.'.rb');
-        //@TODO   use test case objects collection instead
-        $this->_testCases     = $testCases;
         $this->_result        = array();
         $this->_testCasesMap  = new SplObjectStorage();
     }
@@ -251,7 +249,6 @@ class TestSuite {
                 $fileObj->fwrite("\n# Here Comes RSpec examples \n\n");
                 $this->bindTestCases($fileObj);
             }
-
         } catch (RuntimeException $e) {
             echo $e->getMessage();
         }
