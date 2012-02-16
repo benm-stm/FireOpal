@@ -18,11 +18,11 @@
 
 class testCase {
 
-    private $id;
-    private $name;
-    private $_dependenciesMap;
-    private $_flagsMap;
-    private $file;
+    public $id;
+    public $name;
+    public $_dependenciesMap;
+    public $_flagsMap;
+    public $file;
 
     /**
      * Constructor
