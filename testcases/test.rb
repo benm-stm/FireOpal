@@ -1,5 +1,5 @@
 describe "Test logging in" do
-    it "Fill the form and submit"
+    it "Fill the form and submit" do
         @driver.find_element(:name, "form_loginname").send_keys "login"
         @driver.find_element(:name, "form_pw").send_keys "password"
         @driver.find_element(:name, "login").click
