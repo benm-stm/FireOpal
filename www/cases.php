@@ -170,11 +170,12 @@ if (isset($_REQUEST['tests_to_run'])) {
     // TODO: Generate test suite
     $testSuite = new TestSuite($files, $_REQUEST['testsuite_name']);
 	// populating test cases map
-    foreach ($files as $test) {
+/*    foreach ($files as $test) {
         $testCaseFile = new SplFileInfo($test);
         $testCase     = new testCase($testCaseFile->getBasename('.rb'),$testCaseFile);
         $testSuite->attach($testCase);
-    }
+    }*/
+	$testSuiteManager->populateTestSuite($testSuite, $files);
     $testSuite->storeTestSuiteDetails($_REQUEST);
     $testSuite->bindConfigurationElements($_REQUEST);
     $result = $testSuite->loadTestSuite();

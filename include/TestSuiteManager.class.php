@@ -56,6 +56,23 @@ class testSuiteManager {
         return $deleteStatus;
     }
 
+    /**
+     * Populate the collection of test case objects of a given test Suite
+     * from an array that contains test cased path
+     *
+     * @param testSuite $testSuite target test suite to populate
+     * @param Array
+     *
+     * @return Boolean
+     */
+    function populateTestSuite($testSuite, $testCasesArray) {
+        foreach ($testCasesArray as $test) {
+            $testCaseFile = new SplFileInfo($test);
+            $testCase     = new testCase($testCaseFile->getBasename('.rb'),$testCaseFile);
+            $testSuite->attach($testCase);
+        }
+        return true;
+    }
 }
 
 ?>
