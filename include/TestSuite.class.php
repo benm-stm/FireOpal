@@ -122,6 +122,7 @@ class TestSuite {
             $content .= "        @valid = Configuration.new\n";
             $content .= "        @valid.setup()\n";
             $content .= "        @valid.login()\n";
+            $content .= "        @driver = @valid.getdriver\n";
             $content .= "    end\n\n";
             $rspecFileObj->fwrite($content);
         }
@@ -167,6 +168,7 @@ class TestSuite {
                     $login                = "    def login\n";
                     $loginActionPerformed = "        @driver.find_element(:name, \"login\").click\n    end\n\n";
                     $driver               = "        @driver = Selenium::WebDriver.for :remote,";
+                    $getDriver            = "    def getdriver\n        @driver\n    end\n\n";
                     foreach ($set as $name => $entry) {
                         switch ($name) {
                             case "host" :
@@ -201,6 +203,7 @@ class TestSuite {
                     $content .= $tearDown;
                     $content .= $login;
                     $content .= $loginActionPerformed;
+                    $content .= $getDriver;
                     $content .= "end\n\n";
                     $testSuiteFileObj->fwrite($content);
                 }
