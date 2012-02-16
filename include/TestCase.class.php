@@ -40,7 +40,14 @@ class TestCase {
     }
 
     public function getContent() {
-        return true;
+        $testCaseFileObj = new SplFileObject($this->_testCaseFile);
+        $testCaseFileContent = "";
+        if ($testCaseFileObj->isReadable()) {
+            while ($testCaseFileObj->valid()) {
+                $testCaseFileContent .= $testCaseFileObj->fgets()."\n";
+            }
+        }
+        return $testCaseFileContent;
     }
 
     public function retrieveRspecExampleGroup() {
