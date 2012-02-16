@@ -40,11 +40,10 @@ class testSuite {
         $this->name     = 'noName';
         }
         $this->_testSuiteFile = new SplFileInfo(dirname(__FILE__).'/../testsuites/'.$this->name.'.rb');
-        $this->_testCases = $testCases;
-        $this->_observers = array();
-        $this->_result    = array();
-        //@TODO   Better prefer dependency injection here. use SplObjectStorage
-        //$this->_testCases = new SplObjectStorage();
+        $this->_testCases     = $testCases;
+        $this->_observers     = array();
+        $this->_result        = array();
+        $this->_testCasesMap  = new SplObjectStorage();
     }
 
     /**
