@@ -49,7 +49,7 @@ class testSuiteManager {
      * @return Boolean
      */
     function delete($testsuites) {
-        $deleteStatus = false;
+        $deleteStatus = true;
         foreach ($testsuites as $testsuite) {
             $deleteStatus = unlink(dirname(__FILE__).'/../testsuites/'.$testsuite) && $deleteStatus;
         }
