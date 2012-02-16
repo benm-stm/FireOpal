@@ -31,24 +31,30 @@ class testSuite {
     private $_testSuiteFile;
 
     /**
+     * Constructor of the class
      *
+     * @param Array  $testCases     Testcases composing the testsuite
+     * @param String $testSuiteName Name of the testsuite
+     *
+     * @return Void
      */
     public function __construct(array $testCases, $testSuiteName) {
         if (!empty($testSuiteName)) {
             $this->name = $testSuiteName;
         } else {
-        $this->name     = 'noName';
+            $this->name = 'noName';
         }
         $this->_testSuiteFile = new SplFileInfo(dirname(__FILE__).'/../testsuites/'.$this->name.'.rb');
         //@TODO   use test case objects collection instead
-        $this->_testCases = $testCases;
-        $this->_result    = array();
-        $this->_testCasesMap = new SplObjectStorage();
+        $this->_testCases     = $testCases;
+        $this->_result        = array();
+        $this->_testCasesMap  = new SplObjectStorage();
     }
 
     /**
      * Launch test Suite
      *
+     * @return Void
      */
     public function run() {
         exec('rspec '.$this->_testSuiteFile.' --format documentation --out ../log/resultFile_'.time().' 2>&1', $this->_result);
@@ -57,7 +63,9 @@ class testSuite {
     /**
      * Attach a Given test case to the test suite
      *
-     * @param testCase $testCase
+     * @param TestCase $testCase Testcase to be atached to testsuite
+     *
+     * @return Void
      */
     public function attach($testCase) {
         $this->_testCasesMap->attach($testCase);
@@ -65,9 +73,11 @@ class testSuite {
 
     /**
      * Include binded test files within the header of the ruby test Suite file.
-     * @param SplFileObject $rspecFileObj
      *
-     **/
+     * @param SplFileObject $rspecFileObj ???
+     *
+     * @return Void
+     */
     public function bindTestSuiteRequirements($rspecFileObj) {
         if ($rspecFileObj->isWritable()) {
             foreach ($this->_testCases as $testCase) {
@@ -92,18 +102,26 @@ class testSuite {
 
     /**
      * Build RSpec code examples from binded test cases
-     * @param SplFileObject $rspecFileObj
      *
-     **/
+     * @param SplFileObject $rspecFileObj ???
+     *
+     * @return Void
+     */
     public function bindTestCases($rspecFileObj) {
         if ($rspecFileObj->isWritable()) {
-            $rspecFileObj->fwrite("\n");
-            $rspecFileObj->fwrite("describe \"".$this->name."\" do\n\n");
+            $rspecFileObj->fwrite("\ndescribe \"".$this->name."\" do\n\n");
             $this->bindTestSuiteRequirements($rspecFileObj);
                     $rspecFileObj->fwrite("end\n\n");
         }
     }
 
+    /**
+     * Build RSpec setup
+     *
+     * @param SplFileObject $rspecFileObj ???
+     *
+     * @return Void
+     */
     public function bindRspecSetUp($rspecFileObj) {
         if ($rspecFileObj->isWritable()) {
             $rspecFileObj->fwrite("describe \"Configuration preprocess\" do\n");
@@ -118,6 +136,13 @@ class testSuite {
         }
     }
 
+    /**
+     * Build RSpec teardown
+     *
+     * @param SplFileObject $rspecFileObj ???
+     *
+     * @return Void
+     */
     public function bindRspecTearDown($rspecFileObj) {
         if ($rspecFileObj->isWritable()) {
             $rspecFileObj->fwrite("describe \"Teardown process\" do\n");
@@ -134,26 +159,27 @@ class testSuite {
     /**
      * Apply conf parameters to the generated test Suite,
      * Using Ruby syntax, add a conf class then  add Setup, teardown and login methods
+     * @TODO Review the whole conf stuff within a suitable design pattern, we need some flexibility here :'(
      *
      * @param  String $request
      *
-     * @TODO Review the whole conf stuff within a suitable design pattern, we need some flexibility here :'(
-     **/
+     * @return Void
+     */
     public function bindConfigurationElements($request) {
         try {
             $testSuiteFileObj = $this->_testSuiteFile->openFile('a');
             if ($this->_testSuiteFile->isWritable()) {
-            $testSuiteFileObj->fwrite("require 'rubygems'\n");
-            $testSuiteFileObj->fwrite("require 'selenium-webdriver'\n");
-            $testSuiteFileObj->fwrite("require 'rspec/autorun'\n\n");
+                $testSuiteFileObj->fwrite("require 'rubygems'\n");
+                $testSuiteFileObj->fwrite("require 'selenium-webdriver'\n");
+                $testSuiteFileObj->fwrite("require 'rspec/autorun'\n\n");
                 $setupManager = new SetupManager();
                 if($set = $setupManager->extractSetup($request)) {
                     $testSuiteFileObj->fwrite("class Configuration\n\n");
                     $testSuiteFileObj->fwrite("    def setup\n");
-                    $tearDown = "    def teardown\n        @driver.quit\n    end\n\n";
-                    $login    = "    def login\n";
+                    $tearDown             = "    def teardown\n        @driver.quit\n    end\n\n";
+                    $login                = "    def login\n";
                     $loginActionPerformed = "        @driver.find_element(:name, \"login\").click\n    end\n\n";
-                    $driver   = "        @driver = Selenium::WebDriver.for :remote,";
+                    $driver               = "        @driver = Selenium::WebDriver.for :remote,";
                     foreach ($set as $name => $entry) {
                         switch ($name) {
                             case "host" :
@@ -179,28 +205,30 @@ class testSuite {
                             case "project_id" :
                             break;
                             default:
-                       }
-                 }
-                $testSuiteFileObj->fwrite($driver);
-                $testSuiteFileObj->fwrite($target);
-                $testSuiteFileObj->fwrite("        @driver.manage.timeouts.implicit_wait = 30\n");
-                $testSuiteFileObj->fwrite("    end\n\n");
-                $testSuiteFileObj->fwrite($tearDown);
-                $testSuiteFileObj->fwrite($login);
-                $testSuiteFileObj->fwrite($loginActionPerformed);
-                $testSuiteFileObj->fwrite("end\n\n");
+                        }
+                    }
+                    $testSuiteFileObj->fwrite($driver);
+                    $testSuiteFileObj->fwrite($target);
+                    $testSuiteFileObj->fwrite("        @driver.manage.timeouts.implicit_wait = 30\n");
+                    $testSuiteFileObj->fwrite("    end\n\n");
+                    $testSuiteFileObj->fwrite($tearDown);
+                    $testSuiteFileObj->fwrite($login);
+                    $testSuiteFileObj->fwrite($loginActionPerformed);
+                    $testSuiteFileObj->fwrite("end\n\n");
                 }
             }
         } catch (RuntimeException $e) {
             echo $e->getMessage();
         }
-}
+    }
 
     /**
      * Store conf in the correponding testsuite
+     *
      * @param  String $request
      *
-     **/
+     * @return Void
+     */
     function storeTestSuiteDetails($request) {
         try {
             $testSuiteFileObj = $this->_testSuiteFile->openFile('a');
@@ -224,7 +252,8 @@ class testSuite {
     /**
      * Build a test suite from binded test cases and apply a given conf
      *
-     **/
+     * @return Void
+     */
     public function loadTestSuite() {
         try {
             $fileObj = $this->_testSuiteFile->openFile('a');
@@ -250,7 +279,11 @@ class testSuite {
     }
 
     /**
+     * ???
      *
+     * @param String $path Path of the file to add
+     *
+     * @return Void
      */
     function addTestFile($path) {
         $this->files[] = $path;
@@ -264,7 +297,7 @@ class testSuite {
     function displayDetails() {
         $inSetup = false;
         $content = "";
-        $file = $this->_testSuiteFile->openFile('r');
+        $file    = $this->_testSuiteFile->openFile('r');
         while (!$file->eof()) {
             $line = $file->fgets();
             if ($inSetup && $line == "#--- Test Cases End ---\n") {
