@@ -125,13 +125,11 @@ class TestSuite {
     public function bindRspecSetUp($rspecFileObj) {
         if ($rspecFileObj->isWritable()) {
             $content = "describe \"Configuration preprocess\" do\n";
-            //$content .= "    it \"Should prepare test suite configuration\" do\n";
-            $content .= "        before(:each) do\n";
-            $content .= "            @valid = Configuration.new\n";
-            $content .= "            @valid.setup()\n";
-            $content .= "            @valid.login()\n";
-            $content .= "        end\n";
-            //$content .= "    end\n";
+            $content .= "    before(:each) do\n";
+            $content .= "        @valid = Configuration.new\n";
+            $content .= "        @valid.setup()\n";
+            $content .= "        @valid.login()\n";
+            $content .= "    end\n";
             $content .= "end\n\n";
             $rspecFileObj->fwrite($content);
         }
@@ -147,10 +145,9 @@ class TestSuite {
     public function bindRspecTearDown($rspecFileObj) {
         if ($rspecFileObj->isWritable()) {
             $content = "describe \"Teardown process\" do\n";
-            $content .= "        after(:each) do\n";
-            $content .= "            #@valid.logout()\n";
-            $content .= "            @valid.teardown()\n";
-            $content .= "        end\n";
+            $content .= "    after(:each) do\n";
+            $content .= "        @valid.teardown()\n";
+            $content .= "    end\n";
             $content .= "end\n\n";
             $rspecFileObj->fwrite($content);
         }
