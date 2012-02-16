@@ -45,3 +45,20 @@ body {
         a img {
             border:none;
         }
+/*------------------------------------------------header stuff--------------------*/
+#header{
+    width:1000px;
+    height:116px;
+    margin:0 auto;
+}
+#header a.community{
+    display:block; float:left;
+    width:121px;
+    height:22px; 
+    padding:0;
+    left:0px; text-align:center;
+    font:bold 11px/23px Verdana, Arial, Helvetica, sans-serif;
+    color:#097b5f;
+    text-transform:uppercase;
+    text-decoration:none;
+}
