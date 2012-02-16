@@ -17,7 +17,7 @@
  */
 
 require_once 'SetupManager.class.php';
-class testSuite implements SplSubject {
+class testSuite {
 
     const RSPEC_HTML_FORMATTER = 1;
     const RSPEC_PROGRESS_FORMATTER = 2;
@@ -26,7 +26,6 @@ class testSuite implements SplSubject {
 
     private $name;
     private $_testCases;
-    private $_observers;
     private $_currentTestCase;
     private $_result;
     private $_testSuiteFile;
@@ -243,38 +242,6 @@ class testSuite implements SplSubject {
     }
 
     /**
-     * Attach an observer
-     *
-     * @param SplObserver $observer
-     */
-    public function attach(SplObserver $observer) {
-        array_push($this->_observers, $observer);
-    }
-
-    /**
-     * Detach an observer
-     *
-     * @param SplObserver $observer
-     */
-    public function detach(SplObserver $observer) {
-        foreach ($this->_observers as $key => $item)
-        {
-            if ($observer == $item) {
-                unset($this->_observers[$key]);
-            }
-        }
-    }
-
-    /**
-     * Send notification to all observers
-     */
-    public function notify() {
-        foreach ($this->_observers as $key => $item) {
-            $item->update($this);
-        }
-    }
-
-    /**
      *
      */
     function addTestFile($path) {
@@ -304,7 +271,6 @@ class testSuite implements SplSubject {
         }
         return $content;
      }
-
 }
 
 ?>
