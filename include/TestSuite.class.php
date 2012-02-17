@@ -164,7 +164,8 @@ class TestSuite {
             if ($this->_testSuiteFile->isWritable()) {
                 $content = "require 'rubygems'\n";
                 $content .= "require 'selenium-webdriver'\n";
-                $content .= "require 'rspec/autorun'\n\n";
+                $content .= "require 'rspec/autorun'\n";
+                $content .= "require 'json'\n\n";
                 $setupManager = new SetupManager();
                 if($set = $setupManager->extractSetup($request)) {
                     $content .= "class Configuration\n\n";
