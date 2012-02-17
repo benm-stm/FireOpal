@@ -33,7 +33,6 @@ class TestSuite {
     /**
      * Constructor of the class
      *
-     * @param Array  $testCases     Testcases composing the testsuite
      * @param String $testSuiteName Name of the testsuite
      *
      * @return Void
