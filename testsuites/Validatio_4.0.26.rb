@@ -5,48 +5,78 @@
 # user = login ( Login of a user )
 # project = project ( Unix name of a project )
 # project_id = 1 ( Id of the project )
+# tracker = tracker ( Name of a tracker )
 # tracker_shortname = trk ( Shortname of the tracker )
 # docman_root_id = 1 ( Id of the root of docman )
 #--- End Conf
 
+#--- Test Cases list ---
+#  test.rb
+#--- Test Cases End ---
+
+require 'rubygems'
+require 'selenium-webdriver'
+require 'rspec/autorun'
+
 class Configuration
 
     def setup
-        driver = Selenium::WebDriver.for :remote,:url => 'client',:desired_capabilities => :firefox
-        driver.get 'http://codex'
+        @driver = Selenium::WebDriver.for :remote, :url => 'http://client:4444/wd/hub', :desired_capabilities => :firefox
+        @driver.get 'http://codex'
         @driver.manage.timeouts.implicit_wait = 30
     end
 
     def teardown
-        driver.quit
+        @driver.quit
     end
 
     def login
-        driver.find_element(:name, "form_loginname").send_keys "login"
-        driver.find_element(:name, "form_pw").send_keys "password"
-        driver.find_element(:name, "login").click
+        @driver.find_element(:name, "form_loginname").send_keys "login"
+        @driver.find_element(:name, "form_pw").send_keys "password"
+        @driver.find_element(:name, "login").click
+    end
+
+    def getdriver
+        @driver
     end
 
 end
 
-require 'test'
-require 'tuleap_spec'
-require 'tuleap'
 
-describe Validatio_4.0.26 do
-    it "Run testcase test" do
-        test_0 = test.new
-        test_0.run()
+# Here Comes RSpec examples 
+
+
+describe "Validatio_4.0.26" do
+
+    before(:all) do
+        @valid = Configuration.new
+        @valid.setup()
+        @valid.login()
+        @driver = @valid.getdriver
     end
 
-    it "Run testcase tuleap_spec" do
-        test_1 = tuleap_spec.new
-        test_1.run()
-    end
+    describe "test" do
+        describe "Test logging in" do
+            it "Fill the form and submit" do
+                @driver.find_element(:name, "form_loginname").send_keys "login"
+                @driver.find_element(:name, "form_pw").send_keys "password"
+                @driver.find_element(:name, "login").click
+            end
+            it "Test the wrong title of the page" do 
+                (@driver.title).should == "wrong title"
+            end
+            it "Test the correct title of the page" do 
+                (@driver.title).should == "good tiltle"
+            end
+            it "compare 1 to 1" do
+                1.should eq(1)
+            end
+        end
+            end
 
-    it "Run testcase tuleap" do
-        test_2 = tuleap.new
-        test_2.run()
+    after(:all) do
+        @valid.teardown()
     end
 
 end
+
