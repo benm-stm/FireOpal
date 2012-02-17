@@ -59,12 +59,15 @@ body {
 }
 #header a.community{
     display:block; float:left;
-    width:121px;
     height:22px; 
-    padding:0;
+    margin-left:25px;
     left:0px; text-align:center;
     font:bold 11px/23px Verdana, Arial, Helvetica, sans-serif;
-    color:#097b5f;
+    color:#0099FF;
     text-transform:uppercase;
     text-decoration:none;
+    width: 250px;
+    padding: 5px;
+    background-color: #f7f7f7;
+    border: 1px solid #b7b7b7;
 }
