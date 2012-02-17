@@ -83,7 +83,7 @@ class TestSuite {
                     $testCaseFileObj = new SplFileObject($testCase->_testCaseFile);
                     $rspecFileObj->fwrite("    describe \"".$testCase->name."\" do\n");
                     $rspecFileObj->fwrite($testCase->getContent());
-                    $rspecFileObj->fwrite("    end\n\n");
+                    $rspecFileObj->fwrite("\n    end\n\n");
                 } catch (Exception $e) {
                     echo $e->getMessage();
                 }
