@@ -121,12 +121,7 @@ class TestSuite {
             $content .= "        @valid.login()\n";
             $content .= "        @driver = @valid.getdriver\n";
             $set     = "";
-            $setupFile = new SplFileObject(dirname(__FILE__).'/../conf/set.ini');
-            if ($setupFile->isReadable()) {
-                while ($setupFile->valid()) {
-                    $set .= $setupFile->fgets();
-                }
-            }
+            $set = file_get_contents(dirname(__FILE__).'/../conf/set.ini');
             $content .= "        @setup  = JSON.parse('".$set."')\n";
             $content .= "    end\n\n";
             $rspecFileObj->fwrite($content);
