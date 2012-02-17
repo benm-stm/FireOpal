@@ -26,6 +26,9 @@ class TestCase {
 
     /**
      * Constructor
+     *
+     * @param String $name     The test case name
+     * @param String $fileinfo The path to the physical ruby test case file
      */
     public function __construct($name, $fileinfo = null) {
         $this->id               = "";
@@ -39,6 +42,11 @@ class TestCase {
         }
     }
 
+    /**
+     * Retrive the test case file content
+     *
+     * @return String
+     */
     public function getContent() {
         $testCaseFileObj = new SplFileObject($this->_testCaseFile);
         $testCaseFileContent = "";
@@ -50,6 +58,11 @@ class TestCase {
         return $testCaseFileContent;
     }
 
+    /**
+     * Wrapping the test case file content into one RSpec example code
+     *
+     * @return String
+     */
     public function retrieveRspecExampleGroup() {
         $exampleGroup  = "    describe \"".$this->name."\" do\n\n";
         $exampleGroup .= $this->getContent();
