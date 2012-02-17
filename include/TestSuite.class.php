@@ -120,6 +120,14 @@ class TestSuite {
             $content .= "        @valid.setup()\n";
             $content .= "        @valid.login()\n";
             $content .= "        @driver = @valid.getdriver\n";
+            $set     = "";
+            $setupFile = new SplFileObject(dirname(__FILE__).'/../conf/set.ini');
+            if ($setupFile->isReadable()) {
+                while ($setupFile->valid()) {
+                    $set .= $setupFile->fgets();
+                }
+            }
+            $content .= "        @setup  = JSON.parse(".$set.")\n";
             $content .= "    end\n\n";
             $rspecFileObj->fwrite($content);
         }
@@ -146,7 +154,7 @@ class TestSuite {
      * Using Ruby syntax, add a conf class then  add Setup, teardown and login methods
      * @TODO Review the whole conf stuff within a suitable design pattern, we need some flexibility here :'(
      *
-     * @param  String $request
+     * @param String $request
      *
      * @return Void
      */
@@ -213,7 +221,7 @@ class TestSuite {
     /**
      * Store conf in the correponding testsuite
      *
-     * @param  String $request
+     * @param String $request
      *
      * @return Void
      */
