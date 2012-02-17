@@ -127,7 +127,7 @@ class TestSuite {
                     $set .= $setupFile->fgets();
                 }
             }
-            $content .= "        @setup  = JSON.parse(".$set.")\n";
+            $content .= "        @setup  = JSON.parse('".$set."')\n";
             $content .= "    end\n\n";
             $rspecFileObj->fwrite($content);
         }
