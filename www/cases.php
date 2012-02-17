@@ -242,7 +242,7 @@ if (isset($_REQUEST['delete_testsuites'])) {
                             </ul>
                         </fieldset>
                         <div id="submit_panel">
-                            <input id="generate" type="submit" value="Generate !" />
+                            <input id="generate" type="submit" value="Generate !" disabled/>
                         </div>
                     </form>
                 </td>
