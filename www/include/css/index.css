@@ -51,6 +51,27 @@ body {
     background-color:#D1E1F8;
     padding-top:8px;
 }
+#block_config{
+    width:250px;
+    margin:0 auto;
+    padding-left:30px;
+    #background-color:#D1E1F8;
+    padding-top:8px;
+}
+#block_generate{
+    width:250px;
+    margin:0 auto;
+    padding-left:70px;
+    #background-color:#D1E1F8;
+    padding-top:8px;
+}
+#block_delete{
+    width:250px;
+    margin:0 auto;
+    padding-left:70px;
+    #background-color:#D1E1F8;
+    padding-top:8px;
+}
 /*------------------------------------------------header stuff--------------------*/
 #header{
     width:1000px;

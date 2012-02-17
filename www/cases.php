@@ -202,7 +202,7 @@ if (isset($_REQUEST['delete_testsuites'])) {
                 </td>
             </tr>
             <tr>
-                <td nowrap>
+                <td id="block_config">
                     <fieldset>
                         <legend>Config</legend>
                         <ul id="menu"><li class="">
@@ -215,7 +215,7 @@ if (isset($_REQUEST['delete_testsuites'])) {
                         </ul> 
                     </fieldset>
                 </td>
-                <td>
+                <td id="block_generate">
                     <form action="" method="POST">
                         <fieldset>
                             <legend>Testsuite</legend>
@@ -250,7 +250,7 @@ if (isset($_REQUEST['delete_testsuites'])) {
             $testsuites = $testSuiteManager->searchTestsuites();
             if (!empty($testsuites)) {
             echo '
-                <td>
+                <td id="block_delete">
                     <form action="" method="POST">
                         <fieldset>
                             <legend>Delete testsuites</legend>
