@@ -1,7 +1,7 @@
 describe "Test logging in" do
     it "Fill the form and submit" do
         @driver.find_element(:name, "form_loginname").clear
-        @driver.find_element(:name, "form_loginname").send_keys @setup['login']['value']
+        @driver.find_element(:name, "form_loginname").send_keys @setup['user']['value']
         @driver.find_element(:name, "form_pw").send_keys @setup['password']['value']
         @driver.find_element(:name, "login").click
     end
