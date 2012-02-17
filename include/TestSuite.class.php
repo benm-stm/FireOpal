@@ -179,7 +179,7 @@ class TestSuite {
                             break;
                             case "browser" :
                             //whatever you want, i'll launch ff
-                            $driver .= " :desired_capabilities => :firefox\n";
+                            $driver .= " :desired_capabilities => :".$entry['value']."\n";
                             break;
                             case "user" :
                             $login .= "        @driver.find_element(:name, \"form_loginname\").send_keys \"".$entry['value']."\"\n";
