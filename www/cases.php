@@ -222,7 +222,7 @@ if (isset($_REQUEST['delete_testsuites'])) {
                             <table nowrap>
                                 <tr>
                                     <td>Name:</td>
-                                    <td><input name="testsuite_name" /></td>
+                                    <td><input name="testsuite_name" onkeyup="CheckInputToEnableSubmit(this, 'generate');"/></td>
                                 </tr>
                                 <tr>
                                     <td>Description:</td>
@@ -242,7 +242,7 @@ if (isset($_REQUEST['delete_testsuites'])) {
                             </ul>
                         </fieldset>
                         <div id="submit_panel">
-                            <input type="submit" value="Generate !" />
+                            <input id="generate" type="submit" value="Generate !" />
                         </div>
                     </form>
                 </td>

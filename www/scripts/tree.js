@@ -11,6 +11,12 @@
                 uncheck(element.parentNode);
             }
         }
+        function CheckInputToEnableSubmit(inputId, submitId){
+            if(inputId.value == "" )
+                document.getElementById(submitId).disabled = true;
+            else
+                document.getElementById(submitId).disabled = false;
+        }
         function register_events(element) {
             if (element.childNodes) {
                 $A(element.childNodes).each(function (child) {
