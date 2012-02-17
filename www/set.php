@@ -37,49 +37,51 @@ echo '
         <link href="include/css/index.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
-        <table>
-            <tr>
-                <td nowrap>
-                    <font color="red">'.$error.'</font>
-                </td>
-            </tr>
-            <tr>
-                <td nowrap>
-                    <a href="cases"><< Go back</a>
-                    <form action="" method="POST">
-                        <fieldset>
-                            <legend>Config</legend>
-                            <ul id="menu"><li class="">
-                                '.$form.'
-                            </ul> 
-                        </fieldset>
-                        <fieldset>
-                            <legend>New value</legend>
-                            <table>
-                                <tr>
-                                    <td>Name</td>
-                                    <td><input name="new_name" /></td>
-                                </tr>
-                                <tr>
-                                    <td>Type</td>
-                                    <td>
-                                        <select name="new_type">
-                                            <option value="text" >Text</option>
-                                            <option value="password" >Password</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Description</td>
-                                    <td><input name="new_description" /></td>
-                                </tr>
-                            </table>
-                        </fieldset>
-                        <div id="submit_panel"><input type="submit" value="Update !" /></div>
-                    </form>
-                </td>
-            </tr>
-        </table>
+        <div id="body_skin">
+            <table>
+                <tr>
+                    <td nowrap>
+                        <font color="red">'.$error.'</font>
+                    </td>
+                </tr>
+                <tr>
+                    <td nowrap>
+                        <a href="cases"><< Go back</a>
+                        <form action="" method="POST">
+                            <fieldset>
+                                <legend>Config</legend>
+                                <ul id="menu"><li class="">
+                                    '.$form.'
+                                </ul> 
+                            </fieldset>
+                            <fieldset>
+                                <legend>New value</legend>
+                                <table>
+                                    <tr>
+                                        <td>Name</td>
+                                        <td><input name="new_name" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Type</td>
+                                        <td>
+                                            <select name="new_type">
+                                                <option value="text" >Text</option>
+                                                <option value="password" >Password</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Description</td>
+                                        <td><input name="new_description" /></td>
+                                    </tr>
+                                </table>
+                            </fieldset>
+                            <div id="submit_panel"><input type="submit" value="Update !" /></div>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </body>
 </html>';
 
