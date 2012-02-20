@@ -176,6 +176,10 @@ if (isset($_REQUEST['tests_to_run'])) {
     $output = "Testsuite stored";
 }
 
+if (isset($_REQUEST['load_testsuites'])) {
+    //TODO
+}
+
 if (isset($_REQUEST['delete_testsuites'])) {
     $testSuiteManager->delete($_REQUEST['delete_testsuites']);
 }
@@ -246,7 +250,53 @@ if (isset($_REQUEST['delete_testsuites'])) {
                         </div>
                     </form>
                 </td>
-            <?php
+                <?php $testsuites = $testSuiteManager->searchTestsuites();
+                if (!empty($testsuites)) {
+                echo 
+                '<td id="block_load">
+                    <form action="" method="POST">
+                        <fieldset>
+                            <legend>Load testsuites</legend>
+                            <table nowrap>';
+                                 foreach($testsuites as $t) {
+                                    echo '<tr>
+                                        <td>'.$t.'</td>
+                                        <td><input type="checkbox" name="load_testsuites[]'.$t.'" value="'.$t.'" /></td>
+                                    </tr>';
+                                 }
+                            echo '</table>
+                        </fieldset>
+                        <div id="submit_panel"><input type="submit" value="Load !" /></div>
+                    </form>';
+                    echo '<form action="" method="POST">
+                        <fieldset>
+                            <legend>Testcases</legend>
+                            <ul id="menu">';
+                                $tests = search_tests('../testcases');
+                                foreach($tests as $c => $t) {
+                                    display_tests($t, $c, array('is_cat' => true, 'prefixe' => 'tests_to_run', 'checked' => @$_REQUEST['tests_to_run']));
+                                }
+                            echo 
+                            '</ul>
+                            <table nowrap>
+                                <tr>
+                                    <td>Name:</td>
+                                    <td><input name="testsuite_name"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Description:</td>
+                                    <td><textarea name="testsuite_description"></textarea></td>
+                                </tr>
+                            </table>
+                        </fieldset>
+                        
+                        <div id="submit_panel">
+                            <input id="generate" type="submit" value="Generate !"/>
+                        </div>
+                    </form>
+                </td>';
+
+            }
             $testsuites = $testSuiteManager->searchTestsuites();
             if (!empty($testsuites)) {
             echo '
@@ -283,3 +333,4 @@ if (isset($_REQUEST['delete_testsuites'])) {
     //-->
     </script>
 </html>
+
