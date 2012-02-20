@@ -159,7 +159,7 @@ class TestSuite {
                 $content .= "require 'json'\n\n";
                 $content .= "class Configuration\n\n";
                 $content .= "    def setup(setup)\n";
-                $content .= "        @setup  = @setup\n";
+                $content .= "        @setup  = setup\n";
                 $content .= "        @driver = Selenium::WebDriver.for :remote,";
                 $content .= " :url => 'http://'+@setup['client']['value']+':4444/wd/hub',";
                 // TODO: Set the browser dinamically
