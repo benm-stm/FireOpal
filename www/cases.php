@@ -254,7 +254,7 @@ echo '
                             <ul id="menu">';
 $tests = search_tests('../testcases');
 foreach($tests as $c => $t) {
-    display_tests($t, $c, array('is_cat' => true, 'prefixe' => 'testcases_to_add', 'checked' => @$_REQUEST['testcases_to_add']));
+    display_tests($t, $c, array('is_cat' => true, 'prefixe' => 'testcases_to_add', 'checked' => $_REQUEST['testcases_to_add']));
 }
 echo ' 
                             </ul>
