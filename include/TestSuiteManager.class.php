@@ -73,6 +73,7 @@ class TestSuiteManager {
         }
         return true;
     }
+
 }
 
 ?>

@@ -52,7 +52,10 @@ class TestCase {
         $testCaseFileContent = "";
         if ($testCaseFileObj->isReadable()) {
             while ($testCaseFileObj->valid()) {
-                $testCaseFileContent .= "        ".$testCaseFileObj->fgets();
+                $line = $testCaseFileObj->fgets();
+                if (!empty($line)) {
+                    $testCaseFileContent .= "        ".$line;
+                }
             }
         }
         return $testCaseFileContent;

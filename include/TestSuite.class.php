@@ -79,7 +79,6 @@ class TestSuite {
         if ($rspecFileObj->isWritable()) {
             foreach ($this->_testCasesMap as $testCase) {
                 try {
-                    
                     $testCaseFileObj = new SplFileObject($testCase->_testCaseFile);
                     $rspecFileObj->fwrite($testCase->retrieveRspecExampleGroup());
                 } catch (Exception $e) {
@@ -289,7 +288,8 @@ class TestSuite {
             }
         }
         return $content;
-     }
+    }
+
 }
 
 ?>
