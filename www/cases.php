@@ -162,23 +162,25 @@ function prepare_files($filesArray, $prefix) {
 }
 
 $output = '';
-if (isset($_REQUEST['testcases_to_add']) && !empty($_REQUEST['testsuite_name'])) {
-    require_once dirname(__FILE__).'/../include/TestSuite.class.php';
-    require_once dirname(__FILE__).'/../include/TestCase.class.php';
-    // manage request
-    $files = prepare_files($_REQUEST['testcases_to_add'], dirname(__FILE__).'/../testcases');
-    if (!empty($files)) {
-        $testSuite = new TestSuite($_REQUEST['testsuite_name']);
-        $testSuiteManager->populateTestSuite($testSuite, $files);
-        $testSuite->storeTestSuiteDetails($_REQUEST);
-        $testSuite->bindConfigurationElements($_REQUEST);
-        $testSuite->loadTestSuite();
-        $output = "Testsuite stored";
+if (isset($_REQUEST['testcases_to_add'])) {
+    if (!empty($_REQUEST['testsuite_name'])) {
+        require_once dirname(__FILE__).'/../include/TestSuite.class.php';
+        require_once dirname(__FILE__).'/../include/TestCase.class.php';
+        // manage request
+        $files = prepare_files($_REQUEST['testcases_to_add'], dirname(__FILE__).'/../testcases');
+        if (!empty($files)) {
+            $testSuite = new TestSuite($_REQUEST['testsuite_name']);
+            $testSuiteManager->populateTestSuite($testSuite, $files);
+            $testSuite->storeTestSuiteDetails($_REQUEST);
+            $testSuite->bindConfigurationElements($_REQUEST);
+            $testSuite->loadTestSuite();
+            $output = "Testsuite stored";
+        } else {
+            $output = "No testcases selected";
+        }
     } else {
-        $output = "No testcases selected";
+        $output = "Empty name";
     }
-} else {
-    $output = "Empty name";
 }
 
 if (isset($_REQUEST['delete_testsuites'])) {
