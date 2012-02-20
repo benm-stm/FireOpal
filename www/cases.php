@@ -162,23 +162,31 @@ function prepare_files($filesArray, $prefix) {
 }
 
 $output = '';
-if (isset($_REQUEST['tests_to_run'])) {
+if (isset($_REQUEST['testcases_to_add']) && !empty($_REQUEST['testsuite_name'])) {
     require_once dirname(__FILE__).'/../include/TestSuite.class.php';
     require_once dirname(__FILE__).'/../include/TestCase.class.php';
     // manage request
-    $files = prepare_files($_REQUEST['tests_to_run'], dirname(__FILE__).'/../testcases');
-    //@TODO: validate params here
-    // TODO: Generate test suite
-    $testSuite = new TestSuite($_REQUEST['testsuite_name']);
-    $testSuiteManager->populateTestSuite($testSuite, $files);
-    $testSuite->storeTestSuiteDetails($_REQUEST);
-    $testSuite->bindConfigurationElements($_REQUEST);
-    $result = $testSuite->loadTestSuite();
-    $output = "Testsuite stored";
+    $files = prepare_files($_REQUEST['testcases_to_add'], dirname(__FILE__).'/../testcases');
+    if (!empty($files)) {
+        $testSuite = new TestSuite($_REQUEST['testsuite_name']);
+        $testSuiteManager->populateTestSuite($testSuite, $files);
+        $testSuite->storeTestSuiteDetails($_REQUEST);
+        $testSuite->bindConfigurationElements($_REQUEST);
+        $testSuite->loadTestSuite();
+        $output = "Testsuite stored";
+    } else {
+        $output = "No testcases selected";
+    }
+} else {
+    $output = "Empty name";
 }
 
 if (isset($_REQUEST['delete_testsuites'])) {
-    $testSuiteManager->delete($_REQUEST['delete_testsuites']);
+    if ($testSuiteManager->delete($_REQUEST['delete_testsuites'])) {
+        $output = "Testsuite deleted";
+    } else {
+        $output = "Tetsuite not deleted";
+    }
 }
 
 echo '
@@ -192,16 +200,14 @@ echo '
     </head>
     <body>
         <div id="header">
+            <p>
+                <font color="red">'.$output.'</font>
+            </p>
             <a href="/" class="community"><< Go back</a>
             <a href="set" class="community">Update config</a>
         </div>
         <div id="body_skin">
             <table>
-                <tr>
-                    <td nowrap>
-                        <font color="red"><?php echo $output ?></font>
-                    </td>
-                </tr>
                 <tr>
                     <td id="block_config">
                         <fieldset>
@@ -234,7 +240,7 @@ echo '
                                 <ul id="menu">';
 $tests = search_tests('../testcases');
 foreach($tests as $c => $t) {
-    display_tests($t, $c, array('is_cat' => true, 'prefixe' => 'tests_to_run', 'checked' => @$_REQUEST['tests_to_run']));
+    display_tests($t, $c, array('is_cat' => true, 'prefixe' => 'testcases_to_add', 'checked' => @$_REQUEST['testcases_to_add']));
 }
 echo '
                                 </ul>
@@ -273,7 +279,7 @@ echo '
     </body>
     <script type="text/javascript">
     //<!--
-    var tests_to_run = {';
+    var testcases_to_add = {';
 foreach($tests as $c => $t) {
     display_tests_as_javascript($t, $c, array('is_cat' => true));
 }

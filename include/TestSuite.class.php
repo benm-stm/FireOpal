@@ -40,10 +40,10 @@ class TestSuite {
     public function __construct($testSuiteName) {
         if (!empty($testSuiteName)) {
             $this->name = $testSuiteName;
+            $this->_testSuiteFile = new SplFileInfo(dirname(__FILE__).'/../testsuites/'.$this->name.'.rb');
         } else {
-            $this->name = 'noName';
+            $this->_testSuiteFile = new SplFileInfo('/dev/null');
         }
-        $this->_testSuiteFile = new SplFileInfo(dirname(__FILE__).'/../testsuites/'.$this->name.'.rb');
         $this->_result        = array();
         $this->_testCasesMap  = new SplObjectStorage();
     }

@@ -39,7 +39,7 @@ class Setup {
                         case "delete" :
                         case "testsuite_name" :
                         case "testsuite_description" :
-                        case "tests_to_run" :
+                        case "testcases_to_add" :
                             break;
                         case "new_name" :
                             if ($value != 'new_name' &&
