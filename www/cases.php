@@ -213,7 +213,7 @@ echo '
                 <tr>
                     <td id="block_config">
                         <fieldset>
-                            <legend>Config</legend>
+                            <legend><b>Config</b></legend>
                             <ul id="menu"><li class="">';
 $setup = new Setup();
 $content = $setup->display(true);
@@ -225,7 +225,7 @@ echo '
                     <td id="block_generate">
                         <form action="" method="POST">
                             <fieldset>
-                                <legend>Testsuite</legend>
+                                <legend><b>Testsuite</b></legend>
                                 <table nowrap>
                                     <tr>
                                         <td>Name:</td>
@@ -238,7 +238,7 @@ echo '
                                 </table>
                             </fieldset>
                             <fieldset>
-                                <legend>Testcases</legend>
+                                <legend><b>Testcases</b></legend>
                                 <ul id="menu">';
 $tests = search_tests('../testcases');
 foreach($tests as $c => $t) {
@@ -258,7 +258,7 @@ if (!empty($testsuites)) {
                     <td id="block_delete">
                         <form action="" method="POST">
                             <fieldset>
-                                <legend>Delete testsuites</legend>
+                                <legend><b>Delete testsuites</b></legend>
                                 <table nowrap>';
     foreach($testsuites as $t) {
         echo '

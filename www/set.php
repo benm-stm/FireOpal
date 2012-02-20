@@ -49,13 +49,13 @@ echo '
                     <td nowrap>
                         <form action="" method="POST">
                             <fieldset>
-                                <legend>Config</legend>
+                                <legend><b>Config</b></legend>
                                 <ul id="menu"><li class="">
                                     '.$form.'
                                 </ul> 
                             </fieldset>
                             <fieldset>
-                                <legend>New value</legend>
+                                <legend><b>New value</b></legend>
                                 <table>
                                     <tr>
                                         <td>Name</td>

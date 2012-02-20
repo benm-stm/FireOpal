@@ -46,7 +46,7 @@ echo '
                         <form action="" method="POST">
                             <div id="submit_panel"><input type="submit" value="Run !" /></div>
                             <fieldset>
-                                <legend>Testsuites</legend>
+                                <legend><b>Testsuites</b></legend>
                                 <ul id="menu">';
 
 $testSuiteManager = new TestSuiteManager();
@@ -66,7 +66,7 @@ echo '
 if (isset($_REQUEST['details'])) {
     echo '
                         <fieldset>
-                            <legend>'.$_REQUEST['details'].' details</legend>
+                            <legend><b>'.$_REQUEST['details'].' details</b></legend>
                             <pre>';
     $testSuite = new TestSuite(substr($_REQUEST['details'], 0, -3));
     echo $testSuite->displayDetails();
