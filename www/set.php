@@ -20,7 +20,7 @@ ini_set('include_path', ini_get('include_path').':'.dirname(__FILE__).'/../inclu
 require_once 'SetupManager.class.php';
 $setupManager = new SetupManager();
 if (!empty($_REQUEST)) {
-    $setupManager->store($_REQUEST, dirname(__FILE__).'/../conf/set.ini');
+    $setupManager->store($_REQUEST);
     if (isset($_REQUEST['delete']) && !empty($_REQUEST['delete'])) {
         $setupManager->delete($_REQUEST['delete']);
     }

@@ -159,9 +159,9 @@ class SetupManager {
      *
      * @return Boolean
      */
-    function store($request, $filePath) {
+    function store($request) {
         if ($set = $this->extractSetup($request)) {
-            if(file_put_contents($filePath, json_encode($set)) === false) {
+            if(file_put_contents(dirname(__FILE__).'/../conf/set.ini', json_encode($set)) === false) {
                 $this->error[] = "Impossible to save new conf";
                 return false;
             }
