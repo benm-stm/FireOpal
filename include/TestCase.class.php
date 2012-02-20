@@ -29,6 +29,8 @@ class TestCase {
      *
      * @param String $name     The test case name
      * @param String $fileinfo The path to the physical ruby test case file
+     *
+     * @return Void
      */
     public function __construct($name, $fileinfo = null) {
         $this->id               = "";
@@ -75,18 +77,38 @@ class TestCase {
         return $exampleGroup;
     }
 
+    /**
+     * Obtain test case dependencies
+     *
+     * @return Array
+     */
     protected function getDependencies() {
         return $this->_dependenciesMap;
     }
 
+    /**
+     * Set test case dependencies
+     *
+     * @return Void
+     */
     protected function setDependencies($dependenciesArray) {
         $this->_dependenciesMap = $dependenciesArray;
     }
 
+    /**
+     * Obtain test case flags
+     *
+     * @return Array
+     */
     protected function getFlags() {
         return $this->$_flagsMap;
     }
 
+    /**
+     * Set test case flags
+     *
+     * @return Void
+     */
     protected function setFlags($flagsArray) {
         $this->$_flagsMap = $flagsArray;
     }

@@ -21,6 +21,7 @@ ini_set('max_execution_time', 0);
 ini_set('memory_limit', -1);
 ini_set('include_path', ini_get('include_path').':'.dirname(__FILE__).'/../include/');
 
+require_once 'Setup.class.php';
 require_once 'TestSuite.class.php';
 require_once 'TestSuiteManager.class.php';
 $testSuiteManager = new TestSuiteManager();
@@ -163,13 +164,13 @@ function prepare_files($filesArray, $prefix) {
 $output = '';
 if (isset($_REQUEST['tests_to_run'])) {
     require_once dirname(__FILE__).'/../include/TestSuite.class.php';
-	require_once dirname(__FILE__).'/../include/TestCase.class.php';
+    require_once dirname(__FILE__).'/../include/TestCase.class.php';
     // manage request
     $files = prepare_files($_REQUEST['tests_to_run'], dirname(__FILE__).'/../testcases');
     //@TODO: validate params here
     // TODO: Generate test suite
     $testSuite = new TestSuite($_REQUEST['testsuite_name']);
-	$testSuiteManager->populateTestSuite($testSuite, $files);
+    $testSuiteManager->populateTestSuite($testSuite, $files);
     $testSuite->storeTestSuiteDetails($_REQUEST);
     $testSuite->bindConfigurationElements($_REQUEST);
     $result = $testSuite->loadTestSuite();
@@ -184,7 +185,7 @@ if (isset($_REQUEST['delete_testsuites'])) {
     $testSuiteManager->delete($_REQUEST['delete_testsuites']);
 }
 
-?>
+echo '
 <html>
     <head>
         <title>Codex automatic validation</title>
@@ -199,58 +200,26 @@ if (isset($_REQUEST['delete_testsuites'])) {
     </head>
     <body>
         <div id="body_skin">
-        <table>
-            <tr>
-                <td nowrap>
-                    <font color="red"><?php echo $output ?></font>
-                </td>
-            </tr>
-            <tr>
-                <td id="block_config">
-                    <fieldset>
-                        <legend>Config</legend>
-                        <ul id="menu"><li class="">
-                        <?php
-                            require_once 'Setup.class.php';
-                            $setup = new Setup();
-                            $content = $setup->display(true);
-                            echo $content['form'];
-                        ?>
-                        </ul> 
-                    </fieldset>
-                </td>
-                <td id="block_generate">
-                    <form action="" method="POST">
+            <table>
+                <tr>
+                    <td nowrap>
+                        <font color="red"><?php echo $output ?></font>
+                    </td>
+                </tr>
+                <tr>
+                    <td id="block_config">
                         <fieldset>
-                            <legend>Testsuite</legend>
-                            <table nowrap>
-                                <tr>
-                                    <td>Name:</td>
-                                    <td><input name="testsuite_name"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Description:</td>
-                                    <td><textarea name="testsuite_description"></textarea></td>
-                                </tr>
-                            </table>
+                            <legend>Config</legend>
+                            <ul id="menu"><li class="">';
+$setup = new Setup();
+$content = $setup->display(true);
+echo $content['form'];
+echo '
+                            </ul> 
                         </fieldset>
-                        <fieldset>
-                            <legend>Testcases</legend>
-                            <ul id="menu">
-                            <?php
-                                $tests = search_tests('../testcases');
-                                foreach($tests as $c => $t) {
-                                    display_tests($t, $c, array('is_cat' => true, 'prefixe' => 'tests_to_run', 'checked' => @$_REQUEST['tests_to_run']));
-                                }
-                            ?>
-                            </ul>
-                        </fieldset>
-                        <div id="submit_panel">
-                            <input id="generate" type="submit" value="Generate !"/>
-                        </div>
-                    </form>
-                </td>
-                <?php $testsuites = $testSuiteManager->searchTestsuites();
+                     </form>
+                </td>';
+                $testsuites = $testSuiteManager->searchTestsuites();
                 if (!empty($testsuites)) {
                 echo 
                 '<td id="block_load">
@@ -316,21 +285,26 @@ if (isset($_REQUEST['delete_testsuites'])) {
                         </fieldset>
                         <div id="submit_panel"><input type="submit" value="Delete !" /></div>
                     </form>
-                </td>
-            </tr>';
+                </td>';
             }
-            ?>
-        </table>
+            
+        echo '</table>
+
+                    </td>
+                </tr>
+            </table>
         </div>
     </body>
     <script type="text/javascript">
     //<!--
-    var tests_to_run = {
-    <?php foreach($tests as $c => $t) {
-        display_tests_as_javascript($t, $c, array('is_cat' => true));
-    } ?>
+    var tests_to_run = {';
+foreach($tests as $c => $t) {
+    display_tests_as_javascript($t, $c, array('is_cat' => true));
+}
+echo '
     };
     //-->
     </script>
-</html>
+</html>';
+
 
