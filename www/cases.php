@@ -238,10 +238,10 @@ if (!empty($testsuites)) {
                                 <table nowrap>';
     foreach($testsuites as $t) {
         echo '
-                                    <tr>
-                                        <td>'.$t.'</td>
-                                        <td><input type="radio" name="load_testsuites[]'.$t.'" value="'.$t.'" /></td>
-                                    </tr>';
+                                <tr>
+                                    <td>'.$t.'</td>
+                                    <td><input type="radio" name="load_testsuites" value="'.$t.'" /></td>
+                                </tr>';
     }
     echo '
                             </table>
@@ -288,7 +288,7 @@ if (!empty($testsuites)) {
         echo '
                                 <tr>
                                     <td>'.$t.'</td>
-                                    <td><input type="checkbox" name="delete_testsuites[]'.$t.'" value="'.$t.'" /></td>
+                                    <td><input type="checkbox" name="delete_testsuites[]" value="'.$t.'" /></td>
                                 </tr>';
     }
     echo '
