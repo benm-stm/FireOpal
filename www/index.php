@@ -36,13 +36,15 @@ echo '
         <link href="include/css/index.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
+        <div id="header">
+            <a href="cases" class="community">Manage testsuites</a>
+        </div>
         <div id="body_skin">
             <table width="100%">
                 <tr>
                     <td width="10%" nowrap="nowrap">
                         <form action="" method="POST">
                             <div id="submit_panel"><input type="submit" value="Run !" /></div>
-                            <a href="cases">Manage testsuites</a>
                             <fieldset>
                                 <legend>Testsuites</legend>
                                 <ul id="menu">';

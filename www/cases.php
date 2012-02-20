@@ -189,12 +189,12 @@ echo '
         <script type="text/javascript" src="scripts/prototype/prototype.js"></script>
         <script type="text/javascript" src="scripts/scriptaculous/scriptaculous.js"></script>
         <script type="text/javascript" src="scripts/tree.js"></script>
-        <div id="header">
-            <a href="/" class="community"><< Go back</a>
-            <a href="set.php" class="community">Update config</a>
-        </div>
     </head>
     <body>
+        <div id="header">
+            <a href="/" class="community"><< Go back</a>
+            <a href="set" class="community">Update config</a>
+        </div>
         <div id="body_skin">
             <table>
                 <tr>
