@@ -29,31 +29,6 @@ header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
-/**
- * Search testsuites files
- * @TODO: Don't duplicate this but put it in a class like TestSuiteManager
- *
- * @param String $dir   path to directory containing testsuites files
- *
- * @return Array
- */
-function search_testsuites($dir) {
-    $testsuites = array();
-    if (is_dir($dir)) {
-        if ($dh = opendir($dir)) {
-            while (($file = readdir($dh)) !== false) {
-                if (!in_array($file, array('.', '..'))) {
-                    if (!is_dir("$dir/$file")) {
-                        $testsuites[] = $file;
-                    }
-                }
-            }
-            closedir($dh);
-        }
-    }
-    return $testsuites;
-}
-
 echo '
 <html>
     <head>
@@ -87,7 +62,6 @@ echo '
                         </form>';
 
 if (isset($_REQUEST['details'])) {
-    // TODO: Check if the testsuite exists, is valid, etc.
     echo '
                         <fieldset>
                             <legend>'.$_REQUEST['details'].' details</legend>

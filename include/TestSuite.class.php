@@ -274,18 +274,22 @@ class TestSuite {
     function displayDetails() {
         $inSetup = false;
         $content = "";
-        $file    = $this->_testSuiteFile->openFile('r');
-        while (!$file->eof()) {
-            $line = $file->fgets();
-            if ($inSetup && $line == "#--- Test Cases End ---\n") {
-                $inSetup = false;
+        if ($this->_testSuiteFile->isReadable()) {
+            $file    = $this->_testSuiteFile->openFile('r');
+            while (!$file->eof()) {
+                $line = $file->fgets();
+                if ($inSetup && $line == "#--- Test Cases End ---\n") {
+                    $inSetup = false;
+                }
+                if ($inSetup) {
+                    $content .= $line;
+                }
+                if (!$inSetup && $line == "#--- Start Conf in setup here\n") {
+                    $inSetup = true;
+                }
             }
-            if ($inSetup) {
-                $content .= $line;
-            }
-            if (!$inSetup && $line == "#--- Start Conf in setup here\n") {
-                $inSetup = true;
-            }
+        } else {
+            $content = "Could not Read testsuite file";
         }
         return $content;
     }
