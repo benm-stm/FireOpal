@@ -237,12 +237,13 @@ if (!empty($testsuites)) {
                                 <table nowrap>';
     foreach($testsuites as $t) {
         echo '
-                                    <tr>
-                                        <td>'.$t.'</td>
-                                        <td><input type="checkbox" name="load_testsuites[]'.$t.'" value="'.$t.'" /></td>
-                                    </tr>';
+                                <tr>
+                                    <td>'.$t.'</td>
+                                    <td><input type="checkbox" name="load_testsuites[]'.$t.'" value="'.$t.'" /></td>
+                                </tr>';
     }
-    echo '</table>
+    echo '
+                            </table>
                         </fieldset>
                         <div id="submit_panel"><input type="submit" value="Load !" /></div>
                     </form>';
@@ -269,7 +270,6 @@ echo '
                                 </tr>
                             </table>
                         </fieldset>
-                        
                         <div id="submit_panel">
                             <input id="generate" type="submit" value="Generate !"/>
                         </div>
