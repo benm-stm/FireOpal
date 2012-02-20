@@ -241,22 +241,23 @@ if (!empty($testsuites)) {
                                         <td>'.$t.'</td>
                                         <td><input type="checkbox" name="load_testsuites[]'.$t.'" value="'.$t.'" /></td>
                                     </tr>';
-                                 }
-                            echo '</table>
+    }
+    echo '</table>
                         </fieldset>
                         <div id="submit_panel"><input type="submit" value="Load !" /></div>
                     </form>';
-                }
-                    echo '<form action="" method="POST">
+}
+echo '
+                    <form action="" method="POST">
                         <fieldset>
                             <legend>Testcases</legend>
                             <ul id="menu">';
-                                $tests = search_tests('../testcases');
-                                foreach($tests as $c => $t) {
-                                    display_tests($t, $c, array('is_cat' => true, 'prefixe' => 'tests_to_run', 'checked' => @$_REQUEST['tests_to_run']));
-                                }
-                            echo 
-                            '</ul>
+$tests = search_tests('../testcases');
+foreach($tests as $c => $t) {
+    display_tests($t, $c, array('is_cat' => true, 'prefixe' => 'tests_to_run', 'checked' => @$_REQUEST['tests_to_run']));
+}
+echo ' 
+                            </ul>
                             <table nowrap>
                                 <tr>
                                     <td>Name:</td>
@@ -274,30 +275,31 @@ if (!empty($testsuites)) {
                         </div>
                     </form>
                 </td>';
-            
-            if (!empty($testsuites)) {
-            echo '
+
+if (!empty($testsuites)) {
+    echo '
                 <td id="block_delete">
                     <form action="" method="POST">
                         <fieldset>
                             <legend>Delete testsuites</legend>
                             <table nowrap>';
-                                foreach($testsuites as $t) {
-                                    echo '<tr>
-                                              <td>'.$t.'</td>
-                                              <td><input type="checkbox" name="delete_testsuites[]'.$t.'" value="'.$t.'" /></td>
-                                          </tr>';
-                                }
-            echo '
+    foreach($testsuites as $t) {
+        echo '
+                                <tr>
+                                    <td>'.$t.'</td>
+                                    <td><input type="checkbox" name="delete_testsuites[]'.$t.'" value="'.$t.'" /></td>
+                                </tr>';
+    }
+    echo '
                             </table>
                         </fieldset>
                         <div id="submit_panel"><input type="submit" value="Delete !" /></div>
                     </form>
                 </td>';
-            }
-            
-        echo '</table>
+}
 
+echo '
+                        </table>
                     </td>
                 </tr>
             </table>
@@ -314,5 +316,3 @@ echo '
     //-->
     </script>
 </html>';
-
-
