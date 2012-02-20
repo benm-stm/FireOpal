@@ -54,7 +54,7 @@ function search_testsuites($dir) {
     return $testsuites;
 }
 
-?>
+echo '
 <html>
     <head>
         <title>Codex automatic validation</title>
@@ -70,47 +70,49 @@ function search_testsuites($dir) {
                             <a href="cases">Manage testsuites</a>
                             <fieldset>
                                 <legend>Testsuites</legend>
-                                <ul id="menu">
-                                <?php
-                                    $testSuiteManager = new TestSuiteManager();
-                                    $testsuites = $testSuiteManager->searchTestsuites();
-                                    foreach($testsuites as $t) {
-                                        echo '<li>
-                                                  <input type="radio" name="run" value="'.$t.'" />'.$t.'
-                                                  <a href="/?details='.$t.'"> Details</a>
-                                              </li>';
-                                    }
-                                ?>
+                                <ul id="menu">';
+
+$testSuiteManager = new TestSuiteManager();
+$testsuites = $testSuiteManager->searchTestsuites();
+foreach($testsuites as $t) {
+    echo '
+                                    <li>
+                                        <input type="radio" name="run" value="'.$t.'" />'.$t.'
+                                        <a href="/?details='.$t.'"> Details</a>
+                                    </li>';
+}
+echo '
                                 </ul>
                             </fieldset>
-                        </form>
-                        <?php
-                        if (isset($_REQUEST['details'])) {
-                            // TODO: Check if the testsuite exists, is valid, etc.
-                            echo '
+                        </form>';
+
+if (isset($_REQUEST['details'])) {
+    // TODO: Check if the testsuite exists, is valid, etc.
+    echo '
                         <fieldset>
                             <legend>'.$_REQUEST['details'].' details</legend>
                             <pre>';
-                            $testSuite = new TestSuite(substr($_REQUEST['details'], 0, -3));
-                            echo $testSuite->displayDetails();
-                            echo "</pre>
-                        </fieldset>\n";
-                        }
-                        ?>
+    $testSuite = new TestSuite(substr($_REQUEST['details'], 0, -3));
+    echo $testSuite->displayDetails();
+    echo '
+                            </pre>
+                        </fieldset>';
+}
+echo '
                     </td>
                     <td width="90%">
                         <fieldset>
                             <legend>Results</legend>
-                            <pre><?php
-                            //flush();
-                            ob_start('flushHandler');
-                            if (isset($_REQUEST['run'])) {
-                                // manage request
-                                $testSuite = new TestSuite(substr($_REQUEST['run'], 0, -3));
-                                $testSuite->run();
-                                echo "Result file stored";
-                            }
-                            ?>
+                            <pre>';
+//flush();
+ob_start('flushHandler');
+if (isset($_REQUEST['run'])) {
+    // manage request
+    $testSuite = new TestSuite(substr($_REQUEST['run'], 0, -3));
+    $testSuite->run();
+    echo 'Result file stored';
+}
+echo '
                             </pre>
                         </fieldset>
                     </td>
@@ -118,4 +120,6 @@ function search_testsuites($dir) {
             </table>
         </div>
     </body>
-</html>
+</html>';
+
+?>
