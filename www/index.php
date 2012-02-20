@@ -29,31 +29,6 @@ header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
-/**
- * Search testsuites files
- * @TODO: Don't duplicate this but put it in a class like TestSuiteManager
- *
- * @param String $dir   path to directory containing testsuites files
- *
- * @return Array
- */
-function search_testsuites($dir) {
-    $testsuites = array();
-    if (is_dir($dir)) {
-        if ($dh = opendir($dir)) {
-            while (($file = readdir($dh)) !== false) {
-                if (!in_array($file, array('.', '..'))) {
-                    if (!is_dir("$dir/$file")) {
-                        $testsuites[] = $file;
-                    }
-                }
-            }
-            closedir($dh);
-        }
-    }
-    return $testsuites;
-}
-
 echo '
 <html>
     <head>
@@ -61,15 +36,17 @@ echo '
         <link href="include/css/index.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
+        <div id="header">
+            <a href="cases" class="community">Manage testsuites</a>
+        </div>
         <div id="body_skin">
             <table width="100%">
                 <tr>
                     <td width="10%" nowrap="nowrap">
                         <form action="" method="POST">
                             <div id="submit_panel"><input type="submit" value="Run !" /></div>
-                            <a href="cases">Manage testsuites</a>
                             <fieldset>
-                                <legend>Testsuites</legend>
+                                <legend><b>Testsuites</b></legend>
                                 <ul id="menu">';
 
 $testSuiteManager = new TestSuiteManager();
@@ -87,10 +64,9 @@ echo '
                         </form>';
 
 if (isset($_REQUEST['details'])) {
-    // TODO: Check if the testsuite exists, is valid, etc.
     echo '
                         <fieldset>
-                            <legend>'.$_REQUEST['details'].' details</legend>
+                            <legend><b>'.$_REQUEST['details'].' details</b></legend>
                             <pre>';
     $testSuite = new TestSuite(substr($_REQUEST['details'], 0, -3));
     echo $testSuite->displayDetails();

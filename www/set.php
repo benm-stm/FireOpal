@@ -37,25 +37,25 @@ echo '
         <link href="include/css/index.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
+        <div id="header">
+            <p>
+                <font color="red">'.$error.'</font>
+            </p>
+            <a href="cases" class="community"><< Go back</a>
+        </div>
         <div id="body_skin">
             <table>
                 <tr>
                     <td nowrap>
-                        <font color="red">'.$error.'</font>
-                    </td>
-                </tr>
-                <tr>
-                    <td nowrap>
-                        <a href="cases"><< Go back</a>
                         <form action="" method="POST">
                             <fieldset>
-                                <legend>Config</legend>
+                                <legend><b>Config</b></legend>
                                 <ul id="menu"><li class="">
                                     '.$form.'
                                 </ul> 
                             </fieldset>
                             <fieldset>
-                                <legend>New value</legend>
+                                <legend><b>New value</b></legend>
                                 <table>
                                     <tr>
                                         <td>Name</td>

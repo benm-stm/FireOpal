@@ -40,10 +40,10 @@ class TestSuite {
     public function __construct($testSuiteName) {
         if (!empty($testSuiteName)) {
             $this->name = $testSuiteName;
+            $this->_testSuiteFile = new SplFileInfo(dirname(__FILE__).'/../testsuites/'.$this->name.'.rb');
         } else {
-            $this->name = 'noName';
+            $this->_testSuiteFile = new SplFileInfo('/dev/null');
         }
-        $this->_testSuiteFile = new SplFileInfo(dirname(__FILE__).'/../testsuites/'.$this->name.'.rb');
         $this->_result        = array();
         $this->_testCasesMap  = new SplObjectStorage();
     }
@@ -274,18 +274,22 @@ class TestSuite {
     function displayDetails() {
         $inSetup = false;
         $content = "";
-        $file    = $this->_testSuiteFile->openFile('r');
-        while (!$file->eof()) {
-            $line = $file->fgets();
-            if ($inSetup && $line == "#--- Test Cases End ---\n") {
-                $inSetup = false;
+        if ($this->_testSuiteFile->isReadable()) {
+            $file    = $this->_testSuiteFile->openFile('r');
+            while (!$file->eof()) {
+                $line = $file->fgets();
+                if ($inSetup && $line == "#--- Test Cases End ---\n") {
+                    $inSetup = false;
+                }
+                if ($inSetup) {
+                    $content .= $line;
+                }
+                if (!$inSetup && $line == "#--- Start Conf in setup here\n") {
+                    $inSetup = true;
+                }
             }
-            if ($inSetup) {
-                $content .= $line;
-            }
-            if (!$inSetup && $line == "#--- Start Conf in setup here\n") {
-                $inSetup = true;
-            }
+        } else {
+            $content = "Could not Read testsuite file";
         }
         return $content;
     }

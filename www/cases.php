@@ -162,19 +162,25 @@ function prepare_files($filesArray, $prefix) {
 }
 
 $output = '';
-if (isset($_REQUEST['tests_to_run'])) {
-    require_once dirname(__FILE__).'/../include/TestSuite.class.php';
-    require_once dirname(__FILE__).'/../include/TestCase.class.php';
-    // manage request
-    $files = prepare_files($_REQUEST['tests_to_run'], dirname(__FILE__).'/../testcases');
-    //@TODO: validate params here
-    // TODO: Generate test suite
-    $testSuite = new TestSuite($_REQUEST['testsuite_name']);
-    $testSuiteManager->populateTestSuite($testSuite, $files);
-    $testSuite->storeTestSuiteDetails($_REQUEST);
-    $testSuite->bindConfigurationElements($_REQUEST);
-    $result = $testSuite->loadTestSuite();
-    $output = "Testsuite stored";
+if (isset($_REQUEST['testcases_to_add'])) {
+    if (!empty($_REQUEST['testsuite_name'])) {
+        require_once dirname(__FILE__).'/../include/TestSuite.class.php';
+        require_once dirname(__FILE__).'/../include/TestCase.class.php';
+        // manage request
+        $files = prepare_files($_REQUEST['testcases_to_add'], dirname(__FILE__).'/../testcases');
+        if (!empty($files)) {
+            $testSuite = new TestSuite($_REQUEST['testsuite_name']);
+            $testSuiteManager->populateTestSuite($testSuite, $files);
+            $testSuite->storeTestSuiteDetails($_REQUEST);
+            $testSuite->bindConfigurationElements($_REQUEST);
+            $testSuite->loadTestSuite();
+            $output = "Testsuite stored";
+        } else {
+            $output = "No testcases selected";
+        }
+    } else {
+        $output = "Empty name";
+    }
 }
 
 if (isset($_REQUEST['load_testsuites'])) {
@@ -182,7 +188,11 @@ if (isset($_REQUEST['load_testsuites'])) {
 }
 
 if (isset($_REQUEST['delete_testsuites'])) {
-    $testSuiteManager->delete($_REQUEST['delete_testsuites']);
+    if ($testSuiteManager->delete($_REQUEST['delete_testsuites'])) {
+        $output = "Testsuite deleted";
+    } else {
+        $output = "Tetsuite not deleted";
+    }
 }
 
 echo '
@@ -193,23 +203,21 @@ echo '
         <script type="text/javascript" src="scripts/prototype/prototype.js"></script>
         <script type="text/javascript" src="scripts/scriptaculous/scriptaculous.js"></script>
         <script type="text/javascript" src="scripts/tree.js"></script>
-        <div id="header">
-            <a href="/" class="community"><< Go back</a>
-            <a href="set.php" class="community">Update config</a>
-        </div>
     </head>
     <body>
+        <div id="header">
+            <p>
+                <font color="red">'.$output.'</font>
+            </p>
+            <a href="/" class="community"><< Go back</a>
+            <a href="set" class="community">Update config</a>
+        </div>
         <div id="body_skin">
             <table>
                 <tr>
-                    <td nowrap>
-                        <font color="red"><?php echo $output ?></font>
-                    </td>
-                </tr>
-                <tr>
                     <td id="block_config">
                         <fieldset>
-                            <legend>Config</legend>
+                            <legend><b>Config</b></legend>
                             <ul id="menu"><li class="">';
 $setup = new Setup();
 $content = $setup->display(true);
@@ -217,18 +225,19 @@ echo $content['form'];
 echo '
                             </ul> 
                         </fieldset>
-                     </form>
-                </td>';
-                $testsuites = $testSuiteManager->searchTestsuites();
-                if (!empty($testsuites)) {
-                echo 
-                '<td id="block_load">
-                    <form action="" method="POST">
-                        <fieldset>
-                            <legend>Load testsuites</legend>
-                            <table nowrap>';
-                                 foreach($testsuites as $t) {
-                                    echo '<tr>
+                    </td>';
+ 
+$testsuites = $testSuiteManager->searchTestsuites();
+if (!empty($testsuites)) {
+    echo '
+                    <td id="block_load">
+                        <form action="" method="POST">
+                            <fieldset>
+                                <legend><b>Load testsuites</b></legend>
+                                <table nowrap>';
+    foreach($testsuites as $t) {
+        echo '
+                                    <tr>
                                         <td>'.$t.'</td>
                                         <td><input type="checkbox" name="load_testsuites[]'.$t.'" value="'.$t.'" /></td>
                                     </tr>';
@@ -237,6 +246,7 @@ echo '
                         </fieldset>
                         <div id="submit_panel"><input type="submit" value="Load !" /></div>
                     </form>';
+                }
                     echo '<form action="" method="POST">
                         <fieldset>
                             <legend>Testcases</legend>
@@ -264,9 +274,7 @@ echo '
                         </div>
                     </form>
                 </td>';
-
-            }
-            $testsuites = $testSuiteManager->searchTestsuites();
+            
             if (!empty($testsuites)) {
             echo '
                 <td id="block_delete">
@@ -297,7 +305,7 @@ echo '
     </body>
     <script type="text/javascript">
     //<!--
-    var tests_to_run = {';
+    var testcases_to_add = {';
 foreach($tests as $c => $t) {
     display_tests_as_javascript($t, $c, array('is_cat' => true));
 }
