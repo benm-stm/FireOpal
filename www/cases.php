@@ -184,7 +184,8 @@ if (isset($_REQUEST['testcases_to_add'])) {
 }
 
 if (isset($_REQUEST['load_testsuites'])) {
-    //TODO
+    var_dump($_REQUEST);
+ 
 }
 
 if (isset($_REQUEST['delete_testsuites'])) {
@@ -239,7 +240,7 @@ if (!empty($testsuites)) {
         echo '
                                     <tr>
                                         <td>'.$t.'</td>
-                                        <td><input type="checkbox" name="load_testsuites[]'.$t.'" value="'.$t.'" /></td>
+                                        <td><input type="radio" name="load_testsuites[]'.$t.'" value="'.$t.'" /></td>
                                     </tr>';
     }
     echo '</table>
