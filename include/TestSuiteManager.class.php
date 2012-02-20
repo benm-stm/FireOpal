@@ -61,7 +61,7 @@ class TestSuiteManager {
      * from an array that contains test cased path
      *
      * @param TestSuite $testSuite     Target test suite to populate
-     * @param Array     $testCaseArray ???
+     * @param Array     $testCaseArray List of testcases to attach to the testsuite
      *
      * @return Boolean
      */
