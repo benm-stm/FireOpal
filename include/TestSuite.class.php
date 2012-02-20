@@ -161,9 +161,8 @@ class TestSuite {
                 $content .= "    def setup(setup)\n";
                 $content .= "        @setup  = setup\n";
                 $content .= "        @driver = Selenium::WebDriver.for :remote,";
-                $content .= " :url => 'http://'+@setup['client']['value']+':4444/wd/hub',";
-                // TODO: Set the browser dinamically
-                $content .= " :desired_capabilities => :firefox\n";
+                $content .= " :url => \"http://#{@setup['client']['value']}:4444/wd/hub\",";
+                $content .= " :desired_capabilities => @setup['browser']['value'].to_sym\n";
                 $content .= "        @driver.get @setup['host']['value']\n";
                 $content .= "        @driver.manage.timeouts.implicit_wait = 30\n";
                 $content .= "    end\n\n";
