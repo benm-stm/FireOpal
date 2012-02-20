@@ -17,16 +17,16 @@
  */
 
 ini_set('include_path', ini_get('include_path').':'.dirname(__FILE__).'/../include/');
-require_once 'SetupManager.class.php';
-$setupManager = new SetupManager();
+require_once 'Setup.class.php';
+$setup = new Setup();
 if (!empty($_REQUEST)) {
-    $setupManager->store($_REQUEST);
+    $setup->store($_REQUEST);
     if (isset($_REQUEST['delete']) && !empty($_REQUEST['delete'])) {
-        $setupManager->delete($_REQUEST['delete']);
+        $setup->delete($_REQUEST['delete']);
     }
 }
 
-$content = $setupManager->display();
+$content = $setup->display();
 $form    = $content['form'];
 $error   = implode("<br />", $content['error']);
 

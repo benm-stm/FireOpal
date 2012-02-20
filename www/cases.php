@@ -207,9 +207,9 @@ if (isset($_REQUEST['delete_testsuites'])) {
                         <legend>Config</legend>
                         <ul id="menu"><li class="">
                         <?php
-                            require_once 'SetupManager.class.php';
-                            $setupManager = new SetupManager();
-                            $content = $setupManager->display(true);
+                            require_once 'Setup.class.php';
+                            $setup = new Setup();
+                            $content = $setup->display(true);
                             echo $content['form'];
                         ?>
                         </ul> 

@@ -16,7 +16,7 @@
  * along with this code. If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once 'SetupManager.class.php';
+require_once 'Setup.class.php';
 class TestSuite {
 
     const RSPEC_HTML_FORMATTER          = 1;
@@ -161,8 +161,8 @@ class TestSuite {
                 $content .= "require 'selenium-webdriver'\n";
                 $content .= "require 'rspec/autorun'\n";
                 $content .= "require 'json'\n\n";
-                $setupManager = new SetupManager();
-                if($set = $setupManager->extractSetup($request)) {
+                $setup = new Setup();
+                if($set = $setup->extractSetup($request)) {
                     $content .= "class Configuration\n\n";
                     $content .= "    def setup\n";
                     $tearDown             = "    def teardown\n        @driver.quit\n    end\n\n";
@@ -226,8 +226,8 @@ class TestSuite {
             $testSuiteFileObj = $this->_testSuiteFile->openFile('a');
             if ($this->_testSuiteFile->isWritable()) {
                 //Conf storage
-                $setupManager = new SetupManager();
-                $setupManager->storeConf($request, $this->_testSuiteFile->getPathname());
+                $setup = new Setup();
+                $setup->storeConf($request, $this->_testSuiteFile->getPathname());
                 //Test Cases storage
                 $content = "#--- Test Cases list ---\n";
                 foreach ($this->_testCasesMap as $testCase) {
