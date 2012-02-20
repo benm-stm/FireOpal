@@ -116,12 +116,12 @@ class TestSuite {
         if ($rspecFileObj->isWritable()) {
             $content = "    before(:all) do\n";
             $content .= "        @valid = Configuration.new\n";
-            $content .= "        @valid.setup()\n";
+            $set     = "";
+            $set     = file_get_contents(dirname(__FILE__).'/../conf/set.ini');
+            $content .= "        @setup  = JSON.parse('".$set."')\n";
+            $content .= "        @valid.setup(@setup)\n";
             $content .= "        @valid.login()\n";
             $content .= "        @driver = @valid.getdriver\n";
-            $set     = "";
-            $set = file_get_contents(dirname(__FILE__).'/../conf/set.ini');
-            $content .= "        @setup  = JSON.parse('".$set."')\n";
             $content .= "    end\n\n";
             $rspecFileObj->fwrite($content);
         }
@@ -146,13 +146,10 @@ class TestSuite {
     /**
      * Apply conf parameters to the generated test Suite,
      * Using Ruby syntax, add a conf class then  add Setup, teardown and login methods
-     * @TODO Review the whole conf stuff within a suitable design pattern, we need some flexibility here :'(
-     *
-     * @param String $request
      *
      * @return Void
      */
-    public function bindConfigurationElements($request) {
+    public function bindConfigurationElements() {
         try {
             $testSuiteFileObj = $this->_testSuiteFile->openFile('a');
             if ($this->_testSuiteFile->isWritable()) {
@@ -160,53 +157,24 @@ class TestSuite {
                 $content .= "require 'selenium-webdriver'\n";
                 $content .= "require 'rspec/autorun'\n";
                 $content .= "require 'json'\n\n";
-                $setup = new Setup();
-                if($set = $setup->extractSetup($request)) {
-                    $content .= "class Configuration\n\n";
-                    $content .= "    def setup\n";
-                    $tearDown             = "    def teardown\n        @driver.quit\n    end\n\n";
-                    $login                = "    def login\n";
-                    $loginActionPerformed = "        @driver.find_element(:name, \"login\").click\n    end\n\n";
-                    $driver               = "        @driver = Selenium::WebDriver.for :remote,";
-                    $getDriver            = "    def getdriver\n        @driver\n    end\n\n";
-                    foreach ($set as $name => $entry) {
-                        switch ($name) {
-                            case "host" :
-                            //web application to be tested
-                            $target = "        @driver.get '".$entry['value']."'\n";
-                            break;
-                            case "client" :
-                            $driver .= " :url => 'http://".$entry['value'].":4444/wd/hub',";
-                            break;
-                            case "browser" :
-                            //whatever you want, i'll launch ff
-                            $driver .= " :desired_capabilities => :".$entry['value']."\n";
-                            break;
-                            case "user" :
-                            $login .= "        @driver.find_element(:name, \"form_loginname\").send_keys \"".$entry['value']."\"\n";
-                            break;
-                            case "password" :
-                            //@TODO  ^__^"
-                            $login .= "        @driver.find_element(:name, \"form_pw\").send_keys \"".$entry['value']."\"\n";
-                            break;
-                            case "project" :
-                            break;
-                            case "project_id" :
-                            break;
-                            default:
-                        }
-                    }
-                    $content .= $driver;
-                    $content .= $target;
-                    $content .= "        @driver.manage.timeouts.implicit_wait = 30\n";
-                    $content .= "    end\n\n";
-                    $content .= $tearDown;
-                    $content .= $login;
-                    $content .= $loginActionPerformed;
-                    $content .= $getDriver;
-                    $content .= "end\n\n";
-                    $testSuiteFileObj->fwrite($content);
-                }
+                $content .= "class Configuration\n\n";
+                $content .= "    def setup(setup)\n";
+                $content .= "        @setup  = @setup\n";
+                $content .= "        @driver = Selenium::WebDriver.for :remote,";
+                $content .= " :url => 'http://'+@setup['client']['value']+':4444/wd/hub',";
+                // TODO: Set the browser dinamically
+                $content .= " :desired_capabilities => :firefox\n";
+                $content .= "        @driver.get @setup['host']['value']\n";
+                $content .= "        @driver.manage.timeouts.implicit_wait = 30\n";
+                $content .= "    end\n\n";
+                $content .= "    def teardown\n        @driver.quit\n    end\n\n";
+                $content .= "    def login\n";
+                $content .= "        @driver.find_element(:name, \"form_loginname\").send_keys @setup['user']['value']\n";
+                $content .= "        @driver.find_element(:name, \"form_pw\").send_keys @setup['password']['value']\n";
+                $content .= "        @driver.find_element(:name, \"login\").click\n    end\n\n";
+                $content .= "    def getdriver\n        @driver\n    end\n\n";
+                $content .= "end\n\n";
+                $testSuiteFileObj->fwrite($content);
             }
         } catch (RuntimeException $e) {
             echo $e->getMessage();
