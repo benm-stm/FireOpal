@@ -251,7 +251,7 @@ if (!empty($testsuites)) {
 echo '
                         <form action="" method="POST">
                             <fieldset>
-                                <legend>Testcases</legend>
+                                <legend><b>Testcases</b></legend>
                                 <ul id="menu">';
 $tests = search_tests('../testcases');
 foreach($tests as $c => $t) {
@@ -281,7 +281,7 @@ if (!empty($testsuites)) {
                     <td id="block_delete">
                         <form action="" method="POST">
                             <fieldset>
-                                <legend>Delete testsuites</legend>
+                                <legend><b>Delete testsuites</b></legend>
                                 <table nowrap>';
     foreach($testsuites as $t) {
         echo '
