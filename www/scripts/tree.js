@@ -11,11 +11,13 @@
                 uncheck(element.parentNode);
             }
         }
-        function loadTestCases(testCases, form,l1,l2){
-               l1.options.length=0;
+        function loadTestCases(form,l1){
+			var str = document.getElementById('testcases_loaded').value; 
+               testCases = str.split(',');
+			   l1.options.length=0;
                testCases.sort();
                var i
-               for (i=0; i<6; i++) {
+               for (i=0; i<testCases.length; i++) {
                    var o=new Option(testCases[i],testCases[i]);
                    l1.options[l1.options.length]=o;
                }

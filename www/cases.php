@@ -137,13 +137,16 @@ if (!empty($testsuites)) {
                                         <td><input type="radio" name="load_testsuites" value="'.$t.'" /></td>
                                     </tr>';
     }
-
+    //to be modified
+    $arr = implode(',' , array("test1.rb", "test2.rb"));
 
     echo '
                                 </table>
                             </fieldset>
                             <div id="submit_panel">
-                                <input type="button" name="load" value="Load" onclick="loadTestCases(this.form,this.form.testSuite, this.form.testCases)">
+                                <input type="hidden" name="testcases_loaded" id="testcases_loaded" value="'.$arr.'">
+                                <input type="button" name="load" value="Load" onClick="loadTestCases( this.form, this.form.testcases_to_add)">
+                            
                             </div>';
 }
 
