@@ -265,38 +265,38 @@ if (!empty($testsuites)) {
     echo '
                                 </table>
                             </fieldset>
-                                           <div id="submit_panel"><input type="button" name="load" value="Load" onclick="loadTestCases(this.form,this.form.testSuite,this.form.testCases);"><br />
-               <br />
-</div>';
+                            <div id="submit_panel"><input type="button" name="load" value="Load" onclick="loadTestCases(this.form,this.form.testSuite,this.form.testCases);"><br />
+                            </div>';
+    }
 
-}
-
-
-                            echo '<fieldset>
+echo '
+                            <fieldset>
                                 <legend><b>Testcases</b></legend>
+                                <table>
+                                    <tr>
+                                        <td align="center"><B><FONT size="2">Availables test cases</FONT></B><BR>';
+displayFileSystem("../testcases");
+echo '
+                                        </td>
 
+                                        <td align="center">
+                                        <input type="button" value="Add >>>" onClick="AddtestCases(this.form.testCases,this.form.testSuite)">
+                                        <br><br>
+                                        <input type="button" value="&lt;&lt;&lt; Remove" onClick="RemoveTestCase(this.form.testSuite,this.form.testCases)">
+                                        </td>
 
-            <TABLE>
-                <TR>
-                    <TD align="center"><B><FONT size="2">Availables test cases</FONT></B><BR>';
-                    displayFileSystem("../testcases");
-echo '              </TD>
-                    <TD align="center">
-                        <INPUT type="button" value="Add >>>" onClick="AddtestCases(this.form.testCases,this.form.testSuite)">
-                        <BR><BR>
-                        <INPUT type="button" value="&lt;&lt;&lt; Remove" onClick="RemoveTestCase(this.form.testSuite,this.form.testCases)">
-                    </TD>
-                    <TD align="center"><FONT size="2"><B>Dispatched test cases</B></FONT><BR>
-                        <SELECT align=top name="testSuite" size=6 style="width:220px">
-                            <OPTION value="10">----------------------</OPTION>
-                        </SELECT>
-                    </TD>
-                </TR>
-            </TABLE>
-            <SCRIPT language="javascript">
-                document.EditTestSuiteForm.testSuite.options.length=0;
-            </SCRIPT>
-        </FORM>
+                                        <td align="center"><FONT size="2"><B>Dispatched test cases</B></FONT><BR>
+                                            <select align=top name="testSuite" size=6 style="width:220px">
+                                                <option value="10">----------------------</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <SCRIPT language="javascript">
+                                    document.EditTestSuiteForm.testSuite.options.length=0;
+                                </SCRIPT>
+
                                 <table nowrap>
                                     <tr>
                                         <td>Name:</td>
