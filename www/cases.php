@@ -160,7 +160,7 @@ echo '
                                         </td>
 
                                         <td align="center"><FONT size="2"><B>Dispatched test cases</B></FONT>
-                                            <select align=top name="testcases_to_add" size=6 style="width:220px">
+                                            <select align=top name="testcases_to_add" size=10  style="width:320px" multiple="multiple">
                                                 <option value="10">----------------------</option>
                                             </select>
                                         </td>
