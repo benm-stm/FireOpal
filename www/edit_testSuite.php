@@ -20,39 +20,45 @@
     <head>
         <title>Codex automatic validation</title>
         <SCRIPT language="JavaScript">
-            function AddtestCase(l1,l2) {
-               if (l1.options.selectedIndex>=0) {
-                   o=new Option(l1.options[l1.options.selectedIndex].text,l1.options[l1.options.selectedIndex].value);
-                   l2.options[l2.options.length]=o;
-                   //Don't delete test case from left 
-                   //l1.options[l1.options.selectedIndex]=null;
-                   //alert(l2.options[l2.options.length-1].value);
-               }/*else{
-                   alert("Aucune activité sélectionnée");
-               }*/
+            function loadTestCases(form,l1,l2){
+                  var testCases = new Array("\docman\dummytest.rb","test.rb","tuleap.rb","dummytest.rb","yatest.rb","atest.rb","yatest.rb");
+                     l1.options.length=0;
+                     l2.options.length=0;
+                     testCases.sort();
+                     var i
+                     for (i=0; i<6; i++) {
+                         var o=new Option(testCases[i],testCases[i]);
+                         l1.options[l1.options.length]=o;
+                     }
+            }
+            function AddtestCases(l1,l2) {
+                for(testCase=0;testCase<l1.length;testCase++){
+                    if(l1.options[testCase].selected == true){
+                        var added=new Option(l1.options[testCase].text,l1.options[testCase].value);
+                        l2.options[l2.options.length]=added;
+                        l1.options[testCase].selected = null;
+                    }
+                }
             }
            function RemoveTestCase(l1) {
                    l1.options[l1.options.selectedIndex]=null;
-                   //alert(l1.options[l1.options.length-1].value);
             }
         </SCRIPT>
     </head>
     <body>
         <FORM name="EditTestSuiteForm">
+       Load test suite:
+       <input type="button" name="load" value="Load" onclick="loadTestCases(this.form,this.form.testSuite,this.form.testCases);"><br />
+       <br />
             <TABLE>
                 <TR>
                     <TD align="center"><B><FONT size="2">Availables test cases</FONT></B><BR>
-                        <SELECT align=top name="testCases" size=6  style="width:220px">
-                            <OPTION value="dummytest.rb">dummytest.rb</OPTION>
-                            <OPTION value="test.rb">test.rb</OPTION>
-                            <OPTION value="tuleap.rb">tuleap.rb</OPTION>
-                            <OPTION value="dummytest.rb">dummytest.rb</OPTION>
-                            <OPTION value="yatest.rb">yatest.rb</OPTION>
-                            <OPTION value="atest.rb">atest.rb</OPTION>
+                        <SELECT align=top name="testCases" size=6  style="width:220px" multiple="multiple">
+                            
                         </SELECT>
                     </TD>
                     <TD align="center">
-                        <INPUT type="button" value="Add >>>" onClick="AddtestCase(this.form.testCases,this.form.testSuite)">
+                        <INPUT type="button" value="Add >>>" onClick="AddtestCases(this.form.testCases,this.form.testSuite)">
                         <BR><BR>
                         <INPUT type="button" value="&lt;&lt;&lt; Remove" onClick="RemoveTestCase(this.form.testSuite,this.form.testCases)">
                     </TD>

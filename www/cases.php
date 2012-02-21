@@ -226,82 +226,80 @@ echo $content['form'];
 echo '
                             </ul> 
                         </fieldset>
-                    </td>';
+                    </td>
+                    <td id="block_load">';
  
 $testsuites = $testSuiteManager->searchTestsuites();
 if (!empty($testsuites)) {
     echo '
-                    <td id="block_load">
                         <form action="" method="POST">
                             <fieldset>
                                 <legend><b>Load testsuites</b></legend>
                                 <table nowrap>';
     foreach($testsuites as $t) {
         echo '
-                                <tr>
-                                    <td>'.$t.'</td>
-                                    <td><input type="radio" name="load_testsuites" value="'.$t.'" /></td>
-                                </tr>';
+                                    <tr>
+                                        <td>'.$t.'</td>
+                                        <td><input type="radio" name="load_testsuites" value="'.$t.'" /></td>
+                                    </tr>';
     }
     echo '
-                            </table>
-                        </fieldset>
-                        <div id="submit_panel"><input type="submit" value="Load !" /></div>
-                    </form>';
+                                </table>
+                            </fieldset>
+                            <div id="submit_panel"><input type="submit" value="Load !" /></div>
+                        </form>';
 }
 echo '
-                    <form action="" method="POST">
-                        <fieldset>
-                            <legend>Testcases</legend>
-                            <ul id="menu">';
+                        <form action="" method="POST">
+                            <fieldset>
+                                <legend><b>Testcases</b></legend>
+                                <ul id="menu">';
 $tests = search_tests('../testcases');
 foreach($tests as $c => $t) {
     display_tests($t, $c, array('is_cat' => true, 'prefixe' => 'testcases_to_add', 'checked' => @$_REQUEST['testcases_to_add']));
 }
 echo ' 
-                            </ul>
-                            <table nowrap>
-                                <tr>
-                                    <td>Name:</td>
-                                    <td><input name="testsuite_name"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Description:</td>
-                                    <td><textarea name="testsuite_description"></textarea></td>
-                                </tr>
-                            </table>
-                        </fieldset>
-                        <div id="submit_panel">
-                            <input id="generate" type="submit" value="Generate !"/>
-                        </div>
-                    </form>
-                </td>';
+                                </ul>
+                                <table nowrap>
+                                    <tr>
+                                        <td>Name:</td>
+                                        <td><input name="testsuite_name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Description:</td>
+                                        <td><textarea name="testsuite_description"></textarea></td>
+                                    </tr>
+                                </table>
+                            </fieldset>
+                            <div id="submit_panel">
+                                <input id="generate" type="submit" value="Generate !"/>
+                            </div>
+                        </form>
+                    </td>';
 
 if (!empty($testsuites)) {
     echo '
-                <td id="block_delete">
-                    <form action="" method="POST">
-                        <fieldset>
-                            <legend>Delete testsuites</legend>
-                            <table nowrap>';
+                    <td id="block_delete">
+                        <form action="" method="POST">
+                            <fieldset>
+                                <legend><b>Delete testsuites</b></legend>
+                                <table nowrap>';
     foreach($testsuites as $t) {
         echo '
-                                <tr>
-                                    <td>'.$t.'</td>
-                                    <td><input type="checkbox" name="delete_testsuites[]" value="'.$t.'" /></td>
-                                </tr>';
+                                    <tr>
+                                        <td>'.$t.'</td>
+                                        <td><input type="checkbox" name="delete_testsuites[]" value="'.$t.'" /></td>
+                                    </tr>';
     }
     echo '
-                            </table>
-                        </fieldset>
-                        <div id="submit_panel"><input type="submit" value="Delete !" /></div>
-                    </form>
-                </td>';
+                                </table>
+                            </fieldset>
+                            <div id="submit_panel"><input type="submit" value="Delete !" /></div>
+                        </form>
+                    </td>';
 }
 
 echo '
-                        </table>
-                    </td>
                 </tr>
             </table>
         </div>
