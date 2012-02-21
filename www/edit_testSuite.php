@@ -47,8 +47,8 @@
     </head>
     <body>
         <FORM name="EditTestSuiteForm">
-       Load available test cases:
-       <input type="button" name="load" value="Initialisation" onclick="loadTestCases(this.form,this.form.testCases,this.form.testSuite);"><br />
+       Load test suite:
+       <input type="button" name="load" value="Load" onclick="loadTestCases(this.form,this.form.testSuite,this.form.testCases);"><br />
        <br />
             <TABLE>
                 <TR>
