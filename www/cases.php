@@ -70,6 +70,25 @@ function search_tests($entry) {
     return $tests;
 }
 
+function displayFileSystem($directory) {
+    $iter = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($directory, RecursiveDirectoryIterator::KEY_AS_FILENAME)
+            , RecursiveIteratorIterator::SELF_FIRST);
+    $tokenHeader = '<SELECT align=top name="testCases" size=10  style="width:320px" multiple="multiple">';
+    printf($tokenHeader);
+    foreach ($iter as $entry) {
+        if ($entry->isDir()) {
+            $token = "<option disabled></b>%s</b></option>";
+        } else {
+            $token = "<option>&nbsp;&nbsp;&nbsp;&nbsp;%s</option>";
+        }
+        echo str_repeat("&nbsp;", 3*$iter->getDepth());
+        printf($token, $entry);
+    }
+    $tokenFooter = '<SELECT>';
+    printf($tokenFooter);
+    }
+
 /**
  * Show the list of collected test files with hierarchy
  *
@@ -301,7 +320,34 @@ if (!empty($testsuites)) {
 
 echo '
                 </tr>
-            </table>
+            </table>';
+echo ' 
+        <FORM name="EditTestSuiteForm">
+               Load test suite:
+               <input type="button" name="load" value="Load" onclick="loadTestCases(this.form,this.form.testSuite,this.form.testCases);"><br />
+               <br />';
+echo '      <TABLE>
+                <TR>
+                    <TD align="center"><B><FONT size="2">Availables test cases</FONT></B><BR>';
+                    displayFileSystem("../testcases");
+echo '              </TD>
+                    <TD align="center">
+                        <INPUT type="button" value="Add >>>" onClick="AddtestCases(this.form.testCases,this.form.testSuite)">
+                        <BR><BR>
+                        <INPUT type="button" value="&lt;&lt;&lt; Remove" onClick="RemoveTestCase(this.form.testSuite,this.form.testCases)">
+                    </TD>
+                    <TD align="center"><FONT size="2"><B>Dispatched test cases</B></FONT><BR>
+                        <SELECT align=top name="testSuite" size=6 style="width:220px">
+                            <OPTION value="10">----------------------</OPTION>
+                        </SELECT>
+                    </TD>
+                </TR>
+            </TABLE>
+            <SCRIPT language="javascript">
+                document.EditTestSuiteForm.testSuite.options.length=0;
+            </SCRIPT>
+        </FORM>';
+echo '
         </div>
     </body>
     <script type="text/javascript">
