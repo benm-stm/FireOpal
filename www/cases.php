@@ -25,6 +25,7 @@ require_once 'Setup.class.php';
 require_once 'TestSuite.class.php';
 require_once 'TestSuiteManager.class.php';
 $testSuiteManager = new TestSuiteManager();
+$testCaseManager = new TestCaseManager();
 
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
@@ -32,153 +33,6 @@ header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
-/**
- * Search test files recursively
- *
- * @param String $dir   path to directory containing test files
- * @param Array  $tab   Array of collected tests
- * @param String $entry path to test file
- *
- * @return void
- */
-function search_tests_rec($dir, &$tab, $entry) {
-    if (is_dir($dir)) {
-        if ($dh = opendir($dir)) {
-            while (($file = readdir($dh)) !== false) {
-                if (!in_array($file, array('.', '..'))) {
-                    if (is_dir("$dir/$file")) {
-                        search_tests_rec("$dir/$file", $tab[($entry == '../testcases'?'Codex':$entry)], $file);
-                    } else {
-                        $tab[($entry == '../testcases'?'Codex':$entry)]['_tests'][] = $file;
-                    }
-                }
-            }
-            closedir($dh);
-        }
-    }
-}
-
-/**
- * Search all available tests
- *
- * @param String $entry path to directory containing test files
- *
- * @return Array
- */
-function search_tests($entry) {
-    search_tests_rec($entry, $tests, $entry);
-    return $tests;
-}
-
-function displayFileSystem($directory) {
-    $iter = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($directory, RecursiveDirectoryIterator::KEY_AS_FILENAME)
-            , RecursiveIteratorIterator::SELF_FIRST);
-    $tokenHeader = '<SELECT align=top name="testCases" size=10  style="width:320px" multiple="multiple">';
-    printf($tokenHeader);
-    foreach ($iter as $entry) {
-        if ($entry->isDir()) {
-            $token = "<option disabled></b>%s</b></option>";
-        } else {
-            $token = "<option>&nbsp;&nbsp;&nbsp;&nbsp;%s</option>";
-        }
-        echo str_repeat("&nbsp;", 3*$iter->getDepth());
-        printf($token, $entry);
-    }
-    $tokenFooter = '<SELECT>';
-    printf($tokenFooter);
-    }
-
-/**
- * Show the list of collected test files with hierarchy
- *
- * @param Array  $tests  Array of collected tests
- * @param String $categ  Type of the node
- * @param Array  $params metadata
- *
- * @retrun void
- */
-function display_tests($tests, $categ, $params) {
-    $prefixe  = ($params['is_cat'] && $categ !== "_tests") ? $params['prefixe'] .'['. $categ .']' : $params['prefixe'];
-    if ($params['is_cat']) {
-        if ($categ !== "_tests") {
-            echo '<li class="categ">';
-            echo '<input type="hidden"   name="'. $prefixe .'[_do_all]" value="0" />';
-            echo '<input type="checkbox" name="'. $prefixe .'[_do_all]" value="1" '. ($params['checked'] && $params['checked'][$categ]['_do_all'] ? 'checked="checked"' : '') .' />';
-            echo '<b>'. $categ .'</b>';
-            echo '<ul>';
-        }
-        if (is_array($tests)) {
-        foreach($tests as $c => $t) {
-            display_tests($t, $c, array('is_cat' => ($categ !== "_tests"), 'prefixe' => $prefixe, 'checked' => ($params['checked'] && $categ !== "_tests" ? $params['checked'][$categ] : $params['checked'])));
-        }}
-        
-        if ($categ !== "_tests") {
-            echo '</ul>';
-            echo '</li>';   
-        }
-    } else {
-        echo '<li>';
-        echo '<input type="hidden"   name="'. $prefixe .'['. $tests .']" value="0" />';
-        echo '<input type="checkbox" name="'. $prefixe .'['. $tests .']" value="1" '. ($params['checked'] && $params['checked'][$tests] ? 'checked="checked"' : '') .' />';
-        echo $tests;
-        echo '</li>';
-    }
-}
-
-/**
- * Add javascript to the list of tests
- *
- * @param Array  $tests  Array of collected tests
- * @param String $categ  Type of the node
- * @param Array  $params metadata
- *
- * @return void
- */
-function display_tests_as_javascript($tests, $categ, $params) {
-    if ($params['is_cat']) {
-        if ($categ !== "_tests") {
-            echo "'$categ': {";
-        }
-        
-        foreach($tests as $c => $t) {
-            display_tests_as_javascript($t, $c, array('is_cat' => ($categ !== "_tests")));
-        }
-        if ($categ !== "_tests") {
-            echo '},';  
-        }
-    } else {
-        echo "'$tests':true,";
-    }
-}
-
-/**
- * Collect selected files to be executed
- *
- * @param Array  $files  Array of selected tests
- * @param String $prefix Path to the directory containing the file
- * 
- * @return Array
- */
-function prepare_files($filesArray, $prefix) {
-    if (substr($prefix, -1) == '/') {
-        $prefix = substr($prefix,0,-1); ;
-    }
-    $files = array();
-    foreach ($filesArray as $key => $node) {
-        if ($key == 'Codex') {
-            $key = '';
-        }
-        if (is_array($node)) {
-            $files = array_merge($files, prepare_files($node, $prefix."/".$key));
-        } else {
-            if ($node && $key != '_do_all') {
-                $files = array_merge($files, array($prefix."/".$key));
-            }
-        }
-    }
-    return $files;
-}
 
 $output = '';
 if (isset($_REQUEST['testcases_to_add'])) {
@@ -186,7 +40,7 @@ if (isset($_REQUEST['testcases_to_add'])) {
         require_once dirname(__FILE__).'/../include/TestSuite.class.php';
         require_once dirname(__FILE__).'/../include/TestCase.class.php';
         // manage request
-        $files = prepare_files($_REQUEST['testcases_to_add'], dirname(__FILE__).'/../testcases');
+        $files = $testCaseManager->prepare_files($_REQUEST['testcases_to_add'], dirname(__FILE__).'/../testcases');
         if (!empty($files)) {
             $testSuite = new TestSuite($_REQUEST['testsuite_name']);
             $testSuiteManager->populateTestSuite($testSuite, $files);
@@ -203,7 +57,6 @@ if (isset($_REQUEST['testcases_to_add'])) {
 }
 
 if (isset($_REQUEST['load_testsuites'])) {
-    var_dump($_REQUEST);
  
 }
 
@@ -275,7 +128,7 @@ echo '
                                 <table>
                                     <tr>
                                         <td align="center"><B><FONT size="2">Availables test cases</FONT></B><BR>';
-displayFileSystem("../testcases");
+$testCaseManager->displayFileSystem("../testcases");
 echo '
                                         </td>
 
@@ -346,7 +199,7 @@ echo '
     //<!--
     var testcases_to_add = {';
 foreach($tests as $c => $t) {
-    display_tests_as_javascript($t, $c, array('is_cat' => true));
+    $testCaseManager->display_tests_as_javascript($t, $c, array('is_cat' => true));
 }
 echo '
     };
