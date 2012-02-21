@@ -141,7 +141,7 @@ if (!empty($testsuites)) {
                                 </table>
                             </fieldset>
                             <div id="submit_panel">
-                                <input type="button" name="load" value="Load" onclick="loadTestCases(this.form,this.form.testSuite,this.form.testCases);">
+                                <input type="button" name="load" value="Load" onclick="loadTestCases(this.form,this.form.testcases_to_add,this.form.testCases);">
                             </div>';
 }
 
@@ -156,7 +156,7 @@ echo '
                                         </td>
 
                                         <td style="vertical-align:middle">
-                                            <input type="button" value="Add >>>" onClick="AddtestCases(this.form.testCases,this.form.testSuite)">
+                                            <input type="button" value="Add >>>" onClick="AddtestCases(this.form.testCases,this.form.testcases_to_add)">
                                         </td>
 
                                         <td align="center"><FONT size="2"><B>Dispatched test cases</B></FONT>
@@ -165,13 +165,13 @@ echo '
                                             </select>
                                         </td>
                                         <td style="vertical-align:middle">
-                                            <input type="button" value="Remove >>>" onClick="RemoveTestCase(this.form.testSuite,this.form.testCases)">
+                                            <input type="button" value="Remove >>>" onClick="RemoveTestCase(this.form.testcases_to_add,this.form.testCases)">
                                         </td>
                                     </tr>
                                 </table>
 
                                 <SCRIPT language="javascript">
-                                    document.EditTestSuiteForm.testSuite.options.length=0;
+                                    document.EditTestSuiteForm.testcases_to_add.options.length=0;
                                 </SCRIPT>
 
                                 <table nowrap>
