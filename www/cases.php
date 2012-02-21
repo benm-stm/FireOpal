@@ -103,6 +103,27 @@ echo '
                     <td id="block_load">';
  
 $testsuites = $testSuiteManager->searchTestsuites();
+
+if (!empty($testsuites)) {
+    echo '
+                        <form action="" method="POST">
+                            <fieldset>
+                                <legend><b>Delete testsuites</b></legend>
+                                <table nowrap>';
+    foreach($testsuites as $t) {
+        echo '
+                                    <tr>
+                                        <td>'.$t.'</td>
+                                        <td><input type="checkbox" name="delete_testsuites[]" value="'.$t.'" /></td>
+                                    </tr>';
+    }
+    echo '
+                                </table>
+                            </fieldset>
+                            <div id="submit_panel"><input type="submit" value="Delete !" /></div>
+                        </form>';
+}
+
 if (!empty($testsuites)) {
     echo '
                         <form name="EditTestSuiteForm" action="" method="POST">
@@ -169,28 +190,6 @@ echo '
                             </div>
                         </form>
                     </td>';
-
-if (!empty($testsuites)) {
-    echo '
-                    <td id="block_delete">
-                        <form action="" method="POST">
-                            <fieldset>
-                                <legend><b>Delete testsuites</b></legend>
-                                <table nowrap>';
-    foreach($testsuites as $t) {
-        echo '
-                                    <tr>
-                                        <td>'.$t.'</td>
-                                        <td><input type="checkbox" name="delete_testsuites[]" value="'.$t.'" /></td>
-                                    </tr>';
-    }
-    echo '
-                                </table>
-                            </fieldset>
-                            <div id="submit_panel"><input type="submit" value="Delete !" /></div>
-                        </form>
-                    </td>';
-}
 
 echo '
                 </tr>
