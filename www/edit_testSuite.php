@@ -31,7 +31,7 @@
                          l1.options[l1.options.length]=o;
                      }
             }
-            function AddtestCase(l1,l2) {
+            function AddtestCases(l1,l2) {
                 for(testCase=0;testCase<l1.length;testCase++){
                     if(l1.options[testCase].selected == true){
                         var added=new Option(l1.options[testCase].text,l1.options[testCase].value);
@@ -58,7 +58,7 @@
                         </SELECT>
                     </TD>
                     <TD align="center">
-                        <INPUT type="button" value="Add >>>" onClick="AddtestCase(this.form.testCases,this.form.testSuite)">
+                        <INPUT type="button" value="Add >>>" onClick="AddtestCases(this.form.testCases,this.form.testSuite)">
                         <BR><BR>
                         <INPUT type="button" value="&lt;&lt;&lt; Remove" onClick="RemoveTestCase(this.form.testSuite,this.form.testCases)">
                     </TD>
