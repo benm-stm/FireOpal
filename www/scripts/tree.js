@@ -11,8 +11,7 @@
                 uncheck(element.parentNode);
             }
         }
-        function loadTestCases(form,l1,l2){
-            var testCases = new Array("\docman\dummytest.rb","test.rb","tuleap.rb","dummytest.rb","yatest.rb","atest.rb","yatest.rb");
+        function loadTestCases(testCases, form,l1,l2){
                l1.options.length=0;
                l2.options.length=0;
                testCases.sort();

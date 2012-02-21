@@ -141,7 +141,7 @@ if (!empty($testsuites)) {
                                 </table>
                             </fieldset>
                             <div id="submit_panel">
-                                <input type="button" name="load" value="Load" onclick="loadTestCases(this.form,this.form.testSuite,this.form.testCases);">
+                                <input type="button" name="load" value="Load" onclick="loadTestCases(new Array("test.rb"), this.form,this.form.testSuite,this.form.testCases);">
                             </div>';
 }
 
