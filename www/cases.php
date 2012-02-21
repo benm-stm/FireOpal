@@ -251,7 +251,7 @@ echo '
 $testsuites = $testSuiteManager->searchTestsuites();
 if (!empty($testsuites)) {
     echo '
-                        <form action="" method="POST">
+                                                <form name="EditTestSuiteForm" action="" method="POST">
                             <fieldset>
                                 <legend><b>Load testsuites</b></legend>
                                 <table nowrap>';
@@ -265,20 +265,38 @@ if (!empty($testsuites)) {
     echo '
                                 </table>
                             </fieldset>
-                            <div id="submit_panel"><input type="submit" value="Load !" /></div>
-                        </form>';
+                                           <div id="submit_panel"><input type="button" name="load" value="Load" onclick="loadTestCases(this.form,this.form.testSuite,this.form.testCases);"><br />
+               <br />
+</div>';
+
 }
-echo '
-                        <form action="" method="POST">
-                            <fieldset>
+
+
+                            echo '<fieldset>
                                 <legend><b>Testcases</b></legend>
-                                <ul id="menu">';
-$tests = search_tests('../testcases');
-foreach($tests as $c => $t) {
-    display_tests($t, $c, array('is_cat' => true, 'prefixe' => 'testcases_to_add', 'checked' => @$_REQUEST['testcases_to_add']));
-}
-echo ' 
-                                </ul>
+
+
+            <TABLE>
+                <TR>
+                    <TD align="center"><B><FONT size="2">Availables test cases</FONT></B><BR>';
+                    displayFileSystem("../testcases");
+echo '              </TD>
+                    <TD align="center">
+                        <INPUT type="button" value="Add >>>" onClick="AddtestCases(this.form.testCases,this.form.testSuite)">
+                        <BR><BR>
+                        <INPUT type="button" value="&lt;&lt;&lt; Remove" onClick="RemoveTestCase(this.form.testSuite,this.form.testCases)">
+                    </TD>
+                    <TD align="center"><FONT size="2"><B>Dispatched test cases</B></FONT><BR>
+                        <SELECT align=top name="testSuite" size=6 style="width:220px">
+                            <OPTION value="10">----------------------</OPTION>
+                        </SELECT>
+                    </TD>
+                </TR>
+            </TABLE>
+            <SCRIPT language="javascript">
+                document.EditTestSuiteForm.testSuite.options.length=0;
+            </SCRIPT>
+        </FORM>
                                 <table nowrap>
                                     <tr>
                                         <td>Name:</td>
@@ -321,34 +339,8 @@ if (!empty($testsuites)) {
 echo '
                 </tr>
             </table>';
-echo ' 
-        <FORM name="EditTestSuiteForm">
-               Load test suite:
-               <input type="button" name="load" value="Load" onclick="loadTestCases(this.form,this.form.testSuite,this.form.testCases);"><br />
-               <br />';
-echo '      <TABLE>
-                <TR>
-                    <TD align="center"><B><FONT size="2">Availables test cases</FONT></B><BR>';
-                    displayFileSystem("../testcases");
-echo '              </TD>
-                    <TD align="center">
-                        <INPUT type="button" value="Add >>>" onClick="AddtestCases(this.form.testCases,this.form.testSuite)">
-                        <BR><BR>
-                        <INPUT type="button" value="&lt;&lt;&lt; Remove" onClick="RemoveTestCase(this.form.testSuite,this.form.testCases)">
-                    </TD>
-                    <TD align="center"><FONT size="2"><B>Dispatched test cases</B></FONT><BR>
-                        <SELECT align=top name="testSuite" size=6 style="width:220px">
-                            <OPTION value="10">----------------------</OPTION>
-                        </SELECT>
-                    </TD>
-                </TR>
-            </TABLE>
-            <SCRIPT language="javascript">
-                document.EditTestSuiteForm.testSuite.options.length=0;
-            </SCRIPT>
-        </FORM>';
+
 echo '
-        </div>
     </body>
     <script type="text/javascript">
     //<!--
