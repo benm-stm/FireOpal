@@ -189,22 +189,8 @@ echo '
                                 <input id="generate" type="submit" value="Generate !"/>
                             </div>
                         </form>
-                    </td>';
-
-echo '
+                    </td>
                 </tr>
-            </table>';
-
-echo '
+            </table>
     </body>
-    <script type="text/javascript">
-    //<!--
-    var testcases_to_add = {';
-foreach($tests as $c => $t) {
-    $testCaseManager->display_tests_as_javascript($t, $c, array('is_cat' => true));
-}
-echo '
-    };
-    //-->
-    </script>
 </html>';

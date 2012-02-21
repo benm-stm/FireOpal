@@ -76,32 +76,6 @@ class TestCaseManager {
     }
 
     /**
-     * Add javascript to the list of tests
-     *
-     * @param Array  $tests  Array of collected tests
-     * @param String $categ  Type of the node
-     * @param Array  $params metadata
-     *
-     * @return void
-     */
-    function display_tests_as_javascript($tests, $categ, $params) {
-        if ($params['is_cat']) {
-            if ($categ !== "_tests") {
-                echo "'$categ': {";
-            }
-
-            foreach($tests as $c => $t) {
-                display_tests_as_javascript($t, $c, array('is_cat' => ($categ !== "_tests")));
-            }
-            if ($categ !== "_tests") {
-                echo '},';
-            }
-        } else {
-            echo "'$tests':true,";
-        }
-    }
-
-    /**
      * Collect selected files to be executed
      *
      * @param Array  $files  Array of selected tests
