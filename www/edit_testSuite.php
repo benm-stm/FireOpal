@@ -32,10 +32,13 @@
                      }
             }
             function AddtestCase(l1,l2) {
-               if (l1.options.selectedIndex>=0) {
-                   var o=new Option(l1.options[l1.options.selectedIndex].text,l1.options[l1.options.selectedIndex].value);
-                   l2.options[l2.options.length]=o;
-               }
+                for(testCase=0;testCase<l1.length;testCase++){
+                    if(l1.options[testCase].selected == true){
+                        var added=new Option(l1.options[testCase].text,l1.options[testCase].value);
+                        l2.options[l2.options.length]=added;
+                        l1.options[testCase].selected = null;
+                    }
+                }
             }
            function RemoveTestCase(l1) {
                    l1.options[l1.options.selectedIndex]=null;
@@ -50,7 +53,7 @@
             <TABLE>
                 <TR>
                     <TD align="center"><B><FONT size="2">Availables test cases</FONT></B><BR>
-                        <SELECT align=top name="testCases" size=6  style="width:220px">
+                        <SELECT align=top name="testCases" size=6  style="width:220px" multiple="multiple">
                             
                         </SELECT>
                     </TD>
