@@ -104,7 +104,7 @@ echo '
 $testsuites = $testSuiteManager->searchTestsuites();
 if (!empty($testsuites)) {
     echo '
-                                                <form name="EditTestSuiteForm" action="" method="POST">
+                        <form name="EditTestSuiteForm" action="" method="POST">
                             <fieldset>
                                 <legend><b>Load testsuites</b></legend>
                                 <table nowrap>';
@@ -118,30 +118,32 @@ if (!empty($testsuites)) {
     echo '
                                 </table>
                             </fieldset>
-                            <div id="submit_panel"><input type="button" name="load" value="Load" onclick="loadTestCases(this.form,this.form.testSuite,this.form.testCases);"><br />
+                            <div id="submit_panel">
+                                <input type="button" name="load" value="Load" onclick="loadTestCases(this.form,this.form.testSuite,this.form.testCases);">
                             </div>';
-    }
+}
 
 echo '
                             <fieldset>
                                 <legend><b>Testcases</b></legend>
                                 <table>
                                     <tr>
-                                        <td align="center"><B><FONT size="2">Availables test cases</FONT></B><BR>';
+                                        <td align="center"><B><FONT size="2">Availables test cases</FONT></B>';
 $testCaseManager->displayFileSystem("../testcases");
 echo '
                                         </td>
 
-                                        <td align="center">
-                                        <input type="button" value="Add >>>" onClick="AddtestCases(this.form.testCases,this.form.testSuite)">
-                                        <br><br>
-                                        <input type="button" value="&lt;&lt;&lt; Remove" onClick="RemoveTestCase(this.form.testSuite,this.form.testCases)">
+                                        <td style="vertical-align:middle">
+                                            <input type="button" value="Add >>>" onClick="AddtestCases(this.form.testCases,this.form.testSuite)">
                                         </td>
 
-                                        <td align="center"><FONT size="2"><B>Dispatched test cases</B></FONT><BR>
+                                        <td align="center"><FONT size="2"><B>Dispatched test cases</B></FONT>
                                             <select align=top name="testSuite" size=6 style="width:220px">
                                                 <option value="10">----------------------</option>
                                             </select>
+                                        </td>
+                                        <td style="vertical-align:middle">
+                                            <input type="button" value="Remove >>>" onClick="RemoveTestCase(this.form.testSuite,this.form.testCases)">
                                         </td>
                                     </tr>
                                 </table>
