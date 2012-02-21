@@ -24,6 +24,7 @@ ini_set('include_path', ini_get('include_path').':'.dirname(__FILE__).'/../inclu
 require_once 'Setup.class.php';
 require_once 'TestSuite.class.php';
 require_once 'TestSuiteManager.class.php';
+require_once 'TestCaseManager.class.php';
 $testSuiteManager = new TestSuiteManager();
 $testCaseManager = new TestCaseManager();
 
