@@ -50,6 +50,8 @@ echo $error;
 echo '
             <a href="cases" class="community"><< Go back</a>
         </div>
+        <div id="header_clear">
+        </div>
         <div id="body_skin">
             <table>
                 <tr>

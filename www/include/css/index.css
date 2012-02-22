@@ -92,6 +92,9 @@ body {
     background-color: #f7f7f7;
     border: 1px solid #b7b7b7;
 }
+#header_clear{
+    clear: both;
+}
 
 /* {{{ feedback */
 .feedback_error, .feedback_warning, .feedback_info, .feedback_debug {
