@@ -38,15 +38,15 @@ header("Pragma: no-cache");
 $output   = '';
 $messages = array();
 if (isset($_REQUEST['testcases_to_add'])) {
-    $_REQUEST['testcases_to_add'] = explode(',', $_REQUEST['testcases_to_add']);
+    $testCasesToAdd = explode(',', $_REQUEST['testcases_to_add']);
     if (!empty($_REQUEST['testsuite_name'])) {
         require_once dirname(__FILE__).'/../include/TestSuite.class.php';
         require_once dirname(__FILE__).'/../include/TestCase.class.php';
         // manage request
-        $files = $testCaseManager->prepare_files($_REQUEST['testcases_to_add'], dirname(__FILE__).'/../testcases');
+        $files = $testCaseManager->prepare_files($testCasesToAdd, dirname(__FILE__).'/../testcases');
         if (!empty($files)) {
             $testSuite = new TestSuite($_REQUEST['testsuite_name']);
-            $testSuiteManager->populateTestSuite($testSuite, $_REQUEST['testcases_to_add']);
+            $testSuiteManager->populateTestSuite($testSuite, $testCasesToAdd);
             $testSuite->storeTestSuiteDetails($_REQUEST);
             $testSuite->bindConfigurationElements($_REQUEST);
             $testSuite->loadTestSuite();
