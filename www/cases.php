@@ -57,9 +57,6 @@ if (isset($_REQUEST['testcases_to_add'])) {
     }
 }
 
-if (isset($_REQUEST['load_testsuites'])) {
- 
-}
 
 if (isset($_REQUEST['delete_testsuites'])) {
     if ($testSuiteManager->delete($_REQUEST['delete_testsuites'])) {
@@ -67,6 +64,12 @@ if (isset($_REQUEST['delete_testsuites'])) {
     } else {
         $output = "Tetsuite not deleted";
     }
+}
+
+if (isset($_REQUEST['load_testsuites'])) {
+    $testSuite = new TestSuite(substr($_REQUEST['load_testsuites'], 0, -3));
+    $testCases = $testSuite->getTestCases();
+    $testCases_str = implode(',' , $testCases);
 }
 
 echo '
@@ -137,19 +140,21 @@ if (!empty($testsuites)) {
                                         <td><input type="radio" name="load_testsuites" value="'.$t.'" /></td>
                                     </tr>';
     }
-    //to be modified
-    $arr = implode(',' , array("test1.rb", "test2.rb"));
+    echo '                                </table>
+                            </fieldset>';
 
     echo '
-                                </table>
-                            </fieldset>
-                            <div id="submit_panel">
-                                <input type="hidden" name="testcases_loaded" id="testcases_loaded" value="'.$arr.'">
-                                <input type="button" name="load" value="Load" onClick="loadTestCases( this.form, this.form.testcases_to_add)">
-                            
-                            </div>';
-}
 
+                                <div id="submit_panel">';
+
+    echo '  
+                                           <input type="hidden" name="testcases_loaded" id="testcases_loaded" value="'.$testCases_str.'">
+                                           <input type="Submit" name="load" value="Load" onClick="loadTestCases( this.form, this.form.testcases_to_add)">';
+    echo '
+
+                            
+                                </div>';
+}
 echo '
                             <fieldset>
                                 <legend><b>Testcases</b></legend>

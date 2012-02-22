@@ -179,7 +179,31 @@ class TestSuite {
             echo $e->getMessage();
         }
     }
-
+    /**
+     * Returns the testCases attached to this testSuite
+     *
+     * @return Array
+     */
+    public function getTestCases() {
+        $inSetup = false;
+        $content = array();
+        if ($this->_testSuiteFile->isReadable()) {
+            $file    = $this->_testSuiteFile->openFile('r');
+            while (!$file->eof()) {
+                $line = $file->fgets();
+                if ($inSetup && $line == "#--- Test Cases End ---\n") {
+                    $inSetup = false;
+                }
+                if ($inSetup) {
+                    $content[]= substr($line, 1);
+                }
+                if (!$inSetup && $line == "#--- Test Cases list ---\n") {
+                    $inSetup = true;
+                }
+            }
+        }
+        return $content;
+    }
     /**
      * Store conf in the correponding testsuite
      *
