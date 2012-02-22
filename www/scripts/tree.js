@@ -12,15 +12,19 @@
             }
         }
         function loadTestCases(form,l1){
-			var str = document.getElementById('testcases_loaded').value; 
-               testCases = str.split(',');
-			   l1.options.length=0;
-               testCases.sort();
-               var i
-               for (i=0; i<testCases.length; i++) {
-                   var o=new Option(testCases[i],testCases[i]);
-                   l1.options[l1.options.length]=o;
-               }
+            for( i = 0; i < document.EditTestSuiteForm.load_testsuites.length; i++ ) {
+                if( document.EditTestSuiteForm.load_testsuites[i].checked == true ) {
+                    str = document.EditTestSuiteForm.load_testsuites[i].value;
+                }
+            }
+            testCases = str.split(',');
+			l1.options.length=0;
+            testCases.sort();
+            var i
+            for (i=0; i<testCases.length; i++) {
+                var o=new Option(testCases[i],testCases[i]);
+                l1.options[l1.options.length]=o;
+            }
         }
         function AddtestCases(l1,l2) {
             for(testCase=0;testCase<l1.length;testCase++){

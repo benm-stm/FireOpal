@@ -31,7 +31,10 @@ class TestSuiteManager {
                 while (($file = readdir($dh)) !== false) {
                     if (!in_array($file, array('.', '..'))) {
                         if (!is_dir("$dir/$file")) {
-                            $testsuites[] = $file;
+                            $testSuite = new TestSuite(substr($file, 0, -3));
+                            $testCases = $testSuite->getTestCases();
+                            $testCasesStr = implode(',' , $testCases);
+                            $testsuites[$file] = $testCasesStr;
                         }
                     }
                 }

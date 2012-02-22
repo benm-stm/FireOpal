@@ -70,7 +70,7 @@ if (isset($_REQUEST['delete_testsuites'])) {
  
 if (isset($_REQUEST['load_testsuites'])) {
     $testSuite = new TestSuite(substr($_REQUEST['load_testsuites'], 0, -3));
-     $testCases = $testSuite->getTestCases();
+    $testCases = $testSuite->getTestCases();
     $testCasesStr = implode(',' , $testCases);
    echo  $testCasesStr;
 }
@@ -123,11 +123,11 @@ if (!empty($testsuites)) {
                             <fieldset>
                                 <legend><b>Delete testsuites</b></legend>
                                 <table nowrap>';
-    foreach($testsuites as $t) {
+    foreach($testsuites as $testsuite => $testcases) {
         echo '
                                     <tr>
-                                        <td>'.$t.'</td>
-                                        <td><input type="checkbox" name="delete_testsuites[]" value="'.$t.'" /></td>
+                                        <td>'.$testsuite.'</td>
+                                        <td><input type="checkbox" name="delete_testsuites[]" value="'.$testsuite.'" /></td>
                                     </tr>';
     }
     echo '
@@ -143,11 +143,11 @@ if (!empty($testsuites)) {
                             <fieldset>
                                 <legend><b>Load testsuites</b></legend>
                                 <table nowrap>';
-    foreach($testsuites as $t) {
+    foreach($testsuites as $testsuite => $testcases) {
         echo '
                                     <tr>
-                                        <td>'.$t.'</td>
-                                        <td><input type="radio" name="load_testsuites" value="'.$t.'" /></td>
+                                        <td>'.$testsuite.'</td>
+                                        <td><input type="radio" name="load_testsuites" value="'.$testcases.'" /></td>
                                     </tr>';
     }
 
@@ -157,8 +157,7 @@ if (!empty($testsuites)) {
                                 </table>
                             </fieldset>
                             <div id="submit_panel">
-                                <input type="hidden" name="testcases_loaded" id="testcases_loaded" value="'.$testCasesStr.'">
-                                <input type="button" name="load" value="Load" onClick="loadTestCases( this.form, this.form.testcases_to_add)">
+                                <input type="button" name="load" value="Load" onClick="loadTestCases(this.form, this.form.testcases_to_add)">
 
                           
                                 </div>';

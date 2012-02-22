@@ -51,7 +51,7 @@ echo '
 
 $testSuiteManager = new TestSuiteManager();
 $testsuites = $testSuiteManager->searchTestsuites();
-foreach($testsuites as $t) {
+foreach($testsuites as $t => $cases) {
     echo '
                                     <li>
                                         <input type="radio" name="run" value="'.$t.'" />'.$t.'
