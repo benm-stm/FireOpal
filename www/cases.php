@@ -162,7 +162,7 @@ echo '
                                 <legend><b>Testcases</b></legend>
                                 <table>
                                     <tr>
-                                        <td align="center"><B><FONT size="2">Availables test cases</FONT></B>';
+                                        <td align="center"><b><font size="2">Availables test cases</font></b>';
 $testCaseManager->displayFileSystem("../testcases");
 echo '
                                         </td>
@@ -171,7 +171,7 @@ echo '
                                             <input type="button" value="Add >>>" onClick="AddtestCases(this.form.testCases,this.form.testcases_to_add)">
                                         </td>
 
-                                        <td align="center"><FONT size="2"><B>Dispatched test cases</B></FONT>
+                                        <td align="center"><font size="2"><b>Dispatched test cases</b></font>
                                             <select align=top id="testcases_to_add" name="testcases_to_add" size=10  style="width:320px" multiple="multiple">
                                                 <option value="10">----------------------</option>
                                             </select>
@@ -182,26 +182,26 @@ echo '
                                     </tr>
                                 </table>
 
-                                <SCRIPT language="javascript">
+                                <script language="javascript">
                                     document.EditTestSuiteForm.testcases_to_add.options.length=0;
-                                </SCRIPT>';
-echo '                                <script type="text/javascript">
+                                </script>';
+echo '                          <script type="text/javascript">
                                     function generateTestSuite(testcases_to_add) {
                                         var p = document.getElementById(\'testcases_to_add\');
                                         var testCasesString = "";
-                                            for(testCase=0;testCase<p.length;testCase++) {
-                                                if(testCase+1 == p.length) {
-                                                    testCasesString += p[testCase].value;
-                                                } else {
-                                                    testCasesString += p[testCase].value+",";
-                                                }
+                                        for(testCase=0;testCase<p.length;testCase++) {
+                                            if(testCase+1 == p.length) {
+                                                testCasesString += p[testCase].value;
+                                            } else {
+                                                testCasesString += p[testCase].value+",";
                                             }
+                                        }
                                         alert(testCasesString);
                                         d = document.getElementById("submit_panel_1");';
-echo "                                  d.innerHTML = '<input type=\"text\" id=\"testcases_to_add\" name=\"testcases_to_add\" value=\"' + testCasesString + '\" />';
+echo "                                      d.innerHTML = '<input type=\"text\" id=\"testcases_to_add\" name=\"testcases_to_add\" value=\"' + testCasesString + '\" />';
                                     }
-                            </script>";
-                                echo '<table nowrap>
+                                </script>";
+echo '                          <table nowrap>
                                     <tr>
                                         <td>Name:</td>
                                         <td><input name="testsuite_name"/></td>
@@ -219,5 +219,6 @@ echo '                      <div id="submit_panel_1"> </div><div id="submit_pane
                     </td>
                 </tr>
             </table>
+        </div>
     </body>
 </html>';
