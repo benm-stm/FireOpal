@@ -17,19 +17,19 @@
  */
 
 // TODO: Kill every one that breaks HTML indentation
- 
+
 ini_set('display_errors', 'on');
 ini_set('max_execution_time', 0);
 ini_set('memory_limit', -1);
 ini_set('include_path', ini_get('include_path').':'.dirname(__FILE__).'/../include/');
- 
+
 require_once 'Setup.class.php';
 require_once 'TestSuite.class.php';
 require_once 'TestSuiteManager.class.php';
 require_once 'TestCaseManager.class.php';
 $testSuiteManager = new TestSuiteManager();
 $testCaseManager = new TestCaseManager();
- 
+
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate");
@@ -164,7 +164,7 @@ if (!empty($testsuites)) {
                         </form>';
 }
 echo '
-                        <form name="EditTestSuiteForm" action="" method="POST">
+                        <form name="EditTestSuiteForm" action="" method="POST" onSubmit="generateTestSuite(testcases_to_add)">
                             <fieldset>
                                 <legend><b>Testcases</b></legend>
                                 <table>
@@ -188,10 +188,28 @@ echo '
                                         </td>
                                     </tr>
                                 </table>
+
                                 <script language="javascript">
                                     document.EditTestSuiteForm.testcases_to_add.options.length=0;
-                                </script>
-                                <table nowrap>
+                                </script>';
+// TODO: Delete or move this script in tree.js (or equivalent if tree.js is renamed)
+echo '                          <script type="text/javascript">
+                                    function generateTestSuite(testcases_to_add) {
+                                        var p = document.getElementById(\'testcases_to_add\');
+                                        var testCasesString = "";
+                                        for(testCase=0; testCase<p.length; testCase++) {
+                                            if(testCase+1 == p.length) {
+                                                testCasesString += p[testCase].value;
+                                            } else {
+                                                testCasesString += p[testCase].value+",";
+                                            }
+                                        }
+                                        alert(testCasesString);
+                                        d = document.getElementById("submit_panel_1");';
+echo "                                  d.innerHTML = '<input type=\"text\" id=\"testcases_to_add\" name=\"testcases_to_add\" value=\"' + testCasesString + '\" />';
+                                    }
+                                </script>";
+echo '                          <table nowrap>
                                     <tr>
                                         <td>Name:</td>
                                         <td><input name="testsuite_name"/></td>
@@ -212,3 +230,5 @@ echo '                      <div id="submit_panel_1"> </div><div id="submit_pane
         </div>
     </body>
 </html>';
+
+?>
