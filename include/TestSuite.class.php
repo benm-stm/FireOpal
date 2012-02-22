@@ -234,7 +234,33 @@ class TestSuite {
     }
 
     /**
-     * Display setup of the testsuite and assosciated testcases
+     * Returns the testCases attached to this testSuite
+     *
+     * @return Array
+     */
+    public function getTestCases() {
+        $inSetup = false;
+        $testCases = array();
+        if ($this->_testSuiteFile->isReadable()) {
+            $file    = $this->_testSuiteFile->openFile('r');
+            while (!$file->eof()) {
+                $line = $file->fgets();
+                if ($inSetup && $line == "#--- Test Cases End ---\n") {
+                    $inSetup = false;
+                }
+                if ($inSetup) {
+                    $testCases[]= substr($line, 0, 1);
+                }
+                if (!$inSetup && $line == "#--- Test Cases list ---\n") {
+                    $inSetup = true;
+                }
+            }
+        }
+        return $testCases;
+    }
+
+    /**
+     * Display setup of the testsuite and associated testcases
      *
      * @return String
      */
