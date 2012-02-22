@@ -28,7 +28,15 @@ if (!empty($_REQUEST)) {
 
 $content = $setup->display();
 $form    = $content['form'];
-$error   = implode("<br />", $content['error']);
+
+$error   = "";
+if (!empty($content['error'])) {
+    $error   = '<ul class="feedback_error" >';
+    foreach ($content['error'] as $message) {
+        $error .= "<li>".$message."</li>";
+    }
+    $error .= '</ul>';
+}
 
 echo '
 <html>
@@ -37,11 +45,12 @@ echo '
         <link href="include/css/index.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
-        <div id="header">
-            <p>
-                <font color="red">'.$error.'</font>
-            </p>
+        <div id="header">';
+echo $error;
+echo '
             <a href="cases" class="community"><< Go back</a>
+        </div>
+        <div id="header_clear">
         </div>
         <div id="body_skin">
             <table>

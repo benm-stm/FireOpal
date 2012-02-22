@@ -232,7 +232,8 @@ class TestSuite {
     public function getCurrent() {
         return $this->_currentTestCase;
     }
-    
+
+
     /**
      * Returns the testCases attached to this testSuite
      *
@@ -260,7 +261,7 @@ class TestSuite {
     }
 
     /**
-     * Display setup of the testsuite and assosciated testcases
+     * Display setup of the testsuite and associated testcases
      *
      * @return String
      */

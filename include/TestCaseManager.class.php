@@ -64,12 +64,12 @@ class TestCaseManager {
         printf($tokenHeader);
         foreach ($iter as $entry) {
             if ($entry->isDir()) {
-                $token = "<option disabled></b>%s</b></option>";
+                $token = "<option value=\"%s\" disabled></b>%s</b></option>";
             } else {
-                $token = "<option>&nbsp;&nbsp;&nbsp;&nbsp;%s</option>";
+                $token = "<option value=\"%s\">&nbsp;&nbsp;&nbsp;&nbsp;%s</option>";
             }
             echo str_repeat("&nbsp;", 3*$iter->getDepth());
-            printf($token, $entry);
+            printf($token, $entry->getRealPath(),$entry->getFilename());
         }
         $tokenFooter = '<SELECT>';
         printf($tokenFooter);
