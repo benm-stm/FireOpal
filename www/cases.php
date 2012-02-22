@@ -35,7 +35,8 @@ header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
 
-$output = '';
+$output   = '';
+$messages = array();
 if (isset($_REQUEST['testcases_to_add'])) {
     $_REQUEST['testcases_to_add'] = explode(',', $_REQUEST['testcases_to_add']);
     if (!empty($_REQUEST['testsuite_name'])) {
@@ -49,12 +50,12 @@ if (isset($_REQUEST['testcases_to_add'])) {
             $testSuite->storeTestSuiteDetails($_REQUEST);
             $testSuite->bindConfigurationElements($_REQUEST);
             $testSuite->loadTestSuite();
-            $output = "Testsuite stored";
+            $messages[] = "Testsuite stored";
         } else {
-            $output = "No testcases selected";
+            $messages[] = "No testcases selected";
         }
     } else {
-        $output = "Empty name";
+        $messages[] = "Empty name";
     }
 }
 
@@ -64,10 +65,18 @@ if (isset($_REQUEST['load_testsuites'])) {
 
 if (isset($_REQUEST['delete_testsuites'])) {
     if ($testSuiteManager->delete($_REQUEST['delete_testsuites'])) {
-        $output = "Testsuite deleted";
+        $messages[] = "Testsuite deleted";
     } else {
-        $output = "Tetsuite not deleted";
+        $messages[] = "Tetsuite not deleted";
     }
+}
+
+if (!empty($messages)) {
+    $output   = '<ul class="feedback_info" >';
+    foreach ($messages as $message) {
+        $output .= "<li>".$message."</li>";
+    }
+    $output .= '</ul>';
 }
 
 echo '
@@ -80,10 +89,9 @@ echo '
         <script type="text/javascript" src="scripts/tree.js"></script>
     </head>
     <body>
-        <div id="header">
-            <p>
-                <font color="red">'.$output.'</font>
-            </p>
+        <div id="header">';
+echo $output;
+echo '
             <a href="/" class="community"><< Go back</a>
             <a href="set" class="community">Update config</a>
         </div>
