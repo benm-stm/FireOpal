@@ -22,7 +22,7 @@
 <html>
     <head>
         <title>Codex automatic validation</title>
-        <script type="text/javascript" src="scripts/tree.js"></script>
+        <script type="text/javascript" src="include/scripts/tree.js"></script>
     </head>
     <body>
         <FORM name="EditTestSuiteForm">
