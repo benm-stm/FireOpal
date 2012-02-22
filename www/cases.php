@@ -192,7 +192,7 @@ echo '
                                 <script language="javascript">
                                     document.EditTestSuiteForm.testcases_to_add.options.length=0;
                                 </script>';
-// TODO: Delete or move this script in tree.js (or equivalent if tree.js is renamed)
+// TODO: Move this script in tree.js (or equivalent if tree.js is renamed)
 echo '                          <script type="text/javascript">
                                     function generateTestSuite(testcases_to_add) {
                                         var p = document.getElementById(\'testcases_to_add\');
@@ -204,7 +204,6 @@ echo '                          <script type="text/javascript">
                                                 testCasesString += p[testCase].value+",";
                                             }
                                         }
-                                        alert(testCasesString);
                                         d = document.getElementById("submit_panel_1");';
 echo "                                  d.innerHTML = '<input type=\"text\" id=\"testcases_to_add\" name=\"testcases_to_add\" value=\"' + testCasesString + '\" />';
                                     }
