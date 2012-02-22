@@ -18,10 +18,10 @@ function loadTestCases() {
 // TODO: Add comments
 // TODO: Verify if really we need all params
 function AddtestCases(l1,l2) {
-    for(testCase=0;testCase<l1.length;testCase++) {
+    for(testCase=0; testCase<l1.length; testCase++) {
         if(l1.options[testCase].selected == true) {
             var added=new Option(l1.options[testCase].text,l1.options[testCase].value);
-            l2.options[l2.options.length]=added;
+            l2.options[l2.options.length] = added;
             l1.options[testCase].selected = null;
         }
     }
