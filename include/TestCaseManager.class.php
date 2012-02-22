@@ -65,6 +65,7 @@ class TestCaseManager {
         printf($tokenHeader);
         foreach ($iter as $entry) {
             if ($entry->isDir()) {
+                // TODO: Don't put . and ..
                 $token = "<option value=\"%s\" disabled></b>%s</b></option>";
             } else {
                 // TODO: Verify if really we need &nbsp;

@@ -1,3 +1,4 @@
+// TODO: Rename this file (and don't forget to update calls to the file)
 // TODO: Add comments
 function loadTestCases() {
     for( i = 0; i < document.LoadTestSuiteForm.load_testsuites.length; i++ ) {
@@ -7,7 +8,6 @@ function loadTestCases() {
     }
     testCases = str.split(',');
 	document.EditTestSuiteForm.testcases_to_add.options.length=0;
-    testCases.sort();
     var i
     for (i=0; i<testCases.length; i++) {
         var o = new Option(testCases[i],testCases[i]);
@@ -29,6 +29,7 @@ function AddtestCases(l1,l2) {
 
 // TODO: Add comments
 // TODO: Verify if really we need all params
+// TODO: Delete all selected testcases in one click
 function RemoveTestCase(l1) {
     l1.options[l1.options.selectedIndex]=null;
 }
