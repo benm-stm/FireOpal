@@ -35,41 +35,53 @@ header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
 
-$output = '';
+$output   = '';
+$messages = array();
 if (isset($_REQUEST['testcases_to_add'])) {
+    $testCasesToAdd = explode(',', $_REQUEST['testcases_to_add']);
     if (!empty($_REQUEST['testsuite_name'])) {
         require_once dirname(__FILE__).'/../include/TestSuite.class.php';
         require_once dirname(__FILE__).'/../include/TestCase.class.php';
         // manage request
-        $files = $testCaseManager->prepare_files($_REQUEST['testcases_to_add'], dirname(__FILE__).'/../testcases');
+        $files = $testCaseManager->prepare_files($testCasesToAdd, dirname(__FILE__).'/../testcases');
         if (!empty($files)) {
             $testSuite = new TestSuite($_REQUEST['testsuite_name']);
-            $testSuiteManager->populateTestSuite($testSuite, $files);
+            $testSuiteManager->populateTestSuite($testSuite, $testCasesToAdd);
             $testSuite->storeTestSuiteDetails($_REQUEST);
             $testSuite->bindConfigurationElements($_REQUEST);
             $testSuite->loadTestSuite();
-            $output = "Testsuite stored";
+            $messages[] = "Testsuite stored";
         } else {
-            $output = "No testcases selected";
+            $messages[] = "No testcases selected";
         }
     } else {
-        $output = "Empty name";
+        $messages[] = "Empty name";
     }
 }
 
 
 if (isset($_REQUEST['delete_testsuites'])) {
     if ($testSuiteManager->delete($_REQUEST['delete_testsuites'])) {
-        $output = "Testsuite deleted";
+        $messages[] = "Testsuite deleted";
     } else {
-        $output = "Tetsuite not deleted";
+        $messages[] = "Tetsuite not deleted";
     }
 }
+
 
 if (isset($_REQUEST['load_testsuites'])) {
     $testSuite = new TestSuite(substr($_REQUEST['load_testsuites'], 0, -3));
     $testCases = $testSuite->getTestCases();
     $testCases_str = implode(',' , $testCases);
+
+
+if (!empty($messages)) {
+    $output   = '<ul class="feedback_info" >';
+    foreach ($messages as $message) {
+        $output .= "<li>".$message."</li>";
+    }
+    $output .= '</ul>';
+
 }
 
 echo '
@@ -82,10 +94,9 @@ echo '
         <script type="text/javascript" src="scripts/tree.js"></script>
     </head>
     <body>
-        <div id="header">
-            <p>
-                <font color="red">'.$output.'</font>
-            </p>
+        <div id="header">';
+echo $output;
+echo '
             <a href="/" class="community"><< Go back</a>
             <a href="set" class="community">Update config</a>
         </div>
@@ -129,7 +140,7 @@ if (!empty($testsuites)) {
 
 if (!empty($testsuites)) {
     echo '
-                        <form name="EditTestSuiteForm" action="" method="POST">
+                        <form name="EditTestSuiteForm" action="" method="POST" onSubmit = "generateTestSuite(testcases_to_add)">
                             <fieldset>
                                 <legend><b>Load testsuites</b></legend>
                                 <table nowrap>';
@@ -160,7 +171,7 @@ echo '
                                 <legend><b>Testcases</b></legend>
                                 <table>
                                     <tr>
-                                        <td align="center"><B><FONT size="2">Availables test cases</FONT></B>';
+                                        <td align="center"><b><font size="2">Availables test cases</font></b>';
 $testCaseManager->displayFileSystem("../testcases");
 echo '
                                         </td>
@@ -169,8 +180,8 @@ echo '
                                             <input type="button" value="Add >>>" onClick="AddtestCases(this.form.testCases,this.form.testcases_to_add)">
                                         </td>
 
-                                        <td align="center"><FONT size="2"><B>Dispatched test cases</B></FONT>
-                                            <select align=top name="testcases_to_add" size=10  style="width:320px" multiple="multiple">
+                                        <td align="center"><font size="2"><b>Dispatched test cases</b></font>
+                                            <select align=top id="testcases_to_add" name="testcases_to_add" size=10  style="width:320px" multiple="multiple">
                                                 <option value="10">----------------------</option>
                                             </select>
                                         </td>
@@ -180,11 +191,26 @@ echo '
                                     </tr>
                                 </table>
 
-                                <SCRIPT language="javascript">
+                                <script language="javascript">
                                     document.EditTestSuiteForm.testcases_to_add.options.length=0;
-                                </SCRIPT>
-
-                                <table nowrap>
+                                </script>';
+echo '                          <script type="text/javascript">
+                                    function generateTestSuite(testcases_to_add) {
+                                        var p = document.getElementById(\'testcases_to_add\');
+                                        var testCasesString = "";
+                                        for(testCase=0;testCase<p.length;testCase++) {
+                                            if(testCase+1 == p.length) {
+                                                testCasesString += p[testCase].value;
+                                            } else {
+                                                testCasesString += p[testCase].value+",";
+                                            }
+                                        }
+                                        alert(testCasesString);
+                                        d = document.getElementById("submit_panel_1");';
+echo "                                      d.innerHTML = '<input type=\"text\" id=\"testcases_to_add\" name=\"testcases_to_add\" value=\"' + testCasesString + '\" />';
+                                    }
+                                </script>";
+echo '                          <table nowrap>
                                     <tr>
                                         <td>Name:</td>
                                         <td><input name="testsuite_name"/></td>
@@ -194,13 +220,14 @@ echo '
                                         <td><textarea name="testsuite_description"></textarea></td>
                                     </tr>
                                 </table>
-                            </fieldset>
-                            <div id="submit_panel">
-                                <input id="generate" type="submit" value="Generate !"/>
+                            </fieldset>';
+echo '                      <div id="submit_panel_1"> </div><div id="submit_panel">
+                                <input id="generate" type="submit" value="Generate !" />
                             </div>
                         </form>
                     </td>
                 </tr>
             </table>
+        </div>
     </body>
 </html>';

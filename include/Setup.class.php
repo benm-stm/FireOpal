@@ -40,6 +40,7 @@ class Setup {
                         case "testsuite_name" :
                         case "testsuite_description" :
                         case "testcases_to_add" :
+                        case "testcases_loaded" :
                             break;
                         case "new_name" :
                             if ($value != 'new_name' &&
