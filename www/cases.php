@@ -126,7 +126,7 @@ if (!empty($testsuites)) {
 
 if (!empty($testsuites)) {
     echo '
-                        <form name="EditTestSuiteForm" action="" method="POST">
+                        <form name="EditTestSuiteForm" action="" method="POST" onSubmit = "generateTestSuite(testcases_to_add)">
                             <fieldset>
                                 <legend><b>Load testsuites</b></legend>
                                 <table nowrap>';
