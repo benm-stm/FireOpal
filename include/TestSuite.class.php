@@ -54,7 +54,7 @@ class TestSuite {
      * @return Void
      */
     public function run() {
-        exec('rspec '.$this->_testSuiteFile.' --format documentation --out ../log/resultFile_'.time().' 2>&1', $this->_result);
+        exec('ruby '.$this->_testSuiteFile.' --format documentation --out ../log/resultFile_'.time().' 2>&1', $this->_result);
     }
 
     /**
@@ -70,6 +70,7 @@ class TestSuite {
 
     /**
      * Include binded test files within the header of the ruby test Suite file.
+     * @TODO: Complete function comment
      *
      * @param SplFileObject $rspecFileObj ???
      *
@@ -82,6 +83,7 @@ class TestSuite {
                     $testCaseFileObj = new SplFileObject($testCase->_testCaseFile);
                     $rspecFileObj->fwrite($testCase->retrieveRspecExampleGroup());
                 } catch (Exception $e) {
+                    // TODO: Handle errors otherwise
                     echo $e->getMessage();
                 }
             }
@@ -90,6 +92,7 @@ class TestSuite {
 
     /**
      * Build RSpec code examples from binded test cases
+     * @TODO: Handle errors
      *
      * @param SplFileObject $rspecFileObj The file object of the test suite
      *
@@ -107,6 +110,8 @@ class TestSuite {
 
     /**
      * Build RSpec setup
+     * @TODO: Complete function comment
+     * @TODO: Handle errors
      *
      * @param SplFileObject $rspecFileObj ???
      *
@@ -129,6 +134,8 @@ class TestSuite {
 
     /**
      * Build RSpec teardown
+     * @TODO: Complete function comment
+     * @TODO: Handle errors
      *
      * @param SplFileObject $rspecFileObj ???
      *
@@ -176,6 +183,7 @@ class TestSuite {
                 $testSuiteFileObj->fwrite($content);
             }
         } catch (RuntimeException $e) {
+            // TODO: Handle errors otherwise
             echo $e->getMessage();
         }
     }
@@ -203,6 +211,7 @@ class TestSuite {
                 $testSuiteFileObj->fwrite($content);
             }
         } catch (RuntimeException $e) {
+            // TODO: Handle errors otherwise
             echo $e->getMessage();
         }
     }
@@ -220,6 +229,7 @@ class TestSuite {
                 $this->bindTestCases($fileObj);
             }
         } catch (RuntimeException $e) {
+            // TODO: Handle errors otherwise
             echo $e->getMessage();
         }
     }
@@ -236,6 +246,7 @@ class TestSuite {
 
     /**
      * Returns the testCases attached to this testSuite
+     * @TODO: Handle errors
      *
      * @return Array
      */
@@ -262,6 +273,7 @@ class TestSuite {
 
     /**
      * Display setup of the testsuite and associated testcases
+     * @TODO: Handle errors
      *
      * @return String
      */

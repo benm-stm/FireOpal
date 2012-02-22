@@ -74,6 +74,7 @@ class TestSuiteManager {
             $testCase     = new TestCase($testCaseFile->getBasename('.rb'),$testCaseFile);
             $testSuite->attach($testCase);
         }
+        // TODO: Give sense to return value
         return true;
     }
 

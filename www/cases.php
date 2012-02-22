@@ -16,6 +16,7 @@
  * along with this code. If not, see <http://www.gnu.org/licenses/>.
  */
 
+// TODO: Kill every one that breaks HTML indentation
  
 ini_set('display_errors', 'on');
 ini_set('max_execution_time', 0);
@@ -77,6 +78,7 @@ if (isset($_REQUEST['load_testsuites'])) {
 
 
 if (!empty($messages)) {
+    // TODO: Put each type of message into the appropriate type of feedback
     $output   = '<ul class="feedback_info" >';
     foreach ($messages as $message) {
         $output .= "<li>".$message."</li>";
@@ -105,7 +107,7 @@ echo '
                     <td id="block_config">
                         <fieldset>
                             <legend><b>Config</b></legend>
-                            <ul id="menu"><li class="">';
+                            <ul id="menu">';
 $setup = new Setup();
 $content = $setup->display(true);
 echo $content['form'];
@@ -139,7 +141,7 @@ if (!empty($testsuites)) {
 
 if (!empty($testsuites)) {
     echo '
-                        <form name="EditTestSuiteForm" action="" method="POST" onSubmit = "generateTestSuite(testcases_to_add)">
+                        <form name="LoadTestSuiteForm" action="" method="POST">
                             <fieldset>
                                 <legend><b>Load testsuites</b></legend>
                                 <table nowrap>';
@@ -157,12 +159,12 @@ if (!empty($testsuites)) {
                                 </table>
                             </fieldset>
                             <div id="submit_panel">
-                                <input type="button" name="load" value="Load" onClick="loadTestCases(this.form, this.form.testcases_to_add)">
-
-                          
-                                </div>';
+                                <input type="button" name="load" value="Load" onClick="loadTestCases()">
+                            </div>
+                        </form>';
 }
 echo '
+                        <form name="EditTestSuiteForm" action="" method="POST" onSubmit="generateTestSuite(testcases_to_add)">
                             <fieldset>
                                 <legend><b>Testcases</b></legend>
                                 <table>
@@ -201,7 +203,6 @@ echo '                          <script type="text/javascript">
                                                 testCasesString += p[testCase].value+",";
                                             }
                                         }
-                                        alert(testCasesString);
                                         d = document.getElementById("submit_panel_1");';
 echo "                                      d.innerHTML = '<input type=\"text\" id=\"testcases_to_add\" name=\"testcases_to_add\" value=\"' + testCasesString + '\" />';
                                     }

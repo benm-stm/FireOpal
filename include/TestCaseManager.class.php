@@ -20,6 +20,7 @@ class TestCaseManager {
 
     /**
      * Search test files recursively
+     * @TODO: Rename or delete this method
      *
      * @param String $dir   path to directory containing test files
      * @param Array  $tab   Array of collected tests
@@ -56,27 +57,31 @@ class TestCaseManager {
         return $tests;
     }
 
+    // TODO: Add function comment
     function displayFileSystem($directory) {
         $iter = new RecursiveIteratorIterator(
-        new RecursiveDirectoryIterator($directory, RecursiveDirectoryIterator::KEY_AS_FILENAME)
-        , RecursiveIteratorIterator::SELF_FIRST);
-        $tokenHeader = '<SELECT align=top name="testCases" size=10  style="width:320px" multiple="multiple">';
+        new RecursiveDirectoryIterator($directory, RecursiveDirectoryIterator::KEY_AS_FILENAME) , RecursiveIteratorIterator::SELF_FIRST);
+        $tokenHeader = '<select align=top name="testCases" size=10  style="width:320px" multiple="multiple">';
         printf($tokenHeader);
         foreach ($iter as $entry) {
             if ($entry->isDir()) {
                 $token = "<option value=\"%s\" disabled></b>%s</b></option>";
             } else {
+                // TODO: Verify if really we need &nbsp;
+                // TODO: Don't put the absolute path on the server
                 $token = "<option value=\"%s\">&nbsp;&nbsp;&nbsp;&nbsp;%s</option>";
             }
+            // TODO: Verify if we need &nbsp;
             echo str_repeat("&nbsp;", 3*$iter->getDepth());
             printf($token, $entry->getRealPath(),$entry->getFilename());
         }
-        $tokenFooter = '<SELECT>';
+        $tokenFooter = '<select>';
         printf($tokenFooter);
     }
 
     /**
      * Collect selected files to be executed
+     * @TODO: Rename or delete this method
      *
      * @param Array  $files  Array of selected tests
      * @param String $prefix Path to the directory containing the file

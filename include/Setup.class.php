@@ -228,6 +228,7 @@ class Setup {
         $content = '';
         $set = $this->load();
         foreach ($set as $name => $element) {
+            // TODO: Don't set value of the fields with type password
             $content .= '<li><span title="'.$element['description'].'"><label for="'.$name.'">'.$name.':</label><input id="'.$name.'" type="'.$element['type'].'" name="'.$name.'" value="'.$element['value'].'" '.$readOnly.' /></span>';
             if (!$readOnly &&
                 $name != 'host' &&
