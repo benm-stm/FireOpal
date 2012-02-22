@@ -16,57 +16,65 @@
  * along with this code. If not, see <http://www.gnu.org/licenses/>.
  */
 
+ 
 ini_set('display_errors', 'on');
 ini_set('max_execution_time', 0);
 ini_set('memory_limit', -1);
 ini_set('include_path', ini_get('include_path').':'.dirname(__FILE__).'/../include/');
-
+ 
 require_once 'Setup.class.php';
 require_once 'TestSuite.class.php';
 require_once 'TestSuiteManager.class.php';
 require_once 'TestCaseManager.class.php';
 $testSuiteManager = new TestSuiteManager();
 $testCaseManager = new TestCaseManager();
-
+ 
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
-
-
-$output = '';
+ 
+ 
+$output   = '';
+$messages = array();
 if (isset($_REQUEST['testcases_to_add'])) {
+    $testCasesToAdd = explode(',', $_REQUEST['testcases_to_add']);
     if (!empty($_REQUEST['testsuite_name'])) {
         require_once dirname(__FILE__).'/../include/TestSuite.class.php';
         require_once dirname(__FILE__).'/../include/TestCase.class.php';
         // manage request
-        $files = $testCaseManager->prepare_files($_REQUEST['testcases_to_add'], dirname(__FILE__).'/../testcases');
+        $files = $testCaseManager->prepare_files($testCasesToAdd, dirname(__FILE__).'/../testcases');
         if (!empty($files)) {
             $testSuite = new TestSuite($_REQUEST['testsuite_name']);
-            $testSuiteManager->populateTestSuite($testSuite, $files);
+            $testSuiteManager->populateTestSuite($testSuite, $testCasesToAdd);
             $testSuite->storeTestSuiteDetails($_REQUEST);
             $testSuite->bindConfigurationElements($_REQUEST);
             $testSuite->loadTestSuite();
-            $output = "Testsuite stored";
+            $messages[] = "Testsuite stored";
         } else {
-            $output = "No testcases selected";
+            $messages[] = "No testcases selected";
         }
     } else {
-        $output = "Empty name";
+        $messages[] = "Empty name";
     }
 }
-
-if (isset($_REQUEST['load_testsuites'])) {
  
-}
-
+ 
 if (isset($_REQUEST['delete_testsuites'])) {
     if ($testSuiteManager->delete($_REQUEST['delete_testsuites'])) {
-        $output = "Testsuite deleted";
+        $messages[] = "Testsuite deleted";
     } else {
-        $output = "Tetsuite not deleted";
+        $messages[] = "Tetsuite not deleted";
     }
+}
+ 
+ 
+if (isset($_REQUEST['load_testsuites'])) {
+    $testSuite = new TestSuite(substr($_REQUEST['load_testsuites'], 0, -3));
+     $testCases = $testSuite->getTestCases();
+    $testCasesStr = implode(',' , $testCases);
+echo  $testCasesStr;
 }
 
 echo '
@@ -137,14 +145,13 @@ if (!empty($testsuites)) {
                                         <td><input type="radio" name="load_testsuites" value="'.$t.'" /></td>
                                     </tr>';
     }
-    //to be modified
-    $arr = implode(',' , array("test1.rb", "test2.rb"));
+
 
     echo '
                                 </table>
                             </fieldset>
                             <div id="submit_panel">
-                                <input type="hidden" name="testcases_loaded" id="testcases_loaded" value="'.$arr.'">
+                                <input type="hidden" name="testcases_loaded" id="testcases_loaded" value="'.$testCasesStr.'">
                                 <input type="button" name="load" value="Load" onClick="loadTestCases( this.form, this.form.testcases_to_add)">
                             
                             </div>';

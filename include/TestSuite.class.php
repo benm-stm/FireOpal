@@ -232,6 +232,32 @@ class TestSuite {
     public function getCurrent() {
         return $this->_currentTestCase;
     }
+    
+    /**
+     * Returns the testCases attached to this testSuite
+     *
+     * @return Array
+     */
+    public function getTestCases() {
+        $inTests = false;
+        $testCases = array();
+        if ($this->_testSuiteFile->isReadable()) {
+            $file    = $this->_testSuiteFile->openFile('r');
+            while (!$file->eof()) {
+                $line = $file->fgets();
+                if ($inTests && $line == "#--- Test Cases End ---\n") {
+                    $inTests = false;
+                }
+                if ($inTests) {
+                    $testCases[]= substr($line, 1);
+                }
+                if (!$inTests && $line == "#--- Test Cases list ---\n") {
+                    $inTests = true;
+                }
+            }
+        }
+        return $testCases;
+    }
 
     /**
      * Display setup of the testsuite and assosciated testcases
