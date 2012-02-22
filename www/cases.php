@@ -138,11 +138,14 @@ if (!empty($testsuites)) {
                                         <td><input type="radio" name="load_testsuites" value="'.$t.'" /></td>
                                     </tr>';
     }
+    //to be modified
+    $arr = implode(',' , array("test1.rb", "test2.rb", "dummytest.rb", "test.rb"));
     echo '
                                 </table>
                             </fieldset>
                             <div id="submit_panel">
-                                <input type="button" name="load" value="Load" onclick="loadTestCases(this.form,this.form.testSuite,this.form.testCases);">
+                                <input type="hidden" name="testcases_loaded" id="testcases_loaded" value="'.$arr.'">
+                                <input type="button" name="load" value="Load" onClick="loadTestCases( this.form, this.form.testcases_to_add)">
                             </div>';
 }
 
@@ -157,24 +160,24 @@ echo '
                                         </td>
 
                                         <td style="vertical-align:middle">
-                                            <input type="button" value="Add >>>" onClick="AddtestCases(this.form.testCases,this.form.testSuite)">
+                                            <input type="button" value="Add >>>" onClick="AddtestCases(this.form.testCases,this.form.testcases_to_add)">
                                         </td>
 
                                         <td align="center"><FONT size="2"><B>Dispatched test cases</B></FONT>
-                                            <select align=top name="testcases_to_add" size=6 style="width:220px">
+                                            <select align=top id="testcases_to_add" name="testcases_to_add" size=10  style="width:320px" multiple="multiple">
                                                 <option value="10">----------------------</option>
                                             </select>
                                         </td>
                                         <td style="vertical-align:middle">
-                                            <input type="button" value="Remove >>>" onClick="RemoveTestCase(this.form.testSuite,this.form.testCases)">
+                                            <input type="button" value="Remove >>>" onClick="RemoveTestCase(this.form.testcases_to_add,this.form.testCases)">
                                         </td>
                                     </tr>
                                 </table>
 
                                 <SCRIPT language="javascript">
-                                    document.EditTestSuiteForm.testSuite.options.length=0;
-                                </SCRIPT>
-                                <script type="text/javascript">
+                                    document.EditTestSuiteForm.testcases_to_add.options.length=0;
+                                </SCRIPT>';
+echo '                                <script type="text/javascript">
                                     function generateTestSuite(testcases_to_add) {
                                         var p = document.getElementById(\'testcases_to_add\');
                                         var testCasesString = "";
@@ -185,13 +188,12 @@ echo '
                                                     testCasesString += p[testCase].value+",";
                                                 }
                                             }
-                                        //alert(testCasesString);
+                                        alert(testCasesString);
                                         d = document.getElementById("submit_panel_1");';
 echo "                                  d.innerHTML = '<input type=\"text\" id=\"testcases_to_add\" name=\"testcases_to_add\" value=\"' + testCasesString + '\" />';
                                     }
                             </script>";
-echo '
-                                <table nowrap>
+                                echo '<table nowrap>
                                     <tr>
                                         <td>Name:</td>
                                         <td><input name="testsuite_name"/></td>
@@ -201,10 +203,9 @@ echo '
                                         <td><textarea name="testsuite_description"></textarea></td>
                                     </tr>
                                 </table>
-                            </fieldset>
-                            <div id="submit_panel_1"> </div>
-                            <div id="submit_panel">
-                                <input id="generate" type="submit" value="Generate !"/>
+                            </fieldset>';
+echo '                      <div id="submit_panel_1"> </div><div id="submit_panel">
+                                <input id="generate" type="submit" value="Generate !" />
                             </div>
                         </form>
                     </td>
