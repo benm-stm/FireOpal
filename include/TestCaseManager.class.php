@@ -21,7 +21,9 @@ class TestCaseManager {
     const TESTCASES_PATH = "../testcases";
 
     /**
-     * Recursivly creates a basic HTML tree of a given directory.
+     * Recursivly creates a basic HTML tree of a given directory, then render a select input with the file system content starting from this given node.
+     * Visited directories are in dispalyed as bold and disabled select options, if you remove SELF_FIRST option, visited directories are ignored: 
+     * Obviously, they are heading nodes and the iterator object doesn't return them automatically.
      *
      * @param String $directory File system node considered as root for the exploration
      *
