@@ -33,18 +33,10 @@ body {
         tr {
             vertical-align:top;
         }
-        .fail { 
-            color: red; 
-        } 
-        .pass { 
-            color: green; 
-        } 
         pre { 
             background-color: lightgray; 
         }
-        a img {
-            border:none;
-        }
+
 #body_skin{
     width:1200px;
     margin:0 auto;
