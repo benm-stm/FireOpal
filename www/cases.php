@@ -128,26 +128,6 @@ $testsuites = $testSuiteManager->searchTestsuites();
 
 if (!empty($testsuites)) {
     echo '
-                        <form action="" method="POST">
-                            <fieldset>
-                                <legend><b>Delete testsuites</b></legend>
-                                <table nowrap>';
-    foreach($testsuites as $testsuite => $testcases) {
-        echo '
-                                    <tr>
-                                        <td>'.$testsuite.'</td>
-                                        <td><input type="checkbox" name="delete_testsuites[]" value="'.$testsuite.'" /></td>
-                                    </tr>';
-    }
-    echo '
-                                </table>
-                            </fieldset>
-                            <div id="submit_panel"><input type="submit" value="Delete !" /></div>
-                        </form>';
-}
-
-if (!empty($testsuites)) {
-    echo '
                         <form name="LoadTestSuiteForm" action="" method="POST">
                             <fieldset>
                                 <legend><b>Load testsuites</b></legend>
@@ -214,7 +194,29 @@ echo '
                             <div id="submit_panel_1"> </div><div id="submit_panel">
                                 <input id="generate" type="submit" value="Generate !" />
                             </div>
-                        </form>
+                        </form>';
+
+if (!empty($testsuites)) {
+    echo '
+                        <form action="" method="POST">
+                            <fieldset>
+                                <legend><b>Delete testsuites</b></legend>
+                                <table nowrap>';
+    foreach($testsuites as $testsuite => $testcases) {
+        echo '
+                                    <tr>
+                                        <td>'.$testsuite.'</td>
+                                        <td><input type="checkbox" name="delete_testsuites[]" value="'.$testsuite.'" /></td>
+                                    </tr>';
+    }
+    echo '
+                                </table>
+                            </fieldset>
+                            <div id="submit_panel"><input type="submit" value="Delete !" /></div>
+                        </form>';
+}
+
+echo '
                     </td>
                 </tr>
             </table>
