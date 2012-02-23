@@ -28,7 +28,7 @@ function AddtestCases() {
     }
     for(testCase = 0; testCase < document.EditTestSuiteForm.testCases.length; testCase++) {
         if(document.EditTestSuiteForm.testCases.options[testCase].selected == true) {
-            var added = new Option(document.EditTestSuiteForm.testCases.options[testCase].text.substr(4), document.EditTestSuiteForm.testCases.options[testCase].value);
+            var added = new Option(document.EditTestSuiteForm.testCases.options[testCase].value.substr(1), document.EditTestSuiteForm.testCases.options[testCase].value);
             document.EditTestSuiteForm.testcases_to_add.add(added, selected);
             document.EditTestSuiteForm.testCases.options[testCase].selected = null;
         }
