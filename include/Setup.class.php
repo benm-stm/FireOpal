@@ -93,8 +93,7 @@ class Setup {
                         case "project"  :
                             if (is_string($value) &&
                                 strrpos($value,' ') === false &&
-                                strspn($value,"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ") != 0 &&
-                                strspn($value,"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.") === strlen($value) &&
+                                preg_match('/^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$/', $value) &&
                                 strpos($value, 0x0A) === false &&
                                 strpos($value, 0x0D) === false &&
                                 strpos($value, 0x00) === false) {
