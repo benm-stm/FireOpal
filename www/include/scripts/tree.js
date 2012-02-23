@@ -33,3 +33,19 @@ function AddtestCases(l1,l2) {
 function RemoveTestCase(l1) {
     l1.options[l1.options.selectedIndex] = null;
 }
+
+// TODO: Add comments
+// TODO: Verify if really we need all params
+function generateTestSuite(testcases_to_add) {
+    var p = document.getElementById('testcases_to_add');
+    var testCasesString = "";
+    for(testCase = 0; testCase<p.length; testCase++) {
+        if(testCase+1 == p.length) {
+            testCasesString += p[testCase].value;
+        } else {
+            testCasesString += p[testCase].value+",";
+        }
+    }
+    d           = document.getElementById("submit_panel_1");
+    d.innerHTML = '<input type="hidden" id="testcases_to_add" name="testcases_to_add" value="' + testCasesString + '" />';
+}

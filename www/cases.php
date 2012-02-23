@@ -195,25 +195,8 @@ echo '
                                         </td>
                                     </tr>
                                 </table>
-
                                 <script language="javascript">
-                                    document.EditTestSuiteForm.testcases_to_add.options.length=0;
-                                </script>';
-// TODO: Move this script in tree.js (or equivalent if tree.js is renamed)
-echo '                          <script type="text/javascript">
-                                    function generateTestSuite(testcases_to_add) {
-                                        var p = document.getElementById(\'testcases_to_add\');
-                                        var testCasesString = "";
-                                        for(testCase = 0; testCase<p.length; testCase++) {
-                                            if(testCase+1 == p.length) {
-                                                testCasesString += p[testCase].value;
-                                            } else {
-                                                testCasesString += p[testCase].value+",";
-                                            }
-                                        }
-                                        d = document.getElementById("submit_panel_1");
-                                        d.innerHTML = \'<input type="hidden" id="testcases_to_add" name="testcases_to_add" value="\' + testCasesString + \'" />\';
-                                    }
+                                    document.EditTestSuiteForm.testcases_to_add.options.length = 0;
                                 </script>
                                 <table nowrap>
                                     <tr>
@@ -227,8 +210,8 @@ echo '                          <script type="text/javascript">
                                         -->
                                     </tr>
                                 </table>
-                            </fieldset>';
-echo '                      <div id="submit_panel_1"> </div><div id="submit_panel">
+                            </fieldset>
+                            <div id="submit_panel_1"> </div><div id="submit_panel">
                                 <input id="generate" type="submit" value="Generate !" />
                             </div>
                         </form>
