@@ -110,7 +110,11 @@ class Setup {
                             }
                             break;
                         default:
-                            $set[$name]['value'] = $value;
+                            if (!empty($set[$name]['value'])) {
+                                $set[$name]['value'] = $value;
+                            } else {
+                                $this->error[] = "Empty value for '".$name."'";
+                            }
                     }
                 } else {
                     $this->error[] = "No value for '".$name."'";
