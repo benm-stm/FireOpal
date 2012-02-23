@@ -79,7 +79,6 @@ if (isset($_REQUEST['load_testsuites'])) {
 
 
 if (!empty($info)) {
-    // TODO: Put each type of message into the appropriate type of feedback
     $output   = '<ul class="feedback_info" >';
     foreach ($info as $message) {
         $output .= "<li>".$message."</li>";
@@ -88,7 +87,6 @@ if (!empty($info)) {
 }
 
 if (!empty($error)) {
-    // TODO: Put each type of message into the appropriate type of feedback
     $output   .= '<ul class="feedback_error" >';
     foreach ($error as $message) {
         $output .= "<li>".$message."</li>";
