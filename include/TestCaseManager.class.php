@@ -20,7 +20,13 @@ class TestCaseManager {
 
     const TESTCASES_PATH = "../testcases";
 
-    // TODO: Add function comment
+    /**
+     * Recursivly creates a basic HTML tree of a given directory.
+     *
+     * @param String $directory File system node considered as root for the exploration
+     *
+     * @return String
+     */
     function displayFileSystem($directory) {
         $iter = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory, RecursiveDirectoryIterator::KEY_AS_FILENAME | FilesystemIterator::SKIP_DOTS), RecursiveIteratorIterator::SELF_FIRST);
         $output = '<select align=top name="testCases" size=10  style="width:320px" multiple="multiple">';
