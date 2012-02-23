@@ -36,8 +36,9 @@ header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
-$output   = '';
-$messages = array();
+$output = '';
+$info   = array();
+$error  = array();
 if (isset($_REQUEST['testcases_to_add'])) {
     $testCasesToAdd = explode(',', $_REQUEST['testcases_to_add']);
     if (!empty($_REQUEST['testsuite_name'])) {
@@ -51,20 +52,20 @@ if (isset($_REQUEST['testcases_to_add'])) {
             $testSuite->storeTestSuiteDetails($_REQUEST);
             $testSuite->bindConfigurationElements($_REQUEST);
             $testSuite->loadTestSuite();
-            $messages[] = "Testsuite stored";
+            $info[] = "Testsuite stored";
         } else {
-            $messages[] = "No testcases selected";
+            $error[] = "No testcases selected";
         }
     } else {
-        $messages[] = "Empty name";
+        $error[] = "Empty name";
     }
 }
 
 if (isset($_REQUEST['delete_testsuites'])) {
     if ($testSuiteManager->delete($_REQUEST['delete_testsuites'])) {
-        $messages[] = "Testsuite deleted";
+        $info[] = "Testsuite(s) deleted";
     } else {
-        $messages[] = "Tetsuite not deleted";
+        $error[] = "Tetsuite(s) not deleted";
     }
 }
  
@@ -77,14 +78,22 @@ if (isset($_REQUEST['load_testsuites'])) {
 }
 
 
-if (!empty($messages)) {
+if (!empty($info)) {
     // TODO: Put each type of message into the appropriate type of feedback
     $output   = '<ul class="feedback_info" >';
-    foreach ($messages as $message) {
+    foreach ($info as $message) {
         $output .= "<li>".$message."</li>";
     }
     $output .= '</ul>';
+}
 
+if (!empty($error)) {
+    // TODO: Put each type of message into the appropriate type of feedback
+    $output   .= '<ul class="feedback_error" >';
+    foreach ($error as $message) {
+        $output .= "<li>".$message."</li>";
+    }
+    $output .= '</ul>';
 }
 
 echo '
