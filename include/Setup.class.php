@@ -182,15 +182,9 @@ class Setup {
      */
     function delete($names) {
         $set = $this->load();
+        $mandatory = array('host', 'client', 'browser', 'user', 'password', 'project', 'project_id');
         foreach ($names as $name) {
-            if (isset($set[$name]) &&
-                $name != 'host' &&
-                $name != 'client' &&
-                $name != 'browser' &&
-                $name != 'user' &&
-                $name != 'password' &&
-                $name != 'project' &&
-                $name != 'project_id') {
+            if (isset($set[$name]) && !(in_array($name, $mandatory))) {
                 unset($set[$name]);
             } else {
                 $this->error[] = "Impossible to delete ".$name;
@@ -229,19 +223,13 @@ class Setup {
         }
         $content = '';
         $set = $this->load();
+        $mandatory = array('host', 'client', 'browser', 'user', 'password', 'project', 'project_id');
         foreach ($set as $name => $element) {
             if ($element['type'] == 'password') {
                 $element['value'] = '';
             }
             $content .= '<li><span title="'.$element['description'].'"><label for="'.$name.'">'.$name.':</label><input id="'.$name.'" type="'.$element['type'].'" name="'.$name.'" value="'.$element['value'].'" '.$readOnly.' /></span>';
-            if (!$readOnly &&
-                $name != 'host' &&
-                $name != 'client' &&
-                $name != 'browser' &&
-                $name != 'user' &&
-                $name != 'password' &&
-                $name != 'project' &&
-                $name != 'project_id') {
+            if (!$readOnly && (!in_array($name, $mandatory))) {
                 $content .= ' delete<input type="checkbox" name="delete[]" value="'.$name.'" />';
             }
             $content .= '</li>';
