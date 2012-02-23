@@ -24,8 +24,7 @@ class TestCaseManager {
     function displayFileSystem($directory) {
         $iter = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory, RecursiveDirectoryIterator::KEY_AS_FILENAME | FilesystemIterator::SKIP_DOTS), RecursiveIteratorIterator::SELF_FIRST);
         $output = '<select align=top name="testCases" size=10  style="width:320px" multiple="multiple">';
-        foreach ($iter as $entry) {
-            // TODO: Don't put the absolute path on the server
+        foreach ($iter as $entry) {r
             if ($entry->isDir()) {
                 $output .= '<option value="'.substr($entry->getPathname(), strlen(TestCaseManager::TESTCASES_PATH)).'" disabled></b>'.$entry->getFilename().'</b></option>';
             } else {
