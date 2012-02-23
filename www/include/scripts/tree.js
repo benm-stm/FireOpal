@@ -1,13 +1,15 @@
 // TODO: Rename this file (and don't forget to update calls to the file)
+
 // TODO: Add comments
+// TODO: Make this work even if there is only one testsuite
 function loadTestCases() {
-    for( i = 0; i < document.LoadTestSuiteForm.load_testsuites.length; i++ ) {
+    for(i = 0; i < document.LoadTestSuiteForm.load_testsuites.length; i++) {
         if(document.LoadTestSuiteForm.load_testsuites[i].checked == true ) {
             str = document.LoadTestSuiteForm.load_testsuites[i].value;
         }
     }
     testCases = str.split(',');
-	document.EditTestSuiteForm.testcases_to_add.options.length=0;
+	document.EditTestSuiteForm.testcases_to_add.options.length = 0;
     var i
     for (i = 0; i<testCases.length; i++) {
         var o = new Option(testCases[i],testCases[i]);
@@ -27,9 +29,14 @@ function AddtestCases() {
 }
 
 // TODO: Add comments
-// TODO: Delete all selected testcases in one click
+// TODO: Verify why this won't work all the time
 function RemoveTestCase() {
     document.EditTestSuiteForm.testcases_to_add.options[document.EditTestSuiteForm.testcases_to_add.options.selectedIndex] = null;
+    for(testCase = 0; testCase<document.EditTestSuiteForm.testcases_to_add.length; testCase++) {
+        if(document.EditTestSuiteForm.testcases_to_add.options[testCase].selected == true) {
+            document.EditTestSuiteForm.testcases_to_add.options[testCase] = null;
+        }
+    }
 }
 
 // TODO: Add comments
