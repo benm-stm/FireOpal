@@ -33,7 +33,7 @@ class TestSuiteManager {
                         if (!is_dir("$dir/$file")) {
                             $testSuite = new TestSuite(substr($file, 0, -3));
                             $testCases = $testSuite->getTestCases();
-                            $testCasesStr = implode(',' , $testCases);
+                            $testCasesStr = implode(',', $testCases);
                             $testsuites[$file] = $testCasesStr;
                         }
                     }
@@ -71,7 +71,7 @@ class TestSuiteManager {
     function populateTestSuite($testSuite, $testCasesArray) {
         foreach ($testCasesArray as $test) {
             $testCaseFile = new SplFileInfo($test);
-            $testCase     = new TestCase($testCaseFile->getBasename('.rb'),$testCaseFile);
+            $testCase     = new TestCase($testCaseFile->getBasename('.rb'), $testCaseFile);
             $testSuite->attach($testCase);
         }
         // TODO: Give sense to return value

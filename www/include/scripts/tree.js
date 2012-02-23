@@ -9,7 +9,7 @@ function loadTestCases() {
     testCases = str.split(',');
 	document.EditTestSuiteForm.testcases_to_add.options.length=0;
     var i
-    for (i=0; i<testCases.length; i++) {
+    for (i = 0; i<testCases.length; i++) {
         var o = new Option(testCases[i],testCases[i]);
         document.EditTestSuiteForm.testcases_to_add.options[document.EditTestSuiteForm.testcases_to_add.options.length] = o;
     }
@@ -18,9 +18,9 @@ function loadTestCases() {
 // TODO: Add comments
 // TODO: Verify if really we need all params
 function AddtestCases(l1,l2) {
-    for(testCase=0; testCase<l1.length; testCase++) {
+    for(testCase = 0; testCase<l1.length; testCase++) {
         if(l1.options[testCase].selected == true) {
-            var added=new Option(l1.options[testCase].text,l1.options[testCase].value);
+            var added = new Option(l1.options[testCase].text,l1.options[testCase].value);
             l2.options[l2.options.length] = added;
             l1.options[testCase].selected = null;
         }
@@ -31,5 +31,5 @@ function AddtestCases(l1,l2) {
 // TODO: Verify if really we need all params
 // TODO: Delete all selected testcases in one click
 function RemoveTestCase(l1) {
-    l1.options[l1.options.selectedIndex]=null;
+    l1.options[l1.options.selectedIndex] = null;
 }

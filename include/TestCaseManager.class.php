@@ -74,7 +74,7 @@ class TestCaseManager {
             }
             // TODO: Verify if we need &nbsp;
             echo str_repeat("&nbsp;", 3*$iter->getDepth());
-            printf($token, $entry->getRealPath(),$entry->getFilename());
+            printf($token, $entry->getRealPath(), $entry->getFilename());
         }
         $tokenFooter = '<select>';
         printf($tokenFooter);
@@ -91,7 +91,7 @@ class TestCaseManager {
      */
     function prepare_files($filesArray, $prefix) {
         if (substr($prefix, -1) == '/') {
-            $prefix = substr($prefix,0,-1); ;
+            $prefix = substr($prefix, 0, -1); ;
         }
         $files = array();
         foreach ($filesArray as $key => $node) {

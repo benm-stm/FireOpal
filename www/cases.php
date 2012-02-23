@@ -197,18 +197,18 @@ echo '                          <script type="text/javascript">
                                     function generateTestSuite(testcases_to_add) {
                                         var p = document.getElementById(\'testcases_to_add\');
                                         var testCasesString = "";
-                                        for(testCase=0; testCase<p.length; testCase++) {
+                                        for(testCase = 0; testCase<p.length; testCase++) {
                                             if(testCase+1 == p.length) {
                                                 testCasesString += p[testCase].value;
                                             } else {
                                                 testCasesString += p[testCase].value+",";
                                             }
                                         }
-                                        d = document.getElementById("submit_panel_1");';
-echo "                                  d.innerHTML = '<input type=\"text\" id=\"testcases_to_add\" name=\"testcases_to_add\" value=\"' + testCasesString + '\" />';
+                                        d = document.getElementById("submit_panel_1");
+                                        d.innerHTML = \'<input type="text" id="testcases_to_add" name="testcases_to_add" value="\' + testCasesString + \'" />\';
                                     }
-                                </script>";
-echo '                          <table nowrap>
+                                </script>
+                                <table nowrap>
                                     <tr>
                                         <td>Name:</td>
                                         <td><input name="testsuite_name"/></td>
