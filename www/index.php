@@ -80,8 +80,6 @@ echo '
                         <fieldset>
                             <legend>Results</legend>
                             <pre>';
-//flush();
-ob_start('flushHandler');
 if (isset($_REQUEST['run'])) {
     // manage request
     $testSuite = new TestSuite(substr($_REQUEST['run'], 0, -3));
