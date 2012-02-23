@@ -16,28 +16,25 @@ function loadTestCases() {
 }
 
 // TODO: Add comments
-// TODO: Verify if really we need all params
-function AddtestCases(l1,l2) {
-    for(testCase = 0; testCase<l1.length; testCase++) {
-        if(l1.options[testCase].selected == true) {
-            var added = new Option(l1.options[testCase].text,l1.options[testCase].value);
-            l2.options[l2.options.length] = added;
-            l1.options[testCase].selected = null;
+function AddtestCases() {
+    for(testCase = 0; testCase<document.EditTestSuiteForm.testCases.length; testCase++) {
+        if(document.EditTestSuiteForm.testCases.options[testCase].selected == true) {
+            var added = new Option(document.EditTestSuiteForm.testCases.options[testCase].text, document.EditTestSuiteForm.testCases.options[testCase].value);
+            document.EditTestSuiteForm.testcases_to_add.options[document.EditTestSuiteForm.testcases_to_add.options.length] = added;
+            document.EditTestSuiteForm.testCases.options[testCase].selected = null;
         }
     }
 }
 
 // TODO: Add comments
-// TODO: Verify if really we need all params
 // TODO: Delete all selected testcases in one click
-function RemoveTestCase(l1) {
-    l1.options[l1.options.selectedIndex] = null;
+function RemoveTestCase() {
+    document.EditTestSuiteForm.testcases_to_add.options[document.EditTestSuiteForm.testcases_to_add.options.selectedIndex] = null;
 }
 
 // TODO: Add comments
-// TODO: Verify if really we need all params
-function generateTestSuite(testcases_to_add) {
-    var p = document.getElementById('testcases_to_add');
+function generateTestSuite() {
+    var p               = document.getElementById('testcases_to_add');
     var testCasesString = "";
     for(testCase = 0; testCase<p.length; testCase++) {
         if(testCase+1 == p.length) {

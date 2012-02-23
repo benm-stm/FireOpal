@@ -171,7 +171,7 @@ if (!empty($testsuites)) {
                         </form>';
 }
 echo '
-                        <form name="EditTestSuiteForm" action="" method="POST" onSubmit="generateTestSuite(testcases_to_add)">
+                        <form name="EditTestSuiteForm" action="" method="POST" onSubmit="generateTestSuite()">
                             <fieldset>
                                 <legend><b>New testsuite</b></legend>
                                 <table>
@@ -182,7 +182,7 @@ echo '
                                         </td>
 
                                         <td style="vertical-align:middle">
-                                            <input type="button" value="Add >>>" onClick="AddtestCases(this.form.testCases,this.form.testcases_to_add)">
+                                            <input type="button" value="Add >>>" onClick="AddtestCases()">
                                         </td>
 
                                         <td align="center"><font size="2"><b>Dispatched test cases</b></font>
@@ -191,7 +191,7 @@ echo '
                                             </select>
                                         </td>
                                         <td style="vertical-align:middle">
-                                            <input type="button" value="Remove >>>" onClick="RemoveTestCase(this.form.testcases_to_add,this.form.testCases)">
+                                            <input type="button" value="Remove >>>" onClick="RemoveTestCase()">
                                         </td>
                                     </tr>
                                 </table>
