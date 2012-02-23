@@ -13,7 +13,7 @@ function loadTestCases() {
     var i
     for (i = 0; i < testCases.length; i++) {
         var o = new Option(testCases[i],testCases[i]);
-        document.EditTestSuiteForm.testcases_to_add.options[document.EditTestSuiteForm.testcases_to_add.options.length] = o;
+        document.EditTestSuiteForm.testcases_to_add.add(o, null);
     }
 }
 
@@ -22,7 +22,7 @@ function AddtestCases() {
     for(testCase = 0; testCase < document.EditTestSuiteForm.testCases.length; testCase++) {
         if(document.EditTestSuiteForm.testCases.options[testCase].selected == true) {
             var added = new Option(document.EditTestSuiteForm.testCases.options[testCase].text, document.EditTestSuiteForm.testCases.options[testCase].value);
-            document.EditTestSuiteForm.testcases_to_add.options[document.EditTestSuiteForm.testcases_to_add.options.length] = added;
+            document.EditTestSuiteForm.testcases_to_add.add(added, null);
             document.EditTestSuiteForm.testCases.options[testCase].selected = null;
         }
     }
