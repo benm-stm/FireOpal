@@ -18,45 +18,6 @@
 
 class TestCaseManager {
 
-    /**
-     * Search test files recursively
-     * @TODO: Rename or delete this method
-     *
-     * @param String $dir   path to directory containing test files
-     * @param Array  $tab   Array of collected tests
-     * @param String $entry path to test file
-     *
-     * @return void
-     */
-    function search_tests_rec($dir, &$tab, $entry) {
-        if (is_dir($dir)) {
-            if ($dh = opendir($dir)) {
-                while (($file = readdir($dh)) !== false) {
-                    if (!in_array($file, array('.', '..'))) {
-                        if (is_dir("$dir/$file")) {
-                            search_tests_rec("$dir/$file", $tab[($entry == '../testcases'?'Codex':$entry)], $file);
-                        } else {
-                            $tab[($entry == '../testcases'?'Codex':$entry)]['_tests'][] = $file;
-                        }
-                    }
-                }
-                closedir($dh);
-            }
-        }
-    }
-
-    /**
-     * Search all available tests
-     *
-     * @param String $entry path to directory containing test files
-     *
-     * @return Array
-     */
-    function search_tests($entry) {
-        search_tests_rec($entry, $tests, $entry);
-        return $tests;
-    }
-
     // TODO: Add function comment
     function displayFileSystem($directory) {
         $iter = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory, RecursiveDirectoryIterator::KEY_AS_FILENAME | FilesystemIterator::SKIP_DOTS), RecursiveIteratorIterator::SELF_FIRST);
@@ -73,34 +34,6 @@ class TestCaseManager {
         return $output;
     }
 
-    /**
-     * Collect selected files to be executed
-     * @TODO: Rename or delete this method
-     *
-     * @param Array  $files  Array of selected tests
-     * @param String $prefix Path to the directory containing the file
-     *
-     * @return Array
-     */
-    function prepare_files($filesArray, $prefix) {
-        if (substr($prefix, -1) == '/') {
-            $prefix = substr($prefix, 0, -1); ;
-        }
-        $files = array();
-        foreach ($filesArray as $key => $node) {
-            if ($key == 'Codex') {
-                $key = '';
-            }
-            if (is_array($node)) {
-                $files = array_merge($files, prepare_files($node, $prefix."/".$key));
-            } else {
-                if ($node && $key != '_do_all') {
-                    $files = array_merge($files, array($prefix."/".$key));
-                }
-            }
-        }
-        return $files;
-    }
 }
 
 ?>
