@@ -173,7 +173,7 @@ if (!empty($testsuites)) {
 echo '
                         <form name="EditTestSuiteForm" action="" method="POST" onSubmit="generateTestSuite(testcases_to_add)">
                             <fieldset>
-                                <legend><b>Testcases</b></legend>
+                                <legend><b>New testsuite</b></legend>
                                 <table>
                                     <tr>
                                         <td align="center"><b><font size="2">Availables test cases</font></b>';
@@ -217,12 +217,14 @@ echo '                          <script type="text/javascript">
                                 </script>
                                 <table nowrap>
                                     <tr>
-                                        <td>Name:</td>
+                                        <td>Testsuite name:</td>
                                         <td><input name="testsuite_name"/></td>
                                     </tr>
                                     <tr>
+                                        <!-- For the moment we don\'t use the description
                                         <td>Description:</td>
                                         <td><textarea name="testsuite_description"></textarea></td>
+                                        -->
                                     </tr>
                                 </table>
                             </fieldset>';
