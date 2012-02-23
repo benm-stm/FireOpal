@@ -212,7 +212,7 @@ echo '                          <script type="text/javascript">
                                             }
                                         }
                                         d = document.getElementById("submit_panel_1");
-                                        d.innerHTML = \'<input type="text" id="testcases_to_add" name="testcases_to_add" value="\' + testCasesString + \'" />\';
+                                        d.innerHTML = \'<input type="hidden" id="testcases_to_add" name="testcases_to_add" value="\' + testCasesString + \'" />\';
                                     }
                                 </script>
                                 <table nowrap>
