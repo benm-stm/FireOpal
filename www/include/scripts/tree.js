@@ -1,16 +1,19 @@
 // TODO: Rename this file (and don't forget to update calls to the file)
 
 // TODO: Add comments
-// TODO: Make this work even if there is only one testsuite
 function loadTestCases() {
-    for(i = 0; i < document.LoadTestSuiteForm.load_testsuites.length; i++) {
-        if(document.LoadTestSuiteForm.load_testsuites[i].checked == true ) {
-            str = document.LoadTestSuiteForm.load_testsuites[i].value;
+    if (document.LoadTestSuiteForm.load_testsuites.length == undefined && document.LoadTestSuiteForm.load_testsuites.checked == true) {
+        str = document.LoadTestSuiteForm.load_testsuites.value;
+    } else {
+        for(i = 0; i < document.LoadTestSuiteForm.load_testsuites.length; i++) {
+            if(document.LoadTestSuiteForm.load_testsuites[i].checked == true ) {
+                str = document.LoadTestSuiteForm.load_testsuites[i].value;
+            }
         }
     }
     testCases = str.split(',');
 	document.EditTestSuiteForm.testcases_to_add.options.length = 0;
-    var i
+    var i;
     for (i = 0; i < testCases.length; i++) {
         var o = new Option(testCases[i],testCases[i]);
         document.EditTestSuiteForm.testcases_to_add.add(o, null);
