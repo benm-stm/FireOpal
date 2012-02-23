@@ -103,8 +103,8 @@ echo '
         <div id="header">';
 echo $output;
 echo '
-            <a href="/" class="community"><< Go back</a>
-            <a href="set" class="community">Update config</a>
+            <a href="/index.php" class="community"><< Go back</a>
+            <a href="set.php" class="community">Update config</a>
         </div>
         <div id="body_skin">
             <table>

@@ -37,7 +37,7 @@ echo '
     </head>
     <body>
         <div id="header">
-            <a href="cases" class="community">Manage testsuites</a>
+            <a href="cases.php" class="community">Manage testsuites</a>
         </div>
         <div id="body_skin">
             <table width="100%">

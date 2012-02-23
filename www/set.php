@@ -48,7 +48,7 @@ echo '
         <div id="header">';
 echo $error;
 echo '
-            <a href="cases" class="community"><< Go back</a>
+            <a href="cases.php" class="community"><< Go back</a>
         </div>
         <div id="header_clear">
         </div>
