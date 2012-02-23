@@ -18,6 +18,8 @@
 
 class TestCaseManager {
 
+    const TESTCASES_PATH = "../testcases";
+
     // TODO: Add function comment
     function displayFileSystem($directory) {
         $iter = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory, RecursiveDirectoryIterator::KEY_AS_FILENAME | FilesystemIterator::SKIP_DOTS), RecursiveIteratorIterator::SELF_FIRST);
