@@ -29,11 +29,10 @@ function AddtestCases() {
 }
 
 // TODO: Add comments
-// TODO: Verify why this won't work all the time
 function RemoveTestCase() {
-    for(testCase = 0; testCase < document.EditTestSuiteForm.testcases_to_add.length; testCase++) {
+    for(testCase = document.EditTestSuiteForm.testcases_to_add.length -1 ; testCase >= 0 ; testCase--) {
         if(document.EditTestSuiteForm.testcases_to_add.options[testCase].selected == true) {
-            document.EditTestSuiteForm.testcases_to_add.options[testCase] = null;
+            document.EditTestSuiteForm.testcases_to_add.remove(testCase);
         }
     }
 }
