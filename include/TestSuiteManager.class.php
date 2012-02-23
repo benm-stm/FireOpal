@@ -69,8 +69,10 @@ class TestSuiteManager {
      * @return Boolean
      */
     function populateTestSuite($testSuite, $testCasesArray) {
+        $testCasesLocation = new SplFileInfo(TestCaseManager::TESTCASES_PATH);
+        $pathFinder = $testCasesLocation->getRealPath();
         foreach ($testCasesArray as $test) {
-            $testCaseFile = new SplFileInfo($test);
+            $testCaseFile = new SplFileInfo($pathFinder.$test);
             $testCase     = new TestCase($testCaseFile->getBasename('.rb'), $testCaseFile);
             $testSuite->attach($testCase);
         }
