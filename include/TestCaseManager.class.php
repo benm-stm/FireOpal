@@ -27,9 +27,9 @@ class TestCaseManager {
         foreach ($iter as $entry) {
             // TODO: Don't put the absolute path on the server
             if ($entry->isDir()) {
-                $output .= '<option value="'.$entry->getRealPath().'" disabled></b>'.$entry->getFilename().'</b></option>';
+                $output .= '<option value="'.substr($entry->getPathname(), 12).'" disabled></b>'.$entry->getFilename().'</b></option>';
             } else {
-                $output .= '<option value="'.$entry->getRealPath().'">&nbsp;&nbsp;&nbsp;&nbsp;'.$entry->getFilename().'</option>';
+                $output .= '<option value="'.substr($entry->getPathname(), 12).'">&nbsp;&nbsp;&nbsp;&nbsp;'.$entry->getFilename().'</option>';
             }
         }
         $output .= '<select>';
