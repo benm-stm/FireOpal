@@ -130,7 +130,7 @@ if (!empty($testsuites)) {
     echo '
                         <form name="LoadTestSuiteForm" action="" method="POST">
                             <fieldset>
-                                <legend><b>Load testsuites</b></legend>
+                                <legend><b>Load testsuite</b></legend>
                                 <table nowrap>';
     foreach($testsuites as $testsuite => $testcases) {
         echo '
@@ -146,7 +146,7 @@ if (!empty($testsuites)) {
                                 </table>
                             </fieldset>
                             <div id="submit_panel">
-                                <input type="button" name="load" value="Load" onClick="loadTestCases()">
+                                <input type="button" name="load" value="Load !" onClick="loadTestCases()">
                             </div>
                         </form>';
 }
