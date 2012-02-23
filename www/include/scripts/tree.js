@@ -11,7 +11,7 @@ function loadTestCases() {
     testCases = str.split(',');
 	document.EditTestSuiteForm.testcases_to_add.options.length = 0;
     var i
-    for (i = 0; i<testCases.length; i++) {
+    for (i = 0; i < testCases.length; i++) {
         var o = new Option(testCases[i],testCases[i]);
         document.EditTestSuiteForm.testcases_to_add.options[document.EditTestSuiteForm.testcases_to_add.options.length] = o;
     }
@@ -19,7 +19,7 @@ function loadTestCases() {
 
 // TODO: Add comments
 function AddtestCases() {
-    for(testCase = 0; testCase<document.EditTestSuiteForm.testCases.length; testCase++) {
+    for(testCase = 0; testCase < document.EditTestSuiteForm.testCases.length; testCase++) {
         if(document.EditTestSuiteForm.testCases.options[testCase].selected == true) {
             var added = new Option(document.EditTestSuiteForm.testCases.options[testCase].text, document.EditTestSuiteForm.testCases.options[testCase].value);
             document.EditTestSuiteForm.testcases_to_add.options[document.EditTestSuiteForm.testcases_to_add.options.length] = added;
@@ -31,8 +31,7 @@ function AddtestCases() {
 // TODO: Add comments
 // TODO: Verify why this won't work all the time
 function RemoveTestCase() {
-    document.EditTestSuiteForm.testcases_to_add.options[document.EditTestSuiteForm.testcases_to_add.options.selectedIndex] = null;
-    for(testCase = 0; testCase<document.EditTestSuiteForm.testcases_to_add.length; testCase++) {
+    for(testCase = 0; testCase < document.EditTestSuiteForm.testcases_to_add.length; testCase++) {
         if(document.EditTestSuiteForm.testcases_to_add.options[testCase].selected == true) {
             document.EditTestSuiteForm.testcases_to_add.options[testCase] = null;
         }
@@ -43,7 +42,7 @@ function RemoveTestCase() {
 function generateTestSuite() {
     var p               = document.getElementById('testcases_to_add');
     var testCasesString = "";
-    for(testCase = 0; testCase<p.length; testCase++) {
+    for(testCase = 0; testCase < p.length; testCase++) {
         if(testCase+1 == p.length) {
             testCasesString += p[testCase].value;
         } else {
