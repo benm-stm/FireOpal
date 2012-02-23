@@ -22,6 +22,7 @@ class Setup {
 
     /**
      * Extract the setup values from HTTP request and validate them
+     * For better understanding read carefully http://bit.ly/A9LzAX
      *
      * @param Array $request Request containing setup values
      *
