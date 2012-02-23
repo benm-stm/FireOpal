@@ -60,19 +60,17 @@ class TestCaseManager {
     // TODO: Add function comment
     function displayFileSystem($directory) {
         $iter = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory, RecursiveDirectoryIterator::KEY_AS_FILENAME | FilesystemIterator::SKIP_DOTS), RecursiveIteratorIterator::SELF_FIRST);
-        $tokenHeader = '<select align=top name="testCases" size=10  style="width:320px" multiple="multiple">';
-        printf($tokenHeader);
+        $output = '<select align=top name="testCases" size=10  style="width:320px" multiple="multiple">';
         foreach ($iter as $entry) {
-            if ($entry->isDir()) {
-                $token = "<option value=\"%s\" disabled></b>%s</b></option>";
-            } else {
-                $token = "<option value=\"%s\">&nbsp;&nbsp;&nbsp;&nbsp;%s</option>";
-            }
             // TODO: Don't put the absolute path on the server
-            printf($token, $entry->getRealPath(), $entry->getFilename());
+            if ($entry->isDir()) {
+                $output .= '<option value="'.$entry->getRealPath().'" disabled></b>'.$entry->getFilename().'</b></option>';
+            } else {
+                $output .= '<option value="'.$entry->getRealPath().'">&nbsp;&nbsp;&nbsp;&nbsp;'.$entry->getFilename().'</option>';
+            }
         }
-        $tokenFooter = '<select>';
-        printf($tokenFooter);
+        $output .= '<select>';
+        return $output;
     }
 
     /**
