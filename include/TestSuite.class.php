@@ -207,7 +207,7 @@ class TestSuite {
                 foreach ($this->_testCasesMap as $testCase) {
                     $testCasePathInfo = new SplFileInfo($testCase->filePath);
                     $testCasePath = $testCasePathInfo->getRealPath();
-                    $testCaseFinder = substr($testCase->_testCaseFile, strlen($testCasePath)+1);
+                    $testCaseFinder = substr($testCase->_testCaseFile, strlen($testCasePath));
                     $content .= "# ".$testCaseFinder."\n";
                 }
                 $content .= "#--- Test Cases End ---\n\n";
@@ -264,7 +264,7 @@ class TestSuite {
                     $inTests = false;
                 }
                 if ($inTests) {
-                    $testCases[]= substr($line, 1);
+                    $testCases[]= substr($line, 2);
                 }
                 if (!$inTests && $line == "#--- Test Cases list ---\n") {
                     $inTests = true;
