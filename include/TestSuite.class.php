@@ -264,7 +264,7 @@ class TestSuite {
                     $inTests = false;
                 }
                 if ($inTests) {
-                    $testCases[]= substr($line, 2);
+                    $testCases[]= substr(substr($line, 2), 0, -1);
                 }
                 if (!$inTests && $line == "#--- Test Cases list ---\n") {
                     $inTests = true;
