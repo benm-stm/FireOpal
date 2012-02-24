@@ -14,7 +14,7 @@ function loadTestCases() {
     testCases = str.split(',');
 	document.EditTestSuiteForm.testcases_to_add.options.length = 0;
     for (i = 0; i < testCases.length; i++) {
-        var o = new Option(testCases[i].substr(1), testCases[i]);
+        var o = new Option(testCases[i], testCases[i]);
         document.EditTestSuiteForm.testcases_to_add.add(o, null);
     }
 }
@@ -28,7 +28,7 @@ function AddtestCases() {
     }
     for(testCase = 0; testCase < document.EditTestSuiteForm.testCases.length; testCase++) {
         if(document.EditTestSuiteForm.testCases.options[testCase].selected == true) {
-            var added = new Option(document.EditTestSuiteForm.testCases.options[testCase].value.substr(1), document.EditTestSuiteForm.testCases.options[testCase].value);
+            var added = new Option(document.EditTestSuiteForm.testCases.options[testCase].value, document.EditTestSuiteForm.testCases.options[testCase].value);
             document.EditTestSuiteForm.testcases_to_add.add(added, selected);
             document.EditTestSuiteForm.testCases.options[testCase].selected = null;
         }

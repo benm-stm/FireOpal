@@ -18,7 +18,7 @@
 
 class TestCaseManager {
 
-    const TESTCASES_PATH = "../testcases";
+    const TESTCASES_PATH = "../testcases/";
 
     /**
      * Recursivly creates a basic HTML tree of a given directory, then render a select input with the file system content starting from this given node.
