@@ -21,7 +21,7 @@
 ini_set('display_errors', 'on');
 ini_set('max_execution_time', 0);
 ini_set('memory_limit', -1);
-ini_set('include_path', ini_get('include_path').':'.dirname(__FILE__).'/../include/');
+ini_set('include_path', ini_get('include_path').PATH_SEPARATOR.dirname(__DIR__).DIRECTORY_SEPARATOR.'include');
 
 require_once 'Setup.class.php';
 require_once 'TestSuite.class.php';

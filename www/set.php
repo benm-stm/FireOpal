@@ -16,7 +16,7 @@
  * along with this code. If not, see <http://www.gnu.org/licenses/>.
  */
 
-ini_set('include_path', ini_get('include_path').':'.dirname(__FILE__).'/../include/');
+ini_set('include_path', ini_get('include_path').PATH_SEPARATOR.dirname(__DIR__).DIRECTORY_SEPARATOR.'include');
 require_once 'Setup.class.php';
 $setup = new Setup();
 if (!empty($_REQUEST)) {
