@@ -70,9 +70,8 @@ class TestSuite {
 
     /**
      * Include binded test files within the header of the ruby test Suite file.
-     * @TODO: Complete function comment
      *
-     * @param SplFileObject $rspecFileObj ???
+     * @param SplFileObject $rspecFileObj The file object of the test suite
      *
      * @return Void
      */
@@ -113,7 +112,7 @@ class TestSuite {
      * @TODO: Complete function comment
      * @TODO: Handle errors
      *
-     * @param SplFileObject $rspecFileObj ???
+     * @param SplFileObject $rspecFileObj The file object of the test suite
      *
      * @return Void
      */
@@ -137,7 +136,7 @@ class TestSuite {
      * @TODO: Complete function comment
      * @TODO: Handle errors
      *
-     * @param SplFileObject $rspecFileObj ???
+     * @param SplFileObject $rspecFileObj The file object of the test suite
      *
      * @return Void
      */
