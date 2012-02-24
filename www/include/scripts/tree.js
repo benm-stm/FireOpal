@@ -14,7 +14,7 @@ function loadTestCases() {
     testCases = str.split(',');
 	document.EditTestSuiteForm.testcases_to_add.options.length = 0;
     for (i = 0; i < testCases.length; i++) {
-        var o = new Option(testCases[i],testCases[i]);
+        var o = new Option(testCases[i].substr(1), testCases[i]);
         document.EditTestSuiteForm.testcases_to_add.add(o, null);
     }
 }
