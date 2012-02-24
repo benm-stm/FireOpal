@@ -50,7 +50,7 @@ if (isset($_REQUEST['testcases_to_add'])) {
             $testSuite->storeTestSuiteDetails($_REQUEST);
             $testSuite->bindConfigurationElements($_REQUEST);
             $testSuite->loadTestSuite();
-            $info[] = "Testsuite stored";
+            $info[] = "Testsuite '".$_REQUEST['testsuite_name']."' stored";
         } else {
             $error[] = "No testcases selected";
         }
