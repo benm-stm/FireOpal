@@ -5,8 +5,8 @@ function loadTestCases() {
     if (document.LoadTestSuiteForm.load_testsuites.length == undefined && document.LoadTestSuiteForm.load_testsuites.checked == true) {
         str = document.LoadTestSuiteForm.load_testsuites.value;
     } else {
-        for(i = 0; i < document.LoadTestSuiteForm.load_testsuites.length; i++) {
-            if(document.LoadTestSuiteForm.load_testsuites[i].checked == true ) {
+        for (i = 0; i < document.LoadTestSuiteForm.load_testsuites.length; i++) {
+            if (document.LoadTestSuiteForm.load_testsuites[i].checked == true ) {
                 str = document.LoadTestSuiteForm.load_testsuites[i].value;
             }
         }
@@ -21,13 +21,14 @@ function loadTestCases() {
 
 // TODO: Add comments
 function AddtestCases() {
-    for(testCase = 0; testCase < document.EditTestSuiteForm.testcases_to_add.length; testCase++) {
-        if(document.EditTestSuiteForm.testcases_to_add.options[testCase].selected == true) {
+    for (testCase = 0; testCase < document.EditTestSuiteForm.testcases_to_add.length; testCase++) {
+        if (document.EditTestSuiteForm.testcases_to_add.options[testCase].selected == true) {
             var selected = document.EditTestSuiteForm.testcases_to_add.options[testCase];
+            break;
         }
     }
-    for(testCase = 0; testCase < document.EditTestSuiteForm.testCases.length; testCase++) {
-        if(document.EditTestSuiteForm.testCases.options[testCase].selected == true) {
+    for (testCase = 0; testCase < document.EditTestSuiteForm.testCases.length; testCase++) {
+        if (document.EditTestSuiteForm.testCases.options[testCase].selected == true) {
             var added = new Option(document.EditTestSuiteForm.testCases.options[testCase].value, document.EditTestSuiteForm.testCases.options[testCase].value);
             document.EditTestSuiteForm.testcases_to_add.add(added, selected);
             document.EditTestSuiteForm.testCases.options[testCase].selected = null;
@@ -37,8 +38,8 @@ function AddtestCases() {
 
 // TODO: Add comments
 function RemoveTestCase() {
-    for(testCase = document.EditTestSuiteForm.testcases_to_add.length -1 ; testCase >= 0 ; testCase--) {
-        if(document.EditTestSuiteForm.testcases_to_add.options[testCase].selected == true) {
+    for (testCase = document.EditTestSuiteForm.testcases_to_add.length -1 ; testCase >= 0 ; testCase--) {
+        if (document.EditTestSuiteForm.testcases_to_add.options[testCase].selected == true) {
             document.EditTestSuiteForm.testcases_to_add.remove(testCase);
         }
     }
@@ -48,8 +49,8 @@ function RemoveTestCase() {
 function generateTestSuite() {
     var p               = document.getElementById('testcases_to_add');
     var testCasesString = "";
-    for(testCase = 0; testCase < p.length; testCase++) {
-        if(testCase+1 == p.length) {
+    for (testCase = 0; testCase < p.length; testCase++) {
+        if (testCase+1 == p.length) {
             testCasesString += p[testCase].value;
         } else {
             testCasesString += p[testCase].value+",";
