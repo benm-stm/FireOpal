@@ -22,7 +22,7 @@ class TestCase {
     public $name;
     public $_dependenciesMap;
     public $_flagsMap;
-    public $file;
+    public $filePath;
 
     /**
      * Constructor
@@ -37,10 +37,11 @@ class TestCase {
         $this->name             = $name;
         $this->_dependenciesMap = array();
         $this->_flagsMap        = array();
+        $this->filePath         = TestCaseManager::TESTCASES_PATH.'/';
         if (!empty($fileinfo)) {
             $this->_testCaseFile = $fileinfo;
         } else {
-            $this->_testCaseFile = new SplFileInfo(TestCaseManager::TESTCASES_PATH.'/'.$this->name.'.rb');
+            $this->_testCaseFile = new SplFileInfo($this->filePath.$this->name.'.rb');
         }
     }
 
