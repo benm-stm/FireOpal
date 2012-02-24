@@ -37,7 +37,7 @@ class TestCase {
         $this->name             = $name;
         $this->_dependenciesMap = array();
         $this->_flagsMap        = array();
-        $this->filePath         = TestCaseManager::TESTCASES_PATH.'/';
+        $this->filePath         = TestCaseManager::TESTCASES_PATH;
         if (!empty($fileinfo)) {
             $this->_testCaseFile = $fileinfo;
         } else {
