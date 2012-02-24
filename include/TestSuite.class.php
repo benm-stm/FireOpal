@@ -205,7 +205,10 @@ class TestSuite {
                 //Test Cases storage
                 $content = "#--- Test Cases list ---\n";
                 foreach ($this->_testCasesMap as $testCase) {
-                    $content .= "# ".str_replace(substr(dirname(__FILE__), 0, -7).'www/../testcases/', ' ', $testCase->_testCaseFile)."\n";
+                    $testCasePathInfo = new SplFileInfo($testCase->filePath);
+                    $testCasePath = $testCasePathInfo->getRealPath();
+                    $testCaseFinder = substr($testCase->_testCaseFile, strlen($testCasePath));
+                    $content .= "# ".$testCaseFinder."\n";
                 }
                 $content .= "#--- Test Cases End ---\n\n";
                 $testSuiteFileObj->fwrite($content);
