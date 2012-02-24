@@ -55,7 +55,7 @@ foreach($testsuites as $t => $cases) {
     echo '
                                     <li>
                                         <input type="radio" name="run" value="'.$t.'" />'.$t.'
-                                        <a href="/?details='.$t.'"> Details</a>
+                                        <a href="index.php?details='.$t.'"> Details</a>
                                     </li>';
 }
 echo '
