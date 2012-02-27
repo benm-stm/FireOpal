@@ -25,8 +25,6 @@ class TestSuite {
     const RSPEC_COLOR                   = 8;
 
     private $name;
-    private $_testCases;
-    private $_currentTestCase;
     private $_result;
     private $_testSuiteFile;
     private $_testCasesMap;
@@ -237,16 +235,6 @@ class TestSuite {
             echo $e->getMessage();
         }
     }
-
-    /**
-     * Returns the testCase currently being updated
-     *
-     * @return TestCase
-     */
-    public function getCurrent() {
-        return $this->_currentTestCase;
-    }
-
 
     /**
      * Returns the testCases attached to this testSuite
