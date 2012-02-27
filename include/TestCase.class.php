@@ -85,7 +85,26 @@ class TestCase {
      *
      * @return Array
      */
-    protected function getDependencies() {
+    function getDependencies() {
+        if (empty($this->_dependenciesMap)) {
+            $testCaseFileObj = new SplFileObject($this->_testCaseFile);
+            $line            = "";
+            $inDependencies  = false;
+            if ($testCaseFileObj->isReadable()) {
+                while ($testCaseFileObj->valid() && $line != "#--- End dependency list\n") {
+                    $line = $testCaseFileObj->fgets();
+                    if ($inDependencies && $line == "#--- End dependency list\n") {
+                        $inDependencies = false;
+                    }
+                    if ($inDependencies) {
+                        $this->_dependenciesMap[] = trim(str_replace("#", "", $line));
+                    }
+                    if (!$inDependencies && $line == "#--- Start dependency list\n") {
+                        $inDependencies = true;
+                    }
+                }
+            }
+        }
         return $this->_dependenciesMap;
     }
 
@@ -103,7 +122,7 @@ class TestCase {
      *
      * @return Array
      */
-    protected function getFlags() {
+    function getFlags() {
         return $this->$_flagsMap;
     }
 

@@ -1,5 +1,7 @@
+#--- Start dependency list
 # docman/test.rb
 # trackerV3/tuleap.rb
+#--- End dependency list
 
 describe "Testcase name" do
     it "Fill a form and click on a button" do
