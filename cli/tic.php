@@ -19,6 +19,7 @@
 require_once '../include/Setup.class.php';
 require_once '../include/TestSuite.class.php';
 require_once '../include/TestSuiteManager.class.php';
+require_once '../include/TestCaseManager.class.php';
 
 $displayHelp = false;
 $verbose     = false;
@@ -88,7 +89,8 @@ if (!empty($function)) {
             if ($displayHelp) {
                 echo "Display testcases.\n";
             } else {
-                echo "Not implemented yet\n";
+                $testCaseManager = new TestCaseManager();
+                echo $testCaseManager->displayFileSystem("../testcases")."\n";
             }
             break;
         case 'generate' :

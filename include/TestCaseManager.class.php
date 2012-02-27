@@ -27,21 +27,33 @@ class TestCaseManager {
      * $entry is an SPLFileInfo object, default getFilename() method would return the absolute path of the file; Since you need only the filename,
      * you have to set the KEY_AS_FILENAME constant to the iterator constructor.
      *
-     * @param String $directory File system node considered as root for the exploration
+     * @param String  $directory File system node considered as root for the exploration
+     * @param Boolean $html      If true output will be displayed in HTML rather than text
      *
      * @return String
      */
-    function displayFileSystem($directory) {
+    function displayFileSystem($directory, $html = false) {
         $iter = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory, RecursiveDirectoryIterator::KEY_AS_FILENAME | FilesystemIterator::SKIP_DOTS), RecursiveIteratorIterator::SELF_FIRST);
-        $output = '<select align=top name="testCases" size=10  style="width:320px" multiple="multiple">';
+        $output = "";
+        if ($html) {
+            $output = '<select align=top name="testCases" size=10  style="width:320px" multiple="multiple">';
+        }
         foreach ($iter as $entry) {
             if ($entry->isDir()) {
-                $output .= '<option value="'.substr($entry->getPathname(), strlen(TestCaseManager::TESTCASES_PATH)).'" disabled></b>'.$entry->getFilename().'</b></option>';
+                if ($html) {
+                    $output .= '<option value="'.substr($entry->getPathname(), strlen(TestCaseManager::TESTCASES_PATH)).'" disabled></b>'.$entry->getFilename().'</b></option>';
+                }
             } else {
-                $output .= '<option value="'.substr($entry->getPathname(), strlen(TestCaseManager::TESTCASES_PATH)).'">&nbsp;&nbsp;&nbsp;&nbsp;'.$entry->getFilename().'</option>';
+                if ($html) {
+                    $output .= '<option value="'.substr($entry->getPathname(), strlen(TestCaseManager::TESTCASES_PATH)).'">&nbsp;&nbsp;&nbsp;&nbsp;'.$entry->getFilename().'</option>';
+                } else {
+                    $output .= substr($entry->getPathname(), strlen(TestCaseManager::TESTCASES_PATH))."\n";
+                }
             }
         }
-        $output .= '<select>';
+        if ($html) {
+            $output .= '<select>';
+        }
         return $output;
     }
 
