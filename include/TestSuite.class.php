@@ -42,7 +42,7 @@ class TestSuite {
             $testSuiteManager = new TestSuiteManager();
             $this->_testSuiteFile = new SplFileInfo($testSuiteManager->getTestSuitesLocation().$this->name.'.rb');
         } else {
-            $this->_testSuiteFile = new SplFileInfo('/dev/null');
+            throw new InvalidArgumentException('TestSuite constructor needs a string parameter. Input was : '.$testSuiteName);
         }
         $this->_result        = array();
         $this->_testCasesMap  = new SplObjectStorage();
