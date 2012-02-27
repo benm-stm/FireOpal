@@ -190,30 +190,22 @@ class TestSuite {
     /**
      * Store conf in the correponding testsuite
      *
-     * @param String $request
-     *
      * @return Void
      */
-    function storeTestSuiteDetails($request) {
+    function storeTestSuiteDetails() {
         try {
             $testSuiteFileObj = $this->_testSuiteFile->openFile('a');
             if ($this->_testSuiteFile->isWritable()) {
                 //Conf storage
                 $setup = new Setup();
-                $setup->storeConf($request, $this->_testSuiteFile->getPathname());
+                $setup->storeConf($this->_testSuiteFile->getPathname());
                 //Test Cases storage
                 $content = "#--- Test Cases list ---\n";
                 foreach ($this->_testCasesMap as $testCase) {
                     $testCasePathInfo = new SplFileInfo($testCase->filePath);
                     $testCasePath     = $testCasePathInfo->getRealPath();
                     $testCaseFinder   = substr($testCase->_testCaseFile, strlen($testCasePath) + 1);
-                    $dependencies     = $testCase->getDependencies();
-                    if (!empty($dependencies)) {
-                        $dependencies = " depends on:".implode(", ", $dependencies);
-                    } else {
-                        $dependencies = "";
-                    }
-                    $content          .= "# ".$testCaseFinder.$dependencies."\n";
+                    $content          .= "# ".$testCaseFinder."\n";
                 }
                 $content .= "#--- Test Cases End ---\n\n";
                 $testSuiteFileObj->fwrite($content);

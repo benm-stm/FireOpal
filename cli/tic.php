@@ -19,6 +19,7 @@
 require_once '../include/Setup.class.php';
 require_once '../include/TestSuite.class.php';
 require_once '../include/TestSuiteManager.class.php';
+require_once '../include/TestCase.class.php';
 require_once '../include/TestCaseManager.class.php';
 
 $displayHelp = false;
@@ -38,7 +39,6 @@ for ($i = 1; $i < $argc; $i++) {
         // A parameter for the given function
         $param = split("=", $argv[$i]);
         $parameters[str_replace("-", "", $param[0])] = $param[1];
-        break;
     } else {
         // Unknown parameter
         exit("Unknown parameter: \"".$argv[$i]."\"\n");
@@ -97,7 +97,23 @@ if (!empty($function)) {
             if ($displayHelp) {
                 echo "Generate a testsuite.\n";
             } else {
-                echo "Not implemented yet\n";
+                if (isset($parameters["name"])) {
+                    if (isset($parameters["old_testsuite"])) {
+                        $oldTestSuite     = new TestSuite($parameters["old_testsuite"]);
+                        $testCases        = $oldTestSuite->getTestCases();
+                        $testSuite        = new TestSuite($parameters["name"]);
+                        $testSuiteManager = new TestSuiteManager();
+                        $testSuiteManager->populateTestSuite($testSuite, $testCases);
+                        $testSuite->storeTestSuiteDetails();
+                        $testSuite->bindConfigurationElements();
+                        $testSuite->loadTestSuite();
+                        echo "Testsuite \"".$parameters["name"]."\" stored\n";
+                    } else {
+                        echo "--old_testsuite parameter is mandatory\n";
+                    }
+                } else {
+                    echo "--name parameter is mandatory\n";
+                }
             }
             break;
         default :
