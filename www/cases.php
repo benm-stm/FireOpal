@@ -47,7 +47,11 @@ if (isset($_REQUEST['testcases_to_add'])) {
         if (!empty($testCasesToAdd)) {
             try {
                 $testSuite = new TestSuite($_REQUEST['testsuite_name']);
-                $testSuiteManager->populateTestSuite($testSuite, $testCasesToAdd);
+                try {
+                    $testSuiteManager->populateTestSuite($testSuite, $testCasesToAdd);
+                } catch (RuntimeException $e) {
+                    echo $e->getMessage();
+                }
                 $testSuite->storeTestSuiteDetails($_REQUEST);
                 $testSuite->bindConfigurationElements($_REQUEST);
                 $testSuite->loadTestSuite();
