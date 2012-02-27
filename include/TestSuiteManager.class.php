@@ -78,18 +78,20 @@ class TestSuiteManager {
      * @param TestSuite $testSuite     Target test suite to populate
      * @param Array     $testCaseArray List of testcases to attach to the testsuite
      *
-     * @return Boolean
+     * @return void
      */
     function populateTestSuite($testSuite, $testCasesArray) {
         $testCasesLocation = new SplFileInfo(TestCaseManager::TESTCASES_PATH);
-        $pathFinder = $testCasesLocation->getRealPath();
-        foreach ($testCasesArray as $test) {
-            $testCaseFile = new SplFileInfo($pathFinder.DIRECTORY_SEPARATOR.$test);
-            $testCase     = new TestCase($testCaseFile->getBasename('.rb'), $testCaseFile);
-            $testSuite->attach($testCase);
+        if ($testCasesLocation->isDir()) {
+            $pathFinder = $testCasesLocation->getRealPath();
+            foreach ($testCasesArray as $test) {
+                $testCaseFile = new SplFileInfo($pathFinder.DIRECTORY_SEPARATOR.$test);
+                $testCase     = new TestCase($testCaseFile->getBasename('.rb'), $testCaseFile);
+                $testSuite->attach($testCase);
+            }
+        } else {
+            throw new RuntimeException ("Specified test cases location: '".$testCasesLocation."' is not an accessible directory.");
         }
-        // TODO: Give sense to return value
-        return true;
     }
 
 }
