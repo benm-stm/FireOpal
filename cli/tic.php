@@ -90,7 +90,7 @@ if (!empty($function)) {
                 echo "Display testcases.\n";
             } else {
                 $testCaseManager = new TestCaseManager();
-                echo $testCaseManager->displayFileSystem("../testcases")."\n";
+                echo $testCaseManager->displayFileSystem("../testcases");
             }
             break;
         case 'generate' :
