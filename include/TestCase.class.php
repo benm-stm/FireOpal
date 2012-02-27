@@ -56,8 +56,9 @@ class TestCase {
         $testCaseFileContent = "";
         if ($testCaseFileObj->isReadable()) {
             while ($testCaseFileObj->valid()) {
-                $line = $testCaseFileObj->fgets();
-                if (!empty($line)) {
+                $line        = $testCaseFileObj->fgets();
+                $trimmedLine = trim($line);
+                if (!empty($trimmedLine) && !preg_match("/^#/", $trimmedLine)) {
                     $testCaseFileContent .= "        ".$line;
                 }
             }
