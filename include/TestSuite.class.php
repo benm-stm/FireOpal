@@ -29,6 +29,7 @@ class TestSuite {
     private $_currentTestCase;
     private $_result;
     private $_testSuiteFile;
+    private $_testCasesMap;
 
     /**
      * Constructor of the class
