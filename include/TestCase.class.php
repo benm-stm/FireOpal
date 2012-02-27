@@ -23,6 +23,7 @@ class TestCase {
     public $_dependenciesMap;
     public $_flagsMap;
     public $filePath;
+    public $_testCaseFile;
 
     /**
      * Constructor

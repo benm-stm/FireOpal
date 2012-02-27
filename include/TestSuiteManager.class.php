@@ -72,7 +72,7 @@ class TestSuiteManager {
         $testCasesLocation = new SplFileInfo(TestCaseManager::TESTCASES_PATH);
         $pathFinder = $testCasesLocation->getRealPath();
         foreach ($testCasesArray as $test) {
-            $testCaseFile = new SplFileInfo($pathFinder."/".$test);
+            $testCaseFile = new SplFileInfo($pathFinder.DIRECTORY_SEPARATOR.$test);
             $testCase     = new TestCase($testCaseFile->getBasename('.rb'), $testCaseFile);
             $testSuite->attach($testCase);
         }
