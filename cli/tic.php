@@ -51,8 +51,17 @@ if (!empty($function)) {
                 }
             }
             break;
+        case 'testsuites' :
+            echo "Not implemented yet\n";
+            break;
+        case 'testcases' :
+            echo "Not implemented yet\n";
+            break;
+        case 'generate' :
+            echo "Not implemented yet\n";
+            break;
         default :
-            echo "Function not implemented yet or unknown\n";
+            echo "Unknown function\n";
             break;
     }
 } else {
