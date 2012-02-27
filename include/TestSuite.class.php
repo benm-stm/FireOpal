@@ -42,7 +42,7 @@ class TestSuite {
         if (!empty($testSuiteName)) {
             $this->name = $testSuiteName;
             $testSuiteManager = new TestSuiteManager();
-            $this->_testSuiteFile = new SplFileInfo(dirname(__FILE__).DIRECTORY_SEPARATOR.$testSuiteManager->getTestSuitesLocation().$this->name.'.rb');
+            $this->_testSuiteFile = new SplFileInfo($testSuiteManager->getTestSuitesLocation().$this->name.'.rb');
         } else {
             $this->_testSuiteFile = new SplFileInfo('/dev/null');
         }

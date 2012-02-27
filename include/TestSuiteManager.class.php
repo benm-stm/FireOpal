@@ -26,7 +26,7 @@ class TestSuiteManager {
      * @return String
      */
     public function getTestSuitesLocation() {
-        return self::$testSuitesLocation;
+        return dirname(__FILE__).DIRECTORY_SEPARATOR.self::$testSuitesLocation;
     }
 
     /**
@@ -36,7 +36,7 @@ class TestSuiteManager {
      */
     function searchTestsuites() {
         $testsuites = array();
-        $dir = dirname(__FILE__).DIRECTORY_SEPARATOR.self::$testSuitesLocation;
+        $dir = $this->getTestSuitesLocation();
         if (is_dir($dir)) {
             if ($dh = opendir($dir)) {
                 while (($file = readdir($dh)) !== false) {
@@ -64,8 +64,9 @@ class TestSuiteManager {
      */
     function delete($testsuites) {
         $deleteStatus = true;
+        $testSuitesPath = $this->getTestSuitesLocation();
         foreach ($testsuites as $testsuite) {
-            $deleteStatus = unlink(dirname(__FILE__).DIRECTORY_SEPARATOR.self::$testSuitesLocation.$testsuite) && $deleteStatus;
+            $deleteStatus = unlink($testSuitesPath.$testsuite) && $deleteStatus;
         }
         return $deleteStatus;
     }
