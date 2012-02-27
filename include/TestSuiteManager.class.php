@@ -18,6 +18,8 @@
 
 class TestSuiteManager {
 
+    public static $testSuitesLocation = "../testsuites/";
+
     /**
      * Search testsuite files
      *
@@ -25,7 +27,7 @@ class TestSuiteManager {
      */
     function searchTestsuites() {
         $testsuites = array();
-        $dir = dirname(__FILE__).'/../testsuites/';
+        $dir = dirname(__FILE__).DIRECTORY_SEPARATOR.self::$testSuitesLocation;
         if (is_dir($dir)) {
             if ($dh = opendir($dir)) {
                 while (($file = readdir($dh)) !== false) {
@@ -54,7 +56,7 @@ class TestSuiteManager {
     function delete($testsuites) {
         $deleteStatus = true;
         foreach ($testsuites as $testsuite) {
-            $deleteStatus = unlink(dirname(__FILE__).'/../testsuites/'.$testsuite) && $deleteStatus;
+            $deleteStatus = unlink(dirname(__FILE__).DIRECTORY_SEPARATOR.self::$testSuitesLocation.$testsuite) && $deleteStatus;
         }
         return $deleteStatus;
     }
