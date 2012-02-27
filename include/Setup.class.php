@@ -131,7 +131,6 @@ class Setup {
     /**
      * Store the setup passed in HTTP request for the testSuite
      *
-     * @param Array  $request Request containing setup values
      * @param String $filePath
      *
      * @return Boolean
