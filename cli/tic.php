@@ -35,11 +35,12 @@ for ($i = 1; $i < $argc; $i++) {
         $function = $argv[$i];
     } elseif (preg_match("/^-/", $argv[$i])) {
         // A parameter for the given function
-        $parameters[] = $argv[$i];
+        $param = split("=", $argv[$i]);
+        $parameters[str_replace("-", "", $param[0])] = $param[1];
         break;
     } else {
         // Unknown parameter
-        exit_error('Unknown parameter: "'.$argv[$i].'"');
+        exit("Unknown parameter: \"".$argv[$i]."\"\n");
     }
 }
 
@@ -67,7 +68,19 @@ if (!empty($function)) {
                 $testSuiteManager = new TestSuiteManager();
                 $testsuites       = $testSuiteManager->searchTestsuites();
                 foreach ($testsuites as $testsuite => $testcases) {
-                    echo " * ".$testsuite.": \"".$testcases."\"\n";
+                    echo " * ".str_replace(".rb", "", $testsuite).": \"".$testcases."\"\n";
+                }
+            }
+            break;
+        case 'testsuite' :
+            if ($displayHelp) {
+                echo "Display testsuite details.\n";
+            } else {
+                if (isset($parameters["testsuite"])) {
+                    $testSuite = new TestSuite($parameters["testsuite"]);
+                    echo $testSuite->displayDetails()."\n";
+                } else {
+                    echo "--testsuite parameter is mandatory\n";
                 }
             }
             break;
@@ -93,6 +106,7 @@ if (!empty($function)) {
     echo "TIC \"TIC is not CLI\"\nFunctions:
     * setup      : Display setup.
     * testsuites : Display testsuites.
+    * testsuite  : Display testsuite details.
     * testcases  : Display testcases.
     * generate   : Generate a testsuite.
     \n";
