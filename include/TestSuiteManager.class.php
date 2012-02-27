@@ -18,7 +18,7 @@
 
 class TestSuiteManager {
 
-    public static $testSuitesLocation = "../testsuites/";
+    public static $testSuitesLocation = "testsuites";
 
     /**
      * Retrieves test suites location
@@ -26,7 +26,7 @@ class TestSuiteManager {
      * @return String
      */
     public function getTestSuitesLocation() {
-        return dirname(__FILE__).DIRECTORY_SEPARATOR.self::$testSuitesLocation;
+        return dirname(__DIR__).DIRECTORY_SEPARATOR.self::$testSuitesLocation.DIRECTORY_SEPARATOR;
     }
 
     /**
