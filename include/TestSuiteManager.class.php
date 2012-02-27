@@ -21,6 +21,15 @@ class TestSuiteManager {
     public static $testSuitesLocation = "../testsuites/";
 
     /**
+     * Retrieves test suites location
+     *
+     * @return String
+     */
+    public function getTestSuitesLocation() {
+        return self::$testSuitesLocation;
+    }
+
+    /**
      * Search testsuite files
      *
      * @return Array
