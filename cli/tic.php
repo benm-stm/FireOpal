@@ -17,9 +17,8 @@
  */
 
 require_once '../include/Setup.class.php';
-
-$setup = new Setup();
-$set   = $setup->load();
+require_once '../include/TestSuite.class.php';
+require_once '../include/TestSuiteManager.class.php';
 
 for ($i = 1; $i <= $argc-1; $i++) {
     if ($argv[$i] == "--help" || $argv[$i] == "-h") {
@@ -43,6 +42,8 @@ for ($i = 1; $i <= $argc-1; $i++) {
 if (!empty($function)) {
     switch ($function) {
         case 'setup' :
+            $setup = new Setup();
+            $set   = $setup->load();
             foreach ($set as $name => $entry) {
                 if ($entry['type'] == 'password') {
                     echo " *".$name.": ******** (".$entry['description'].")\n";
@@ -52,7 +53,11 @@ if (!empty($function)) {
             }
             break;
         case 'testsuites' :
-            echo "Not implemented yet\n";
+            $testSuiteManager = new TestSuiteManager();
+            $testsuites       = $testSuiteManager->searchTestsuites();
+            foreach ($testsuites as $testsuite => $testcases) {
+                echo " *".$testsuite."\n";
+            }
             break;
         case 'testcases' :
             echo "Not implemented yet\n";
