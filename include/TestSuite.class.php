@@ -205,9 +205,15 @@ class TestSuite {
                 $content = "#--- Test Cases list ---\n";
                 foreach ($this->_testCasesMap as $testCase) {
                     $testCasePathInfo = new SplFileInfo($testCase->filePath);
-                    $testCasePath = $testCasePathInfo->getRealPath();
-                    $testCaseFinder = substr($testCase->_testCaseFile, strlen($testCasePath) + 1);
-                    $content .= "# ".$testCaseFinder."\n";
+                    $testCasePath     = $testCasePathInfo->getRealPath();
+                    $testCaseFinder   = substr($testCase->_testCaseFile, strlen($testCasePath) + 1);
+                    $dependencies     = $testCase->getDependencies();
+                    if (!empty($dependencies)) {
+                        $dependencies = " depends on:".implode(", ", $dependencies);
+                    } else {
+                        $dependencies = "";
+                    }
+                    $content          .= "# ".$testCaseFinder.$dependencies."\n";
                 }
                 $content .= "#--- Test Cases End ---\n\n";
                 $testSuiteFileObj->fwrite($content);
