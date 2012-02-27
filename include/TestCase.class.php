@@ -44,6 +44,9 @@ class TestCase {
         } else {
             $this->_testCaseFile = new SplFileInfo($this->filePath.$this->name.'.rb');
         }
+        if (!$this->_testCaseFile->isFile()) {
+            throw new RuntimeException ("The test case file referenced by SplFileInfo object doesn't exist or is not a regular file.");
+        }
     }
 
     /**
