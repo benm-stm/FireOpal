@@ -77,15 +77,18 @@ class TestCase {
      * @return String
      */
     public function retrieveRspecExampleGroup() {
-        $exampleGroup = "#---- Test case ".$this->name." ----\n";
-        $exampleGroup .= "    describe \"".$this->name."\" do\n";
+        $exampleGroupHeader = "#---- Test case ".$this->name." ----\n";
+        $exampleGroupFooter = "#---- End test case ".$this->name." ----\n\n";
+        $exampleGroup       = $exampleGroupHeader."    describe \"".$this->name."\" do\n";
         try {
             $exampleGroup .= $this->getContent();
         } catch (LogicException $e) {
             echo $e->getMessage();
+            //On Windows, newlines are actually \r\n, not just \n.
+            $exampleGroup = "#".$e->getMessage()."\n";
+            return $exampleGroupHeader.$exampleGroup.$exampleGroupFooter;
         }
-        $exampleGroup .= "\n    end\n";
-        $exampleGroup .= "#---- End test case ".$this->name." ----\n\n";
+        $exampleGroup .= "\n    end\n".$exampleGroupFooter;
         return $exampleGroup;
     }
 
