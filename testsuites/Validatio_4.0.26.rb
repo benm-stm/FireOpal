@@ -21,8 +21,8 @@ require 'rspec/autorun'
 class Configuration
 
     def setup
-        @driver = Selenium::WebDriver.for :remote, :url => 'http://client:4444/wd/hub', :desired_capabilities => :firefox
-        @driver.get 'http://codex'
+        @driver = Selenium::WebDriver.for :remote, :url => 'http://10.157.12.139:4444/wd/hub', :desired_capabilities => :firefox
+        @driver.get 'http://codex-test.cro.st.com'
         @driver.manage.timeouts.implicit_wait = 30
     end
 
@@ -46,37 +46,62 @@ end
 # Here Comes RSpec examples 
 
 
+class Thing
+end
+
+class Logging
+end
+
+class TuleapValidation
+end
+
+
 describe "Validatio_4.0.26" do
 
     before(:all) do
         @valid = Configuration.new
         @valid.setup()
+        @l =Thing.new
         @valid.login()
         @driver = @valid.getdriver
     end
 
-    describe "test" do
-        describe "Test logging in" do
-            it "Fill the form and submit" do
-                @driver.find_element(:name, "form_loginname").send_keys "login"
-                @driver.find_element(:name, "form_pw").send_keys "password"
-                @driver.find_element(:name, "login").click
-            end
-            it "Test the wrong title of the page" do 
-                (@driver.title).should == "wrong title"
-            end
-            it "Test the correct title of the page" do 
-                (@driver.title).should == "good tiltle"
-            end
-            it "compare 1 to 1" do
-                1.should eq(1)
+
+    describe Thing do
+        it "compare 1 to 1" do
+            1.should eq(1)
+        end
+    end
+    
+	describe Logging do
+        it "Fill the form and submit" do
+            @driver.find_element(:name, "form_loginname").send_keys "terzino"
+            @driver.find_element(:name, "form_pw").send_keys "pwd"
+            @driver.find_element(:name, "login").click
+        end
+        it "Test the wrong title of the page" do
+            (@driver.title).should == "wrong title"
+        end
+        it "Test the correct title of the page" do
+            (@driver.title).should == "good tiltle"
+        end
+        it "compare 1 to 1" do
+            1.should eq(1)
+        end
+    end
+    
+	describe TuleapValidation do
+        thing = @l.describe
+        if thing.example.execution_result[:status] !='failed'
+            it "should print test" do
+                2.should eq(2)
+                puts ("ooooooooooooooooup")
             end
         end
-            end
+    end
 
     after(:all) do
         @valid.teardown()
     end
 
 end
-
