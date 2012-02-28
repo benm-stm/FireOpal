@@ -16,6 +16,18 @@
  * along with this code. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+* This class implements RSpec test suite for a set of given test cases.
+*
+* SPL exceptions class hierarchy may be helpfull for somebody to better understand the whole errors handling:
+* Exception                    The base class for all Exceptions.
+*    LogicException        Exception that represents error in the program logic. Direct known subclasses:
+*        BadFunctionCallException
+*            BadMethodCallException
+*        DomainException, InvalidArgumentException, LengthException, OutOfRangeException
+*    RuntimeException    Exception thrown if an error which can only be found on runtime occurs. Direct known subclasses:
+*        OutOfBoundsException, OverflowException, RangeException, UnderflowException, UnexpectedValueException
+*/
 require_once 'Setup.class.php';
 class TestSuite {
 
