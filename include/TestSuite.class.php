@@ -97,9 +97,13 @@ class TestSuite {
     public function bindTestCases($rspecFileObj) {
         if ($rspecFileObj->isWritable()) {
             $rspecFileObj->fwrite("\ndescribe \"".$this->name."\" do\n\n");
-            $this->bindRspecSetUp($rspecFileObj);
-            $this->bindTestSuiteRequirements($rspecFileObj);
-            $this->bindRspecTearDown($rspecFileObj);
+            try {
+                $this->bindRspecSetUp($rspecFileObj);
+                $this->bindTestSuiteRequirements($rspecFileObj);
+                $this->bindRspecTearDown($rspecFileObj);
+            } catch (LogicException $e) {
+                echo $e->getMessage();
+            }
             $rspecFileObj->fwrite("end\n\n");
         } 
     }
