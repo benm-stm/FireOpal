@@ -67,7 +67,7 @@ if (!empty($function)) {
             break;
         case 'testsuites' :
             if ($displayHelp) {
-                echo "testsuites: Display testsuites.\n    --help or -h: Display this help\n";
+                echo "testsuites: Display testsuites.\nParameters:\n    --help or -h: Display this help\n";
             } else {
                 $testSuiteManager = new TestSuiteManager();
                 $testsuites       = $testSuiteManager->searchTestsuites();
@@ -78,7 +78,7 @@ if (!empty($function)) {
             break;
         case 'testsuite' :
             if ($displayHelp) {
-                echo "testsuite: Display testsuite details.\nParameters:\n    --testsuite: Name of the testsuite to display\n    --help or -h: Display this help\n";
+                echo "testsuite: Display testsuite details.\nParameters:\n    --testsuite : Name of the testsuite to display\n    --help or -h: Display this help\n";
             } else {
                 if (isset($parameters["testsuite"])) {
                     $testSuite = new TestSuite($parameters["testsuite"]);
@@ -90,7 +90,7 @@ if (!empty($function)) {
             break;
         case 'testcases' :
             if ($displayHelp) {
-                echo "testcases: Display testcases.\nParameters:\n    --numbered: Display testcases indexed by a number\n    --help or -h: Display this help\n";
+                echo "testcases: Display testcases.\nParameters:\n    --numbered  : Display testcases indexed by a number\n    --help or -h: Display this help\n";
             } else {
                 $output          = '';
                 $testCaseManager = new TestCaseManager();
@@ -106,7 +106,7 @@ if (!empty($function)) {
             break;
         case 'generate' :
             if ($displayHelp) {
-                echo "generate: Generate a testsuite.\nParameters:\n    --name         : Name of the new testsuite\n    --old_testsuite: Name of an old testsuite from which we import the list of testcases\n    --testcases    : List of indexes of testcases as obtained from \"testcases\" function\n    --help or -h: Display this help\nNB: You can't use both --old_testsuite and --testcases\n";
+                echo "generate: Generate a testsuite.\nParameters:\n    --name          : Name of the new testsuite\n    --old_testsuite : Name of an old testsuite from which we import the list of testcases\n    --testcases     : List of indexes of testcases as obtained from \"testcases\" function\n    --help or -h    : Display this help\nNB: You can't use both --old_testsuite and --testcases\n";
             } else {
                 if (isset($parameters["name"])) {
                     if (isset($parameters["old_testsuite"]) && !isset($parameters["old_testsuite"])) {
@@ -148,7 +148,7 @@ if (!empty($function)) {
             break;
     }
 } else {
-    echo "TIC \"TIC is not CLI\"\nFunctions:    \n* setup      : Display setup.\n    * testsuites : Display testsuites.\n    * testsuite  : Display testsuite details.\n    * testcases  : Display testcases.\n    * generate   : Generate a testsuite.\nTo display help about each function:\n> php tic.php <function_name> [--help|-h]\n";
+    echo "TIC \"TIC is not CLI\"\nFunctions:    \n    * setup      : Display setup.\n    * testsuites : Display testsuites.\n    * testsuite  : Display testsuite details.\n    * testcases  : Display testcases.\n    * generate   : Generate a testsuite.\nTo display help about each function:\n> php tic.php <function_name> [--help|-h]\n";
 }
 
 ?>
