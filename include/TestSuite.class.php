@@ -247,6 +247,8 @@ class TestSuite {
             } catch (LogicException $e) {
                     echo $e->getMessage();
             }
+        } else {
+            throw new RuntimeException('Failure: test suite file "'.$this->_testSuiteFile.'" is not writable.');
         }
     }
 
