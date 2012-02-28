@@ -65,6 +65,8 @@ class TestCase {
                     $testCaseFileContent .= "        ".$line;
                 }
             }
+        } else {
+            throw new LogicException('Unable to retrieve file content. Test case file "'.$testCaseFileObj.'" is not readable.');
         }
         return $testCaseFileContent;
     }
