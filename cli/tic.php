@@ -38,6 +38,9 @@ for ($i = 1; $i < $argc; $i++) {
     } elseif (preg_match("/^-/", $argv[$i])) {
         // A parameter for the given function
         $param = split("=", $argv[$i]);
+        if (!isset($param[1])) {
+            $param[1] = true;
+        }
         $parameters[str_replace("-", "", $param[0])] = $param[1];
     } else {
         // Unknown parameter
@@ -89,8 +92,16 @@ if (!empty($function)) {
             if ($displayHelp) {
                 echo "Display testcases.\n";
             } else {
+                $output          = '';
                 $testCaseManager = new TestCaseManager();
-                echo $testCaseManager->displayFileSystem("../testcases");
+                $testcases       = $testCaseManager->listFileSystem("../testcases");
+                foreach ($testcases as $index => $testcase) {
+                    if (isset($parameters["numbered"])) {
+                        $output .= " ".$index."-";
+                    }
+                    $output .= " ".$testcase."\n";
+                }
+                echo $output;
             }
             break;
         case 'generate' :
@@ -103,7 +114,17 @@ if (!empty($function)) {
                         $testCases    = $oldTestSuite->getTestCases();
                         echo "Testsuite \"".$parameters["name"]."\" stored\n";
                     } elseif (isset($parameters["testcases"])) {
-                        $testCases = split(",", $parameters["testcases"]);
+                        $testCasesNumbers = split(",", $parameters["testcases"]);
+                        $testCaseManager  = new TestCaseManager();
+                        $testCasesList    = $testCaseManager->listFileSystem("../testcases");
+                        $testCases        = array();
+                        foreach ($testCasesNumbers as $number) {
+                            if (isset($testCasesList[$number])) {
+                                $testCases[] = $testCasesList[$number];
+                            } else {
+                                echo "\"".$number."\" is not a valid testcase index, to verify your input, try\n>php tic.php testcases --numbered\n";
+                            }
+                        }
                     } else {
                         echo "You need to use --old_testsuite or --testcases parameters to pass list of testcases\n";
                     }
@@ -128,11 +149,11 @@ if (!empty($function)) {
     }
 } else {
     echo "TIC \"TIC is not CLI\"\nFunctions:
-    * setup      : Display setup.
-    * testsuites : Display testsuites.
-    * testsuite  : Display testsuite details.
-    * testcases  : Display testcases.
-    * generate   : Generate a testsuite.
+    * setup             : Display setup.
+    * testsuites        : Display testsuites.
+    * testsuite         : Display testsuite details.
+    * testcases         : Display testcases.
+    * generate          : Generate a testsuite.
     \n";
 }
 

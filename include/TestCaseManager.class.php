@@ -21,6 +21,17 @@ class TestCaseManager {
     const TESTCASES_PATH = "../testcases/";
 
     /**
+     * Create a recursive filesytem iterator
+     *
+     * @param String $directory Directory to be used
+     *
+     * @return RecursiveIteratorIterator
+     */
+    function getFileSystemIterator($directory) {
+        return new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory, RecursiveDirectoryIterator::KEY_AS_FILENAME | FilesystemIterator::SKIP_DOTS), RecursiveIteratorIterator::SELF_FIRST);
+    }
+
+    /**
      * Recursivly creates a basic HTML tree of a given directory, then render a select input with the file system content starting from this given node.
      * Visited directories are in dispalyed as bold and disabled select options, if you remove SELF_FIRST option, visited directories are ignored: 
      * Obviously, they are heading nodes and the iterator object doesn't return them automatically.
@@ -28,33 +39,39 @@ class TestCaseManager {
      * you have to set the KEY_AS_FILENAME constant to the iterator constructor.
      *
      * @param String  $directory File system node considered as root for the exploration
-     * @param Boolean $html      If true output will be displayed in HTML rather than text
      *
      * @return String
      */
-    function displayFileSystem($directory, $html = false) {
-        $iter = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory, RecursiveDirectoryIterator::KEY_AS_FILENAME | FilesystemIterator::SKIP_DOTS), RecursiveIteratorIterator::SELF_FIRST);
-        $output = "";
-        if ($html) {
-            $output = '<select align=top name="testCases" size=10  style="width:320px" multiple="multiple">';
-        }
+    function displayFileSystem($directory) {
+        $iter   = $this->getFileSystemIterator($directory);
+        $output = '<select align=top name="testCases" size=10  style="width:320px" multiple="multiple">';
         foreach ($iter as $entry) {
             if ($entry->isDir()) {
-                if ($html) {
-                    $output .= '<option value="'.substr($entry->getPathname(), strlen(TestCaseManager::TESTCASES_PATH)).'" disabled></b>'.$entry->getFilename().'</b></option>';
-                }
+                $output .= '<option value="'.substr($entry->getPathname(), strlen(TestCaseManager::TESTCASES_PATH)).'" disabled></b>'.$entry->getFilename().'</b></option>';
             } else {
-                if ($html) {
-                    $output .= '<option value="'.substr($entry->getPathname(), strlen(TestCaseManager::TESTCASES_PATH)).'">&nbsp;&nbsp;&nbsp;&nbsp;'.$entry->getFilename().'</option>';
-                } else {
-                    $output .= substr($entry->getPathname(), strlen(TestCaseManager::TESTCASES_PATH))."\n";
-                }
+                $output .= '<option value="'.substr($entry->getPathname(), strlen(TestCaseManager::TESTCASES_PATH)).'">&nbsp;&nbsp;&nbsp;&nbsp;'.$entry->getFilename().'</option>';
             }
         }
-        if ($html) {
-            $output .= '<select>';
-        }
+        $output .= '<select>';
         return $output;
+    }
+
+    /**
+     * Generate a list of testcases in an array
+     *
+     * @param String $directory Directory to be used
+     *
+     * @return Array
+     */
+    function listFileSystem($directory) {
+        $iter      = $this->getFileSystemIterator($directory);
+        $testcases = array();
+        foreach ($iter as $entry) {
+            if (!$entry->isDir()) {
+                $testcases[] = substr($entry->getPathname(), strlen(TestCaseManager::TESTCASES_PATH));
+            }
+        }
+        return $testcases;
     }
 
 }

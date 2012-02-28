@@ -164,7 +164,7 @@ echo '
                                 <table>
                                     <tr>
                                         <td align="center"><b><font size="2">Availables test cases</font></b>';
-echo $testCaseManager->displayFileSystem("../testcases", true);
+echo $testCaseManager->displayFileSystem("../testcases");
 echo '
                                         </td>
 
