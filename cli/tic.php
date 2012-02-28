@@ -135,6 +135,7 @@ if (!empty($function)) {
                         $testSuite->storeTestSuiteDetails();
                         $testSuite->bindConfigurationElements();
                         $testSuite->loadTestSuite();
+                        echo "Testsuite \"".$parameters["name"]."\" stored\n";
                     } else {
                         echo "No testcases to add\n";
                     }
