@@ -180,6 +180,8 @@ class TestSuite {
      * Apply conf parameters to the generated test Suite,
      * Using Ruby syntax, add a conf class then  add Setup, teardown and login methods
      *
+     * @throws {RuntimeException}    If the $_testSuiteFile property, wich is an SplFileInfo object, stands for a non writable file.
+     *
      * @return Void
      */
     public function bindConfigurationElements() {
@@ -206,6 +208,8 @@ class TestSuite {
             $content .= "    def getdriver\n        @driver\n    end\n\n";
             $content .= "end\n\n";
             $testSuiteFileObj->fwrite($content);
+        } else {
+            throw new RuntimeException('Failure: test suite file "'.$this->_testSuiteFile.'" is not writable.');
         }
     }
 
