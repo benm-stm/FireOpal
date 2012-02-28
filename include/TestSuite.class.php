@@ -220,7 +220,7 @@ class TestSuite {
      */
     function storeTestSuiteDetails() {
         $testSuiteFileObj = $this->_testSuiteFile->openFile('a');
-        if ($this->_testSuiteFile->isWritable()) {
+        if ($this->_testSuiteFile->isWritable()) { 
             //Conf storage
             $setup = new Setup();
             $setup->storeConf($this->_testSuiteFile->getPathname());
@@ -234,6 +234,8 @@ class TestSuite {
             }
             $content .= "#--- Test Cases End ---\n\n";
             $testSuiteFileObj->fwrite($content);
+        } else {
+            throw new RuntimeException('Failure: test suite file "'.$this->_testSuiteFile.'" is not writable.');
         }
     }
 
