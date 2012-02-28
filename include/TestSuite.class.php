@@ -219,26 +219,21 @@ class TestSuite {
      * @return Void
      */
     function storeTestSuiteDetails() {
-        try {
-            $testSuiteFileObj = $this->_testSuiteFile->openFile('a');
-            if ($this->_testSuiteFile->isWritable()) {
-                //Conf storage
-                $setup = new Setup();
-                $setup->storeConf($this->_testSuiteFile->getPathname());
-                //Test Cases storage
-                $content = "#--- Test Cases list ---\n";
-                foreach ($this->_testCasesMap as $testCase) {
-                    $testCasePathInfo = new SplFileInfo($testCase->filePath);
-                    $testCasePath     = $testCasePathInfo->getRealPath();
-                    $testCaseFinder   = substr($testCase->_testCaseFile, strlen($testCasePath) + 1);
-                    $content          .= "# ".$testCaseFinder."\n";
-                }
-                $content .= "#--- Test Cases End ---\n\n";
-                $testSuiteFileObj->fwrite($content);
+        $testSuiteFileObj = $this->_testSuiteFile->openFile('a');
+        if ($this->_testSuiteFile->isWritable()) {
+            //Conf storage
+            $setup = new Setup();
+            $setup->storeConf($this->_testSuiteFile->getPathname());
+            //Test Cases storage
+            $content = "#--- Test Cases list ---\n";
+            foreach ($this->_testCasesMap as $testCase) {
+                $testCasePathInfo = new SplFileInfo($testCase->filePath);
+                $testCasePath     = $testCasePathInfo->getRealPath();
+                $testCaseFinder   = substr($testCase->_testCaseFile, strlen($testCasePath) + 1);
+                $content          .= "# ".$testCaseFinder."\n";
             }
-        } catch (RuntimeException $e) {
-            // TODO: Handle errors otherwise
-            echo $e->getMessage();
+            $content .= "#--- Test Cases End ---\n\n";
+            $testSuiteFileObj->fwrite($content);
         }
     }
 
