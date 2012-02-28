@@ -81,7 +81,7 @@ class TestCase {
         $exampleGroup .= "    describe \"".$this->name."\" do\n";
         try {
             $exampleGroup .= $this->getContent();
-        } catch (Exception $e) {
+        } catch (LogicException $e) {
             echo $e->getMessage();
         }
         $exampleGroup .= "\n    end\n";
