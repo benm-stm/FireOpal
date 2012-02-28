@@ -78,14 +78,11 @@ class TestSuite {
     public function bindTestSuiteRequirements($rspecFileObj) {
         if ($rspecFileObj->isWritable()) {
             foreach ($this->_testCasesMap as $testCase) {
-                try {
                     $testCaseFileObj = new SplFileObject($testCase->_testCaseFile);
                     $rspecFileObj->fwrite($testCase->retrieveRspecExampleGroup());
-                } catch (Exception $e) {
-                    // TODO: Handle errors otherwise
-                    echo $e->getMessage();
-                }
             }
+        } else {
+            throw new BadMethodCallException('Something went wrong when trying to write to test suite file "'.$this->_testSuiteFile.'".');
         }
     }
 
