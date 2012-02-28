@@ -39,7 +39,7 @@ for ($i = 1; $i < $argc; $i++) {
         // A parameter for the given function
         $param = split("=", $argv[$i]);
         if (!isset($param[1])) {
-            $param[1] = true;
+            $param[1] = false;
         }
         $parameters[str_replace("-", "", $param[0])] = $param[1];
     } else {
