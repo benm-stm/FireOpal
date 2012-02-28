@@ -34,7 +34,9 @@ for ($i = 1; $i < $argc; $i++) {
         $verbose = true;
     } elseif (!preg_match("/^-/", $argv[$i])) {
         // Not a parameter (does not start with "-") Then, it must be a name of a function
-        $function = $argv[$i];
+        if (empty($function)) {
+            $function = $argv[$i];
+        }
     } elseif (preg_match("/^-/", $argv[$i])) {
         // A parameter for the given function
         $param = split("=", $argv[$i]);
