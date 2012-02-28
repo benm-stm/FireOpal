@@ -49,12 +49,12 @@ if (isset($_REQUEST['testcases_to_add'])) {
                 $testSuite = new TestSuite($_REQUEST['testsuite_name']);
                 try {
                     $testSuiteManager->populateTestSuite($testSuite, $testCasesToAdd);
+                    $testSuite->storeTestSuiteDetails();
+                    $testSuite->bindConfigurationElements();
+                    $testSuite->loadTestSuite();
                 } catch (RuntimeException $e) {
                     echo $e->getMessage();
                 }
-                $testSuite->storeTestSuiteDetails();
-                $testSuite->bindConfigurationElements();
-                $testSuite->loadTestSuite();
             } catch (InvalidArgumentException $e) {
                 echo $e->getMessage();
                 echo $e->getTraceAsString();

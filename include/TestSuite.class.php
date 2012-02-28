@@ -235,8 +235,7 @@ class TestSuite {
             $content .= "#--- Test Cases End ---\n\n";
             $testSuiteFileObj->fwrite($content);
         } else {
-            throw new RuntimeException('Failure: test suite file "'.$this->_testSuiteFile.'" is not writable.');
-        }
+            throw new RuntimeException('Failure during test cases storage: test suite file "'.$this->_testSuiteFile.'" is not writable.');        }
     }
 
     /**
