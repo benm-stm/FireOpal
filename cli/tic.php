@@ -23,18 +23,16 @@ require_once '../include/TestCase.class.php';
 require_once '../include/TestCaseManager.class.php';
 
 $displayHelp = false;
-$verbose     = false;
 $function    = '';
 $parameters  = array();
 
 for ($i = 1; $i < $argc; $i++) {
     if ($argv[$i] == "--help" || $argv[$i] == "-h") {
         $displayHelp = true;
-    } elseif ($argv[$i] == "--verbose" || $argv[$i] == "-v") {
-        $verbose = true;
     } elseif (!preg_match("/^-/", $argv[$i])) {
         // Not a parameter (does not start with "-") Then, it must be a name of a function
         if (empty($function)) {
+            // Once function name is there it couldn't be replaced by another one
             $function = $argv[$i];
         }
     } elseif (preg_match("/^-/", $argv[$i])) {
@@ -54,7 +52,7 @@ if (!empty($function)) {
     switch ($function) {
         case 'setup' :
             if ($displayHelp) {
-                echo "Display setup.\n";
+                echo "setup: Display setup.\n";
             } else {
                 $setup = new Setup();
                 $set   = $setup->load();
@@ -69,7 +67,7 @@ if (!empty($function)) {
             break;
         case 'testsuites' :
             if ($displayHelp) {
-                echo "Display testsuites.\n";
+                echo "testsuites: Display testsuites.\n";
             } else {
                 $testSuiteManager = new TestSuiteManager();
                 $testsuites       = $testSuiteManager->searchTestsuites();
@@ -80,7 +78,7 @@ if (!empty($function)) {
             break;
         case 'testsuite' :
             if ($displayHelp) {
-                echo "Display testsuite details.\n";
+                echo "testsuite: Display testsuite details.\nParameters:\n    --testsuite: Name of the testsuite to display\n";
             } else {
                 if (isset($parameters["testsuite"])) {
                     $testSuite = new TestSuite($parameters["testsuite"]);
@@ -92,7 +90,7 @@ if (!empty($function)) {
             break;
         case 'testcases' :
             if ($displayHelp) {
-                echo "Display testcases.\n";
+                echo "testcases: Display testcases.\nParameters:\n    --numbered: Display testcases indexed by a number\n";
             } else {
                 $output          = '';
                 $testCaseManager = new TestCaseManager();
@@ -108,14 +106,13 @@ if (!empty($function)) {
             break;
         case 'generate' :
             if ($displayHelp) {
-                echo "Generate a testsuite.\n";
+                echo "generate: Generate a testsuite.\nParameters:\n    --name         : Name of the new testsuite\n    --old_testsuite: Name of an old testsuite from which we import the list of testcases\n    --testcases    : List of indexes of testcases as obtained from \"testcases\" function\nNB: You can't use both --old_testsuite and --testcases\n";
             } else {
                 if (isset($parameters["name"])) {
-                    if (isset($parameters["old_testsuite"])) {
+                    if (isset($parameters["old_testsuite"]) && !isset($parameters["old_testsuite"])) {
                         $oldTestSuite = new TestSuite($parameters["old_testsuite"]);
                         $testCases    = $oldTestSuite->getTestCases();
-                        echo "Testsuite \"".$parameters["name"]."\" stored\n";
-                    } elseif (isset($parameters["testcases"])) {
+                    } elseif (isset($parameters["testcases"]) && !isset($parameters["old_testsuite"])) {
                         $testCasesNumbers = split(",", $parameters["testcases"]);
                         $testCaseManager  = new TestCaseManager();
                         $testCasesList    = $testCaseManager->listFileSystem("../testcases");
@@ -128,7 +125,7 @@ if (!empty($function)) {
                             }
                         }
                     } else {
-                        echo "You need to use --old_testsuite or --testcases parameters to pass list of testcases\n";
+                        echo "You need to use --old_testsuite or --testcases parameters to pass list of testcases, you can't use both\n";
                     }
                     if (isset($testCases) && !empty($testCases)) {
                         $testSuite        = new TestSuite($parameters["name"]);
@@ -152,11 +149,11 @@ if (!empty($function)) {
     }
 } else {
     echo "TIC \"TIC is not CLI\"\nFunctions:
-    * setup             : Display setup.
-    * testsuites        : Display testsuites.
-    * testsuite         : Display testsuite details.
-    * testcases         : Display testcases.
-    * generate          : Generate a testsuite.
+    * setup      : Display setup.
+    * testsuites : Display testsuites.
+    * testsuite  : Display testsuite details.
+    * testcases  : Display testcases.
+    * generate   : Generate a testsuite.
     \n";
 }
 
