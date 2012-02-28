@@ -99,17 +99,23 @@ if (!empty($function)) {
             } else {
                 if (isset($parameters["name"])) {
                     if (isset($parameters["old_testsuite"])) {
-                        $oldTestSuite     = new TestSuite($parameters["old_testsuite"]);
-                        $testCases        = $oldTestSuite->getTestCases();
+                        $oldTestSuite = new TestSuite($parameters["old_testsuite"]);
+                        $testCases    = $oldTestSuite->getTestCases();
+                        echo "Testsuite \"".$parameters["name"]."\" stored\n";
+                    } elseif (isset($parameters["testcases"])) {
+                        $testCases = split(",", $parameters["testcases"]);
+                    } else {
+                        echo "You need to use --old_testsuite or --testcases parameters to pass list of testcases\n";
+                    }
+                    if (isset($testCases) && !empty($testCases)) {
                         $testSuite        = new TestSuite($parameters["name"]);
                         $testSuiteManager = new TestSuiteManager();
                         $testSuiteManager->populateTestSuite($testSuite, $testCases);
                         $testSuite->storeTestSuiteDetails();
                         $testSuite->bindConfigurationElements();
                         $testSuite->loadTestSuite();
-                        echo "Testsuite \"".$parameters["name"]."\" stored\n";
                     } else {
-                        echo "--old_testsuite parameter is mandatory\n";
+                        echo "No testcases to add\n";
                     }
                 } else {
                     echo "--name parameter is mandatory\n";
