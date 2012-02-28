@@ -47,6 +47,7 @@ class TestSuite {
      * @param String $testSuiteName Name of the testsuite
      *
      * @throws {InvalidArgumentException}    If the $testSuiteName param is an empty string.
+     *
      * @return Void
      */
     public function __construct($testSuiteName) {
@@ -87,6 +88,7 @@ class TestSuite {
      * @param SplFileObject $rspecFileObj The file object of the test suite
      *
      * @throws {BadMethodCallException}    If the $rspecFileObj param, wich is an SplFileObject object, stands for a non writable file.
+     *
      * @return Void
      */
     public function bindTestSuiteRequirements($rspecFileObj) {
@@ -107,6 +109,7 @@ class TestSuite {
      * @param SplFileObject $rspecFileObj The file object of the test suite
      *
      * @throws {BadMethodCallException}    If the $rspecFileObj param, wich is an SplFileObject object, stands for a non writable file.
+     *
      * @return Void
      */
     public function bindTestCases($rspecFileObj) {
@@ -132,6 +135,7 @@ class TestSuite {
      * @param SplFileObject $rspecFileObj The file object of the test suite
      *
      * @throws {BadMethodCallException}    If the $rspecFileObj param, wich is an SplFileObject object, stands for a non writable file.
+     *
      * @return Void
      */
     public function bindRspecSetUp($rspecFileObj) {
@@ -158,6 +162,7 @@ class TestSuite {
      * @param SplFileObject $rspecFileObj The file object of the test suite
      *
      * @throws {BadMethodCallException}    If the $rspecFileObj param, wich is an SplFileObject object, stands for a non writable file.
+     *
      * @return Void
      */
     public function bindRspecTearDown($rspecFileObj) {
@@ -242,6 +247,7 @@ class TestSuite {
      * Build a test suite from binded test cases and apply a given conf
      *
      * @throws {RuntimeException}    If the $_testSuiteFile property, wich is an SplFileInfo object, stands for a non writable file.
+     *
      * @return Void
      */
     public function loadTestSuite() {
