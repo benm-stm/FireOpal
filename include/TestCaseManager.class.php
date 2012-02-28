@@ -21,18 +21,29 @@ class TestCaseManager {
     const TESTCASES_PATH = "../testcases/";
 
     /**
+     * Create a recursive filesytem iterator
+     *
+     * @param String $directory Directory to be used
+     *
+     * @return RecursiveIteratorIterator
+     */
+    function getFileSystemIterator($directory) {
+        return new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory, RecursiveDirectoryIterator::KEY_AS_FILENAME | FilesystemIterator::SKIP_DOTS), RecursiveIteratorIterator::SELF_FIRST);
+    }
+
+    /**
      * Recursivly creates a basic HTML tree of a given directory, then render a select input with the file system content starting from this given node.
      * Visited directories are in dispalyed as bold and disabled select options, if you remove SELF_FIRST option, visited directories are ignored: 
      * Obviously, they are heading nodes and the iterator object doesn't return them automatically.
      * $entry is an SPLFileInfo object, default getFilename() method would return the absolute path of the file; Since you need only the filename,
      * you have to set the KEY_AS_FILENAME constant to the iterator constructor.
      *
-     * @param String $directory File system node considered as root for the exploration
+     * @param String  $directory File system node considered as root for the exploration
      *
      * @return String
      */
     function displayFileSystem($directory) {
-        $iter = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory, RecursiveDirectoryIterator::KEY_AS_FILENAME | FilesystemIterator::SKIP_DOTS), RecursiveIteratorIterator::SELF_FIRST);
+        $iter   = $this->getFileSystemIterator($directory);
         $output = '<select align=top name="testCases" size=10  style="width:320px" multiple="multiple">';
         foreach ($iter as $entry) {
             if ($entry->isDir()) {
@@ -43,6 +54,24 @@ class TestCaseManager {
         }
         $output .= '<select>';
         return $output;
+    }
+
+    /**
+     * Generate a list of testcases in an array
+     *
+     * @param String $directory Directory to be used
+     *
+     * @return Array
+     */
+    function listFileSystem($directory) {
+        $iter      = $this->getFileSystemIterator($directory);
+        $testcases = array();
+        foreach ($iter as $entry) {
+            if (!$entry->isDir()) {
+                $testcases[] = substr($entry->getPathname(), strlen(TestCaseManager::TESTCASES_PATH));
+            }
+        }
+        return $testcases;
     }
 
 }

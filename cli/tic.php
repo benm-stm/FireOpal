@@ -19,27 +19,32 @@
 require_once '../include/Setup.class.php';
 require_once '../include/TestSuite.class.php';
 require_once '../include/TestSuiteManager.class.php';
+require_once '../include/TestCase.class.php';
+require_once '../include/TestCaseManager.class.php';
 
 $displayHelp = false;
-$verbose     = false;
 $function    = '';
 $parameters  = array();
 
 for ($i = 1; $i < $argc; $i++) {
     if ($argv[$i] == "--help" || $argv[$i] == "-h") {
         $displayHelp = true;
-    } elseif ($argv[$i] == "--verbose" || $argv[$i] == "-v") {
-        $verbose = true;
     } elseif (!preg_match("/^-/", $argv[$i])) {
         // Not a parameter (does not start with "-") Then, it must be a name of a function
-        $function = $argv[$i];
+        if (empty($function)) {
+            // Once function name is there it couldn't be replaced by another one
+            $function = $argv[$i];
+        }
     } elseif (preg_match("/^-/", $argv[$i])) {
         // A parameter for the given function
-        $parameters[] = $argv[$i];
-        break;
+        $param = split("=", $argv[$i]);
+        if (!isset($param[1])) {
+            $param[1] = false;
+        }
+        $parameters[str_replace("-", "", $param[0])] = $param[1];
     } else {
         // Unknown parameter
-        exit_error('Unknown parameter: "'.$argv[$i].'"');
+        exit("Unknown parameter: \"".$argv[$i]."\"\n");
     }
 }
 
@@ -47,7 +52,7 @@ if (!empty($function)) {
     switch ($function) {
         case 'setup' :
             if ($displayHelp) {
-                echo "Display setup.\n";
+                echo "setup: Display setup.\nParameters:\n    --help or -h: Display this help\n";
             } else {
                 $setup = new Setup();
                 $set   = $setup->load();
@@ -62,27 +67,80 @@ if (!empty($function)) {
             break;
         case 'testsuites' :
             if ($displayHelp) {
-                echo "Display testsuites.\n";
+                echo "testsuites: Display testsuites.\nParameters:\n    --help or -h: Display this help\n";
             } else {
                 $testSuiteManager = new TestSuiteManager();
                 $testsuites       = $testSuiteManager->searchTestsuites();
                 foreach ($testsuites as $testsuite => $testcases) {
-                    echo " * ".$testsuite.": \"".$testcases."\"\n";
+                    echo " * ".str_replace(".rb", "", $testsuite).": \"".$testcases."\"\n";
+                }
+            }
+            break;
+        case 'testsuite' :
+            if ($displayHelp) {
+                echo "testsuite: Display testsuite details.\nParameters:\n    --testsuite : Name of the testsuite to display\n    --help or -h: Display this help\n";
+            } else {
+                if (isset($parameters["testsuite"])) {
+                    $testSuite = new TestSuite($parameters["testsuite"]);
+                    echo $testSuite->displayDetails()."\n";
+                } else {
+                    echo "--testsuite parameter is mandatory\n";
                 }
             }
             break;
         case 'testcases' :
             if ($displayHelp) {
-                echo "Display testcases.\n";
+                echo "testcases: Display testcases.\nParameters:\n    --numbered  : Display testcases indexed by a number\n    --help or -h: Display this help\n";
             } else {
-                echo "Not implemented yet\n";
+                $output          = '';
+                $testCaseManager = new TestCaseManager();
+                $testcases       = $testCaseManager->listFileSystem("../testcases");
+                foreach ($testcases as $index => $testcase) {
+                    if (isset($parameters["numbered"])) {
+                        $output .= " ".$index."-";
+                    }
+                    $output .= " ".$testcase."\n";
+                }
+                echo $output;
             }
             break;
         case 'generate' :
             if ($displayHelp) {
-                echo "Generate a testsuite.\n";
+                echo "generate: Generate a testsuite.\nParameters:\n    --name          : Name of the new testsuite\n    --old_testsuite : Name of an old testsuite from which we import the list of testcases\n    --testcases     : List of indexes of testcases as obtained from \"testcases\" function\n    --help or -h    : Display this help\nNB: You can't use both --old_testsuite and --testcases\n";
             } else {
-                echo "Not implemented yet\n";
+                if (isset($parameters["name"])) {
+                    if (isset($parameters["old_testsuite"]) && !isset($parameters["old_testsuite"])) {
+                        $oldTestSuite = new TestSuite($parameters["old_testsuite"]);
+                        $testCases    = $oldTestSuite->getTestCases();
+                    } elseif (isset($parameters["testcases"]) && !isset($parameters["old_testsuite"])) {
+                        $testCasesNumbers = split(",", $parameters["testcases"]);
+                        $testCaseManager  = new TestCaseManager();
+                        $testCasesList    = $testCaseManager->listFileSystem("../testcases");
+                        $testCases        = array();
+                        foreach ($testCasesNumbers as $number) {
+                            if (isset($testCasesList[$number])) {
+                                $testCases[] = $testCasesList[$number];
+                            } else {
+                                echo "\"".$number."\" is not a valid testcase index, to verify your input, try\n>php tic.php testcases --numbered\n";
+                            }
+                        }
+                    } else {
+                        echo "You need to use --old_testsuite or --testcases parameters to pass list of testcases, you can't use both\n";
+                    }
+                    if (isset($testCases) && !empty($testCases)) {
+                        $testSuite        = new TestSuite($parameters["name"]);
+                        $testSuiteManager = new TestSuiteManager();
+                        $testSuiteManager->populateTestSuite($testSuite, $testCases);
+                        $testSuite->storeTestSuiteDetails();
+                        $testSuite->bindConfigurationElements();
+                        $testSuite->loadTestSuite();
+                        echo "Testsuite \"".$parameters["name"]."\" stored\n";
+                    } else {
+                        echo "No testcases to add\n";
+                    }
+                } else {
+                    echo "--name parameter is mandatory\n";
+                }
             }
             break;
         default :
@@ -90,12 +148,7 @@ if (!empty($function)) {
             break;
     }
 } else {
-    echo "TIC \"TIC is not CLI\"\nFunctions:
-    * setup      : Display setup.
-    * testsuites : Display testsuites.
-    * testcases  : Display testcases.
-    * generate   : Generate a testsuite.
-    \n";
+    echo "TIC \"TIC is not CLI\"\nFunctions:    \n    * setup      : Display setup.\n    * testsuites : Display testsuites.\n    * testsuite  : Display testsuite details.\n    * testcases  : Display testcases.\n    * generate   : Generate a testsuite.\nTo display help about each function:\n> php tic.php <function_name> [--help|-h]\n";
 }
 
 ?>

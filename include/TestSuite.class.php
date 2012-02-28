@@ -25,8 +25,6 @@ class TestSuite {
     const RSPEC_COLOR                   = 8;
 
     private $name;
-    private $_testCases;
-    private $_currentTestCase;
     private $_result;
     private $_testSuiteFile;
     private $_testCasesMap;
@@ -44,7 +42,7 @@ class TestSuite {
             $testSuiteManager = new TestSuiteManager();
             $this->_testSuiteFile = new SplFileInfo($testSuiteManager->getTestSuitesLocation().$this->name.'.rb');
         } else {
-            $this->_testSuiteFile = new SplFileInfo('/dev/null');
+            throw new InvalidArgumentException('TestSuite constructor needs a string parameter. Input was : '.$testSuiteName);
         }
         $this->_result        = array();
         $this->_testCasesMap  = new SplObjectStorage();
@@ -71,7 +69,7 @@ class TestSuite {
     }
 
     /**
-     * Include binded test files within the header of the ruby test Suite file.
+     * Write into  to the test suite file the  RSpec code example of each binded test case.
      *
      * @param SplFileObject $rspecFileObj The file object of the test suite
      *
@@ -80,14 +78,11 @@ class TestSuite {
     public function bindTestSuiteRequirements($rspecFileObj) {
         if ($rspecFileObj->isWritable()) {
             foreach ($this->_testCasesMap as $testCase) {
-                try {
                     $testCaseFileObj = new SplFileObject($testCase->_testCaseFile);
                     $rspecFileObj->fwrite($testCase->retrieveRspecExampleGroup());
-                } catch (Exception $e) {
-                    // TODO: Handle errors otherwise
-                    echo $e->getMessage();
-                }
             }
+        } else {
+            throw new BadMethodCallException('Something went wrong when trying to write to test suite file "'.$this->_testSuiteFile.'".');
         }
     }
 
@@ -106,13 +101,12 @@ class TestSuite {
             $this->bindTestSuiteRequirements($rspecFileObj);
             $this->bindRspecTearDown($rspecFileObj);
             $rspecFileObj->fwrite("end\n\n");
-        }
+        } 
     }
 
     /**
      * Build RSpec setup
      * @TODO: Complete function comment
-     * @TODO: Handle errors
      *
      * @param SplFileObject $rspecFileObj The file object of the test suite
      *
@@ -130,13 +124,14 @@ class TestSuite {
             $content .= "        @driver = @valid.getdriver\n";
             $content .= "    end\n\n";
             $rspecFileObj->fwrite($content);
+        } else {
+            throw new BadMethodCallException('Something went wrong when trying to write to test suite file "'.$this->_testSuiteFile.'".');
         }
     }
 
     /**
      * Build RSpec teardown
      * @TODO: Complete function comment
-     * @TODO: Handle errors
      *
      * @param SplFileObject $rspecFileObj The file object of the test suite
      *
@@ -148,6 +143,8 @@ class TestSuite {
             $content .= "        @valid.teardown()\n";
             $content .= "    end\n\n";
             $rspecFileObj->fwrite($content);
+        } else {
+            throw new BadMethodCallException('Something went wrong when trying to write to test suite file "'.$this->_testSuiteFile.'".');
         }
     }
 
@@ -192,24 +189,22 @@ class TestSuite {
     /**
      * Store conf in the correponding testsuite
      *
-     * @param String $request
-     *
      * @return Void
      */
-    function storeTestSuiteDetails($request) {
+    function storeTestSuiteDetails() {
         try {
             $testSuiteFileObj = $this->_testSuiteFile->openFile('a');
             if ($this->_testSuiteFile->isWritable()) {
                 //Conf storage
                 $setup = new Setup();
-                $setup->storeConf($request, $this->_testSuiteFile->getPathname());
+                $setup->storeConf($this->_testSuiteFile->getPathname());
                 //Test Cases storage
                 $content = "#--- Test Cases list ---\n";
                 foreach ($this->_testCasesMap as $testCase) {
                     $testCasePathInfo = new SplFileInfo($testCase->filePath);
-                    $testCasePath = $testCasePathInfo->getRealPath();
-                    $testCaseFinder = substr($testCase->_testCaseFile, strlen($testCasePath) + 1);
-                    $content .= "# ".$testCaseFinder."\n";
+                    $testCasePath     = $testCasePathInfo->getRealPath();
+                    $testCaseFinder   = substr($testCase->_testCaseFile, strlen($testCasePath) + 1);
+                    $content          .= "# ".$testCaseFinder."\n";
                 }
                 $content .= "#--- Test Cases End ---\n\n";
                 $testSuiteFileObj->fwrite($content);
@@ -237,16 +232,6 @@ class TestSuite {
             echo $e->getMessage();
         }
     }
-
-    /**
-     * Returns the testCase currently being updated
-     *
-     * @return TestCase
-     */
-    public function getCurrent() {
-        return $this->_currentTestCase;
-    }
-
 
     /**
      * Returns the testCases attached to this testSuite

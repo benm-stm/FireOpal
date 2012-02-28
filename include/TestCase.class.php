@@ -44,6 +44,9 @@ class TestCase {
         } else {
             $this->_testCaseFile = new SplFileInfo($this->filePath.$this->name.'.rb');
         }
+        if (!$this->_testCaseFile->isFile()) {
+            throw new RuntimeException ("The test case file referenced by SplFileInfo object doesn't exist or is not a regular file.");
+        }
     }
 
     /**
@@ -56,11 +59,14 @@ class TestCase {
         $testCaseFileContent = "";
         if ($testCaseFileObj->isReadable()) {
             while ($testCaseFileObj->valid()) {
-                $line = $testCaseFileObj->fgets();
-                if (!empty($line)) {
+                $line        = $testCaseFileObj->fgets();
+                $trimmedLine = trim($line);
+                if (!empty($trimmedLine) && !preg_match("/^#/", $trimmedLine)) {
                     $testCaseFileContent .= "        ".$line;
                 }
             }
+        } else {
+            throw new LogicException('Unable to retrieve file content. Test case file "'.$testCaseFileObj.'" is not readable.');
         }
         return $testCaseFileContent;
     }
@@ -71,11 +77,18 @@ class TestCase {
      * @return String
      */
     public function retrieveRspecExampleGroup() {
-        $exampleGroup = "#---- Test case ".$this->name." ----\n";
-        $exampleGroup .= "    describe \"".$this->name."\" do\n";
-        $exampleGroup .= $this->getContent();
-        $exampleGroup .= "\n    end\n";
-        $exampleGroup .= "#---- End test case ".$this->name." ----\n\n";
+        $exampleGroupHeader = "#---- Test case ".$this->name." ----\n";
+        $exampleGroupFooter = "#---- End test case ".$this->name." ----\n\n";
+        $exampleGroup       = $exampleGroupHeader."    describe \"".$this->name."\" do\n";
+        try {
+            $exampleGroup .= $this->getContent();
+        } catch (LogicException $e) {
+            echo $e->getMessage();
+            //On Windows, newlines are actually \r\n, not just \n.
+            $exampleGroup = "#".$e->getMessage()."\n";
+            return $exampleGroupHeader.$exampleGroup.$exampleGroupFooter;
+        }
+        $exampleGroup .= "\n    end\n".$exampleGroupFooter;
         return $exampleGroup;
     }
 
@@ -84,7 +97,26 @@ class TestCase {
      *
      * @return Array
      */
-    protected function getDependencies() {
+    function getDependencies() {
+        if (empty($this->_dependenciesMap)) {
+            $testCaseFileObj = new SplFileObject($this->_testCaseFile);
+            $line            = "";
+            $inDependencies  = false;
+            if ($testCaseFileObj->isReadable()) {
+                while ($testCaseFileObj->valid() && $line != "#--- End dependency list\n") {
+                    $line = $testCaseFileObj->fgets();
+                    if ($inDependencies && $line == "#--- End dependency list\n") {
+                        $inDependencies = false;
+                    }
+                    if ($inDependencies) {
+                        $this->_dependenciesMap[] = trim(str_replace("#", "", $line));
+                    }
+                    if (!$inDependencies && $line == "#--- Start dependency list\n") {
+                        $inDependencies = true;
+                    }
+                }
+            }
+        }
         return $this->_dependenciesMap;
     }
 
@@ -102,7 +134,7 @@ class TestCase {
      *
      * @return Array
      */
-    protected function getFlags() {
+    function getFlags() {
         return $this->$_flagsMap;
     }
 

@@ -27,7 +27,7 @@ class Setup {
      *
      * @return Array
      */
-    function extractSetup($request) {
+    function extractSetup($request = null) {
         $set            = $this->load();
         $newName        = null;
         $newType        = null;
@@ -131,13 +131,12 @@ class Setup {
     /**
      * Store the setup passed in HTTP request for the testSuite
      *
-     * @param Array  $request Request containing setup values
      * @param String $filePath
      *
      * @return Boolean
      */
-    function storeConf($request, $filePath) {
-        if ($set = $this->extractSetup($request)) {
+    function storeConf($filePath) {
+        if ($set = $this->extractSetup()) {
             $content = "#--- Start Conf in setup here\n";
             foreach ($set as $name => $entry) {
                 if ($entry['type'] != 'password') {

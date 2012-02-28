@@ -18,7 +18,7 @@
 
 class TestSuiteManager {
 
-    public static $testSuitesLocation = "../testsuites/";
+    public static $testSuitesLocation = "testsuites";
 
     /**
      * Retrieves test suites location
@@ -26,7 +26,7 @@ class TestSuiteManager {
      * @return String
      */
     public function getTestSuitesLocation() {
-        return dirname(__FILE__).DIRECTORY_SEPARATOR.self::$testSuitesLocation;
+        return dirname(__DIR__).DIRECTORY_SEPARATOR.self::$testSuitesLocation.DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -78,18 +78,24 @@ class TestSuiteManager {
      * @param TestSuite $testSuite     Target test suite to populate
      * @param Array     $testCaseArray List of testcases to attach to the testsuite
      *
-     * @return Boolean
+     * @return void
      */
     function populateTestSuite($testSuite, $testCasesArray) {
         $testCasesLocation = new SplFileInfo(TestCaseManager::TESTCASES_PATH);
-        $pathFinder = $testCasesLocation->getRealPath();
-        foreach ($testCasesArray as $test) {
-            $testCaseFile = new SplFileInfo($pathFinder.DIRECTORY_SEPARATOR.$test);
-            $testCase     = new TestCase($testCaseFile->getBasename('.rb'), $testCaseFile);
-            $testSuite->attach($testCase);
+        if ($testCasesLocation->isDir()) {
+            $pathFinder = $testCasesLocation->getRealPath();
+            foreach ($testCasesArray as $test) {
+                try {
+                    $testCaseFile = new SplFileInfo($pathFinder.DIRECTORY_SEPARATOR.$test);
+                    $testCase     = new TestCase($testCaseFile->getBasename('.rb'), $testCaseFile);
+                    $testSuite->attach($testCase);
+                } catch (RuntimeException $e) {
+                    echo $e->getMessage();
+                }
+            }
+        } else {
+            throw new RuntimeException ("Specified test cases location: '".$testCasesLocation."' is not an accessible directory.");
         }
-        // TODO: Give sense to return value
-        return true;
     }
 
 }

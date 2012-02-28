@@ -45,12 +45,21 @@ if (isset($_REQUEST['testcases_to_add'])) {
         require_once dirname(__FILE__).'/../include/TestSuite.class.php';
         require_once dirname(__FILE__).'/../include/TestCase.class.php';
         if (!empty($testCasesToAdd)) {
-            $testSuite = new TestSuite($_REQUEST['testsuite_name']);
-            $testSuiteManager->populateTestSuite($testSuite, $testCasesToAdd);
-            $testSuite->storeTestSuiteDetails($_REQUEST);
-            $testSuite->bindConfigurationElements($_REQUEST);
-            $testSuite->loadTestSuite();
-            $info[] = "Testsuite '".$_REQUEST['testsuite_name']."' stored";
+            try {
+                $testSuite = new TestSuite($_REQUEST['testsuite_name']);
+                try {
+                    $testSuiteManager->populateTestSuite($testSuite, $testCasesToAdd);
+                } catch (RuntimeException $e) {
+                    echo $e->getMessage();
+                }
+                $testSuite->storeTestSuiteDetails();
+                $testSuite->bindConfigurationElements();
+                $testSuite->loadTestSuite();
+            } catch (InvalidArgumentException $e) {
+                echo $e->getMessage();
+                echo $e->getTraceAsString();
+            }
+            $info[] = "Testsuite \"".$_REQUEST['testsuite_name']."\" stored";
         } else {
             $error[] = "No testcases selected";
         }
