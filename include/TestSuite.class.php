@@ -117,7 +117,9 @@ class TestSuite {
                 echo $e->getMessage();
             }
             $rspecFileObj->fwrite("end\n\n");
-        } 
+        } else {
+            throw new BadMethodCallException('Unable to write RSpec stack to test suite file "'.$this->_testSuiteFile.'". Please check that this file is writable.');
+        }
     }
 
     /**
@@ -237,15 +239,14 @@ class TestSuite {
      * @return Void
      */
     public function loadTestSuite() {
-        try {
-            $fileObj = $this->_testSuiteFile->openFile('a');
-            if ($this->_testSuiteFile->isWritable()) {
-                $fileObj->fwrite("\n# Here Comes RSpec examples \n\n");
+        $fileObj = $this->_testSuiteFile->openFile('a');
+        if ($this->_testSuiteFile->isWritable()) {
+            $fileObj->fwrite("\n# Here Comes RSpec examples \n\n");
+            try {
                 $this->bindTestCases($fileObj);
+            } catch (LogicException $e) {
+                    echo $e->getMessage();
             }
-        } catch (RuntimeException $e) {
-            // TODO: Handle errors otherwise
-            echo $e->getMessage();
         }
     }
 
