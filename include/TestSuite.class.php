@@ -69,7 +69,7 @@ class TestSuite {
     }
 
     /**
-     * Include binded test files within the header of the ruby test Suite file.
+     * Write into  to the test suite file the  RSpec code example of each binded test case.
      *
      * @param SplFileObject $rspecFileObj The file object of the test suite
      *
