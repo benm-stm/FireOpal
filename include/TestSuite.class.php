@@ -101,13 +101,12 @@ class TestSuite {
             $this->bindTestSuiteRequirements($rspecFileObj);
             $this->bindRspecTearDown($rspecFileObj);
             $rspecFileObj->fwrite("end\n\n");
-        }
+        } 
     }
 
     /**
      * Build RSpec setup
      * @TODO: Complete function comment
-     * @TODO: Handle errors
      *
      * @param SplFileObject $rspecFileObj The file object of the test suite
      *
@@ -125,13 +124,14 @@ class TestSuite {
             $content .= "        @driver = @valid.getdriver\n";
             $content .= "    end\n\n";
             $rspecFileObj->fwrite($content);
+        } else {
+            throw new BadMethodCallException('Something went wrong when trying to write to test suite file "'.$this->_testSuiteFile.'".');
         }
     }
 
     /**
      * Build RSpec teardown
      * @TODO: Complete function comment
-     * @TODO: Handle errors
      *
      * @param SplFileObject $rspecFileObj The file object of the test suite
      *
@@ -143,6 +143,8 @@ class TestSuite {
             $content .= "        @valid.teardown()\n";
             $content .= "    end\n\n";
             $rspecFileObj->fwrite($content);
+        } else {
+            throw new BadMethodCallException('Something went wrong when trying to write to test suite file "'.$this->_testSuiteFile.'".');
         }
     }
 
