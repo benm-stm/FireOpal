@@ -84,6 +84,7 @@ class TestSuiteManager {
         foreach ($testCasesArray as $test) {
             try {
                 $testCase = new TestCase(substr($test, 0, -3));
+                // TODO: Check tags before dependencies
                 $dependencies = $testCase->getDependencies();
                 try {
                     $this->attachDependencies($testSuite, $dependencies, $test);
