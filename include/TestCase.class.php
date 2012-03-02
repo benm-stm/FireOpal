@@ -21,7 +21,7 @@ class TestCase {
     public $id;
     public $name;
     public $_dependenciesMap;
-    public $_flagsMap;
+    public $_tagsMap;
     public $filePath;
     public $_testCaseFile;
 
@@ -37,7 +37,7 @@ class TestCase {
         $this->id               = "";
         $this->name             = $name;
         $this->_dependenciesMap = array();
-        $this->_flagsMap        = array();
+        $this->_tagsMap         = array();
         $this->filePath         = TestCaseManager::TESTCASES_PATH;
         if (!empty($fileinfo)) {
             $this->_testCaseFile = $fileinfo;
@@ -130,21 +130,21 @@ class TestCase {
     }
 
     /**
-     * Obtain test case flags
+     * Obtain test case tags
      *
      * @return Array
      */
-    function getFlags() {
-        return $this->$_flagsMap;
+    function getTags() {
+        return $this->$_tagsMap;
     }
 
     /**
-     * Set test case flags
+     * Set test case tags
      *
      * @return Void
      */
-    protected function setFlags($flagsArray) {
-        $this->$_flagsMap = $flagsArray;
+    protected function setTags($tagsArray) {
+        $this->$_tagsMap = $tagsArray;
     }
 
 }
