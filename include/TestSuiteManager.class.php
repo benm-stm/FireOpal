@@ -85,15 +85,26 @@ class TestSuiteManager {
             try {
                 $testCase = new TestCase(substr($test, 0, -3));
                 $dependencies = $testCase->getDependencies();
-                // TODO: Avoid infinite loop when there are circular dependencies
-                foreach($dependencies as $dependency) {
-                    if (!$testSuite->isAttached(substr($dependency, 0, -3))) {
-                        $this->populateTestSuite($testSuite, array($dependency));
-                    }
+                try {
+                    $this->attachDependencies($testSuite, $dependencies, $test);
+                } catch (OutOfRangeException $exception) {
+                    echo $exception->getMessage();
                 }
                 $testSuite->attach($testCase);
             } catch (RuntimeException $e) {
                 echo $e->getMessage();
+            }
+        }
+    }
+
+    function attachDependencies($testSuite, $dependencies, $entryPoint) {
+        foreach($dependencies as $dependency) {
+            if (!$testSuite->isAttached(substr($dependency, 0, -3))) {
+                if ( !strcmp($entryPoint, $dependency)) {
+                    $this->populateTestSuite($testSuite, array($dependency));
+                } else {
+                    throw new OutOfRangeException('An error occured while applying dependencies: Test cases "'.$entryPoint.'" and "'.$dependency.'" dependencies may lead to a deadlock situation.\n');
+                }
             }
         }
     }
