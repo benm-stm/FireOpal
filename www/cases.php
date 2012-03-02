@@ -48,7 +48,9 @@ if (isset($_REQUEST['testcases_to_add'])) {
             try {
                 $testSuite = new TestSuite($_REQUEST['testsuite_name']);
                 try {
-                    $testSuiteManager->populateTestSuite($testSuite, $testCasesToAdd);
+                    $populateResult = $testSuiteManager->populateTestSuite($testSuite, $testCasesToAdd);
+                    $info  = $populateResult['info'];
+                    $error = $populateResult['error'];
                     $testSuite->storeTestSuiteDetails();
                     $testSuite->bindConfigurationElements();
                     $testSuite->loadTestSuite();

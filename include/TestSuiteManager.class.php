@@ -18,6 +18,9 @@
 
 class TestSuiteManager {
 
+    private $info  = array();
+    private $error = array();
+
     public static $testSuitesLocation = "testsuites";
 
     /**
@@ -78,7 +81,7 @@ class TestSuiteManager {
      * @param TestSuite $testSuite     Target test suite to populate
      * @param Array     $testCaseArray List of testcases to attach to the testsuite
      *
-     * @return void
+     * @return Array
      */
     function populateTestSuite($testSuite, $testCasesArray) {
         foreach ($testCasesArray as $test) {
@@ -89,22 +92,33 @@ class TestSuiteManager {
                 try {
                     $this->attachDependencies($testSuite, $dependencies, $test);
                 } catch (OutOfRangeException $exception) {
-                    echo $exception->getMessage();
+                    $this->error[] = $exception->getMessage();
                 }
                 $testSuite->attach($testCase);
             } catch (RuntimeException $e) {
-                echo $e->getMessage();
+                $this->error[] = $e->getMessage();
             }
         }
+        return array("info" => $this->info, "error" => $this->error);
     }
 
+    /**
+     * Recursively attach dependencies of a testcases
+     *
+     * @param TestSuite $testSuite    Target test suite to populate
+     * @param Array     $dependencies Array of testcase dependencies to attach
+     * @param String    $entryPoint   Name of the testCase originating the dependency
+     *
+     * @return Void
+     */
     function attachDependencies($testSuite, $dependencies, $entryPoint) {
         foreach($dependencies as $dependency) {
             if (!$testSuite->isAttached(substr($dependency, 0, -3))) {
-                if ( !strcmp($entryPoint, $dependency)) {
+                if (strcmp($entryPoint, $dependency) !== 0) {
                     $this->populateTestSuite($testSuite, array($dependency));
+                    $this->info[] = 'Testcase "'.$dependency.'" were added as dependency of "'.$entryPoint.'"';
                 } else {
-                    throw new OutOfRangeException('An error occured while applying dependencies: Test cases "'.$entryPoint.'" and "'.$dependency.'" dependencies may lead to a deadlock situation.\n');
+                    throw new OutOfRangeException('An error occured while applying dependencies: Test cases "'.$entryPoint.'" and "'.$dependency.'" dependencies may lead to a deadlock situation.');
                 }
             }
         }
