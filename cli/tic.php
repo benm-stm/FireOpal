@@ -109,7 +109,7 @@ if (!empty($function)) {
                 echo "generate: Generate a testsuite.\nParameters:\n    --name          : Name of the new testsuite\n    --old_testsuite : Name of an old testsuite from which we import the list of testcases\n    --testcases     : List of indexes of testcases as obtained from \"testcases\" function\n    --help or -h    : Display this help\nNB: You can't use both --old_testsuite and --testcases\n";
             } else {
                 if (isset($parameters["name"])) {
-                    if (isset($parameters["old_testsuite"]) && !isset($parameters["old_testsuite"])) {
+                    if (isset($parameters["old_testsuite"]) && !isset($parameters["testcases"])) {
                         $oldTestSuite = new TestSuite($parameters["old_testsuite"]);
                         $testCases    = $oldTestSuite->getTestCases();
                     } elseif (isset($parameters["testcases"]) && !isset($parameters["old_testsuite"])) {
