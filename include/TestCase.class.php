@@ -121,30 +121,31 @@ class TestCase {
     }
 
     /**
-     * Set test case dependencies
-     *
-     * @return Void
-     */
-    protected function setDependencies($dependenciesArray) {
-        $this->_dependenciesMap = $dependenciesArray;
-    }
-
-    /**
      * Obtain test case tags
      *
      * @return Array
      */
     function getTags() {
-        return $this->$_tagsMap;
-    }
-
-    /**
-     * Set test case tags
-     *
-     * @return Void
-     */
-    protected function setTags($tagsArray) {
-        $this->$_tagsMap = $tagsArray;
+        if (empty($this->_tagsMap)) {
+            $testCaseFileObj = new SplFileObject($this->_testCaseFile);
+            $line            = "";
+            $inTags          = false;
+            if ($testCaseFileObj->isReadable()) {
+                while ($testCaseFileObj->valid() && $line != "#--- End tags\n") {
+                    $line = $testCaseFileObj->fgets();
+                    if ($inTags && $line == "#--- End tags\n") {
+                        $inTags = false;
+                    }
+                    if ($inTags) {
+                        $this->_tagsMap[] = trim(str_replace("#", "", $line));
+                    }
+                    if (!$inTags && $line == "#--- Start tags\n") {
+                        $inTags = true;
+                    }
+                }
+            }
+        }
+        return $this->_tagsMap;
     }
 
 }

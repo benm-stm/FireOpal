@@ -1,3 +1,8 @@
+#--- Start tags
+# write
+# site_admin
+#--- End tags
+
 #--- Start dependency list
 # docman/test.rb
 # trackerV3/tuleap.rb
