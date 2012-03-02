@@ -81,27 +81,20 @@ class TestSuiteManager {
      * @return void
      */
     function populateTestSuite($testSuite, $testCasesArray) {
-        $testCasesLocation = new SplFileInfo(TestCaseManager::TESTCASES_PATH);
-        if ($testCasesLocation->isDir()) {
-            $pathFinder = $testCasesLocation->getRealPath();
-            foreach ($testCasesArray as $test) {
-                try {
-                    $testCaseFile = new SplFileInfo($pathFinder.DIRECTORY_SEPARATOR.$test);
-                    $testCase     = new TestCase($testCaseFile->getBasename('.rb'), $testCaseFile);
-                    $dependencies = $testCase->getDependencies();
-                    // TODO: Avoid infinite loop when there are circular dependencies
-                    foreach($dependencies as $dependency) {
-                        if (!$testSuite->isAttached($dependency)) {
-                            $this->populateTestSuite($testSuite, array($dependency));
-                        }
+        foreach ($testCasesArray as $test) {
+            try {
+                $testCase = new TestCase(substr($test, 0, -3));
+                $dependencies = $testCase->getDependencies();
+                // TODO: Avoid infinite loop when there are circular dependencies
+                foreach($dependencies as $dependency) {
+                    if (!$testSuite->isAttached(substr($dependency, 0, -3))) {
+                        $this->populateTestSuite($testSuite, array($dependency));
                     }
-                    $testSuite->attach($testCase);
-                } catch (RuntimeException $e) {
-                    echo $e->getMessage();
                 }
+                $testSuite->attach($testCase);
+            } catch (RuntimeException $e) {
+                echo $e->getMessage();
             }
-        } else {
-            throw new RuntimeException ("Specified test cases location: '".$testCasesLocation."' is not an accessible directory.");
         }
     }
 
