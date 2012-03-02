@@ -197,7 +197,7 @@ class Setup {
             $this->error[] = "Impossible to save new conf";
             return false;
         }
-        $this->info[] = "Entries deleted";
+        $this->info[] = "Entrie(s) deleted";
         return true;
     }
 
