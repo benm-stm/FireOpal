@@ -82,6 +82,24 @@ class TestSuite {
         $this->_testCasesMap->attach($testCase);
     }
 
+     /**
+     * Search if a testcase is already atached at least once to the testsuite
+     *
+     * @param String $testCase Name of the testcase to search
+     *
+     * @return Boolean
+     */
+    public function isAttached($testCase) {
+        $attached = false;
+        foreach ($this->_testCasesMap as $tc) {
+            if ($tc->name == $testCase) {
+                $attached = true;
+                break;
+            }
+        }
+        return $attached;
+    }
+
     /**
      * Write into  to the test suite file the  RSpec code example of each binded test case.
      *

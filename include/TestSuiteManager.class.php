@@ -88,6 +88,13 @@ class TestSuiteManager {
                 try {
                     $testCaseFile = new SplFileInfo($pathFinder.DIRECTORY_SEPARATOR.$test);
                     $testCase     = new TestCase($testCaseFile->getBasename('.rb'), $testCaseFile);
+                    $dependencies = $testCase->getDependencies();
+                    // TODO: Avoid infinite loop when there are circular dependencies
+                    foreach($dependencies as $dependency) {
+                        if (!$testSuite->isAttached($dependency)) {
+                            $this->populateTestSuite($testSuite, array($dependency));
+                        }
+                    }
                     $testSuite->attach($testCase);
                 } catch (RuntimeException $e) {
                     echo $e->getMessage();
