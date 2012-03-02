@@ -3,39 +3,39 @@
 body {
     padding:0;
     margin:0; margin-top:30px; background-color:#F6F5F0; float:inherit;
-        }
-        body, th, td {
-            font-family: Verdana, Arial, sans-serif;
-            font-size:10pt;
-        }
-        #menu,
-        #menu ul {
-            list-style-type:none;
-            padding-left:0px;
-        }
-        #menu ul li {
-            padding-left:40px;
-        }
-        #menu ul li.categ {
-            padding-left:24px;
-        }
-        #submit_panel {
-            text-align:center;
-        }
-        #submit_panel input {
-            font-size:2em;
-            width:200px;;
-        }
-        label {
-            display:block;
-            width: 150px;
-        }
-        tr {
-            vertical-align:top;
-        }
-        pre { 
-            background-color: lightgray; 
-        }
+}
+body, th, td {
+    font-family: Verdana, Arial, sans-serif;
+    font-size:10pt;
+}
+#menu,
+#menu ul {
+    list-style-type:none;
+    padding-left:0px;
+}
+#menu ul li {
+    padding-left:40px;
+}
+#menu ul li.categ {
+    padding-left:24px;
+}
+#submit_panel {
+    text-align:center;
+}
+#submit_panel input {
+    font-size:2em;
+    width:200px;;
+}
+label {
+    display:block;
+    width: 150px;
+}
+tr {
+    vertical-align:top;
+}
+pre { 
+    background-color: lightgray; 
+}
 
 #body_skin{
     width:1200px;
@@ -90,39 +90,43 @@ body {
 
 /* {{{ feedback */
 .feedback_error, .feedback_warning, .feedback_info, .feedback_debug {
-        font-family:sans-serif;
-        background-color: #f7f7f7;
-        background-position: 20px 50%;
-        background-repeat:no-repeat;
-        margin-left:0px;
-        margin-bottom:10px;
-        list-style:none;
-        padding:10px 50px;
+    font-family:sans-serif;
+    background-color: #f7f7f7;
+    background-position: 20px 50%;
+    background-repeat:no-repeat;
+    margin-left:0px;
+    margin-bottom:10px;
+    list-style:none;
+    padding:10px 50px;
 }
 
 .feedback_error {
-        border:thick solid #ff0000;
-        color:#ff0000;
-        font-weight:bold;
-        background-image: url(/include/images/ic/error.png)
+    border:thick solid #ff0000;
+    color:#ff0000;
+    font-weight:bold;
+    background-image: url(/include/images/ic/error.png)
 }
 .feedback_warning {
-        border:medium solid darkorange;
-        color:peru;
-        font-weight:normal;
-        background-image: url(/include/images/ic/warning.png)
+    border:medium solid darkorange;
+    color:peru;
+    font-weight:normal;
+    background-image: url(/include/images/ic/warning.png)
 }
 .feedback_info {
-        border:thin solid darkblue;
-        color:darkblue;
-        font-weight:normal;
-        background-image: url(/include/images/ic/info.png)
+    border:thin solid darkblue;
+    color:darkblue;
+    font-weight:normal;
+    background-image: url(/include/images/ic/info.png)
 }
 .feedback_debug {
-        font-family:monospace;
-        color:yellow;
-        font-weight:normal;
-        background-color:black;
-        display:none; 
+    font-family:monospace;
+    color:yellow;
+    font-weight:normal;
+    background-color:black;
+    display:none; 
 }
 /* }}} */
+
+.toggler {
+    cursor:pointer;
+}

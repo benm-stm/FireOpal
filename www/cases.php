@@ -120,7 +120,8 @@ echo '
                 <tr>
                     <td id="block_config">
                         <fieldset>
-                            <legend><b>Config</b></legend>
+                            <legend class="toggler" onclick="toggle_visibility(\'menu\')">
+                                <b>Config</b></legend>
                             <ul id="menu">';
 $setup = new Setup();
 $content = $setup->display(true);
@@ -137,8 +138,8 @@ if (!empty($testsuites)) {
     echo '
                         <form name="LoadTestSuiteForm" action="" method="POST">
                             <fieldset>
-                                <legend><b>Load testsuite</b></legend>
-                                <table nowrap>';
+                                <legend class="toggler" onclick="toggle_visibility(\'load_container\')"><b>Load testsuite</b></legend>
+                                <table id="load_container" nowrap>';
     foreach($testsuites as $testsuite => $testcases) {
         echo '
                                     <tr>
@@ -160,8 +161,8 @@ if (!empty($testsuites)) {
 echo '
                         <form name="EditTestSuiteForm" action="" method="POST" onSubmit="generateTestSuite()">
                             <fieldset>
-                                <legend><b>New testsuite</b></legend>
-                                <table>
+                                <legend class="toggler" onclick="toggle_visibility(\'testsuite_container\')"><b>New testsuite</b></legend>
+                                <table id="testsuite_container">
                                     <tr>
                                         <td align="center"><b><font size="2">Availables test cases</font></b>';
 echo $testCaseManager->displayFileSystem("../testcases");
@@ -207,8 +208,8 @@ if (!empty($testsuites)) {
     echo '
                         <form action="" method="POST">
                             <fieldset>
-                                <legend><b>Delete testsuites</b></legend>
-                                <table nowrap>';
+                                <legend class="toggler" onclick="toggle_visibility(\'delete_container\')"><b>Delete testsuites</b></legend>
+                                <table id="delete_container" nowrap>';
     foreach($testsuites as $testsuite => $testcases) {
         echo '
                                     <tr>
@@ -229,6 +230,15 @@ echo '
             </table>
         </div>
     </body>
+        <script type="text/javascript">
+            function toggle_visibility(id) {
+               var e = document.getElementById(id);
+               if(e.style.display == "block")
+                  e.style.display = "none";
+               else
+                  e.style.display = "block";
+            }
+    </script>
 </html>';
 
 ?>
