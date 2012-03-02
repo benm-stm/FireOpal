@@ -29,9 +29,18 @@ if (!empty($_REQUEST)) {
 $content = $setup->display();
 $form    = $content['form'];
 
-$error   = "";
+$info = "";
+if (!empty($content['info'])) {
+    $info = '<ul class="feedback_info" >';
+    foreach ($content['info'] as $message) {
+        $info .= "<li>".$message."</li>";
+    }
+    $info .= '</ul>';
+}
+
+$error = "";
 if (!empty($content['error'])) {
-    $error   = '<ul class="feedback_error" >';
+    $error = '<ul class="feedback_error" >';
     foreach ($content['error'] as $message) {
         $error .= "<li>".$message."</li>";
     }
@@ -46,6 +55,7 @@ echo '
     </head>
     <body>
         <div id="header">';
+echo $info;
 echo $error;
 echo '
             <a href="cases.php" class="community"><< Go back</a>

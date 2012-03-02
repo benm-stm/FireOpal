@@ -19,6 +19,7 @@
 class Setup {
 
     private $error = array();
+    private $info  = array();
 
     /**
      * Extract the setup values from HTTP request and validate them
@@ -168,6 +169,7 @@ class Setup {
                 $this->error[] = "Impossible to save new conf";
                 return false;
             }
+            $this->info[] = "Setup stored";
             return true;
         }
         $this->error[] = "Empty setup";
@@ -195,6 +197,7 @@ class Setup {
             $this->error[] = "Impossible to save new conf";
             return false;
         }
+        $this->info[] = "Entries deleted";
         return true;
     }
 
@@ -235,7 +238,7 @@ class Setup {
             }
             $content .= '</li>';
         }
-        return array("form" => $content, "error" => $this->error);
+        return array("form" => $content, "error" => $this->error, "info" => $this->info);
     }
 
 }

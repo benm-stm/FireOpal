@@ -86,7 +86,7 @@ if (isset($_REQUEST['load_testsuites'])) {
 
 
 if (!empty($info)) {
-    $output   = '<ul class="feedback_info" >';
+    $output = '<ul class="feedback_info" >';
     foreach ($info as $message) {
         $output .= "<li>".$message."</li>";
     }
@@ -94,7 +94,7 @@ if (!empty($info)) {
 }
 
 if (!empty($error)) {
-    $output   .= '<ul class="feedback_error" >';
+    $output .= '<ul class="feedback_error" >';
     foreach ($error as $message) {
         $output .= "<li>".$message."</li>";
     }
