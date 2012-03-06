@@ -245,7 +245,7 @@ class TestSuite {
             //Test Cases storage
             $content = "#--- Test Cases list ---\n";
             foreach ($this->_testCasesMap as $testCase) {
-                $content          .= "# ".$testCase->name."\n";
+                $content          .= "# ".$testCase->name.".rb\n";
             }
             $content .= "#--- Test Cases End ---\n\n";
             $testSuiteFileObj->fwrite($content);
