@@ -24,9 +24,10 @@ describe "Display of paste in menu" do
             @driver.find_element(:link, "[Close]").click
         end
         it "Find a folder other than docman root" do
-            folder = @driver.find_element(:class, "docman_item_type_folder")
-            $folder_id = folder[:href].split("&action=collapseFolder&id=")
-            $folder_id = $folder_id[1]
+            folder        = @driver.find_element(:xpath, '//a[contains(@class, "docman_item_type_folder")]')
+            $folder_class = folder[:class]
+            $folder_id    = folder[:href].split("&action=collapseFolder&id=")
+            $folder_id    = $folder_id[1]
         end
         it "Open menu of the selected folder" do
             @driver.find_element(:xpath, "//a[@id='docman_item_show_menu_"+$folder_id+"']/img").click
@@ -54,25 +55,31 @@ describe "Display of paste in menu" do
         end
     end
     describe "#precondition:" do
-        it "Collapse the selected folder" do
-            # TODO
+        it "Open the selected folder" do
+            @driver.find_element(:id, "docman_item_title_link_268").click
         end
         it "Find a children folder of the copied one" do
-            # TODO
+            folder       = @driver.find_element(:xpath, '//a[contains(@class, "docman_item_type_folder")]')
+            $children_id = folder[:href].split("&action=collapseFolder&id=")
+            $children_id = $children_id[1]
         end
         it "Open menu of the children folder" do
-            # TODO
+            @driver.find_element(:xpath, "//a[@id='docman_item_show_menu_"+$children_id+"']/img").click
         end
         it "User is document writer on the children folder" do
-            # TODO
+            @driver.find_element(:class, "docman_item_option_newfolder").text.should == "New folder"
         end
     end
     describe "#regression:" do
         it "Paste doesn't exist in the menu of a children folder of the copied folder" do
-            # TODO
+            # TODO: Assert something not present
+            #@driver.find_element(:class, "docman_item_option_paste")
         end
     end
     describe "#precondition:" do
+        it "Return to docman root" do
+            @driver.find_element(:link, "Documents").click
+        end
         it "Open menu of docman root" do
             @driver.find_element(:css, "img.docman_item_icon").click
         end
