@@ -77,7 +77,6 @@ describe "Display of paste in menu" do
         end
     end
     describe "#regression:" do
-    
         it "Paste doesn't exist in the menu of a children folder of the copied folder" do
             begin
                 @driver.find_element(:class, "docman_item_option_paste")
