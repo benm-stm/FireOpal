@@ -79,7 +79,10 @@ class TestCase {
     public function retrieveRspecExampleGroup() {
         $exampleGroupHeader = "#---- Test case ".$this->name." ----\n";
         $exampleGroupFooter = "#---- End test case ".$this->name." ----\n\n";
-        $exampleGroup       = $exampleGroupHeader."    describe \"".$this->name."\" do\n";
+        $exampleGroup       = $exampleGroupHeader."    describe \"".$this->name."\" do\n\n";
+        $exampleGroup       .= "        before(:all) do\n";
+        $exampleGroup       .= "            @driver.navigate.to @setup['host']['value'] + '/my/'\n";
+        $exampleGroup       .= "        end\n\n";
         try {
             $exampleGroup .= $this->getContent();
         } catch (LogicException $e) {
@@ -146,6 +149,19 @@ class TestCase {
             }
         }
         return $this->_tagsMap;
+    }
+
+    /**
+     * Check if the current setup are compatible with testcase tags
+     *
+     * @return Boolean
+     */
+    function checkTags() {
+        $setupManager = new Setup();
+        $setup        = $setupManager->load();
+        $tags         = $this->getTags();
+        // TODO: Check tags compatibility
+        return true;
     }
 
 }

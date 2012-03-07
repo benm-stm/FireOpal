@@ -87,14 +87,17 @@ class TestSuiteManager {
         foreach ($testCasesArray as $test) {
             try {
                 $testCase = new TestCase(substr($test, 0, -3));
-                // TODO: Check tags before dependencies
-                $dependencies = $testCase->getDependencies();
-                try {
-                    $this->attachDependencies($testSuite, $dependencies, $test);
-                } catch (OutOfRangeException $exception) {
-                    $this->error[] = $exception->getMessage();
+                if ($testCase->checkTags()) {
+                    $dependencies = $testCase->getDependencies();
+                    try {
+                        $this->attachDependencies($testSuite, $dependencies, $test);
+                    } catch (OutOfRangeException $exception) {
+                        $this->error[] = $exception->getMessage();
+                    }
+                    $testSuite->attach($testCase);
+                } else {
+                    $this->error[] = 'Testcase "'.$test.'" were removed due to an incompatible tag';
                 }
-                $testSuite->attach($testCase);
             } catch (RuntimeException $e) {
                 $this->error[] = $e->getMessage();
             }
