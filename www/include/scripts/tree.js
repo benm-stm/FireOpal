@@ -42,6 +42,9 @@ function AddtestCases() {
             document.EditTestSuiteForm.testCases.options[testCase].selected = null;
         }
     }
+    p = document.getElementById('testcases_to_add');
+    for (testCase = 0; testCase < p.length && !(p[testCase].value); testCase++);
+    (testCase == p.length) ? document.getElementById('generate').disabled = true : document.getElementById('generate').disabled = false;
 }
 
 // TODO: Add comments
