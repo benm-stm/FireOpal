@@ -10,16 +10,26 @@
 #--- End dependency list
 
 describe "Testcase name" do
-    it "Fill a form and click on a button" do
-        @driver.find_element(:name, "form_element_example_1").clear
-        @driver.find_element(:name, "form_element_example_1").send_keys @setup['user']['value']
-        @driver.find_element(:name, "form_element_example_2").send_keys @setup['password']['value']
-        @driver.find_element(:name, "button_example").click
+    describe "#precondition" do
+        it "Clear the first field" do
+            @driver.find_element(:name, "form_element_example_1").clear
+        end
+        it "Fill the first field" do
+            @driver.find_element(:name, "form_element_example_1").send_keys @setup['user']['value']
+        end
+        it "Fill another field" do
+            @driver.find_element(:name, "form_element_example_2").send_keys @setup['password']['value']
+        end
+        it "Click on a button" do
+            @driver.find_element(:name, "button_example").click
+        end
     end
-    it "Test the wrong title of the page" do
-        (@driver.title).should == "wrong title"
-    end
-    it "Test the correct title of the page" do
-        (@driver.title).should == "good tiltle"
+    describe "#regression" do
+        it "Test the wrong title of the page" do
+            (@driver.title).should == "wrong title"
+        end
+        it "Test the correct title of the page" do
+            (@driver.title).should == "good tiltle"
+        end
     end
 end
