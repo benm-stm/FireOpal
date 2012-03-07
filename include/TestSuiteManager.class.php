@@ -80,10 +80,11 @@ class TestSuiteManager {
      *
      * @param TestSuite $testSuite     Target test suite to populate
      * @param Array     $testCaseArray List of testcases to attach to the testsuite
+     * @param Boolean   $isDependency  Is the testcases added by the user or added as dependency
      *
      * @return Array
      */
-    function populateTestSuite($testSuite, $testCasesArray) {
+    function populateTestSuite($testSuite, $testCasesArray, $isDependency = false) {
         foreach ($testCasesArray as $test) {
             try {
                 $testCase = new TestCase(substr($test, 0, -3));
@@ -94,7 +95,7 @@ class TestSuiteManager {
                     } catch (OutOfRangeException $exception) {
                         $this->error[] = $exception->getMessage();
                     }
-                    $testSuite->attach($testCase);
+                    $testSuite->attach($testCase, $isDependency);
                 } else {
                     $this->error[] = 'Testcase "'.$test.'" were removed due to an incompatible tag';
                 }
@@ -118,7 +119,7 @@ class TestSuiteManager {
         foreach($dependencies as $dependency) {
             if (!$testSuite->isAttached(substr($dependency, 0, -3))) {
                 if (strcmp($entryPoint, $dependency) !== 0) {
-                    $this->populateTestSuite($testSuite, array($dependency));
+                    $this->populateTestSuite($testSuite, array($dependency), true);
                     $this->info[] = 'Testcase "'.$dependency.'" were added as dependency of "'.$entryPoint.'"';
                 } else {
                     throw new OutOfRangeException('An error occured while applying dependencies: Test cases "'.$entryPoint.'" and "'.$dependency.'" dependencies may lead to a deadlock situation.');

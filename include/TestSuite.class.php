@@ -59,7 +59,7 @@ class TestSuite {
             throw new InvalidArgumentException('TestSuite constructor needs a string parameter. Input was : '.$testSuiteName);
         }
         $this->_result        = array();
-        $this->_testCasesMap  = new SplObjectStorage();
+        $this->_testCasesMap  = array();
     }
 
     /**
@@ -74,12 +74,13 @@ class TestSuite {
     /**
      * Attach a Given test case to the test suite
      *
-     * @param TestCase $testCase Testcase to be atached to testsuite
+     * @param TestCase $testCase      Testcase to be atached to testsuite
+     * @param Boolean  $isDependency  Is the testcase added by the user or added as dependency
      *
      * @return Void
      */
-    public function attach($testCase) {
-        $this->_testCasesMap->attach($testCase);
+    public function attach($testCase, $isDependency = false) {
+        $this->_testCasesMap[] = array('is_dependency' => $isDependency, 'testcase' => $testCase);
     }
 
      /**
@@ -92,7 +93,7 @@ class TestSuite {
     public function isAttached($testCase) {
         $attached = false;
         foreach ($this->_testCasesMap as $tc) {
-            if ($tc->name == $testCase) {
+            if ($tc['testcase']->name == $testCase) {
                 $attached = true;
                 break;
             }
@@ -112,8 +113,8 @@ class TestSuite {
     public function bindTestSuiteRequirements($rspecFileObj) {
         if ($rspecFileObj->isWritable()) {
             foreach ($this->_testCasesMap as $testCase) {
-                    $testCaseFileObj = new SplFileObject($testCase->_testCaseFile);
-                    $rspecFileObj->fwrite($testCase->retrieveRspecExampleGroup());
+                    $testCaseFileObj = new SplFileObject($testCase['testcase']->_testCaseFile);
+                    $rspecFileObj->fwrite($testCase['testcase']->retrieveRspecExampleGroup());
             }
         } else {
             throw new BadMethodCallException('Something went wrong when trying to write to test suite file "'.$this->_testSuiteFile.'".');
@@ -244,8 +245,13 @@ class TestSuite {
             $setup->storeConf($this->_testSuiteFile->getPathname());
             //Test Cases storage
             $content = "#--- Test Cases list ---\n";
-            foreach ($this->_testCasesMap as $testCase) {
-                $content          .= "# ".$testCase->name.".rb\n";
+            foreach ($this->_testCasesMap as $entry) {
+                if ($entry['is_dependency']) {
+                    $dependency = "*";
+                } else {
+                    $dependency = "";
+                }
+                $content          .= "# ".$entry['testcase']->name.".rb ".$dependency."\n";
             }
             $content .= "#--- Test Cases End ---\n\n";
             $testSuiteFileObj->fwrite($content);
@@ -291,7 +297,10 @@ class TestSuite {
                     $inTests = false;
                 }
                 if ($inTests) {
-                    $testCases[]= substr(substr($line, 2), 0, -1);
+                    $line = trim(str_replace("#", "", $line));
+                    if (!empty($line) && !preg_match("/\*$/", $line)) {
+                        $testCases[]= $line;
+                    }
                 }
                 if (!$inTests && $line == "#--- Test Cases list ---\n") {
                     $inTests = true;
