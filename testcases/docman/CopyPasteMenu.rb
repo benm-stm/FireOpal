@@ -39,7 +39,8 @@ describe "Display of paste in menu" do
             @driver.find_element(:class, "docman_item_option_cut").click
         end
         it "Feedback of the cut is displayed" do
-            # TODO
+            text = " cut. You can now paste it wherever you want with 'Paste' action in popup menu."
+            (@driver.find_element(:id, "item_cut").text.include? text).should eq(true)
         end
         it "Open menu of the selected folder after cut" do
             @driver.find_element(:xpath, "//a[@id='docman_item_show_menu_"+$folder_id+"']/img").click
@@ -50,8 +51,13 @@ describe "Display of paste in menu" do
     end
     describe "#regression:" do
         it "Paste doesn't exist in the menu of the copied folder" do
-            # TODO: Assert something not present
-            #@driver.find_element(:class, "docman_item_option_paste")
+            begin
+                @driver.find_element(:class, "docman_item_option_paste")
+                # TODO: Find a better way to detect this as a regression
+                true.should eq(false)
+            rescue
+                true.should eq(true)
+            end
         end
     end
     describe "#precondition:" do
@@ -71,9 +77,15 @@ describe "Display of paste in menu" do
         end
     end
     describe "#regression:" do
+    
         it "Paste doesn't exist in the menu of a children folder of the copied folder" do
-            # TODO: Assert something not present
-            #@driver.find_element(:class, "docman_item_option_paste")
+            begin
+                @driver.find_element(:class, "docman_item_option_paste")
+                # TODO: Find a better way to detect this as a regression
+                true.should eq(false)
+            rescue
+                true.should eq(true)
+            end
         end
     end
     describe "#precondition:" do
