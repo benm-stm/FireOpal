@@ -51,6 +51,9 @@ function RemoveTestCase() {
             document.EditTestSuiteForm.testcases_to_add.remove(testCase);
         }
     }
+    if (document.EditTestSuiteForm.testcases_to_add.length < 1) {
+        document.getElementById('generate').disabled = true;
+    }
 }
 
 // TODO: Add comments
