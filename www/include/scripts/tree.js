@@ -17,6 +17,14 @@ function loadTestCases() {
         var o = new Option(testCases[i], testCases[i]);
         document.EditTestSuiteForm.testcases_to_add.add(o, null);
     }
+    p = document.getElementById('testcases_to_add');
+    for (testCase = 0; testCase < p.length && !(p[testCase].value); testCase++);
+    if (testCase == p.length) {
+        alert('Test suite loading failure:\nThis test suite seems to be empty !!');
+        document.getElementById('generate').disabled = true;
+    } else {
+        document.getElementById('generate').disabled = false;
+    }
 }
 
 // TODO: Add comments
