@@ -49,8 +49,8 @@ if (isset($_REQUEST['testcases_to_add'])) {
                 $testSuite = new TestSuite($_REQUEST['testsuite_name']);
                 try {
                     $populateResult = $testSuiteManager->populateTestSuite($testSuite, $testCasesToAdd);
-                    $info  = $populateResult['info'];
-                    $error = $populateResult['error'];
+                    $info           = $populateResult['info'];
+                    $error          = $populateResult['error'];
                     $testSuite->storeTestSuiteDetails();
                     $testSuite->bindConfigurationElements();
                     $testSuite->loadTestSuite();
@@ -80,8 +80,8 @@ if (isset($_REQUEST['delete_testsuites'])) {
  
  
 if (isset($_REQUEST['load_testsuites'])) {
-    $testSuite = new TestSuite(substr($_REQUEST['load_testsuites'], 0, -3));
-    $testCases = $testSuite->getTestCases();
+    $testSuite    = new TestSuite(substr($_REQUEST['load_testsuites'], 0, -3));
+    $testCases    = $testSuite->getTestCases();
     $testCasesStr = implode(',' , $testCases);
    echo  $testCasesStr;
 }

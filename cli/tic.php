@@ -130,7 +130,13 @@ if (!empty($function)) {
                     if (isset($testCases) && !empty($testCases)) {
                         $testSuite        = new TestSuite($parameters["name"]);
                         $testSuiteManager = new TestSuiteManager();
-                        $testSuiteManager->populateTestSuite($testSuite, $testCases);
+                        $populateResult = $testSuiteManager->populateTestSuite($testSuite, $testCases);
+                        foreach ($populateResult['info'] as $message) {
+                            echo "Info: ".$message."\n";
+                        }
+                        foreach ($populateResult['error'] as $message) {
+                            echo "Error: ".$message."\n";
+                        }
                         $testSuite->storeTestSuiteDetails();
                         $testSuite->bindConfigurationElements();
                         $testSuite->loadTestSuite();
