@@ -62,7 +62,7 @@ describe "Display of paste in menu" do
     end
     describe "#precondition:" do
         it "Open the selected folder" do
-            @driver.find_element(:id, "docman_item_title_link_268").click
+            @driver.find_element(:id, "docman_item_title_link_"+$folder_id+"").click
         end
         it "Find a children folder of the copied one" do
             folder       = @driver.find_element(:xpath, '//a[contains(@class, "docman_item_type_folder")]')
