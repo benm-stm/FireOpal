@@ -2,7 +2,7 @@
 # Copyright (c) STMicroelectronics 2011. All rights reserved
 #
 
-This is a solution to run integration tests using SeleniumRC
+This is a solution to run automatic tests using Selenium webdriver
 
 
 LICENSE
@@ -25,6 +25,8 @@ On Launcher machine:
 
     > gem install selenium-webdriver
     > gem install rspec
+
+    You may need to install other packages using "gem install <package_name>" like json or other.
 
     Put this code on that machine and point the root of the webserver on "www" folder
 
@@ -49,9 +51,12 @@ On Client machine:
 RUN TESTS
 =========
 
-You probably need to modify tests settings in conf/set.php file. (Not used for the moment)
+You probably need to update tests settings from web interface in this page "http(s)://<host>/set.php"
+Then generate a testsuite from this web interface "http(s)://<host>/case.php"
+
+You can Also generate a testsuite using TIC from command line interface, for that you need first to access to the Launcher machine
 
 You can run a testsuite in command line by just typing:
-> ruby testsuite.rb
+> ruby /path/to/testsuite.rb
 
-Or using web interface by selecting the testsuite you want to run then Run
+Or using web interface "http(s)://<host>/index.php" by selecting the testsuite you want to run then Run!
