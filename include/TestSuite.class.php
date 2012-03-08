@@ -68,7 +68,9 @@ class TestSuite {
      * @return Void
      */
     public function run() {
-        exec('ruby '.$this->_testSuiteFile.' --format documentation --out ../log/resultFile_'.time().' 2>&1', $this->_result);
+        $logFile = '../log/resultFile_'.time();
+        exec('ruby '.$this->_testSuiteFile.' --format documentation --out '.$logFile.' 2>&1', $this->_result);
+        file_put_contents($logFile, "Run in ".date("D M j, Y G:i:s T")."\n", FILE_APPEND);
     }
 
     /**
