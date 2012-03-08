@@ -221,6 +221,7 @@ class TestSuite {
             $content .= "    end\n\n";
             $content .= "    def teardown\n        @driver.quit\n    end\n\n";
             $content .= "    def login\n";
+            $content .= "        @driver.navigate.to @setup['host']['value'] + '/my/'\n";
             $content .= "        @driver.find_element(:name, \"form_loginname\").send_keys @setup['user']['value']\n";
             $content .= "        @driver.find_element(:name, \"form_pw\").send_keys @setup['password']['value']\n";
             $content .= "        @driver.find_element(:name, \"login\").click\n    end\n\n";
