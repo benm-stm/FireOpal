@@ -15,9 +15,9 @@
  * along with this code. If not, see <http://www.gnu.org/licenses/>.
  */
 
-// TODO: Rename this file (and don't forget to update calls to the file)
-
-// TODO: Add comments
+/**
+ * Load testcases to add from an old testsuite
+ */
 function loadTestCases() {
     if (document.LoadTestSuiteForm.load_testsuites.length == undefined && document.LoadTestSuiteForm.load_testsuites.checked == true) {
         str = document.LoadTestSuiteForm.load_testsuites.value;
@@ -44,7 +44,9 @@ function loadTestCases() {
     }
 }
 
-// TODO: Add comments
+/**
+ * Add selected testcase(s) to the testcases to add
+ */
 function AddtestCases() {
     for (testCase = 0; testCase < document.EditTestSuiteForm.testcases_to_add.length; testCase++) {
         if (document.EditTestSuiteForm.testcases_to_add.options[testCase].selected == true) {
@@ -64,7 +66,9 @@ function AddtestCases() {
     (testCase == p.length) ? document.getElementById('generate').disabled = true : document.getElementById('generate').disabled = false;
 }
 
-// TODO: Add comments
+/**
+ * Remove selected testcase(s) from testcases to add
+ */
 function RemoveTestCase() {
     for (testCase = document.EditTestSuiteForm.testcases_to_add.length -1 ; testCase >= 0 ; testCase--) {
         if (document.EditTestSuiteForm.testcases_to_add.options[testCase].selected == true) {
@@ -76,7 +80,9 @@ function RemoveTestCase() {
     }
 }
 
-// TODO: Add comments
+/**
+ * Compile the selected testcases in a hidden field
+ */
 function generateTestSuite() {
     var p               = document.getElementById('testcases_to_add');
     var testCasesString = "";
