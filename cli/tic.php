@@ -23,12 +23,15 @@ require_once '../include/TestCase.class.php';
 require_once '../include/TestCaseManager.class.php';
 
 $displayHelp = false;
+$quiet       = false;
 $function    = '';
 $parameters  = array();
 
 for ($i = 1; $i < $argc; $i++) {
     if ($argv[$i] == "--help" || $argv[$i] == "-h") {
         $displayHelp = true;
+    } elseif ($argv[$i] == "--quiet" || $argv[$i] == "-q") {
+        $quiet = true;
     } elseif (!preg_match("/^-/", $argv[$i])) {
         // Not a parameter (does not start with "-") Then, it must be a name of a function
         if (empty($function)) {
@@ -121,7 +124,9 @@ if (!empty($function)) {
                             if (isset($testCasesList[$number])) {
                                 $testCases[] = $testCasesList[$number];
                             } else {
-                                echo "\"".$number."\" is not a valid testcase index, to verify your input, try\n>php tic.php testcases --numbered\n";
+                                if (!$quiet) {
+                                    echo "\"".$number."\" is not a valid testcase index, to verify your input, try\n>php tic.php testcases --numbered\n";
+                                }
                             }
                         }
                     } else {
@@ -131,18 +136,24 @@ if (!empty($function)) {
                         $testSuite        = new TestSuite($parameters["name"]);
                         $testSuiteManager = new TestSuiteManager();
                         $populateResult = $testSuiteManager->populateTestSuite($testSuite, $testCases);
-                        foreach ($populateResult['info'] as $message) {
-                            echo "Info: ".$message."\n";
-                        }
-                        foreach ($populateResult['error'] as $message) {
-                            echo "Error: ".$message."\n";
+                        if (!$quiet) {
+                            foreach ($populateResult['info'] as $message) {
+                                echo "Info: ".$message."\n";
+                            }
+                            foreach ($populateResult['error'] as $message) {
+                                echo "Error: ".$message."\n";
+                            }
                         }
                         $testSuite->storeTestSuiteDetails();
                         $testSuite->bindConfigurationElements();
                         $testSuite->loadTestSuite();
-                        echo "Testsuite \"".$parameters["name"]."\" stored\n";
+                        if (!$quiet) {
+                            echo "Testsuite \"".$parameters["name"]."\" stored\n";
+                        }
                     } else {
-                        echo "No testcases to add\n";
+                        if (!$quiet) {
+                            echo "No testcases to add\n";
+                        }
                     }
                 } else {
                     echo "--name parameter is mandatory\n";
