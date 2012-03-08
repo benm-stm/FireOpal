@@ -108,11 +108,11 @@ if (!empty($function)) {
             if ($displayHelp) {
                 echo "generate: Generate a testsuite.\nParameters:\n    --name          : Name of the new testsuite\n    --old_testsuite : Name of an old testsuite from which we import the list of testcases\n    --testcases     : List of indexes of testcases as obtained from \"testcases\" function\n    --help or -h    : Display this help\nNB: You can't use both --old_testsuite and --testcases\n";
             } else {
-                if (isset($parameters["name"])) {
-                    if (isset($parameters["old_testsuite"]) && !isset($parameters["testcases"])) {
+                if (isset($parameters["name"]) && !empty($parameters["name"])) {
+                    if (isset($parameters["old_testsuite"]) && !empty($parameters["testcases"]) && !isset($parameters["testcases"])) {
                         $oldTestSuite = new TestSuite($parameters["old_testsuite"]);
                         $testCases    = $oldTestSuite->getTestCases();
-                    } elseif (isset($parameters["testcases"]) && !isset($parameters["old_testsuite"])) {
+                    } elseif (isset($parameters["testcases"]) && !empty($parameters["testcases"]) && !isset($parameters["old_testsuite"])) {
                         $testCasesNumbers = split(",", $parameters["testcases"]);
                         $testCaseManager  = new TestCaseManager();
                         $testCasesList    = $testCaseManager->listFileSystem("../testcases");
