@@ -1,7 +1,7 @@
 #--- Start tags
 # write
 #--- End tags
-describe "add a widget to My dashbiard" do
+describe "add a widget to My dashboard" do
     describe "#precondition:" do
         it "should find my personal page" do
             @driver.find_element(:link, "My Personal Page").click
@@ -14,7 +14,7 @@ describe "add a widget to My dashbiard" do
         end
     end
     describe "add the widget" do
-        it "Hint the add button of the widget" do
+        it "should hint the add button of the widget" do
             @driver.find_element(:name, "name["+@setup['widget_name']['value']+"][add]").click
             @driver.manage.timeouts.implicit_wait = 5
         end
