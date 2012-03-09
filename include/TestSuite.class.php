@@ -108,7 +108,7 @@ class TestSuite {
      *
      * @param SplFileObject $rspecFileObj The file object of the test suite
      *
-     * @throws {BadMethodCallException}    If the $rspecFileObj param, wich is an SplFileObject object, stands for a non writable file.
+     * @throws {BadMethodCallException} If the $rspecFileObj param, wich is an SplFileObject object, stands for a non writable file.
      *
      * @return Void
      */
@@ -125,11 +125,10 @@ class TestSuite {
 
     /**
      * Build RSpec code examples from binded test cases
-     * @TODO: Handle errors
      *
      * @param SplFileObject $rspecFileObj The file object of the test suite
      *
-     * @throws {BadMethodCallException}    If the $rspecFileObj param, wich is an SplFileObject object, stands for a non writable file.
+     * @throws {BadMethodCallException} If the $rspecFileObj param, wich is an SplFileObject object, stands for a non writable file.
      *
      * @return Void
      */
@@ -141,6 +140,7 @@ class TestSuite {
                 $this->bindTestSuiteRequirements($rspecFileObj);
                 $this->bindRspecTearDown($rspecFileObj);
             } catch (LogicException $e) {
+                // TODO: Replace the echo
                 echo $e->getMessage();
             }
             $rspecFileObj->fwrite("end\n\n");
@@ -155,7 +155,7 @@ class TestSuite {
      *
      * @param SplFileObject $rspecFileObj The file object of the test suite
      *
-     * @throws {BadMethodCallException}    If the $rspecFileObj param, wich is an SplFileObject object, stands for a non writable file.
+     * @throws {BadMethodCallException} If the $rspecFileObj param, wich is an SplFileObject object, stands for a non writable file.
      *
      * @return Void
      */
@@ -182,7 +182,7 @@ class TestSuite {
      *
      * @param SplFileObject $rspecFileObj The file object of the test suite
      *
-     * @throws {BadMethodCallException}    If the $rspecFileObj param, wich is an SplFileObject object, stands for a non writable file.
+     * @throws {BadMethodCallException} If the $rspecFileObj param, wich is an SplFileObject object, stands for a non writable file.
      *
      * @return Void
      */
@@ -201,7 +201,7 @@ class TestSuite {
      * Apply conf parameters to the generated test Suite,
      * Using Ruby syntax, add a conf class then  add Setup, teardown and login methods
      *
-     * @throws {RuntimeException}    If the $_testSuiteFile property, wich is an SplFileInfo object, stands for a non writable file.
+     * @throws {RuntimeException} If the $_testSuiteFile property, wich is an SplFileInfo object, stands for a non writable file.
      *
      * @return Void
      */
@@ -276,7 +276,8 @@ class TestSuite {
             try {
                 $this->bindTestCases($fileObj);
             } catch (LogicException $e) {
-                    echo $e->getMessage();
+                // TODO: Replace the echo
+                echo $e->getMessage();
             }
         } else {
             throw new RuntimeException('Failure: test suite file "'.$this->_testSuiteFile.'" is not writable.');
