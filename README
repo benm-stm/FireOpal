@@ -15,7 +15,7 @@ INSTALLATION
 Before installing, you need to understand that this code deals with three different machines:
 1- The machine from which you may launch tests having a webserver on which this code is deployed. Let's call it "Launcher machine".
 2- The machine on which web application to be tested is deployed. Let's call it "Server machine".
-3- The machine from which tests will be launched, we use a web browser installed on it. Let's call it "Client machine".
+3- The machine from which tests will be executed on a browser, we use a web browser installed on it. Let's call it "Client machine".
 
 On Launcher machine:
 
