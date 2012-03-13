@@ -36,11 +36,11 @@ class LogManager {
     private $logStatus = LogManager::LOG_CLOSED;
 
     public function __construct($fileInfo, $severity) {
-        $this->logFile = new SplFileInfo($filepath);
+        $this->logFile = new SplFileInfo($fileInfo);
         $this->messageMap = array();
         if ($this->logFile->isFile()) {
             if (!$this->logFile->isWritable()) {
-                $this->messageMap[] = "'".$filepath."' exists, but could not be opened for writing. Check that appropriate permissions have been set.";
+                $this->messageMap[] = "'".$fileInfo."' exists, but could not be opened for writing. Check that appropriate permissions have been set.";
                 return;
             }
         }
