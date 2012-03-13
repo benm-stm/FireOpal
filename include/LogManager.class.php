@@ -55,28 +55,32 @@ class LogManager {
     }
 
     public function LogInfo($line, $outputStream = null) {
-        $this->Log( $line, LogManager::INFO, $outputStream);
+        return $this->Log( $line, LogManager::INFO, $outputStream);
     }
 
-        public function LogDebug($line, $outputStream = null) {
-    $this->Log( $line, LogManager::DEBUG, $outputStream);
+    public function LogDebug($line, $outputStream = null) {
+        return $this->Log( $line, LogManager::DEBUG, $outputStream);
     }
 
     public function LogWARNING($line, $outputStream = null) {
-        $this->Log( $line, LogManager::WARNING, $outputStream);
+        return $this->Log( $line, LogManager::WARNING, $outputStream);
     }
 
     public function LogError($line, $outputStream = null) {
-        $this->Log( $line, LogManager::ERROR, $outputStream);
+        return $this->Log( $line, LogManager::ERROR, $outputStream);
     }
 
-    public function LogFatal($line, $outputStream = null) {
-        $this->Log( $line, LogManager::FATAL, $outputStream);
-    }
-
-    public function Log($line, $severity, $outputStream) {
+    public function Log($line, $severity, $outputStream = null) {
         $timeTrace = $this->getTimeTrace($severity);
         $this->addLine( "$timeTrace $line \n" );
+        if (!empty($outputStream)) {
+            return $this->formatOutputStream($line, $severity);
+        }
+        return;
+    }
+
+    public function formatOutputStream($line, $severity) {
+        return $line;
     }
 
     private function getTimeTrace($logLevel) {
