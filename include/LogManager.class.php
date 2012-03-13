@@ -27,6 +27,7 @@ class LogManager {
     public  $dateFormat = "Y-m-d G:i:s";
     public  $messageMap;
     private $logFile;
+    private $severity;
 
     public function __construct($fileInfo) {
         $this->logFile = new SplFileInfo($filepath);
