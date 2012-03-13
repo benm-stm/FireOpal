@@ -29,6 +29,7 @@ class LogManager {
     private $logFile;
     private $severity;
     private $filObject;
+    private $logStatus;
 
     public function __construct($fileInfo) {
         $this->logFile = new SplFileInfo($filepath);
