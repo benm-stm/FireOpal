@@ -18,15 +18,15 @@
 
 class LogManager {
 
-    const DEBUG       = 1;
-    const INFO        = 2;
-    const WARNING     = 3;
-    const ERROR       = 4;
-    const OFF         = 5;
-    const LOG_OPENED  = 1;
-    const LOG_FAILURE = 2;
-    const LOG_CLOSED  = 3;
-
+    const DEBUG             = 1;
+    const INFO              = 2;
+    const WARNING           = 3;
+    const ERROR             = 4;
+    const OFF               = 5;
+    const LOG_OPENED        = 1;
+    const LOG_FAILURE       = 2;
+    const LOG_CLOSED        = 3;
+    const HTML_OUTPUTSTREAM = 1;
     public  $dateFormat = "Y-m-d G:i:s";
     public  $messageMap;
     private $logFile;
@@ -54,27 +54,27 @@ class LogManager {
         return;
     }
 
-    public function LogInfo($line) {
-        $this->Log( $line, LogManager::INFO);
+    public function LogInfo($line, $outputStream = null) {
+        $this->Log( $line, LogManager::INFO, $outputStream);
     }
 
-        public function LogDebug($line) {
-    $this->Log( $line, LogManager::DEBUG);
+        public function LogDebug($line, $outputStream = null) {
+    $this->Log( $line, LogManager::DEBUG, $outputStream);
     }
 
-    public function LogWARNING($line) {
-        $this->Log( $line, LogManager::WARNING);
+    public function LogWARNING($line, $outputStream = null) {
+        $this->Log( $line, LogManager::WARNING, $outputStream);
     }
 
-    public function LogError($line) {
-        $this->Log( $line, LogManager::ERROR);
+    public function LogError($line, $outputStream = null) {
+        $this->Log( $line, LogManager::ERROR, $outputStream);
     }
 
-    public function LogFatal($line) {
-        $this->Log( $line, LogManager::FATAL);
+    public function LogFatal($line, $outputStream = null) {
+        $this->Log( $line, LogManager::FATAL, $outputStream);
     }
 
-    public function Log($line, $severity) {
+    public function Log($line, $severity, $outputStream) {
         $timeTrace = $this->getTimeTrace($severity);
         $this->addLine( "$timeTrace $line \n" );
     }
