@@ -33,7 +33,7 @@ class LogManager {
     private $logFile;
     private $severity;
     private $filObject;
-    private $logStatus;
+    private $logStatus = LogManager::LOG_CLOSED;
 
     public function __construct($fileInfo) {
         $this->logFile = new SplFileInfo($filepath);
