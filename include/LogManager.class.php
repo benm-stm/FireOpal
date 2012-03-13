@@ -90,7 +90,7 @@ class LogManager {
             case LogManager::ERROR:
                 return '<ul class="feedback_error" ><li>'.$line.'</li></ul>';
         default:
-                return $line;
+                return '<ul class="feedback_debug" ><li>'.$line.'</li></ul>';
         }
     }
 
