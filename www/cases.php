@@ -60,8 +60,8 @@ if (isset($_REQUEST['testcases_to_add'])) {
                     echo $e->getMessage();
                 }
             } catch (InvalidArgumentException $e) {
-                echo $e->getMessage();
-                echo $e->getTraceAsString();
+                $logger->LogWarning($e->getMessage());
+                $logger->LogError($e->getTraceAsString());
             }
             $info[] = "Testsuite \"".$_REQUEST['testsuite_name']."\" stored";
         } else {
