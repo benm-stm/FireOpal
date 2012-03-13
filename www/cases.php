@@ -39,7 +39,7 @@ $testSuiteManager->setLogger($logger);
 $testCaseManager = new TestCaseManager();
 
 $output = '';
-$logViwer = '';
+$logViewer = '';
 $info   = array();
 $error  = array();
 if (isset($_REQUEST['testcases_to_add'])) {
@@ -62,10 +62,10 @@ if (isset($_REQUEST['testcases_to_add'])) {
                     echo $e->getMessage();
                 }
             } catch (InvalidArgumentException $e) {
-                $logger->LogWarning($e->getMessage());
+                $logViewer .= $logger->LogWarning($e->getMessage(), LogManager::HTML);
                 $logger->LogError($e->getTraceAsString());
             }
-            $logViwer .= $logger->LogInfo("Testsuite \"".$_REQUEST['testsuite_name']."\" stored", LogManager::HTML);
+            $logViewer .= $logger->LogInfo("Testsuite \"".$_REQUEST['testsuite_name']."\" stored", LogManager::HTML);
         } else {
             $error[] = "No testcases selected";
         }
@@ -117,7 +117,7 @@ echo '
     <body>
         <div id="header">';
 echo $output;
-echo $logViwer;
+echo $logViewer;
 echo '
             <a href="index.php" class="community"><< Go back</a>
             <a href="set.php" class="community">Update config</a>
