@@ -64,5 +64,11 @@ class LogManager {
     return true;
     }
 
+    public function addLine($line) {
+        if ($this->severity != LogManager::OFF) {
+            // @TODO apppend log file
+        }
+    }
+
 }
 ?>
