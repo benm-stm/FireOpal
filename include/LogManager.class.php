@@ -18,15 +18,14 @@
 
 class LogManager {
 
-    const DEBUG   = 1;
-    const INFO    = 2;
-    const WARNING = 3;
-    const ERROR   = 4;
-    const OFF     = 5;
-
-    const LOG_OPENED    = 1;
-    const LOG_FAILURE   = 2;
-    const LOG_CLOSED    = 3;
+    const DEBUG       = 1;
+    const INFO        = 2;
+    const WARNING     = 3;
+    const ERROR       = 4;
+    const OFF         = 5;
+    const LOG_OPENED  = 1;
+    const LOG_FAILURE = 2;
+    const LOG_CLOSED  = 3;
 
     public  $dateFormat = "Y-m-d G:i:s";
     public  $messageMap;
@@ -44,7 +43,7 @@ class LogManager {
                 return;
             }
         }
-            $this->severity = $severity;
+        $this->severity = $severity;
         if ($this->filObject = $this->logFile->openFile('a')) {
             $this->MessageQueue[] = "The log file was successfully opened.";
             $this->logStatus = LogManager::LOG_OPENED;
