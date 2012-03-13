@@ -80,7 +80,18 @@ class LogManager {
     }
 
     public function formatOutputStream($line, $severity) {
-        return $line;
+        switch ($severity) {
+            case LogManager::DEBUG:
+                return '<ul class="feedback_debug" ><li>'.$line.'</li></ul>';
+            case LogManager::INFO:
+                return '<ul class="feedback_info" ><li>'.$line.'</li></ul>';
+            case LogManager::WARNING:
+                return '<ul class="feedback_warning" ><li>'.$line.'</li></ul>';
+            case LogManager::ERROR:
+                return '<ul class="feedback_error" ><li>'.$line.'</li></ul>';
+        default:
+                return $line;
+        }
     }
 
     private function getTimeTrace($logLevel) {
