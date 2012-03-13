@@ -41,27 +41,27 @@ class LogManager {
     }
 
     public function LogInfo($line) {
-    $this->Log( $line, LogManager::INFO);
+        $this->Log( $line, LogManager::INFO);
     }
 
-    public function LogDebug($line) {
+        public function LogDebug($line) {
     $this->Log( $line, LogManager::DEBUG);
     }
 
     public function LogWARNING($line) {
-    $this->Log( $line, LogManager::WARNINGING);
+        $this->Log( $line, LogManager::WARNINGING);
     }
 
     public function LogError($line) {
-    $this->Log( $line, LogManager::ERROR);
+        $this->Log( $line, LogManager::ERROR);
     }
 
     public function LogFatal($line) {
-    $this->Log( $line, LogManager::FATAL);
+        $this->Log( $line, LogManager::FATAL);
     }
 
     public function Log($line, $severity) {
-    return true;
+        return true;
     }
 
     public function addLine($line) {
