@@ -80,7 +80,7 @@ class LogManager {
     }
 
     private function getTimeTrace($logLevel) {
-        $time = date($this->DateFormat);
+        $time = date($this->dateFormat);
         switch ($logLevel) {
             case LogManager::DEBUG:
                 return "$time - DEBUG level : ";
