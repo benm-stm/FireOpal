@@ -39,6 +39,7 @@ $testSuiteManager->setLogger($logger);
 $testCaseManager = new TestCaseManager();
 
 $output = '';
+$logViwer = '';
 $info   = array();
 $error  = array();
 if (isset($_REQUEST['testcases_to_add'])) {
@@ -64,7 +65,7 @@ if (isset($_REQUEST['testcases_to_add'])) {
                 $logger->LogWarning($e->getMessage());
                 $logger->LogError($e->getTraceAsString());
             }
-            $info[] = $logger->LogInfo("Testsuite \"".$_REQUEST['testsuite_name']."\" stored", LogManager::HTML);
+            $logViwer .= $logger->LogInfo("Testsuite \"".$_REQUEST['testsuite_name']."\" stored", LogManager::HTML);
         } else {
             $error[] = "No testcases selected";
         }
@@ -116,6 +117,7 @@ echo '
     <body>
         <div id="header">';
 echo $output;
+echo $logViwer;
 echo '
             <a href="index.php" class="community"><< Go back</a>
             <a href="set.php" class="community">Update config</a>
