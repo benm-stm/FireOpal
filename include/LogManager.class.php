@@ -35,7 +35,7 @@ class LogManager {
     private $filObject;
     private $logStatus = LogManager::LOG_CLOSED;
 
-    public function __construct($fileInfo) {
+    public function __construct($fileInfo, $severity) {
         $this->logFile = new SplFileInfo($filepath);
         $this->messageMap = array();
         if ($this->logFile->isFile()) {
@@ -44,6 +44,7 @@ class LogManager {
                 return;
             }
         }
+            $this->severity = $severity;
         if ($this->filObject = $this->logFile->openFile('a')) {
             $this->MessageQueue[] = "The log file was successfully opened.";
             $this->logStatus = LogManager::LOG_OPENED;
