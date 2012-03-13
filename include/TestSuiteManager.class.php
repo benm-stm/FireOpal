@@ -20,8 +20,14 @@ class TestSuiteManager {
 
     private $info  = array();
     private $error = array();
+    protected $logger;
 
     public static $testSuitesLocation = "testsuites";
+
+    //@TODO May be you should add a class constructor and inject there logger object dependency?
+    public function setLogger($logger) {
+        $this->logger = $logger;
+  }
 
     /**
      * Retrieves test suites location
@@ -100,6 +106,7 @@ class TestSuiteManager {
                     $this->error[] = 'Testcase "'.$test.'" were removed due to an incompatible tag';
                 }
             } catch (RuntimeException $e) {
+                $this->logger->LogWarning($e->getMessage());
                 $this->error[] = $e->getMessage();
             }
         }

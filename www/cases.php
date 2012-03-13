@@ -33,13 +33,14 @@ require_once 'TestSuite.class.php';
 require_once 'TestSuiteManager.class.php';
 require_once 'TestCaseManager.class.php';
 require_once 'LogManager.class.php';
+$logger = new LogManager( "log.txt", LogManager::DEBUG);
 $testSuiteManager = new TestSuiteManager();
+$testSuiteManager->setLogger($logger);
 $testCaseManager = new TestCaseManager();
 
 $output = '';
 $info   = array();
 $error  = array();
-$logger = new LogManager( "log.txt", LogManager::DEBUG);
 if (isset($_REQUEST['testcases_to_add'])) {
     $testCasesToAdd = explode(',', $_REQUEST['testcases_to_add']);
     if (!empty($_REQUEST['testsuite_name'])) {
