@@ -83,7 +83,9 @@ class LogManager {
 
     public function addLine($line) {
         if ($this->severity != LogManager::OFF) {
-            // @TODO apppend log file
+            if (!$this->filObject->fwrite($line)) {
+                $this->MessageQueue[] = "Failure occurred while attempting to write to log file. Check that appropriate permissions have been set.";
+            }
         }
     }
 
