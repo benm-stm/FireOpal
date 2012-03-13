@@ -28,6 +28,7 @@ class LogManager {
     public  $messageMap;
     private $logFile;
     private $severity;
+    private $filObject;
 
     public function __construct($fileInfo) {
         $this->logFile = new SplFileInfo($filepath);
