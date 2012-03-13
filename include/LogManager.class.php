@@ -46,8 +46,10 @@ class LogManager {
         }
         if ($this->filObject = $this->logFile->openFile('a')) {
             $this->MessageQueue[] = "The log file was successfully opened.";
+            $this->logStatus = LogManager::LOG_OPENED;
         } else {
             $this->MessageQueue[] = "A problem occurred when attempting to open log file.";
+            $this->logStatus = LogManager::LOG_FAILURE;
         }
         return;
     }
