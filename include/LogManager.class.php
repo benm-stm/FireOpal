@@ -76,7 +76,8 @@ class LogManager {
     }
 
     public function Log($line, $severity) {
-        return true;
+        $timeTrace = $this->getTimeTrace($severity);
+        $this->addLine( "$timeTrace $line \n" );
     }
 
     private function getTimeTrace($logLevel) {
