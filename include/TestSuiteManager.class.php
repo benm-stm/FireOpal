@@ -24,7 +24,14 @@ class TestSuiteManager {
 
     public static $testSuitesLocation = "testsuites";
 
-    //@TODO May be you should add a class constructor and inject there logger object dependency?
+    /**
+     * Set logger object for testSuiteManager
+     * @TODO May be you should add a class constructor and inject there logger object dependency?
+     *
+     * @param LogManager $logger Injected LogManager instance
+     *
+     * @return Void
+     */
     public function setLogger($logger) {
         $this->logger = $logger;
   }
