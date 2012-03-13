@@ -64,7 +64,7 @@ class LogManager {
     }
 
     public function LogWARNING($line) {
-        $this->Log( $line, LogManager::WARNINGING);
+        $this->Log( $line, LogManager::WARNING);
     }
 
     public function LogError($line) {
