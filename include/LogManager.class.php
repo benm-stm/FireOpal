@@ -64,6 +64,22 @@ class LogManager {
         return true;
     }
 
+    private function getTimeTrace($logLevel) {
+        $time = date($this->DateFormat);
+        switch ($logLevel) {
+            case LogManager::DEBUG:
+                return "$time - DEBUG level : ";
+            case LogManager::INFO:
+                return "$time - INFO level : ";
+            case LogManager::WARNING:
+                return "$time - WARNING level : ";
+            case LogManager::ERROR:
+                return "$time - ERROR level : ";
+            default:
+                return "$time - LOG default level : ";
+        }
+    }
+
     public function addLine($line) {
         if ($this->severity != LogManager::OFF) {
             // @TODO apppend log file
