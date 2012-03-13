@@ -57,6 +57,7 @@ if (isset($_REQUEST['testcases_to_add'])) {
                     $testSuite->bindConfigurationElements();
                     $testSuite->loadTestSuite();
                 } catch (RuntimeException $e) {
+                    $logger->LogWarning($e->getMessage());
                     echo $e->getMessage();
                 }
             } catch (InvalidArgumentException $e) {
@@ -64,6 +65,7 @@ if (isset($_REQUEST['testcases_to_add'])) {
                 $logger->LogError($e->getTraceAsString());
             }
             $info[] = "Testsuite \"".$_REQUEST['testsuite_name']."\" stored";
+            $logger->LogInfo("Testsuite \"".$_REQUEST['testsuite_name']."\" stored");
         } else {
             $error[] = "No testcases selected";
         }
