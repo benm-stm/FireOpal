@@ -64,8 +64,7 @@ if (isset($_REQUEST['testcases_to_add'])) {
                 $logger->LogWarning($e->getMessage());
                 $logger->LogError($e->getTraceAsString());
             }
-            $info[] = "Testsuite \"".$_REQUEST['testsuite_name']."\" stored";
-            $logger->LogInfo("Testsuite \"".$_REQUEST['testsuite_name']."\" stored");
+            $info[] = $logger->LogInfo("Testsuite \"".$_REQUEST['testsuite_name']."\" stored", LogManager::HTML);
         } else {
             $error[] = "No testcases selected";
         }
