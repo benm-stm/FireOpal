@@ -39,6 +39,12 @@ class LogManager {
                 return;
             }
         }
+        if ($this->filObject = $this->logFile->openFile('a')) {
+            $this->MessageQueue[] = "The log file was successfully opened.";
+        } else {
+            $this->MessageQueue[] = "A problem occurred when attempting to open log file.";
+        }
+        return;
     }
 
     public function LogInfo($line) {
