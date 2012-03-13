@@ -24,6 +24,10 @@ class LogManager {
     const ERROR   = 4;
     const OFF     = 5;
 
+    const LOG_OPENED    = 1;
+    const LOG_FAILURE   = 2;
+    const LOG_CLOSED    = 3;
+
     public  $dateFormat = "Y-m-d G:i:s";
     public  $messageMap;
     private $logFile;
