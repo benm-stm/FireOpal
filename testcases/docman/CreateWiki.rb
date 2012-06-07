@@ -47,8 +47,8 @@ describe "Create a new document wiki" do
             #is there a better way to select this button?
             @driver.find_element(:xpath, "(//input[@value='Create document'])").click
         end
-    end
         it "verify the text returned" do
             ( @driver.find_element(:class, "feedback_info").text.include? "Permissions successfully updated.").should be_true  
         end
+    end
 end
