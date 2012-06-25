@@ -27,7 +27,8 @@ describe "Add disk quota for a given project" do
             @driver.find_element(:link, "My Personal Page").click
         end
         it "Find Admin link" do
-            @driver.find_element(:link, "Admin").click
+            #@driver.find_element(:link, "Admin").click
+            @driver.find_element(:xpath, "(//a[@href='Admin'])").click
         end
         it "Find Statistics link" do
             @driver.find_element(:link, "Statistics").click
