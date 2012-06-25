@@ -29,7 +29,7 @@ describe "Deletes a given project disk quota" do
             @driver.find_element(:link, "My Personal Page").click
         end
         it "Find Admin link" do
-            @driver.find_element(:link, "Admin").click
+            @driver.find_element(:xpath, "//a[@href='/admin/']").click
         end
         it "Find Statistics link" do
             @driver.find_element(:link, "Statistics").click
