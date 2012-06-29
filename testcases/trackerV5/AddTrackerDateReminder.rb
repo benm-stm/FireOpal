@@ -27,13 +27,13 @@ describe "Add new tracker date reminder" do
             @driver.find_element(:link, "My Personal Page").click
         end
         it "Find project" do
-            @driver.find_element(:link, "Administration Project").click
+            @driver.find_element(:link, @setup['project_name']['value']).click
         end
         it "Find tracker service" do
             @driver.find_element(:link, "Trackers").click
         end
         it "Find My tracker" do
-            @driver.find_element(:link, "zerazr").click
+            @driver.find_element(:link, @setup['tracker_name']['value']).click
         end
         it "Find Notifications interface" do
             @driver.find_element(:link, "Notifications").click
