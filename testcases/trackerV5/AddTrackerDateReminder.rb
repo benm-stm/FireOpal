@@ -32,10 +32,10 @@ describe "Add new tracker date reminder" do
         it "Find tracker service" do
             @driver.find_element(:link, "Trackers").click
         end
-        it "Find My tracker" do
+        it "Find target tracker" do
             @driver.find_element(:link, @setup['tracker_name']['value']).click
         end
-        it "Find Notifications interface" do
+        it "Find notifications management interface" do
             @driver.find_element(:link, "Notifications").click
         end
     end
@@ -44,19 +44,26 @@ describe "Add new tracker date reminder" do
             @driver.find_element(:id, "add_reminder").click
         end
         it "Select Ugroups to be notified" do
-            Selenium::WebDriver::Support::Select.new(@driver.find_element(:name, "reminder_ugroup[]")).select_by(:text, @setup['ugroup_name']['value'])
+            #@TODO Manage comma separated ugroups from conf
+            ugroups      = @driver.find_element(:name, "reminder_ugroup[]")
+            ugroupsMSBox = Selenium::WebDriver::Support::Select.new(ugroups)
+            ugroupsMSBox.select_by(:text, @setup['ugroup_name']['value'])
         end
         it "Specify distance in days" do
             @driver.find_element(:name, "distance").clear
             @driver.find_element(:name, "distance").send_keys @setup['distance']['value']
         end
         it "Select notification type" do
-            Selenium::WebDriver::Support::Select.new(@driver.find_element(:name, "notif_type")).select_by(:text, @setup['notif_type']['value'])
+            notificationType = @driver.find_element(:name, "notif_type")
+            notifTypeSelect  = Selenium::WebDriver::Support::Select.new(notificationType)
+            notifTypeSelect.select_by(:text, @setup['notif_type']['value'])
         end
         it "Select the date field on which the reminder will be applied" do
-            Selenium::WebDriver::Support::Select.new(@driver.find_element(:name, "reminder_field_date")).select_by(:text, @setup['field_name']['value'])
+            fieldDate       = @driver.find_element(:name, "reminder_field_date")
+            fieldDateSelect = Selenium::WebDriver::Support::Select.new(fieldDate)
+            fieldDateSelect.select_by(:text, @setup['field_name']['value'])
         end
-        it "Submit new Reminder form" do
+        it "Submit new tracker date reminder" do
             @driver.find_element(:css, "td > input[name=\"submit\"]").click
         end
         it "Find new reminder info feed back" do
