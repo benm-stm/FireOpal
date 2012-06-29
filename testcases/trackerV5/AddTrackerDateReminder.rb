@@ -43,9 +43,9 @@ describe "Add new tracker date reminder" do
         it "Hint add reminder button" do
             @driver.find_element(:id, "add_reminder").click
         end
-        #it "Select Ugroups to be notified" do
-        #    @driver.find_element(:xpath, "(//input[@type='submit'])[3]").click
-        #end
+        it "Select Ugroups to be notified" do
+            Selenium::WebDriver::Support::Select.new(@driver.find_element(:name, "reminder_ugroup[]")).select_by(:text, "project_admins")
+        end
         it "Specify distance in days" do
             @driver.find_element(:name, "distance").clear
             @driver.find_element(:name, "distance").send_keys "11"
