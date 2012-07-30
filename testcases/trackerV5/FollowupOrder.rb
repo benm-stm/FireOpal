@@ -33,18 +33,17 @@
 describe "Order of followups is saved" do
     describe "#precondition:" do
         it "Open the artifct" do
-            $link = @setup['host']['value'] + '/plugins/tracker/?aid='+ @setup['artifact_id']['value']
-            @driver.navigate.to $link
+            @@artifactLink = @setup['host']['value'] + '/plugins/tracker/?aid='+ @setup['artifact_id']['value']
+            @driver.navigate.to @@artifactLink
         end
         it "Get the followup order" do
-            @trackerId = @driver.find_element(:id, "tracker_id").attribute("value")
-            $link = @setup['host']['value'] + '/plugins/tracker/comments_order.php?tracker_id='+ @trackerId
-            @driver.navigate.to $link
+            $trackerId = @driver.find_element(:id, "tracker_id").attribute("value")
+            @@orderLink = @setup['host']['value'] + '/plugins/tracker/comments_order.php?tracker_id='+ $trackerId
+            @driver.navigate.to @@orderLink
+            @@order = @driver.find_element(:tag_name => "body").text
         end
         it "Get back to the artifact" do
-            $link = @setup['host']['value'] + '/plugins/tracker/?aid='+ @setup['artifact_id']['value']
-            @driver.navigate.to $link
-            # @TODO: Save page HTML
+            @driver.navigate.to @@artifactLink
         end
         it "Invert the order" do
             @driver.find_element(:css, "img[alt=\"invert order of follow-up comments\"]").click
@@ -52,10 +51,8 @@ describe "Order of followups is saved" do
     end
     describe "#regression:" do
         it "The followup order is saved" do
-            @trackerId = @driver.find_element(:id, "tracker_id").attribute("value")
-            $link = @setup['host']['value'] + '/plugins/tracker/comments_order.php?tracker_id='+ @trackerId
-            @driver.navigate.to $link
-            # @TODO: Compare page HTML to the prviously saved one
+            @driver.navigate.to @@orderLink
+            @driver.find_element(:tag_name => "body").text.should_not eq(@@order)
         end
     end
 end
