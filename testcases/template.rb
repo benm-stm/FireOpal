@@ -15,6 +15,10 @@
 # along with this code. If not, see <http://www.gnu.org/licenses/>.    #
 ########################################################################
 
+#--- Start summary
+# This is a template for testcases to be written
+#--- End summary
+
 #--- Start tags
 # write
 # site_admin
@@ -25,6 +29,11 @@
 # trackerV3/tuleap.rb
 # template.rb
 #--- End dependency list
+
+#--- Start conf params
+# user
+# password
+#--- End conf params
 
 describe "Testcase name" do
     describe "#precondition" do

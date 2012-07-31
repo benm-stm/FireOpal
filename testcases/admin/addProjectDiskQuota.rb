@@ -17,9 +17,19 @@
 
 # @TODO: try to test autocomplete stuff
 
+#--- Start summary
+# Add disk quota for a project
+#--- End summary
+
 #--- Start tags
 # write
+# site_admin
 #--- End tags
+
+#--- Start conf params
+# disk_quota_project_id
+# disk_quota_requester
+#--- End conf params
 
 describe "Add disk quota for a given project" do
     describe "#precondition:" do

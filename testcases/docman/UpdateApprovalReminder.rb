@@ -15,11 +15,22 @@
 # along with this code. If not, see <http://www.gnu.org/licenses/>.    #
 ########################################################################
 
-# TODO: make this test depend on another one that creates an papproval table
+#--- Start summary
+# Update approval table reminder
+#--- End summary
 
 #--- Start tags
 # write
 #--- End tags
+
+#--- Start dependency list
+# docman/AddApprovalReminder.rb
+#--- End dependency list
+
+#--- Start conf params
+# host
+# project_id
+#--- End conf params
 
 describe "Browse to approval table menu" do
     describe "#precondition:" do

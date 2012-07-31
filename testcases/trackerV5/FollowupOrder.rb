@@ -19,10 +19,8 @@
 # Check that the followup order is saved
 #--- End summary
 
-#--- Start dependency list
-#--- End dependency list
-
 #--- Start conf params
+# host
 # artifact_id
 #--- End conf params
 

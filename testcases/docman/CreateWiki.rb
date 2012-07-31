@@ -15,9 +15,18 @@
 # along with this code. If not, see <http://www.gnu.org/licenses/>.    #
 ########################################################################
 
-#--- 
-# This testcase allows you to create a document with type wiki.
-#--- 
+#--- Start summary
+# Create a wiki type document
+#--- End summary
+
+#--- Start tags
+# write
+#--- End tags
+
+#--- Start conf params
+# host
+# project_id
+#--- End conf params
 
 describe "Create a new document wiki" do
     describe "#precondition:" do

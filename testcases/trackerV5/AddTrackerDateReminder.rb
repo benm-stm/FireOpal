@@ -15,11 +15,24 @@
 # along with this code. If not, see <http://www.gnu.org/licenses/>.    #
 ########################################################################
 
+#--- Start summary
+# Add a tracker date reminder
+#--- End summary
+
 #--- Start tags
 # Tracker V5
 # Admin
 # write
 #--- End tags
+
+#--- Start conf params
+# project_name
+# tracker_name
+# ugroup_name
+# distance
+# notif_type
+# field_name
+#--- End conf params
 
 describe "Add new tracker date reminder" do
     describe "#precondition:" do

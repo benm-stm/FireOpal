@@ -15,13 +15,25 @@
 # along with this code. If not, see <http://www.gnu.org/licenses/>.    #
 ########################################################################
 
-# @TODO: Add dependency on "project disk quota insertion" test case.
-#@TODO: Retrive project name before deletion then inject it to feedback matcher within the 7th example...
-#@TODO: Extend test case for multiple deletion...
+# @TODO: Retrive project name before deletion then inject it to feedback matcher within the 7th example...
+# @TODO: Extend test case for multiple deletion...
+
+#--- Start summary
+# This is a template for testcases to be written
+#--- End summary
 
 #--- Start tags
 # write
+# site_admin
 #--- End tags
+
+#--- Start dependency list
+# admin/addProjectDiskQuota.rb
+#--- End dependency list
+
+#--- Start conf params
+# disk_quota_project_id
+#--- End conf params
 
 describe "Deletes a given project disk quota" do
     describe "#precondition:" do

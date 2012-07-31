@@ -15,9 +15,24 @@
 # along with this code. If not, see <http://www.gnu.org/licenses/>.    #
 ########################################################################
 
+#--- Start summary
+# Update approval table reminder V2
+#--- End summary
+
 #--- Start tags
 # write
 #--- End tags
+
+#--- Start dependency list
+# docman/CopyPasteMenu.rb
+# trackerV3/tuleap.rb
+# template.rb
+#--- End dependency list
+
+#--- Start conf params
+# user
+# password
+#--- End conf params
 
 describe "Update docman approval table reminder" do
     describe "#precondition:" do

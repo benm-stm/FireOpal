@@ -16,20 +16,18 @@
 ########################################################################
 
 #--- Start summary
-# This test aims to add a new reminder on a given approval table 
+# Add a new approval table reminder
 #--- End summary
-
-#--- Start dependency list
-#--- End dependency list
-
-#--- Start conf params
-# project_id
-# docman_id
-#--- End conf params
 
 #--- Start tags
 # write
 #--- End tags
+
+#--- Start conf params
+# host
+# project_id
+# docman_id
+#--- End conf params
 
 describe "Browse to approval table menu" do
     describe "#precondition:" do

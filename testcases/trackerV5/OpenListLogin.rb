@@ -19,12 +19,11 @@
 # Add a user login in an open list binded to users
 #--- End summary
 
-#--- Start dependency list
-#--- End dependency list
-
 #--- Start conf params
+# host
 # artifact_id
 # open_list_id
+# user
 #--- End conf params
 
 #--- Start tags

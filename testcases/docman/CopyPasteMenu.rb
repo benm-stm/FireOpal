@@ -15,10 +15,18 @@
 # along with this code. If not, see <http://www.gnu.org/licenses/>.    #
 ########################################################################
 
+#--- Start summary
+# Verify that the paste menu is displayed only for folders other than the copied folder or its decendency
+#--- End summary
+
 #--- Start tags
 # read_only
 # docman_write
 #--- End tags
+
+#--- Start conf params
+# project_name
+#--- End conf params
 
 describe "Display of paste in menu" do
     describe "#precondition:" do
