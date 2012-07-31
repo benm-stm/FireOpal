@@ -22,7 +22,6 @@
 #--- Start conf params
 # host
 # artifact_id
-# open_list_id
 # user
 #--- End conf params
 
@@ -30,7 +29,7 @@
 # tracker V5
 #--- End tags
 
-describe "Order of followups is saved" do
+describe "Put user login in a user binded open list" do
     describe "#precondition:" do
         it "Open the artifct" do
             $link = @setup['host']['value'] + '/plugins/tracker/?aid='+ @setup['artifact_id']['value']
@@ -45,11 +44,18 @@ describe "Order of followups is saved" do
                     $more = false
                 end
             end
-            @driver.find_element(:id, @setup['open_list_id']['value']).clear
+            @driver.find_element(:class, "maininput").clear
         end
         it "Fill the open list" do
-            # @TODO: Make this work 100% of the time instead of exactly 50% of the time (which is suspect!)
-            @driver.find_element(:id, @setup['open_list_id']['value']).send_keys @setup['user']['value'] + ","
+            @driver.find_element(:class, "maininput").send_keys @setup['user']['value'] + ","
+            begin
+                @driver.find_element(:css, "a.closebutton")
+            rescue
+                @driver.find_element(:css, "em").click
+            end
+        end
+        it "Verify that the open list is filled correctly" do
+            @driver.find_element(:css, "a.closebutton")
         end
         it "Submit the artifact update" do
             @driver.find_element(:name, "submit_and_stay").click
@@ -57,7 +63,14 @@ describe "Order of followups is saved" do
     end
     describe "#regression:" do
         it "User login is accepted in open list" do
-            # @TODO: check the feedback message
+            @driver.find_element(:css, "a.closebutton")
+        end
+        it "Artifact successfully updated or no changes" do
+            begin
+                @driver.find_element(:class, "feedback_info").text.should include("Successfully Updated")
+            rescue
+                @driver.find_element(:class, "feedback_info").text.should include("No changes for artifact")
+            end
         end
     end
 end
