@@ -42,34 +42,36 @@ $output = '';
 $logViewer = '';
 $info   = array();
 $error  = array();
-if (isset($_REQUEST['testcases_to_add']) && !empty($_REQUEST['testcases_to_add'])) {
-    $testCasesToAdd = explode(',', $_REQUEST['testcases_to_add']);
-    if (!empty($_REQUEST['testsuite_name'])) {
-        require_once dirname(__FILE__).'/../include/TestSuite.class.php';
-        require_once dirname(__FILE__).'/../include/TestCase.class.php';
-        try {
-            $testSuite = new TestSuite($_REQUEST['testsuite_name']);
+if (isset($_REQUEST['testcases_to_add'])) {
+    if (!empty($_REQUEST['testcases_to_add'])) {
+        $testCasesToAdd = explode(',', $_REQUEST['testcases_to_add']);
+        if (!empty($_REQUEST['testsuite_name'])) {
+            require_once dirname(__FILE__).'/../include/TestSuite.class.php';
+            require_once dirname(__FILE__).'/../include/TestCase.class.php';
             try {
-                $populateResult = $testSuiteManager->populateTestSuite($testSuite, $testCasesToAdd);
-                $info           = $populateResult['info'];
-                $error          = $populateResult['error'];
-                $testSuite->storeTestSuiteDetails();
-                $testSuite->bindConfigurationElements();
-                $testSuite->loadTestSuite();
-            } catch (RuntimeException $e) {
-                $logger->LogWarning($e->getMessage());
-                echo $e->getMessage();
+                $testSuite = new TestSuite($_REQUEST['testsuite_name']);
+                try {
+                    $populateResult = $testSuiteManager->populateTestSuite($testSuite, $testCasesToAdd);
+                    $info           = $populateResult['info'];
+                    $error          = $populateResult['error'];
+                    $testSuite->storeTestSuiteDetails();
+                    $testSuite->bindConfigurationElements();
+                    $testSuite->loadTestSuite();
+                } catch (RuntimeException $e) {
+                    $logger->LogWarning($e->getMessage());
+                    echo $e->getMessage();
+                }
+            } catch (InvalidArgumentException $e) {
+                $logViewer .= $logger->LogWarning($e->getMessage(), LogManager::HTML);
+                $logger->LogError($e->getTraceAsString());
             }
-        } catch (InvalidArgumentException $e) {
-            $logViewer .= $logger->LogWarning($e->getMessage(), LogManager::HTML);
-            $logger->LogError($e->getTraceAsString());
+            $logViewer .= $logger->LogInfo("Testsuite \"".$_REQUEST['testsuite_name']."\" stored", LogManager::HTML);
+        } else {
+            $error[] = "Empty name";
         }
-        $logViewer .= $logger->LogInfo("Testsuite \"".$_REQUEST['testsuite_name']."\" stored", LogManager::HTML);
     } else {
-        $error[] = "Empty name";
+        $error[] = "No testcases selected";
     }
-} else {
-    $error[] = "No testcases selected";
 }
 
 if (isset($_REQUEST['delete_testsuites'])) {
