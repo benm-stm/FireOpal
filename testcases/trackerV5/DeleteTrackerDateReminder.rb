@@ -34,7 +34,7 @@
 # tracker_id
 #--- End conf params
 
-describe "Add new tracker date reminder" do
+describe "Delete a tracker date reminder" do
     describe "#precondition:" do
         it "Open notifications management interface" do
             $link = @setup['host']['value'] + '/plugins/tracker/?tracker=' + @setup['tracker_id']['value'] + '&func=notifications'
