@@ -92,8 +92,6 @@ class Setup {
                         case "password" :
                         case "project"  :
                             if (is_string($value) &&
-                                strrpos($value,' ') === false &&
-                                preg_match('/^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$/', $value) &&
                                 strpos($value, 0x0A) === false &&
                                 strpos($value, 0x0D) === false &&
                                 strpos($value, 0x00) === false) {
