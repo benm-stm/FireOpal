@@ -26,7 +26,7 @@
 #--- End tags
 
 #--- Start dependency list
-# trackerV5/AddTrackerDateReminder.rb
+# trackerV5/UpdateTrackerDateReminder.rb
 #--- End dependency list
 
 #--- Start conf params
@@ -41,36 +41,18 @@ describe "Add new tracker date reminder" do
             @driver.navigate.to $link
         end
         it "Find a reminder to update" do
-            @driver.find_element(:id, "update_reminder")
+            @driver.find_element(:id, "delete_reminder")
         end
     end
     describe "#regression:" do
-        it "Click on update reminder button" do
-            @driver.find_element(:id, "update_reminder").click
+        it "Click on delete reminder button" do
+            @driver.find_element(:id, "delete_reminder").click
         end
-        it "Select Ugroups to be notified" do
-            ugroups      = @driver.find_element(:name, "reminder_ugroup[]")
-            ugroupsMSBox = Selenium::WebDriver::Support::Select.new(ugroups)
-            ugroupsMSBox.select_by(:text, 'project_members')
+        it "Confirm the deletion" do
+            @driver.find_element(:name, "confirm_delete").click
         end
-        it "Specify distance in days" do
-            @driver.find_element(:name, "distance").clear
-            @driver.find_element(:name, "distance").send_keys Time.now.to_i
-        end
-        it "Select notification type" do
-            notificationType = @driver.find_element(:name, "notif_type")
-            notifTypeSelect  = Selenium::WebDriver::Support::Select.new(notificationType)
-            notifTypeSelect.select_by(:text, 'After')
-        end
-        it "Submit the updated values of the tracker date reminder" do
-            @driver.find_element(:css, "td > input[name=\"submit\"]").click
-        end
-        it "Verify feed back message" do
-            begin
-                @driver.find_element(:class, "feedback_info").text.should include("Date Reminder successfully updated")
-            rescue
-                @driver.find_element(:class, "feedback_error").text.should include("Cannot duplicate Date Reminder")
-            end
+        it "Verify feedback message" do
+            @driver.find_element(:class, "feedback_info").text.should include("Date Reminder successfully deleted")
         end
     end
 end
