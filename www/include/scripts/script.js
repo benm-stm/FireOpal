@@ -29,7 +29,7 @@ function loadTestCases() {
         }
     }
     testCases = str.split(',');
-	document.EditTestSuiteForm.testcases_to_add.options.length = 0;
+    document.EditTestSuiteForm.testcases_to_add.options.length = 0;
     for (i = 0; i < testCases.length; i++) {
         var o = new Option(testCases[i], testCases[i]);
         document.EditTestSuiteForm.testcases_to_add.add(o, null);
