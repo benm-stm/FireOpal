@@ -91,11 +91,14 @@ class Setup {
                         case "user"     :
                         case "password" :
                         case "project"  :
-                            if (is_string($value) &&
+                            if (!empty($value) &&
+                                is_string($value) &&
                                 strpos($value, 0x0A) === false &&
                                 strpos($value, 0x0D) === false &&
                                 strpos($value, 0x00) === false) {
                                 $set[$name]['value'] = $value;
+                            } elseif (empty($value)) {
+                                // Do nothing
                             } else {
                                 $this->error[] = "Invalid ".$name;
                             }
