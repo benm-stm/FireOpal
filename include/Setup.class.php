@@ -126,6 +126,8 @@ class Setup {
         }
         if ($newName && $newType && $newDescription) {
             $set[$newName] = array("value" => "", "description" => $newDescription, "type" => $newType);
+        } else {
+            $this->error[] = "All fields are mandatory for a new value";
         }
         return $set;
     }
