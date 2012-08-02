@@ -102,6 +102,10 @@ class TestSuiteManager {
             try {
                 $testCase = new TestCase(substr($test, 0, -3));
                 if ($testCase->checkTags()) {
+                    $missingParams = $testCase->checkSetupParams();
+                    if (!empty($missingParams)) {
+                        $this->error[] = 'Testcase "'.$test.'" requeires missing conf param(s): '.join(', ', $missingParams);
+                    }
                     $dependencies = $testCase->getDependencies();
                     try {
                         $this->attachDependencies($testSuite, $dependencies, $test);

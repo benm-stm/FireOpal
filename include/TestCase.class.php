@@ -21,6 +21,7 @@ class TestCase {
     public $id;
     public $name;
     public $_dependenciesMap;
+    public $_setupParamsMap;
     public $_tagsMap;
     public $filePath;
     public $_testCaseFile;
@@ -37,6 +38,7 @@ class TestCase {
         $this->id               = "";
         $this->name             = $name;
         $this->_dependenciesMap = array();
+        $this->_setupParamsMap  = array();
         $this->_tagsMap         = array();
         $this->filePath         = TestCaseManager::TESTCASES_PATH;
         if (!empty($fileinfo)) {
@@ -121,6 +123,38 @@ class TestCase {
             }
         }
         return $this->_dependenciesMap;
+    }
+
+    /**
+     * Obtain test case setup params
+     *
+     * @return Array
+     */
+    function getSetupParams() {
+        if (empty($this->_setupParamsMap)) {
+            $testCaseFileObj = new SplFileObject($this->_testCaseFile);
+            $line            = "";
+            if ($testCaseFileObj->isReadable()) {
+                while ($testCaseFileObj->valid()) {
+                    $line = $testCaseFileObj->fgets();
+                    // @TODO: get all usages of setup params in $line
+                }
+            }
+        }
+        return $this->_setupParamsMap;
+    }
+
+    /**
+     * Check if all params needed by the testcase are present in setup
+     *
+     * @return Array
+     */
+    function checkSetupParams() {
+        $setupManager = new Setup();
+        $setup        = $setupManager->load();
+        $setupParams  = $this->getSetupParams();
+        // @TODO: Check presence
+        return array();
     }
 
     /**
