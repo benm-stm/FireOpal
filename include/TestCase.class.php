@@ -150,11 +150,16 @@ class TestCase {
      * @return Array
      */
     function checkSetupParams() {
-        $setupManager = new Setup();
-        $setup        = $setupManager->load();
-        $setupParams  = $this->getSetupParams();
-        // @TODO: Check presence
-        return array();
+        $setupManager  = new Setup();
+        $setup         = $setupManager->load();
+        $setupParams   = $this->getSetupParams();
+        $missingParams = array();
+        foreach ($setupParams as $param) {
+            if (!array_key_exists($param, $setup)) {
+                $missingParams[] = $param;
+            }
+        }
+        return $missingParams;
     }
 
     /**
