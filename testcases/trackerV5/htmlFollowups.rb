@@ -48,20 +48,29 @@ describe "TV5 HTML followup" do
         end
         it "Find the first artifact" do
             @driver.find_element(:css, "img[alt=\"#1\"]").click
+			#Or retrieve artifact id from conf:
+			#@driver.find_element(:link, "@setup['artifact_id']['value']").click
         end
     end
 	describe "#regression:" do
-        it "Toggle rich text editor" do
-            @driver.find_element(:link, "Toggle rich text formatting").click
+        #it "Toggle rich text editor" do
+        #    @driver.find_element(:link, "Toggle rich text formatting").click
+        #end
+        #it "Select HTML format for new followup" do
+        #    @driver.find_element(:css, "html").click
+        #end
+		it "Check html format radio button"
+		    @driver.find_element(:id, "comment_format_htmlnew").click
         end
-        it "Select HTML format for new followup" do
-            @driver.find_element(:css, "html").click
+		it "Write followup content" do
+            @driver.find_element(:id, "tracker_followup_comment_new").clear
+            @driver.find_element(:id, "tracker_followup_comment_new").send_keys "Yet another <b>html</b> followup"
+		end
+		it "Submit new followup" do
+			@driver.find_element(:xpath, "(//input[@name='submit_and_stay'])[2]").click
         end
-        it "Do something wrong" do
-            @driver.find_element(:css, "span.cke_icon").click
-            @driver.find_element(:id, "cke_6").click
-            @driver.find_element(:xpath, "(//input[@name='submit_and_stay'])[2]").click
-            @driver.find_element(:css, "a.l.vst").click   
+		it "Find new followup info feed back" do
+            @driver.find_element(:class, "feedback_info").text.should include("Successfully Updated")
         end
     end
 end
