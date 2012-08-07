@@ -1,3 +1,20 @@
+########################################################################
+# Copyright (c) STMicroelectronics 2012. All rights reserved           #
+#                                                                      #
+# This code is free software; you can redistribute it and/or modify    #
+# it under the terms of the GNU General Public License as published by #
+# the Free Software Foundation; either version 2 of the License, or    #
+# (at your option) any later version.                                  #
+#                                                                      #
+# This code is distributed in the hope that it will be useful,         #
+# but WITHOUT ANY WARRANTY; without even the implied warranty of       #
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the        #
+# GNU General Public License for more details.                         #
+#                                                                      #
+# You should have received a copy of the GNU General Public License    #
+# along with this code. If not, see <http://www.gnu.org/licenses/>.    #
+########################################################################
+
 #--- Start test Summary
 # this test Check that a non-wiki admin can NOT access to the admin page.
 #--- End test Summary
@@ -12,7 +29,7 @@
 #--- End dependency list
 # 
 
-describe "non-wiki admin can NOT do any administration action" do     
+describe "non-wiki admin can NOT do any administration action" do
     describe "#Precondition" do
         it "go to  the project link" do
             $link = @setup['host']['value'] + '/projects/' + @setup['project_short_name']['value']
@@ -22,7 +39,7 @@ describe "non-wiki admin can NOT do any administration action" do
             (@driver.find_element(:class, "contenttable").text.include? "Permission Denied").should be_false
         end
     end
-    describe "#Steps" do
+    describe "#Step" do
         it "try to access to wiki admin section" do
             $link = @setup['host']['value'] + '/wiki/admin/index.php?group_id=' + @setup['project_id']['value']
             @driver.navigate.to $link
