@@ -65,7 +65,7 @@ describe "Update a tracker date reminder" do
         it "Submit the updated values of the tracker date reminder" do
             @driver.find_element(:css, "td > input[name=\"submit\"]").click
         end
-        it "Verify feed back message" do
+        it "Verify feedback message" do
             begin
                 @driver.find_element(:class, "feedback_info").text.should include("Date Reminder successfully updated")
             rescue
