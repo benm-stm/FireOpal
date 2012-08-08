@@ -29,14 +29,14 @@
 #--- End conf params
 
 describe "Create a new document wiki" do
-    describe "#precondition:" do
+    describe "#precondition" do
     #The project "gpig" should exist and "simplex" should be a document writer
         it "Find Documents link" do
             $link = @setup['host']['value'] + '/plugins/docman/?group_id=' + @setup['project_id']['value']
             @driver.navigate.to $link
         end
     end
-    describe "#regression:" do
+    describe "#step" do
         it "Find Create a New Document link" do
             @driver.find_element(:class, "docman_item_icon").click
             @driver.find_element(:class, "docman_item_option_newdocument").click
