@@ -16,11 +16,10 @@
 ########################################################################
 
 #--- Start summary
-# This test Delete existing Git repository from Codex interface.
+# This testcase allows you to add mails and check to notifications.
 #--- End summary
 
 #--- Start dependency list
-#CreateRepoGit.rb
 #--- End dependency list
 
 #--- Start conf params
@@ -29,37 +28,57 @@
 # project_short_name
 #--- End conf params
 
+$Git_AddNotifiedMails_mail= "user1@st.com"
+$Git_AddNotifiedMails_correctlogin = "codex support"
+$Git_AddNotifiedMails_wronglogin = "user1"
 $CreateRepoGit_rep_name = "TestingValidation1"
 
-describe "Delete existing Git repo" do
-    describe "#precondition" do
+describe "add notification" do
+    describe "#precondition" do 
         it "Go to the project link" do
             $link = @setup['host']['value'] + '/projects/' + @setup['project_short_name']['value']
             @driver.navigate.to $link
         end
         it "test if the user is a project member" do
             (@driver.find_element(:class, "contenttable").text.include? "Permission Denied").should be_false
-        end 
+        end
     end
-    describe "#step" do
+     describe "#step" do
         it "go to Git service" do
             $link = @setup['host']['value'] + '/plugins/git/?group_id=' + @setup['project_id']['value']
             @driver.navigate.to $link
         end
-        it "select the repositry" do
+        it "select a repository to manage"do
             @driver.find_element(:link, $CreateRepoGit_rep_name).click
         end
-        it "enter to repository management" do
-            @driver.find_element(:link, "Repository management").click
+        it "Go to Repository management" do
+           @driver.find_element(:link, "Repository management").click
         end
-        it "click on delete this repository" do
-            @driver.find_element(:name, "confirm_deletion").click
+        it "user have no mail address" do
+            # wrong login: 
+            @driver.find_element(:id,"add_mail").clear
+            @driver.find_element(:id,"add_mail").send_keys $Git_AddNotifiedMails_wronglogin
+            @driver.find_element(:id,"add_mail_submit").click
+            (@driver.find_element(:class,"feedback_error").text.include? "No user corresponding to entry").should be_true
         end
-        it "confirm deletion" do
-            @driver.find_element(:id, "submit").click
+        it "user name will be autocompleted" do
+            # correct autocomplited login:
+            @driver.find_element(:id,"add_mail").clear
+            @driver.find_element(:id,"add_mail").send_keys $Git_AddNotifiedMails_correctlogin
+            @driver.find_element(:id,"add_mail_submit").click
+            (@driver.find_element(:class,"feedback_info").text.include? "Mail added").should be_true
         end
-        it "feedback message displayed" do
-            (@driver.find_element(:class,"feedback_info").text.include? "removed").should be_true
+        it "Add some mail addresses" do
+            @driver.find_element(:id,"add_mail").clear
+            @driver.find_element(:id,"add_mail").send_keys $Git_AddNotifiedMails_mail
+            @driver.find_element(:id,"add_mail_submit").click
+            (@driver.find_element(:class,"feedback_info").text.include? "Mail added").should be_true
+        end
+        it "add again the same mail" do
+            @driver.find_element(:id,"add_mail").clear
+            @driver.find_element(:id,"add_mail").send_keys $Git_AddNotifiedMails_mail
+            @driver.find_element(:id,"add_mail_submit").click
+            (@driver.find_element(:class,"feedback_info").text.include? "The notification is already enabled for this email").should be_true
         end
     end
 end

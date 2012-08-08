@@ -16,56 +16,43 @@
 ########################################################################
 
 #--- Start summary
-# This test create a Git repository from Codex interface.
-#--- End summary
+# This testcase PREVENT a non-project member to fork repositories
+#--- End summary.
 
 #--- Start dependency list
 #--- End dependency list
 
 #--- Start conf params
 # host
-# project_id
-# project_short_name
+# project2_id
+# project2_short_name
 #--- End conf params
 
-$CreateRepoGit_rep_name = "TestingValidation1"
-
-describe "Create Git repo" do
-    describe "#precondition" do
+describe "prevent a non-project admin to fork repositories" do
+    describe "precondition" do
         it "Go to the project link" do
-            $link = @setup['host']['value'] + '/projects/' + @setup['project_short_name']['value']
+            $link = @setup['host']['value'] + '/projects/' + @setup['project2_short_name']['value']
             @driver.navigate.to $link
         end
         it "test if the user is a project member" do
             (@driver.find_element(:class, "contenttable").text.include? "Permission Denied").should be_false
         end
-        it " Check if the user is project Admin " do
-            @driver.find_element(:link, "Admin").displayed?
-        end
+    end
+    describe "step" do
         it "go to Git service" do
-            $link = @setup['host']['value'] + '/plugins/git/?group_id=' + @setup['project_id']['value']
+            $link = @setup['host']['value'] + '/plugins/git/?group_id=' + @setup['project2_id']['value']
             @driver.navigate.to $link
         end
-    end
-    describe "#step" do
-        it "insert TestingValidation1 " do
-            @driver.find_element(:id, "repo_name").send_keys $CreateRepoGit_rep_name
+        it "feedback message displayed" do
+            (@driver.find_element(:class,"main_body_row").text.include? "No repository found").should be_true
         end
-        it "submit repo creation" do
-            @driver.find_element(:id, "repo_add").click
+        it "feedback for repository list" do
+            @driver.find_element(:link, "Repository list").click
+            (@driver.find_element(:class,"main_body_row").text.include? "No repository found").should be_true
         end
-        it "Assert: submit repo creation" do
-            @driver.find_element(:id, "repo_add").click
-        end
-        it "should find TestingValidation1 repo" do
-            wait = Selenium::WebDriver::Wait.new(:timeout => 15)
-            assertRepoCreation = wait.until {
-            repo = @driver.find_element(:link, $CreateRepoGit_rep_name)
-            repo if repo.displayed?
-        }
-        end
-        it "feedback message for already existing repo name is not displayed " do
-            ( @driver.find_element(:class,"feedback_error").text.include? "Repository TestingValidation1 already exists").should be_false
+        it "feedback for Fork repositories" do
+            @driver.find_element(:link, "Fork repositories").click
+            (@driver.find_element(:class,"main_body_row").text.include? "Fork repositories").should be_true
         end
     end
 end

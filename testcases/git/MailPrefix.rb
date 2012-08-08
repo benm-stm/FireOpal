@@ -16,7 +16,7 @@
 ########################################################################
 
 #--- Start summary
-# This test create a Git repository from Codex interface.
+# This testcase allows you to change mail prefix.
 #--- End summary
 
 #--- Start dependency list
@@ -29,8 +29,9 @@
 #--- End conf params
 
 $CreateRepoGit_rep_name = "TestingValidation1"
+$Git_MailPrefix_NewPrefix="new_prefix"
 
-describe "Create Git repo" do
+describe "change a mail prefix" do
     describe "#precondition" do
         it "Go to the project link" do
             $link = @setup['host']['value'] + '/projects/' + @setup['project_short_name']['value']
@@ -39,33 +40,25 @@ describe "Create Git repo" do
         it "test if the user is a project member" do
             (@driver.find_element(:class, "contenttable").text.include? "Permission Denied").should be_false
         end
-        it " Check if the user is project Admin " do
-            @driver.find_element(:link, "Admin").displayed?
-        end
+    end
+    describe "#step" do
         it "go to Git service" do
             $link = @setup['host']['value'] + '/plugins/git/?group_id=' + @setup['project_id']['value']
             @driver.navigate.to $link
         end
-    end
-    describe "#step" do
-        it "insert TestingValidation1 " do
-            @driver.find_element(:id, "repo_name").send_keys $CreateRepoGit_rep_name
+        it "Go to Repository management" do
+            @driver.find_element(:link, $CreateRepoGit_rep_name).click
+            @driver.find_element(:link, "Repository management").click
         end
-        it "submit repo creation" do
-            @driver.find_element(:id, "repo_add").click
+        it "Put the mail prefix" do
+            @driver.find_element(:id,"add_mail").clear
+            @driver.find_element(:id,"add_mail").send_keys
         end
-        it "Assert: submit repo creation" do
-            @driver.find_element(:id, "repo_add").click
+        it "update changement" do
+            @driver.find_element(:id,"mail_prefix_submit").click
         end
-        it "should find TestingValidation1 repo" do
-            wait = Selenium::WebDriver::Wait.new(:timeout => 15)
-            assertRepoCreation = wait.until {
-            repo = @driver.find_element(:link, $CreateRepoGit_rep_name)
-            repo if repo.displayed?
-        }
-        end
-        it "feedback message for already existing repo name is not displayed " do
-            ( @driver.find_element(:class,"feedback_error").text.include? "Repository TestingValidation1 already exists").should be_false
+        it "verify the text returned" do
+            (@driver.find_element(:class,"feedback_info").text.include? "Mail prefix updated").should be_true
         end
     end
 end

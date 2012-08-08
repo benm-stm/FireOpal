@@ -16,11 +16,10 @@
 ########################################################################
 
 #--- Start summary
-# This test Delete existing Git repository from Codex interface.
+# This testcase allows you to change repository description.
 #--- End summary
 
 #--- Start dependency list
-#CreateRepoGit.rb
 #--- End dependency list
 
 #--- Start conf params
@@ -31,35 +30,65 @@
 
 $CreateRepoGit_rep_name = "TestingValidation1"
 
-describe "Delete existing Git repo" do
-    describe "#precondition" do
+describe "change repository description" do
+    describe "#precondition" do 
         it "Go to the project link" do
             $link = @setup['host']['value'] + '/projects/' + @setup['project_short_name']['value']
             @driver.navigate.to $link
         end
         it "test if the user is a project member" do
             (@driver.find_element(:class, "contenttable").text.include? "Permission Denied").should be_false
-        end 
+        end
     end
     describe "#step" do
         it "go to Git service" do
             $link = @setup['host']['value'] + '/plugins/git/?group_id=' + @setup['project_id']['value']
             @driver.navigate.to $link
         end
-        it "select the repositry" do
+        it "Go to Repository management" do
             @driver.find_element(:link, $CreateRepoGit_rep_name).click
-        end
-        it "enter to repository management" do
             @driver.find_element(:link, "Repository management").click
         end
-        it "click on delete this repository" do
-            @driver.find_element(:name, "confirm_deletion").click
+        it "Change the description" do
+            #READ:
+            #Extract all options from the multi-select box
+            select = @driver.find_element(:id, "repo_access[read]")
+            all_options = select.find_elements(:tag_name, "option")
+            # Select the option "registered_users"
+            all_options.each do |option|
+                if option.text == "registered_users"
+                    option.click
+                break
+                end
+            end
+            #write
+            #Extract all options from the multi-select box
+            select = @driver.find_element(:id, "repo_access[write]")
+            all_options = select.find_elements(:tag_name, "option")
+            #Select the option "registered_users"
+            all_options.each do |option|
+                if option.text == "registered_users"
+                    option.click
+                break
+                end
+            end
+            #Rewind
+            #Extract all options from the multi-select box
+            select = @driver.find_element(:id, "repo_access[wplus]")
+            all_options = select.find_elements(:tag_name, "option")
+            #Select the option "registered_users"
+            all_options.each do |option|
+                if option.text == "registered_users"
+                    option.click
+                break
+                end
+            end
         end
-        it "confirm deletion" do
-            @driver.find_element(:id, "submit").click
+        it "Click on save" do
+            @driver.find_element(:xpath, "(//input[@value='Save'])").click
         end
-        it "feedback message displayed" do
-            (@driver.find_element(:class,"feedback_info").text.include? "removed").should be_true
+        it "verify the text returned" do
+            (@driver.find_element(:class,"feedback_info").text.include? "All registered users added (default values) - Permissions successfully updated").should be_true
         end
     end
 end
