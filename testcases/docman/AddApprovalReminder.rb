@@ -31,12 +31,26 @@
 
 describe "Browse to approval table menu" do
     describe "#precondition" do
-        it "Open the approval table" do
-            $link = @setup['host']['value'] + '/plugins/docman/?group_id='+ @setup['project_id']['value'] + '&action=approval_create&id='+ @setup['docman_root_id']['value']
-            @driver.navigate.to $link
+        it "Find my personal page" do
+            @driver.find_element(:link, "My Personal Page").click
         end
-        it "Verify that user can update the approval table" do
+        it "Find project" do
+            @driver.find_element(:link, @setup['project']['value']).click
+        end
+        it "Find document service" do
+            @driver.find_element(:link, "Documents").click
+        end
+        it "Open menu of docman root" do
+            @driver.find_element(:css, "img.docman_item_icon").click
+        end
+        it "Find approval table link" do
+            @driver.find_element(:link, "Approval table").click
+        end
+        it "Edit the approval table" do
             @driver.find_element(:css, "strong > a").click
+        end
+        it "Verify that the approval table is created" do
+            @driver.find_element(:tag_name => "body").text.should include("Approval table global settings")
         end
         it "Verify that the reminder is not set" do
             @driver.find_element(:id, "approval_table_reminder_checkbox").attribute("value").should eq("off")
@@ -48,6 +62,7 @@ describe "Browse to approval table menu" do
                 @driver.find_element(:id, "approval_table_reminder_checkbox").click
             end
             $value = 2
+            @driver.find_element(:name, "occurence").clear
             @driver.find_element(:name, "occurence").send_keys $value
             @driver.find_element(:css, "p > input[type=\"submit\"]").click
         end

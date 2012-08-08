@@ -40,7 +40,7 @@ describe "Browse to approval table menu" do
             @driver.navigate.to $link
         end
         it "Verify that user can update the aproval table" do
-            # TODO
+            # @TODO
         end
     end
     describe "#step" do
@@ -50,13 +50,17 @@ describe "Browse to approval table menu" do
         it "Change form values" do
             @driver.find_element(:name, "reminder").click
             @driver.find_element(:name, "reminder").click
-            $value = @driver.find_element(:name, "occurence").attribute("value").to_i
+            Selenium::WebDriver::Support::Select.new(@driver.find_element(:id, "period")).select_by(:text, "Weeks")
+            $value = @driver.find_element(:name, "occurence").attribute("value").to_i + 1
             @driver.find_element(:name, "occurence").clear
-            @driver.find_element(:name, "occurence").send_keys $value + 1
+            @driver.find_element(:name, "occurence").send_keys $value
             @driver.find_element(:xpath, "//input[@value='Update']").click
         end
         it "Verify that the occurence has been updated" do
-            $value = @driver.find_element(:name, "occurence").attribute("value").to_i.should == $value + 1
+            $value = @driver.find_element(:name, "occurence").attribute("value").to_i.should == $value * 7
+        end
+        it "Check update feedback" do
+            @driver.find_element(:class, "feedback_info").text.should include("Table settings updated.")
         end
     end
 end
