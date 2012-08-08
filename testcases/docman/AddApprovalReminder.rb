@@ -69,5 +69,8 @@ describe "Browse to approval table menu" do
         it "Verify that the occurence has been added" do
             $value = @driver.find_element(:name, "occurence").attribute("value").to_i.should == $value
         end
+        it "Check update feedback" do
+            @driver.find_element(:class, "feedback_info").text.should include("Table settings updated.")
+        end
     end
 end
