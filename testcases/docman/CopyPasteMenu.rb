@@ -74,7 +74,7 @@ describe "Display of paste in menu" do
             @driver.find_element(:class, "docman_item_option_cut").text.should == "Cut"
         end
     end
-    describe "#regression:" do
+    describe "#step:" do
         it "Paste doesn't exist in the menu of the copied folder" do
             begin
                 @driver.find_element(:class, "docman_item_option_paste")
@@ -101,7 +101,7 @@ describe "Display of paste in menu" do
             @driver.find_element(:class, "docman_item_option_newfolder").text.should == "New folder"
         end
     end
-    describe "#regression:" do
+    describe "#step:" do
         it "Paste doesn't exist in the menu of a children folder of the copied folder" do
             begin
                 @driver.find_element(:class, "docman_item_option_paste")
@@ -123,7 +123,7 @@ describe "Display of paste in menu" do
             @driver.find_element(:class, "docman_item_option_newfolder").text.should == "New folder"
         end
     end
-    describe "#regression:" do
+    describe "#step:" do
         it "Paste exist in the menu of a parent of the copied folder" do
             @driver.find_element(:class, "docman_item_option_paste").text.should == "Paste"
         end
