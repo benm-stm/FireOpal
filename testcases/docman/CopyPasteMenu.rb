@@ -29,7 +29,7 @@
 #--- End conf params
 
 describe "Display of paste in menu" do
-    describe "#precondition:" do
+    describe "#precondition" do
         it "Go to my personal page" do
             @driver.find_element(:link, "My Personal Page").click
         end
@@ -74,7 +74,7 @@ describe "Display of paste in menu" do
             @driver.find_element(:class, "docman_item_option_cut").text.should == "Cut"
         end
     end
-    describe "#step:" do
+    describe "#step" do
         it "Paste doesn't exist in the menu of the copied folder" do
             begin
                 @driver.find_element(:class, "docman_item_option_paste")
@@ -85,7 +85,7 @@ describe "Display of paste in menu" do
             end
         end
     end
-    describe "#precondition:" do
+    describe "#precondition" do
         it "Open the selected folder" do
             @driver.find_element(:id, "docman_item_title_link_"+$folder_id+"").click
         end
@@ -101,7 +101,7 @@ describe "Display of paste in menu" do
             @driver.find_element(:class, "docman_item_option_newfolder").text.should == "New folder"
         end
     end
-    describe "#step:" do
+    describe "#step" do
         it "Paste doesn't exist in the menu of a children folder of the copied folder" do
             begin
                 @driver.find_element(:class, "docman_item_option_paste")
@@ -112,7 +112,7 @@ describe "Display of paste in menu" do
             end
         end
     end
-    describe "#precondition:" do
+    describe "#precondition" do
         it "Return to docman root" do
             @driver.find_element(:link, "Documents").click
         end
@@ -123,7 +123,7 @@ describe "Display of paste in menu" do
             @driver.find_element(:class, "docman_item_option_newfolder").text.should == "New folder"
         end
     end
-    describe "#step:" do
+    describe "#step" do
         it "Paste exist in the menu of a parent of the copied folder" do
             @driver.find_element(:class, "docman_item_option_paste").text.should == "Paste"
         end
