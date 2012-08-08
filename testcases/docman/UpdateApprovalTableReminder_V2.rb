@@ -24,23 +24,20 @@
 #--- End tags
 
 #--- Start dependency list
-# docman/CopyPasteMenu.rb
-# trackerV3/tuleap.rb
-# template.rb
+# docman/AddApprovalReminder.rb
 #--- End dependency list
 
 #--- Start conf params
-# user
-# password
+# project
 #--- End conf params
 
 describe "Update docman approval table reminder" do
-    describe "#precondition:" do
+    describe "#precondition" do
         it "Find my personal page" do
             @driver.find_element(:link, "My Personal Page").click
         end
         it "Find project" do
-            @driver.find_element(:link, "Administration Project").click
+            @driver.find_element(:link, @setup['project']['value']).click
         end
         it "Find document service" do
             @driver.find_element(:link, "Documents").click
@@ -55,9 +52,9 @@ describe "Update docman approval table reminder" do
             @driver.find_element(:css, "strong > a").click
         end
     end
-    describe "#regression:" do
+    describe "#step" do
         it "Update Reminder settings" do
-                Selenium::WebDriver::Support::Select.new(@driver.find_element(:id, "period")).select_by(:text, "Weeks")
+            Selenium::WebDriver::Support::Select.new(@driver.find_element(:id, "period")).select_by(:text, "Weeks")
             @driver.find_element(:name, "occurence").clear
             @driver.find_element(:name, "occurence").send_keys "2"
         end

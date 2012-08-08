@@ -30,10 +30,11 @@
 #--- Start conf params
 # host
 # project_id
+# docman_root_id
 #--- End conf params
 
 describe "Browse to approval table menu" do
-    describe "#precondition:" do
+    describe "#precondition" do
         it "Open the approval table" do
             $link = @setup['host']['value'] + '/plugins/docman/?group_id=' + @setup['project_id']['value'] + '&action=approval_create&id=' + @setup['docman_root_id']['value']
             @driver.navigate.to $link
@@ -42,7 +43,7 @@ describe "Browse to approval table menu" do
             # TODO
         end
     end
-    describe "#regression:" do
+    describe "#step" do
         it "Reminder is on" do
             @driver.find_element(:name, "reminder").attribute("value").should == "on"
         end

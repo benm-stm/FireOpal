@@ -50,7 +50,7 @@ describe "Testcase name" do
             @driver.find_element(:name, "button_example").click
         end
     end
-    describe "#regression" do
+    describe "#step" do
         it "Test the wrong title of the page" do
             (@driver.title).should == "wrong title"
         end

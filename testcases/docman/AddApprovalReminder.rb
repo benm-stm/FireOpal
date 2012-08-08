@@ -26,27 +26,29 @@
 #--- Start conf params
 # host
 # project_id
-# docman_id
+# docman_root_id
 #--- End conf params
 
 describe "Browse to approval table menu" do
-    describe "#precondition:" do
+    describe "#precondition" do
         it "Open the approval table" do
-            $link = @setup['host']['value'] + '/plugins/docman/?group_id='+ @setup['project_id']['value'] + '&action=approval_create&id='+ @setup['docman_id']['value']
+            $link = @setup['host']['value'] + '/plugins/docman/?group_id='+ @setup['project_id']['value'] + '&action=approval_create&id='+ @setup['docman_root_id']['value']
             @driver.navigate.to $link
         end
         it "Verify that user can update the approval table" do
-            @driver.find_element(:css, "strong > a").click 
+            @driver.find_element(:css, "strong > a").click
         end
         it "Verify that the reminder is not set" do
-            @driver.find_element(:id, "approval_table_reminder_checkbox").attribute("value").should == "on"    
+            @driver.find_element(:id, "approval_table_reminder_checkbox").attribute("value").should eq("off")
         end
     end
-    describe "#regression:" do
+    describe "#step" do
         it "Hint add reminder button" do
-            @driver.find_element(:id, "approval_table_reminder_checkbox").click
+            if @driver.find_element(:id, "approval_table_reminder_checkbox").attribute("value") == "off"
+                @driver.find_element(:id, "approval_table_reminder_checkbox").click
+            end
             $value = 2
-            @driver.find_element(:name, "occurence").send_keys $value 
+            @driver.find_element(:name, "occurence").send_keys $value
             @driver.find_element(:css, "p > input[type=\"submit\"]").click
         end
         it "Verify that the occurence has been added" do
