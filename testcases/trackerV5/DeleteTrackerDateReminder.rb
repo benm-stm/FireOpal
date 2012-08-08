@@ -35,7 +35,7 @@
 #--- End conf params
 
 describe "Delete a tracker date reminder" do
-    describe "#precondition:" do
+    describe "#precondition" do
         it "Open notifications management interface" do
             $link = @setup['host']['value'] + '/plugins/tracker/?tracker=' + @setup['tracker_id']['value'] + '&func=notifications'
             @driver.navigate.to $link
@@ -44,7 +44,7 @@ describe "Delete a tracker date reminder" do
             @driver.find_element(:id, "delete_reminder")
         end
     end
-    describe "#regression:" do
+    describe "#step" do
         it "Click on delete reminder button" do
             @driver.find_element(:id, "delete_reminder").click
         end
