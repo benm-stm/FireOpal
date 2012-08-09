@@ -70,15 +70,8 @@ describe "Add new tracker date reminder" do
         end
         it "Select the date field on which the reminder will be applied" do
             fieldDate       = @driver.find_element(:name, "reminder_field_date")
-            optionCount = @driver.find_element(:name, "reminder_field_date").size();
-            optionList = arraylist.new
-            for i in 1..optionCount 
-                option = @driver.getAttribute("//select[@name='reminder_field_date']/option["+i+"]/@value");
-                optionList.add(option)
-            end
             fieldDateSelect = Selenium::WebDriver::Support::Select.new(fieldDate)
-            $field_name = optionList[rand(optionList.length)]  
-            fieldDateSelect.select_by(:text, "Due Date")
+            fieldDateSelect.select_by(:text, "Due date")
         end
         it "Submit new tracker date reminder" do
             @driver.find_element(:css, "td > input[name=\"submit\"]").click
