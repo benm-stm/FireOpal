@@ -13,15 +13,13 @@
 #--- End Conf
 
 #--- Test Cases list ---
-# trackerV5/AddTrackerDateReminder.rb *
-# trackerV5/UpdateTrackerDateReminder.rb *
-# trackerV5/DeleteTrackerDateReminder.rb 
 # trackerV5/AddTrackerDateReminder.rb 
 # trackerV5/UpdateTrackerDateReminder.rb 
 # docman/CreateWiki.rb 
 # docman/AddApprovalReminder.rb 
 # docman/UpdateApprovalReminder.rb 
 # docman/CopyPasteMenu.rb 
+# trackerV5/DeleteTrackerDateReminder.rb 
 #--- Test Cases End ---
 
 require 'rubygems'
@@ -68,151 +66,6 @@ describe "Validation_STCodexQA_Tuleap5.3_NT" do
         @valid.login()
         @driver = @valid.getdriver
     end
-
-#---- Test case trackerV5/AddTrackerDateReminder ----
-    describe "trackerV5/AddTrackerDateReminder" do
-
-        before(:all) do
-            @driver.navigate.to @setup['host']['value'] + '/my/'
-        end
-
-        describe "Add new tracker date reminder" do
-            describe "#precondition" do
-                it "Find my personal page" do
-                    @driver.find_element(:link, "My Personal Page").click
-                end
-                it "Find project" do
-                    @driver.find_element(:link, @setup['project_name']['value']).click
-                end
-                it "Find tracker service" do
-                    @driver.find_element(:link, "Trackers").click
-                end
-                it "Find target tracker" do
-                    @driver.find_element(:link, @setup['tracker']['value']).click
-                end
-                it "Find notifications management interface" do
-                    @driver.find_element(:link, "Notifications").click
-                end
-            end
-            describe "#step" do
-                it "Hint add reminder button" do
-                    @driver.find_element(:id, "add_reminder").click
-                end
-                it "Select Ugroups to be notified" do
-                    ugroups      = @driver.find_element(:name, "reminder_ugroup[]")
-                    ugroupsMSBox = Selenium::WebDriver::Support::Select.new(ugroups)
-                    ugroupsMSBox.select_by(:text, 'project_members')
-                end
-                it "Specify distance in days" do
-                    @driver.find_element(:name, "distance").clear
-                    @driver.find_element(:name, "distance").send_keys Time.now.to_i
-                end
-                it "Select notification type" do
-                    notificationType = @driver.find_element(:name, "notif_type")
-                    notifTypeSelect  = Selenium::WebDriver::Support::Select.new(notificationType)
-                    notifValues = ["After", "Before"]
-                    $notif_type = notifValues[rand(notifValues.length)]
-                    notifTypeSelect.select_by(:text, $notif_type)
-                end
-                it "Select the date field on which the reminder will be applied" do
-                    fieldDate       = @driver.find_element(:name, "reminder_field_date")
-                    fieldDateSelect = Selenium::WebDriver::Support::Select.new(fieldDate)
-                    fieldDateSelect.select_by(:text, "Due date")
-                end
-                it "Submit new tracker date reminder" do
-                    @driver.find_element(:css, "td > input[name=\"submit\"]").click
-                end
-                it "Find new reminder info feed back" do
-                    @driver.find_element(:class, "feedback_info").text.should include("Date Reminder successfully added")
-                end
-            end
-        end
-
-    end
-#---- End test case trackerV5/AddTrackerDateReminder ----
-
-#---- Test case trackerV5/UpdateTrackerDateReminder ----
-    describe "trackerV5/UpdateTrackerDateReminder" do
-
-        before(:all) do
-            @driver.navigate.to @setup['host']['value'] + '/my/'
-        end
-
-        describe "Update a tracker date reminder" do
-            describe "#precondition:" do
-                it "Open notifications management interface" do
-                    $link = @setup['host']['value'] + '/plugins/tracker/?tracker=' + @setup['tracker_id']['value'] + '&func=notifications'
-                    @driver.navigate.to $link
-                end
-                it "Find a reminder to update" do
-                    @driver.find_element(:id, "update_reminder")
-                end
-            end
-            describe "#regression:" do
-                it "Click on update reminder button" do
-                    @driver.find_element(:id, "update_reminder").click
-                end
-                it "Select Ugroups to be notified" do
-                    ugroups      = @driver.find_element(:name, "reminder_ugroup[]")
-                    ugroupsMSBox = Selenium::WebDriver::Support::Select.new(ugroups)
-                    ugroupsMSBox.select_by(:text, 'project_members')
-                end
-                it "Specify distance in days" do
-                    @driver.find_element(:name, "distance").clear
-                    @driver.find_element(:name, "distance").send_keys Time.now.to_i
-                end
-                it "Select notification type" do
-                    notificationType = @driver.find_element(:name, "notif_type")
-                    notifTypeSelect  = Selenium::WebDriver::Support::Select.new(notificationType)
-                    notifTypeSelect.select_by(:text, 'After')
-                end
-                it "Submit the updated values of the tracker date reminder" do
-                    @driver.find_element(:css, "td > input[name=\"submit\"]").click
-                end
-                it "Verify feedback message" do
-                    begin
-                        @driver.find_element(:class, "feedback_info").text.should include("Date Reminder successfully updated")
-                    rescue
-                        @driver.find_element(:class, "feedback_error").text.should include("Cannot duplicate Date Reminder")
-                    end
-                end
-            end
-        end
-
-    end
-#---- End test case trackerV5/UpdateTrackerDateReminder ----
-
-#---- Test case trackerV5/DeleteTrackerDateReminder ----
-    describe "trackerV5/DeleteTrackerDateReminder" do
-
-        before(:all) do
-            @driver.navigate.to @setup['host']['value'] + '/my/'
-        end
-
-        describe "Delete a tracker date reminder" do
-            describe "#precondition" do
-                it "Open notifications management interface" do
-                    $link = @setup['host']['value'] + '/plugins/tracker/?tracker=' + @setup['tracker_id']['value'] + '&func=notifications'
-                    @driver.navigate.to $link
-                end
-                it "Find a reminder to update" do
-                    @driver.find_element(:id, "delete_reminder")
-                end
-            end
-            describe "#step" do
-                it "Click on delete reminder button" do
-                    @driver.find_element(:id, "delete_reminder").click
-                end
-                it "Confirm the deletion" do
-                    @driver.find_element(:name, "confirm_delete").click
-                end
-                it "Verify feedback message" do
-                    @driver.find_element(:class, "feedback_info").text.should include("Date Reminder successfully deleted")
-                end
-            end
-        end
-    end
-#---- End test case trackerV5/DeleteTrackerDateReminder ----
 
 #---- Test case trackerV5/AddTrackerDateReminder ----
     describe "trackerV5/AddTrackerDateReminder" do
@@ -573,6 +426,38 @@ describe "Validation_STCodexQA_Tuleap5.3_NT" do
 
     end
 #---- End test case docman/CopyPasteMenu ----
+
+#---- Test case trackerV5/DeleteTrackerDateReminder ----
+    describe "trackerV5/DeleteTrackerDateReminder" do
+
+        before(:all) do
+            @driver.navigate.to @setup['host']['value'] + '/my/'
+        end
+
+        describe "Delete a tracker date reminder" do
+            describe "#precondition" do
+                it "Open notifications management interface" do
+                    $link = @setup['host']['value'] + '/plugins/tracker/?tracker=' + @setup['tracker_id']['value'] + '&func=notifications'
+                    @driver.navigate.to $link
+                end
+                it "Find a reminder to update" do
+                    @driver.find_element(:id, "delete_reminder")
+                end
+            end
+            describe "#step" do
+                it "Click on delete reminder button" do
+                    @driver.find_element(:id, "delete_reminder").click
+                end
+                it "Confirm the deletion" do
+                    @driver.find_element(:name, "confirm_delete").click
+                end
+                it "Verify feedback message" do
+                    @driver.find_element(:class, "feedback_info").text.should include("Date Reminder successfully deleted")
+                end
+            end
+        end
+    end
+#---- End test case trackerV5/DeleteTrackerDateReminder ----
 
     after(:all) do
         @valid.teardown()
