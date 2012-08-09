@@ -29,7 +29,7 @@
 #--- End dependency list
 
 describe "Non-project admin" do
-    describe "#Precondition" do
+    describe "#precondition" do
         it "Go to the project link" do
             $link = @setup['host']['value'] + '/projects/' + @setup['project']['value']
             @driver.navigate.to $link
@@ -38,7 +38,7 @@ describe "Non-project admin" do
             (@driver.find_element(:class, "contenttable").text.include? "Permission Denied").should be_false
         end
     end
-    describe "#Step" do
+    describe "#step" do
         it "Try to access to project admin section" do
             $link = @setup['host']['value'] + '/project/admin/?group_id=' + @setup['project_id']['value']
             @driver.navigate.to $link
