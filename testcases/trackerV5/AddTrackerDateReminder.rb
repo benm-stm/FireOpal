@@ -27,15 +27,11 @@
 
 #--- Start conf params
 # project_name
-# tracker_name
-# ugroup_name
-# distance
-# notif_type
-# field_name
+# tracker
 #--- End conf params
 
 describe "Add new tracker date reminder" do
-    describe "#precondition:" do
+    describe "#precondition" do
         it "Find my personal page" do
             @driver.find_element(:link, "My Personal Page").click
         end
@@ -46,35 +42,43 @@ describe "Add new tracker date reminder" do
             @driver.find_element(:link, "Trackers").click
         end
         it "Find target tracker" do
-            @driver.find_element(:link, @setup['tracker_name']['value']).click
+            @driver.find_element(:link, @setup['tracker']['value']).click
         end
         it "Find notifications management interface" do
             @driver.find_element(:link, "Notifications").click
         end
     end
-    describe "#regression:" do
+    describe "#step" do
         it "Hint add reminder button" do
             @driver.find_element(:id, "add_reminder").click
         end
         it "Select Ugroups to be notified" do
-            #@TODO Manage comma separated ugroups from conf
             ugroups      = @driver.find_element(:name, "reminder_ugroup[]")
             ugroupsMSBox = Selenium::WebDriver::Support::Select.new(ugroups)
-            ugroupsMSBox.select_by(:text, @setup['ugroup_name']['value'])
+            ugroupsMSBox.select_by(:text, 'project_members')
         end
         it "Specify distance in days" do
             @driver.find_element(:name, "distance").clear
-            @driver.find_element(:name, "distance").send_keys @setup['distance']['value']
+            @driver.find_element(:name, "distance").send_keys Time.now.to_i
         end
         it "Select notification type" do
             notificationType = @driver.find_element(:name, "notif_type")
             notifTypeSelect  = Selenium::WebDriver::Support::Select.new(notificationType)
-            notifTypeSelect.select_by(:text, @setup['notif_type']['value'])
+            notifValues = ["After", "Before"]
+            $notif_type = notifValues[rand(notifValues.length)]
+            notifTypeSelect.select_by(:text, $notif_type)
         end
         it "Select the date field on which the reminder will be applied" do
             fieldDate       = @driver.find_element(:name, "reminder_field_date")
+            optionCount = @driver.find_element(:name, "reminder_field_date").size();
+            optionList = arraylist.new
+            for i in 1..optionCount 
+                option = @driver.getAttribute("//select[@name='reminder_field_date']/option["+i+"]/@value");
+                optionList.add(option)
+            end
             fieldDateSelect = Selenium::WebDriver::Support::Select.new(fieldDate)
-            fieldDateSelect.select_by(:text, @setup['field_name']['value'])
+            $field_name = optionList[rand(optionList.length)]  
+            fieldDateSelect.select_by(:text, "Due Date")
         end
         it "Submit new tracker date reminder" do
             @driver.find_element(:css, "td > input[name=\"submit\"]").click
