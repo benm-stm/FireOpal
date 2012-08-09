@@ -15,35 +15,37 @@
 # along with this code. If not, see <http://www.gnu.org/licenses/>.    #
 ########################################################################
 
-#--- Start test Summary
+#--- Start summary
 # This test Check that a non-project admin can NOT access to the admin page.
-#--- End test Summary
+#--- End summary
 
-#--- Start config variables
+#--- Start conf params
 # host
 # project_id
 # project
-#--- End config variables
+#--- End conf params
 
 #--- Start dependency list
 #--- End dependency list
 
-describe "Non-project admin" do
-    describe "#precondition" do
-        it "Go to the project link" do
-            $link = @setup['host']['value'] + '/projects/' + @setup['project']['value']
-            @driver.navigate.to $link
+describe "Non-project admin"do
+    describe "#precondition"do
+        it "Find my personal page"do
+            @driver.find_element(:link, "My Personal Page").click
         end
-        it "Test if the user is a project member" do
-            (@driver.find_element(:class, "contenttable").text.include? "Permission Denied").should be_false
+        it "Find project"do
+            @driver.find_element(:link, @setup['project']['value']).click
+        end
+        it "Test if the user is a project member"do
+            (@driver.find_element(:id, "feedback").text.include? "Permission Denied").should be_false
         end
     end
     describe "#step" do
-        it "Try to access to project admin section" do
+        it "Try to access to project admin section"do
             $link = @setup['host']['value'] + '/project/admin/?group_id=' + @setup['project_id']['value']
             @driver.navigate.to $link
         end
-        it "Display an error message: Insufficient Group Access" do
+        it "Display an error message: Insufficient Group Access"do
             (@driver.find_element(:class, "feedback").text.include? "Insufficient Group Access").should be_true
         end
     end
