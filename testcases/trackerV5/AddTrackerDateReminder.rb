@@ -69,9 +69,15 @@ describe "Add new tracker date reminder" do
             notifTypeSelect.select_by(:text, $notif_type)
         end
         it "Select the date field on which the reminder will be applied" do
-            fieldDate       = @driver.find_element(:name, "reminder_field_date")
+            fieldDate   = @driver.find_element(:name, "reminder_field_date")
+            optionCount = fieldDate.find_elements(:tag_name=>"option")
+            optionList  = Array.new
+            optionCount.each do |el|
+                optionList.push el.text
+            end
             fieldDateSelect = Selenium::WebDriver::Support::Select.new(fieldDate)
-            fieldDateSelect.select_by(:text, "Due date")
+            $field_name     = optionList[rand(optionList.length)]
+            fieldDateSelect.select_by(:text, $field_name)
         end
         it "Submit new tracker date reminder" do
             @driver.find_element(:css, "td > input[name=\"submit\"]").click
