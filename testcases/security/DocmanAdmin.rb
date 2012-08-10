@@ -14,20 +14,20 @@
 # You should have received a copy of the GNU General Public License    #
 # along with this code. If not, see <http://www.gnu.org/licenses/>.    #
 ########################################################################
- 
+
 #--- Start summary
 # This test prevent a non document admin to open the admin page
 #--- End summary
- 
+
 #--- Start conf params
 # host
 # project_id
 # project
 #--- End conf params
- 
+
 #--- Start dependency list
 #--- End dependency list
- 
+
 describe "Non-docman admin can NOT do any administration action" do
     describe "#precondition" do
         it "Find my personal page"do
@@ -39,13 +39,12 @@ describe "Non-docman admin can NOT do any administration action" do
         it "Test if the user is a project member" do
             (@driver.find_element(:class, "contenttable").text.include? "Permission Denied").should be_false
         end
-    end
-    describe "#step" do
-        
         it "Try to access to docman admin section" do
             $link = @setup['host']['value'] + '/plugins/docman/?group_id=' + @setup ['project_id']['value'] + '&action=admin'
             @driver.navigate.to $link
         end
+    end
+    describe "#step" do
         it "Display an error message:You do not have sufficient access rights to administrate the document manager" do
             (@driver.find_element(:class, "feedback_error").text.include? "You do not have sufficient access rights to administrate the document manager").should be_true
         end
