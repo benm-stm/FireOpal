@@ -84,7 +84,7 @@ pre {
 /*------------------------------------------------header stuff--------------------*/
 #header{
     width:1000px;
-    height:116px;
+    height: auto;
     margin:0 auto;
 }
 #header a.community{
@@ -100,6 +100,7 @@ pre {
     padding: 5px;
     background-color: #f7f7f7;
     border: 1px solid #b7b7b7;
+    margin-bottom:30px;
 }
 #header_clear{
     clear: both;
