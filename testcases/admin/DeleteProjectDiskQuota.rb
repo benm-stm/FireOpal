@@ -36,7 +36,7 @@
 #--- End conf params
 
 describe "Deletes a given project disk quota" do
-    describe "#precondition:" do
+    describe "#precondition" do
         it "Find my personal page" do
             @driver.find_element(:link, "My Personal Page").click
         end
@@ -50,7 +50,7 @@ describe "Deletes a given project disk quota" do
             @driver.find_element(:link, "Project quota").click
         end
     end
-    describe "#regression:" do
+    describe "#step" do
         it "Select Project disk quota to delete" do
             @driver.find_element(:xpath, "(//input[@value='"+@setup['disk_quota_project_id']['value']+"'])").click
         end

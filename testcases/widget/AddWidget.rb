@@ -24,7 +24,7 @@
 #--- End tags
 
 describe "Add a widget to My dashboard" do
-    describe "#precondition:" do
+    describe "#precondition" do
         it "Find my personal page" do
             @driver.find_element(:link, "My Personal Page").click
         end
@@ -39,7 +39,7 @@ describe "Add a widget to My dashboard" do
             @driver.manage.timeouts.implicit_wait = 5
         end
     end
-    describe "#regression:" do
+    describe "#step" do
         it "Find my personal page" do
             @driver.find_element(:link, "My Personal Page").click
         end

@@ -30,7 +30,7 @@
 #--- End tags
 
 describe "Put user login in a user binded open list" do
-    describe "#precondition:" do
+    describe "#precondition" do
         it "Open the artifct" do
             $link = @setup['host']['value'] + '/plugins/tracker/?aid='+ @setup['artifact_id']['value']
             @driver.navigate.to $link
@@ -61,7 +61,7 @@ describe "Put user login in a user binded open list" do
             @driver.find_element(:name, "submit_and_stay").click
         end
     end
-    describe "#regression:" do
+    describe "#step" do
         it "User login is accepted in open list" do
             @driver.find_element(:css, "a.closebutton")
         end

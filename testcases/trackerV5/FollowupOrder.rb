@@ -29,7 +29,7 @@
 #--- End tags
 
 describe "Order of followups is saved" do
-    describe "#precondition:" do
+    describe "#precondition" do
         it "Open the artifct" do
             @@artifactLink = @setup['host']['value'] + '/plugins/tracker/?aid='+ @setup['artifact_id']['value']
             @driver.navigate.to @@artifactLink
@@ -47,7 +47,7 @@ describe "Order of followups is saved" do
             @driver.find_element(:css, "img[alt=\"invert order of follow-up comments\"]").click
         end
     end
-    describe "#regression:" do
+    describe "#step" do
         it "The followup order is saved" do
             @driver.navigate.to @@orderLink
             @driver.find_element(:tag_name => "body").text.should_not eq(@@order)

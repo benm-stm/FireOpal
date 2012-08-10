@@ -32,7 +32,7 @@
 #--- End conf params
 
 describe "Add disk quota for a given project" do
-    describe "#precondition:" do
+    describe "#precondition" do
         it "Find my personal page" do
             @driver.find_element(:link, "My Personal Page").click
         end
@@ -46,7 +46,7 @@ describe "Add disk quota for a given project" do
             @driver.find_element(:link, "Project quota").click
         end
     end
-    describe "#regression:" do
+    describe "#step" do
         it "Clear the project name field" do
             @driver.find_element(:id, "project").clear
         end

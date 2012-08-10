@@ -35,7 +35,7 @@
 #--- End conf params
 
 describe "Update a tracker date reminder" do
-    describe "#precondition:" do
+    describe "#precondition" do
         it "Open notifications management interface" do
             $link = @setup['host']['value'] + '/plugins/tracker/?tracker=' + @setup['tracker_id']['value'] + '&func=notifications'
             @driver.navigate.to $link
@@ -44,7 +44,7 @@ describe "Update a tracker date reminder" do
             @driver.find_element(:id, "update_reminder")
         end
     end
-    describe "#regression:" do
+    describe "#step" do
         it "Click on update reminder button" do
             @driver.find_element(:id, "update_reminder").click
         end
