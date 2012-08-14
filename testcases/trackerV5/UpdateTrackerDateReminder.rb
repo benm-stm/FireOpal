@@ -55,7 +55,7 @@ describe "Update a tracker date reminder" do
         end
         it "Specify distance in days" do
             @driver.find_element(:name, "distance").clear
-            @driver.find_element(:name, "distance").send_keys Time.now.to_i
+            @driver.find_element(:name, "distance").send_keys rand(90)
         end
         it "Select notification type" do
             notificationType = @driver.find_element(:name, "notif_type")
