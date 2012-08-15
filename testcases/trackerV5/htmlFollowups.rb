@@ -48,18 +48,10 @@ describe "TV5 HTML followup" do
         end
         it "Find the first artifact" do
             @driver.find_element(:css, "img[alt=\"#1\"]").click
-            #Or retrieve artifact id from conf:
-            #@driver.find_element(:link, "@setup['artifact_id']['value']").click
         end
     end
     describe "#step" do
-        #it "Toggle rich text editor" do
-        #    @driver.find_element(:link, "Toggle rich text formatting").click
-        #end
-        #it "Select HTML format for new followup" do
-        #    @driver.find_element(:css, "html").click
-        #end
-        it "Check html format radio button"
+        it "Check html format radio button" do
             @driver.find_element(:id, "comment_format_htmlnew").click
         end
         it "Write followup content" do
