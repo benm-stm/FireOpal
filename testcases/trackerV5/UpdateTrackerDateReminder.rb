@@ -51,7 +51,13 @@ describe "Update a tracker date reminder" do
         it "Select Ugroups to be notified" do
             ugroups      = @driver.find_element(:name, "reminder_ugroup[]")
             ugroupsMSBox = Selenium::WebDriver::Support::Select.new(ugroups)
-            ugroupsMSBox.select_by(:text, 'project_members')
+            ugroupsList  = Array.new
+            ugroupsMSBox.options.each do |elm|
+                #puts elm.attribute("value")
+                ugroupsList.push elm.text
+            end
+            $ugroup_name = ugroupsList[rand(ugroupsList.length)]
+            ugroupsMSBox.select_by(:text, $ugroup_name)
         end
         it "Specify distance in days" do
             @driver.find_element(:name, "distance").clear
