@@ -33,7 +33,7 @@
 #--- End conf params
 
 describe "TV5 HTML followup" do
-    describe "#precondition:" do
+    describe "#precondition" do
         it "Find my personal page" do
             @driver.find_element(:link, "My Personal Page").click
         end
@@ -48,28 +48,28 @@ describe "TV5 HTML followup" do
         end
         it "Find the first artifact" do
             @driver.find_element(:css, "img[alt=\"#1\"]").click
-			#Or retrieve artifact id from conf:
-			#@driver.find_element(:link, "@setup['artifact_id']['value']").click
+            #Or retrieve artifact id from conf:
+            #@driver.find_element(:link, "@setup['artifact_id']['value']").click
         end
     end
-	describe "#regression:" do
+    describe "#step" do
         #it "Toggle rich text editor" do
         #    @driver.find_element(:link, "Toggle rich text formatting").click
         #end
         #it "Select HTML format for new followup" do
         #    @driver.find_element(:css, "html").click
         #end
-		it "Check html format radio button"
-		    @driver.find_element(:id, "comment_format_htmlnew").click
+        it "Check html format radio button"
+            @driver.find_element(:id, "comment_format_htmlnew").click
         end
-		it "Write followup content" do
+        it "Write followup content" do
             @driver.find_element(:id, "tracker_followup_comment_new").clear
             @driver.find_element(:id, "tracker_followup_comment_new").send_keys "Yet another <b>html</b> followup"
-		end
-		it "Submit new followup" do
-			@driver.find_element(:xpath, "(//input[@name='submit_and_stay'])[2]").click
         end
-		it "Find new followup info feed back" do
+        it "Submit new followup" do
+            @driver.find_element(:xpath, "(//input[@name='submit_and_stay'])[2]").click
+        end
+        it "Find new followup info feed back" do
             @driver.find_element(:class, "feedback_info").text.should include("Successfully Updated")
         end
     end
