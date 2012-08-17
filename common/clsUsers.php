@@ -162,5 +162,16 @@ class  clsUsers {
     function setAtt($att,$value) {
         $this->$att=$value;
     }
+
+    function userExist() {
+        $req = "select  * from users where email='".$this->email."' order by id";
+        $rows = mysql_query($req);
+        $nb_ligne = mysql_num_rows($rows);
+        if( $nb_ligne > 0 ) {
+            return true;
+        } else {
+            return false;
+        }
+
 }
 ?>
