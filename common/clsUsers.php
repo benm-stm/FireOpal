@@ -192,5 +192,55 @@ class  clsUsers {
         return 0;
         }
     }
+
+    function sendMail( $temp_passe, $max ) {
+$From  = "From:tester@codex.cro.st.com\n";
+$From .= "MIME-version: 1.0\n";
+$From .= "Content-type: text/html; charset= iso-8859-1\n";
+$Sujet = 'Valider votre inscription';
+$link = ' <a href="http://crx2106.cro.st.com/confirm.php?id1='.$max.'&id2='.$temp_passe.'">Cliquez ici</a>';
+$Message = '
+<html>
+<head>
+<style type="text/css" >
+  .table_parcours{
+    border-top:#002222 1px solid;
+    border-left:#002222 1px solid;
+    border-right:#002222 1px solid;
+    border-bottom:#002222 1px solid;
+    font-family:Arial, Helvetica, sans-serif 12px;
+  }
+</style>
+</head>
+<body>
+ <table cellspacing="0" cellpadding="0" class="table_parcours" align="center" >
+  <tr  >
+  <td width="438"  align="left"  > <img src="http://www.7ellclub.com/img/tools/7ellclub.jpg" border="0" /> </td>
+ </tr>
+ <tr  >
+  <td width="438" bgcolor="#FF8000"  ><font color="#FFFFFF" >Bienvenue chez 7ellclub 2009</font></td>
+ </tr>
+ <tr   >
+  <td width="438" style="padding-left:5px;" >
+   <p class="texte">
+                       Votre E-mail : <strong>'.$this->email.'</strong><br>
+                       Votre Pseudo : <strong>'.$this->pseudo.'</strong><br>
+                       Votre Mot de passe :<strong>'.$this->motPasse.'</strong><br>
+                       Pour valider votre compte veuillez '.$link.'<br>
+                       Merci pour votre confiance l\' equipe 7ellclub.com<br><br>
+                       
+                        Si vous n\'arrivez pas à cliquer sur le lien veuillez copier coller ce lien dans <br>
+                        la barre d\'adresse, merci
+                        http://www.7ellclub.com/confirm.php?id1='.$max.'&id2='.$temp_passe.'
+   </p>
+ </td>
+ </tr> 
+</table>
+</body>
+</html>
+';
+@mail($this->email,$Sujet,$Message,$From);
+}
+
 }
 ?>
