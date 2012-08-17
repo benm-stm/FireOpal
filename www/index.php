@@ -34,6 +34,30 @@ echo '
     <head>
         <title>Codex automatic validation</title>
         <link href="include/css/index.css" rel="stylesheet" type="text/css" />
+';
+
+$welcomeMessage = '';
+$sign = '';
+if(!isset($_SESSION['sess_idUser'])) {
+	$sign = '<a href="../common/sign.php" class="lienvert">Sign In</a> ';  
+	$Myitems = '<span class="lienlogo">|</span> <a href="http://codex.cro.st.com/" class="lienvert">Codex</a>  ';
+ }
+
+echo '
+	<div id="header">
+	    <div id="right">
+			<div id="bloctext1" style="width:500px;" align="right" >
+				<font class="lienvert0">'.$welcomeMessage.'</font> 
+				'.$sign.'
+				'.$Myitems.'
+				<span class="lienlogo">|</span> <a href="http://rspec.info/" class="lienlogo">RSpec</a>
+				<span class="lienlogo">|</span> <a href="http://seleniumhq.org/docs/03_webdriver.html" class="lienlogo">Selenium WebDriver Documentation</a>
+			</div>
+		</div>
+	</div>
+';
+
+echo '
     </head>
     <body>
         <div id="header">
