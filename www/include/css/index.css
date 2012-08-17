@@ -19,7 +19,10 @@
 /* CSS Document */
 body {
     padding:0;
-    margin:0; margin-top:50px; background-color:#F6F5F0; float:inherit;
+    margin:0;
+    margin-top:50px;
+    background-color:#F6F5F0;
+    float:inherit;
 }
 body, th, td {
     font-family: Verdana, Arial, sans-serif;
@@ -58,7 +61,7 @@ pre {
     width:1200px;
     margin:0 auto;
     background-color:#D1E1F8;
-    padding-top:8px;
+    padding-top:40px;
 }
 #block_config{
     width:250px;
@@ -86,6 +89,7 @@ pre {
     width:1000px;
     height: auto;
     margin:0 auto;
+    padding-top:45px;
 }
 
 #sign{
@@ -95,31 +99,44 @@ pre {
 }
 
 #sign #toplien{
-	width:340px;
-	height:22px;
-	float:left;
-	position: relative;
-	display:block;
+    width:340px;
+    height:22px;
+    float:left;
+    position: relative;
+    display:block;
 }
 
 #sign #toplien #testsuite{
-	width:93px; 
-	height:22px; 
-	float:left; 
-	position:relative; 
-	display:block;
+    width:93px; 
+    height:22px; 
+    float:left; 
+    position:relative; 
+    display:block;
+}
+
+#sign a.testsuite{
+    display:block;
+    width:93px;
+    height:22px; background-image:url(../../images/index/btn_portal.png);
+    padding:0;
+    left:0px; text-align:center;
+    font:bold 11px/23px Verdana, Arial, Helvetica, sans-serif;
+    color:#629628;
+    text-transform:uppercase;
+    text-decoration:none;
 }
 
 #sign #toplien{
-	width:340px;
-	height:22px;
-	float:left;
-	position: relative;
-	display:block;
+    width:340px;
+    height:22px;
+    float:left;
+    position: relative;
+    display:block;
 }
 
 #header a.community{
-    display:block; float:left;
+    display:block;
+    float:left;
     height:22px; 
     margin-left:25px;
     left:0px; text-align:center;
@@ -138,27 +155,27 @@ pre {
 }
 
 #sign #sepcoin{
-	width:1200px;
-	height:15px;
-	float:left;
-	position: relative;
-	background-image: url(../images/index/header_corner.jpg);
-	background-repeat:no-repeat;
+    width:1200px;
+    height:15px;
+    float:left;
+    position: relative;
+    background-image: url(../images/index/header_corner.jpg);
+    background-repeat:no-repeat;
 }
 
 #sign #bloctop{display:block; float:left;
-	width:1200px;
-	height:42px;
-	margin:0 auto; background-color:#FFFFFF;
+    width:1200px;
+    height:24px;
+    margin:0 auto; background-color:#FFFFFF;
 }
 
 #sign #bloctop #right{
-	display:block;
-	width:640px;
-	height:34px;
-	margin:0 auto;
-	float: right;
-	margin-right: 8px;
+    display:block;
+    width:640px;
+    height:22px;
+    margin:0 auto;
+    float: right;
+    margin-right: 8px;
 }
 
 /* {{{ feedback */
