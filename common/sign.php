@@ -7,8 +7,6 @@ echo '
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <title>Sign up</title>
-<link href="index.css" rel="stylesheet" type="text/css" />
-<link href="style.css" rel="stylesheet" type="text/css" />
 <link href="sign.css" rel="stylesheet" type="text/css" />
 </head>
 ';
