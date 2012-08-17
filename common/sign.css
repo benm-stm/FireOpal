@@ -1,0 +1,306 @@
+@charset "utf-8";
+/* CSS Document */
+body{
+    padding:0;
+    margin:0;
+    margin-top:10px;
+    background-color:#e3e3c9;
+    float:inherit;
+}
+#body2{
+    width:1000px;
+    margin:0 auto;
+    background-color:#f6f5f0;
+    padding-top:10px;
+}
+#body2 #blocsign{
+    width:1000px;
+    height:396px;
+    padding:0;
+    background-color:#f6f5f0;
+    float:left;
+}
+
+#body2 #blocsign #blocsign1-1{
+    width:485px;
+    height:auto;
+    padding:0;
+    margin:0 auto;
+    float:left;
+    background-color:#FFFFFF;
+    margin-left: 10px;
+    padding-bottom:0px;
+}
+
+#body2 #blocsign #blocsign2-1{
+    width:487px;
+    height:auto;
+    padding:0;
+    margin-left:10px;
+    display:block;
+    float:left;
+}
+
+/*------------------------------------------------ sign  --------------------*/
+a{
+outline:none;
+}
+.a303{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:15px; text-decoration:none; color:#ff4f00;}
+.a1{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:8px; text-decoration:none; color:#928a6e;}
+.a2{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; text-decoration:none; color:#928a6e;}
+.a3{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px; text-decoration:none; color:#928a6e;}
+.a4{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:9px; text-decoration:none; color:#928a6e; line-height:1.00; text-align:center;}
+.lienvert{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; text-decoration:none; color:#629628;}
+.lienvert:hover{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; text-decoration:none; color:#000000;}
+
+.lienvert2{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; text-decoration:none; color:#629628;}
+.lienvert2:hover{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; text-decoration:none; color:#928a6e;}
+
+.lienlogo2{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; text-decoration:none; color:#928a6e; font-weight:normal;}
+.lienlogo2:hover{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; text-decoration:none; color:#629628; font-weight:normal;}
+
+.search{width:110px; height:13px; background-color:#ebebd9; border:none; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:9px; color:#928a6e;} 
+
+.h1{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px; text-decoration:none; color:#000000;}
+
+.h2{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px; text-decoration:none; color:#ffffff;}
+
+.titrevert{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; text-decoration:none; color:#629628; font-weight:bold;}
+
+.date{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; text-decoration:none; color:#192a24;}
+a.date:hover{color:#699b20;}
+
+.titre_item{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; text-decoration:none; color:#192a24;}
+a.titre_item:hover{color:#699b20;}
+
+a.com_auteur{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:9px; text-decoration:none; color:#192a24;}
+a.com_auteur:hover{color:#699b20;}
+
+.com_text{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:9px; text-decoration:none; color:#928a6e;}
+.com_text:hover{color:#699b20;}
+
+.date2{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; text-decoration:none; color:#928a6e;}
+
+.date3{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; text-decoration:none; color:#ba6a3a;}
+a.date3:hover{color:#699b20;}
+
+.a5{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:9px; text-decoration:none; color:#928a6e; line-height:1.00;}
+
+.titrevert{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; text-decoration:none; color:#629628;}
+.lienvert0{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; text-decoration:none; color:#629628;}
+
+/*------------------------------------------------ sign  --------------------*/
+.blocsign1-1{
+    border: solid 1px;
+    border-color:#ebebd9;
+    width:483px;
+    height:355px;
+    padding:0;
+    margin:0 auto;
+    float:left;
+    background-color:#FFFFFF;
+}
+
+#body2 #blocsign #blocsign2-2{
+    width:485px;
+    height:170px;
+    padding:0;
+    margin-left:0px;
+    display:block;
+    float:left;
+    background-color:#ffffff;
+}
+
+#sign_titreb1{
+    width:470px;
+    height:27px;
+    margin:0 auto;
+    float:left;
+    background-image: url(../www/include/images/sign/bg_top2.jpg);
+    background-repeat:no-repeat;
+    padding-left: 15px;
+    line-height:2.2em;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:12px;
+    text-decoration:none;
+    color:#ffffff;
+}
+
+.sign_titreb1_1{
+    width:auto;
+    height:auto;
+    margin:0 auto;
+    float:left;
+    margin-left: 13px;
+    margin-top:25px;
+    line-height:1em;
+    font-size:12px;
+    text-decoration:none;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    color:#93bd10;
+    font-weight:bold;
+}
+
+.sign_titreb1_2{
+    width:300px;
+    height:auto;
+    margin:0 auto;
+    float:left;
+    margin-left: 134px;
+    margin-top:40px;
+    line-height:1em;
+}
+
+.sign_titreb1_3{
+    width:300px;
+    height:auto;
+    margin:0 auto;
+    float:left;
+    margin-left: 134px;
+    margin-top:5px;
+    line-height:1em;
+}
+
+.sign_titreb1_4{
+    width:320px;
+    height:41px;
+    margin:0 auto;
+    float:left;
+    margin-left: 124px;
+    margin-top:40px;
+    line-height:1em;
+}
+
+.sign_titreb1_5{
+    width:40px;
+    height:49px;
+    margin:0 auto;
+    float:left;
+    /* margin-left: 82px;*/
+    margin-left: 40px;
+    margin-top:19px;
+    line-height:1em;
+}
+
+.sign_titreb1_6{
+    width:320px;
+    height:49px;
+    margin:0 auto;
+    float:left;
+    margin-left: 0px;
+    margin-top:19px;
+    line-height:1em;
+}
+
+.sign_titreb2_1{
+    width:350px;
+    height:auto;
+    margin:0 auto;
+    float:left;
+    margin-left: 46px;
+    margin-top:60px;
+    line-height:1em;
+}
+
+.sign_titreb2_11{
+    width:350px;
+    height:auto;
+    margin:0 auto;
+    float:left;
+    margin-left: 46px;
+    margin-top:14px;
+    line-height:1em;
+}
+
+.sign_titreb2_7{
+    width:350px;
+    height:auto;
+    margin:0 auto;
+    float:left;
+    margin-left: 46px;
+    margin-top:37px;
+    line-height:1em;
+}
+
+.sign_titreb2_6{
+    width:350px;
+    height:auto;
+    margin:0 auto;
+    float:left;
+    margin-left: 46px;
+    margin-top:55px;
+    line-height:1em;
+}
+
+
+.sign_titreb2_2{
+    width:150px;
+    height:auto;
+    margin:0 auto;
+    float:left;
+    margin-left: 0px;
+    margin-top:0px;
+    line-height:1em;
+}
+
+.sign_titreb2_4{
+    width:188px;
+    height:auto;
+    margin:0 auto;
+    float:right;
+    margin-left: 0px;
+    margin-top:0px;
+    line-height:1em;
+}
+.sign_titreb2_3{
+    width:350px;
+    height:auto;
+    margin:0 auto;
+    float:left;
+    margin-left: 81px;
+    margin-top:55px;
+    line-height:1em;
+}
+
+.sign_titreb2_5{
+    width:350px;
+    height:auto;
+    margin:0 auto;
+    float:left;
+    margin-left: 46px;
+    margin-top:10px;
+    line-height:1em;
+}
+
+.txtgris{
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:12px;
+    color:#949494;
+    font-weight:bold;
+}
+
+#sign_titreb51{
+    width:470px;
+    height:27px;
+    margin:0 auto;
+    float:left;
+    background-image: url(../www/include/images/sign/bg_top2.jpg);
+    background-repeat:no-repeat;
+    padding-left: 15px;
+    line-height:2.2em;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:12px;
+    text-decoration:none;
+    color:#ffffff;
+}
+
+.champs{
+    width:188px;
+    height:16px;
+    background-color:#f1f1e4;
+    border: solid 1px #dcd9d0;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:11px;
+    color:#000000;
+    float: right;
+}
