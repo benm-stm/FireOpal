@@ -63,7 +63,7 @@ echo '
 
 <div class="sign_titreb2_5">
   <div class="sign_titreb2_4">
-  <div style="float:left"><input type="checkbox" name="remember" id="remember" value="1"/> </div> 
+  <div style="float:left"><input type="checkbox" name="remember" id="remember" value="1"/> </div>
 <div class="date" style="float:right; padding-right:45px;" >Remember my details</div>
   </div>
 </div>
@@ -101,27 +101,27 @@ echo '
 $cookie_name ='remember';
 if( isset($_POST['email']) ) {
     $email = $_POST['email'];
-    //  setcookie($cookie_name,$email, $time + 3600);    
-    $pass = $_POST['pass']; 
-    $check = $_POST['remember'];  
+    //  setcookie($cookie_name,$email, $time + 3600);
+    $pass = $_POST['pass'];
+    $check = $_POST['remember'];
     //$user = new clsUsers();
     /*if( (int)$user->controlPassword($email, $pass) == 0 )
           $messageStack->add('Erreur: email et/ou mot de passe incorrecte', 'error');
     else {*/
     $_SESSION['sess_idUser'] = $user->id;
-    if($check == 1) { //rememberMe 
-    //setcookie('rememberMe[mail]',$email,  time()  + 3600);        
-        setcookie('rememberMe', $user->id, time() + 3600*24*7);   
+    if($check == 1) { //rememberMe
+    //setcookie('rememberMe[mail]',$email,  time()  + 3600);
+        setcookie('rememberMe', $user->id, time() + 3600*24*7);
     }
-    //redirect('index.php?id='.$user->id); 
+    //redirect('index.php?id='.$user->id);
 }
-//} 
+//}
 else if(isset($_COOKIE['rememberMe'])) {
     // $email = $_COOKIE['rememberMe[mail]'];
     // if(isset($_COOKIE['rememberMe[id]']))
     // {
     $_SESSION['sess_idUser'] = $_COOKIE['rememberMe'];
-    //redirect('index.php'); 
+    //redirect('index.php');
     //}
 }
 ?>
