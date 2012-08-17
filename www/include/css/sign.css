@@ -41,55 +41,34 @@ body{
     float:left;
 }
 
-/*------------------------------------------------ sign  --------------------*/
 a{
 outline:none;
 }
-.a303{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:15px; text-decoration:none; color:#ff4f00;}
-.a1{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:8px; text-decoration:none; color:#928a6e;}
-.a2{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; text-decoration:none; color:#928a6e;}
-.a3{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px; text-decoration:none; color:#928a6e;}
-.a4{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:9px; text-decoration:none; color:#928a6e; line-height:1.00; text-align:center;}
-.lienvert{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; text-decoration:none; color:#629628;}
-.lienvert:hover{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; text-decoration:none; color:#000000;}
 
-.lienvert2{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; text-decoration:none; color:#629628;}
-.lienvert2:hover{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; text-decoration:none; color:#928a6e;}
+.forgetLink{
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	text-decoration:none;
+	color:#928a6e;
+}
 
-.lienlogo2{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; text-decoration:none; color:#928a6e; font-weight:normal;}
-.lienlogo2:hover{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; text-decoration:none; color:#629628; font-weight:normal;}
+.forgetLink:hover{
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:11px;
+text-decoration:none;
+color:#629628;
+}
 
-.search{width:110px; height:13px; background-color:#ebebd9; border:none; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:9px; color:#928a6e;} 
+.joinText{
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:11px;
+text-decoration:none;
+color:#192a24;}
 
-.h1{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px; text-decoration:none; color:#000000;}
+a.joinText:hover{
+color:#699b20;
+}
 
-.h2{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px; text-decoration:none; color:#ffffff;}
-
-.titrevert{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; text-decoration:none; color:#629628; font-weight:bold;}
-
-.date{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; text-decoration:none; color:#192a24;}
-a.date:hover{color:#699b20;}
-
-.titre_item{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; text-decoration:none; color:#192a24;}
-a.titre_item:hover{color:#699b20;}
-
-a.com_auteur{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:9px; text-decoration:none; color:#192a24;}
-a.com_auteur:hover{color:#699b20;}
-
-.com_text{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:9px; text-decoration:none; color:#928a6e;}
-.com_text:hover{color:#699b20;}
-
-.date2{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; text-decoration:none; color:#928a6e;}
-
-.date3{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; text-decoration:none; color:#ba6a3a;}
-a.date3:hover{color:#699b20;}
-
-.a5{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:9px; text-decoration:none; color:#928a6e; line-height:1.00;}
-
-.titrevert{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; text-decoration:none; color:#629628;}
-.lienvert0{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; text-decoration:none; color:#629628;}
-
-/*------------------------------------------------ sign  --------------------*/
 .blocsign1-1{
     border: solid 1px;
     border-color:#ebebd9;

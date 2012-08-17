@@ -22,19 +22,19 @@ echo '
 <div class="sign_titreb1_1">CREATE YOUR ACCOUNT</div>
 <div class="sign_titreb1_2">
     <img src="../www/include/images/sign/puce2.jpg" width="8" height="8" />
-    <span class="date">Add Ruby/webdriver testcases</span></div>
+    <span class="joinText">Add Ruby/webdriver testcases</span></div>
 <div class="sign_titreb1_3">
     <img src="../www/include/images/sign/puce2.jpg" width="8" height="8" /> 
-    <span class="date">Set up configuration params</span></div>
+    <span class="joinText">Set up configuration params</span></div>
 <div class="sign_titreb1_3">
     <img src="../www/include/images/sign/puce2.jpg" width="8" height="8" />
-    <span class="date">Create and run testsuites</span></div>
+    <span class="joinText">Create and run testsuites</span></div>
 <div class="sign_titreb1_3">
     <img src="../www/include/images/sign/puce2.jpg" width="8" height="8" />
-    <span class="date">Command line interface</span></div>
+    <span class="joinText">Command line interface</span></div>
 <div class="sign_titreb1_3">
     <img src="../www/include/images/sign/puce2.jpg" width="8" height="8" />
-    <span class="date">Retrieve testsuites results</span></div>
+    <span class="joinText">Retrieve testsuites results</span></div>
 <div class="sign_titreb1_4">
     <a href="step1.php">
     <img src="../www/include/images/sign/joinfree.jpg" width="226" height="41" border="0" /></a>
@@ -52,26 +52,26 @@ echo '
 <form action="sign.php" method="post" enctype="multipart/form-data" >
 
 <div class="sign_titreb2_1">
-<div class="sign_titreb2_2"><p class="date">Your Email Address</p>
+<div class="sign_titreb2_2"><p class="joinText">Your Email Address</p>
 </div><div id="champs1"><input name="email" type="text" class="champs" value="{email}" /></div>
 </div>
 
 <div class="sign_titreb2_11">
-<div class="sign_titreb2_2"><p class="date">Your Password</p>
+<div class="sign_titreb2_2"><p class="joinText">Your Password</p>
 </div><div id="champs1"><input type="password" id="pass" name="pass" class="champs"/></div>
 </div>
 
 <div class="sign_titreb2_5">
   <div class="sign_titreb2_4">
-  <div style="float:left"><input type="checkbox" name="remember" id="remember" value="1"/> </div>
-<div class="date" style="float:right; padding-right:45px;" >Remember my details</div>
+  <div style="float:left"><input type="checkbox" name="remember" id="remember" value="1"/> </div> 
+<div class="joinText" style="float:right; padding-right:45px;" >Remember my details</div>
   </div>
 </div>
 
 <div class="sign_titreb2_6">
   <div id="champs1">
     <div class="sign_titreb2_4">
-      <p class="date">
+      <p class="joinText">
       <input type="image"  value="Next" id="btnNext" src="../www/include/images/sign/login.jpg" width="85" height="18" border="0" alt="sustenn, the Sustainable Development Portal" >
     </p>
     </div>
@@ -83,8 +83,8 @@ echo '
 <div class="sign_titreb2_7">
   <div id="champs1">
     <div class="sign_titreb2_4">
-      <p class="date2"><a href="#" class="lienlogo" style="font-size:9px">Forgot your password ?</a><br />
-        <a href="#" class="lienlogo" style="font-size:9px">Forgot your email address ?</a></p>
+      <p class="joinText2"><a href="#" class="forgetLink" style="font-size:9px">Forgot your password ?</a><br />
+        <a href="#" class="forgetLink" style="font-size:9px">Forgot your email address ?</a></p>
     </div>
   </div>
 </div>
@@ -101,27 +101,27 @@ echo '
 $cookie_name ='remember';
 if( isset($_POST['email']) ) {
     $email = $_POST['email'];
-    //  setcookie($cookie_name,$email, $time + 3600);
-    $pass = $_POST['pass'];
-    $check = $_POST['remember'];
+    //  setcookie($cookie_name,$email, $time + 3600);    
+    $pass = $_POST['pass']; 
+    $check = $_POST['remember'];  
     //$user = new clsUsers();
     /*if( (int)$user->controlPassword($email, $pass) == 0 )
           $messageStack->add('Erreur: email et/ou mot de passe incorrecte', 'error');
     else {*/
     $_SESSION['sess_idUser'] = $user->id;
-    if($check == 1) { //rememberMe
-    //setcookie('rememberMe[mail]',$email,  time()  + 3600);
-        setcookie('rememberMe', $user->id, time() + 3600*24*7);
+    if($check == 1) { //rememberMe 
+    //setcookie('rememberMe[mail]',$email,  time()  + 3600);        
+        setcookie('rememberMe', $user->id, time() + 3600*24*7);   
     }
-    //redirect('index.php?id='.$user->id);
+    //redirect('index.php?id='.$user->id); 
 }
-//}
+//} 
 else if(isset($_COOKIE['rememberMe'])) {
     // $email = $_COOKIE['rememberMe[mail]'];
     // if(isset($_COOKIE['rememberMe[id]']))
     // {
     $_SESSION['sess_idUser'] = $_COOKIE['rememberMe'];
-    //redirect('index.php');
+    //redirect('index.php'); 
     //}
 }
 ?>
