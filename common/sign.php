@@ -1,5 +1,6 @@
 <?php
 header("Content-Type: text/html; charset=iso-8859-1");
+require_once('clsUsers.php');
 
 echo '
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -98,13 +99,13 @@ echo '
 
 // Select the username from the cookie
 //$username = $_COOKIE['AVTool']['username'];
-$cookie_name ='remember';
+$cookie_name = 'remember';
 if( isset($_POST['email']) ) {
     $email = $_POST['email'];
     //  setcookie($cookie_name,$email, $time + 3600);    
-    $pass = $_POST['pass']; 
+    $pass  = $_POST['pass']; 
     $check = $_POST['remember'];  
-    //$user = new clsUsers();
+    $user  = new clsUsers();
     /*if( (int)$user->controlPassword($email, $pass) == 0 )
           $messageStack->add('Erreur: email et/ou mot de passe incorrecte', 'error');
     else {*/

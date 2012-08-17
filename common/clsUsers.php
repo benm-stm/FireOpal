@@ -172,6 +172,7 @@ class  clsUsers {
         } else {
             return false;
         }
+     }
 
     function controlPassword($pseudo, $pass) {
         $pseudo = trim($pseudo);
@@ -189,7 +190,7 @@ class  clsUsers {
             }
         } else {
         return 0;
+        }
     }
-
 }
 ?>
