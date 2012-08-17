@@ -105,7 +105,7 @@ if( isset($_POST['email']) ) {
     //  setcookie($cookie_name,$email, $time + 3600);    
     $pass  = $_POST['pass']; 
     $check = $_POST['remember'];  
-    $user  = new clsUsers();
+    $user  = new user();
     /*if( (int)$user->controlPassword($email, $pass) == 0 )
           $messageStack->add('Erreur: email et/ou mot de passe incorrecte', 'error');
     else {*/

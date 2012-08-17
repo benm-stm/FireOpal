@@ -16,7 +16,7 @@
  * along with this code. If not, see <http://www.gnu.org/licenses/>.
  */
 
-class  clsUsers {
+class  user {
 
     var $id;
     var $email;
@@ -88,10 +88,10 @@ class  clsUsers {
     /**
      * Constructor
      *
-     * @return clsUser
+     * @return user
      */
 
-    function  clsUsers() {
+    function  user() {
      }
 
     /**
