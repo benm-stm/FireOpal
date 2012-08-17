@@ -173,5 +173,23 @@ class  clsUsers {
             return false;
         }
 
+    function controlPassword($pseudo, $pass) {
+        $pseudo = trim($pseudo);
+        $pass   = trim($pass);
+        if( $pass != '' and $pseudo != '' ) {
+            $req = "select * from users where email = '".$pseudo."' and password = '".$pass."' and completeRecording = '1' ";
+            $result = mysql_query($req);
+            if( mysql_num_rows($result) > 0 ) {
+                $row = mysql_fetch_array($result);
+                $ID = $row['id'];
+                $this ->loadFromId($ID);
+                return 1;
+            } else {
+                return 0;
+            }
+        } else {
+        return 0;
+    }
+
 }
 ?>
