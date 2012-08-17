@@ -1,3 +1,20 @@
+/**
+ * Copyright (c) STMicroelectronics 2012. All rights reserved
+ *
+ * This code is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This code is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this code. If not, see <http://www.gnu.org/licenses/>.
+ */
+
 @charset "utf-8";
 /* CSS Document */
 body{
@@ -15,7 +32,7 @@ body{
 }
 #body2 #blocsign{
     width:1000px;
-    height:396px;
+    height:496px;
     padding:0;
     background-color:#f6f5f0;
     float:left;
@@ -46,10 +63,10 @@ outline:none;
 }
 
 .forgetLink{
-	font-family:Verdana, Arial, Helvetica, sans-serif;
-	font-size:11px;
-	text-decoration:none;
-	color:#928a6e;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:11px;
+    text-decoration:none;
+    color:#928a6e;
 }
 
 .forgetLink:hover{
@@ -73,7 +90,7 @@ color:#699b20;
     border: solid 1px;
     border-color:#ebebd9;
     width:483px;
-    height:355px;
+    height:455px;
     padding:0;
     margin:0 auto;
     float:left;
