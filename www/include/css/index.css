@@ -19,7 +19,7 @@
 /* CSS Document */
 body {
     padding:0;
-    margin:0; margin-top:30px; background-color:#F6F5F0; float:inherit;
+    margin:0; margin-top:50px; background-color:#F6F5F0; float:inherit;
 }
 body, th, td {
     font-family: Verdana, Arial, sans-serif;
@@ -87,6 +87,37 @@ pre {
     height: auto;
     margin:0 auto;
 }
+
+#sign{
+    width:1200px;
+    height: auto;
+    margin:0 auto;
+}
+
+#sign #toplien{
+	width:340px;
+	height:22px;
+	float:left;
+	position: relative;
+	display:block;
+}
+
+#sign #toplien #testsuite{
+	width:93px; 
+	height:22px; 
+	float:left; 
+	position:relative; 
+	display:block;
+}
+
+#sign #toplien{
+	width:340px;
+	height:22px;
+	float:left;
+	position: relative;
+	display:block;
+}
+
 #header a.community{
     display:block; float:left;
     height:22px; 
@@ -104,6 +135,30 @@ pre {
 }
 #header_clear{
     clear: both;
+}
+
+#sign #sepcoin{
+	width:1200px;
+	height:15px;
+	float:left;
+	position: relative;
+	background-image: url(../images/index/header_corner.jpg);
+	background-repeat:no-repeat;
+}
+
+#sign #bloctop{display:block; float:left;
+	width:1200px;
+	height:42px;
+	margin:0 auto; background-color:#FFFFFF;
+}
+
+#sign #bloctop #right{
+	display:block;
+	width:640px;
+	height:34px;
+	margin:0 auto;
+	float: right;
+	margin-right: 8px;
 }
 
 /* {{{ feedback */
