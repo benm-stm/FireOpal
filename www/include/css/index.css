@@ -178,6 +178,41 @@ pre {
     margin-right: 8px;
 }
 
+.signLink{
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:11px;
+    text-decoration:none;
+    color:#928a6e;
+}
+
+.signLink:hover{
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:11px;
+text-decoration:none;
+color:#629628;
+}
+
+.greenLink{
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:11px;
+text-decoration:none;
+color:#629628;
+}
+
+.greenLink:hover{
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:11px;
+text-decoration:none;
+color:#000000;
+}
+
+.welcomeLink{
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:11px;
+text-decoration:none;
+color:#629628;
+}
+
 /* {{{ feedback */
 .feedback_error, .feedback_warning, .feedback_info, .feedback_debug {
     font-family:sans-serif;
