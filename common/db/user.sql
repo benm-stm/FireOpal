@@ -1,8 +1,8 @@
 --
--- table `users` structure
+-- table `user` structure
 --
 
-CREATE TABLE IF NOT EXISTS `users` (
+CREATE TABLE IF NOT EXISTS `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(100) NOT NULL,
   `password` varchar(100) DEFAULT NULL,
@@ -28,10 +28,10 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
--- Table `users` content
+-- Table `user` content
 --
 
-INSERT INTO `users` (`id`, `email`, `password`, `surname`, `familyName`, `organisation`, `title`, `country`, `city`, `photo`, `typeOrganisation`, `activityFocus`, `titleQualification`, `englishLanguage`, `sex`, `born`, `check1`, `check2`, `check3`, `check4`, `completeRecording`) VALUES
+INSERT INTO `user` (`id`, `email`, `password`, `surname`, `familyName`, `organisation`, `title`, `country`, `city`, `photo`, `typeOrganisation`, `activityFocus`, `titleQualification`, `englishLanguage`, `sex`, `born`, `check1`, `check2`, `check3`, `check4`, `completeRecording`) VALUES
 (1, 'toto@laposte.net', 'aaa', 'xxxx', 'xxxxx', 'xx', 'xxxx', 74, '1', '52830.jpg', 1, '1', 1, 'no', 'female', '1974', 1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
