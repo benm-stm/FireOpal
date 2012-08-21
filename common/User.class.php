@@ -44,14 +44,14 @@ class  user {
     var $check3;
     var $check4;
     var $completeRecording;    
- 
+
     /**
      * Table name
      */
-    var $tableName = 'users';
+    var $tableName = 'user';
 
     /**
-     * Liste des champs de la table Boutique
+     * Liste des champs de la table user
      *
      * @var Liste
      */
