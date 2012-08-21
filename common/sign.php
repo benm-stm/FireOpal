@@ -78,9 +78,9 @@ echo '
     </div>
   </div>
 </div>
-</form>
-{update_message}
-
+</form>';
+echo $messageStack;
+echo '
 <div class="sign_titreb2_7">
   <div id="champs1">
     <div class="sign_titreb2_4">
