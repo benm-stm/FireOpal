@@ -28,22 +28,22 @@ class  user {
     var $country;
     var $city;
     var $photo;
-    var $logo;
+    //var $logo;
     var $typeOrganisation;
-    var $activityFocus1;
-    var $activityFocus2;
-    var $activityFocus3;
-    var $titleQualification1;
-    var $titleQualification2;
+    //var $activityFocus1;
+    //var $activityFocus2;
+    //var $activityFocus3;
+    //var $titleQualification1;
+    //var $titleQualification2;
     var $englishLanguage;
     var $sex;
     var $born;
-    var $position;
+    //var $position;
     var $check1;
     var $check2;
     var $check3;
     var $check4;
-    var $completeRecording;   
+    var $completeRecording;    
  
     /**
      * Table name
