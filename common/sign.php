@@ -29,6 +29,48 @@ echo '
 </head>
 ';
 
+// Select the username from the cookie
+//$username = $_COOKIE['AVTool']['username'];
+$cookie_name  = 'remember';
+$messageStack = '';
+if (!isset($_SESSION)) {
+    session_start();
+}
+if(isset($_POST['email'])) {
+    $email = $_POST['email'];
+    // setcookie($cookie_name,$email, $time + 3600);
+    $pass  = $_POST['pass'];
+    if(isset($_POST['remember']) && !empty($_POST['email'])) {
+        $check = $_POST['remember'];
+    }
+    $user  = new user();
+
+    if(!$user->controlPassword($email, $pass)) {
+        $messageStack = '
+        <div class="messageStackError">
+        <img src="../www/include/images/ic/error.png" alt="">&nbsp;
+                Error: wrong email or password
+        </div>
+        ';
+    } else {
+        $_SESSION['sess_idUser'] = $user->id;
+        if($check == 1) {
+        //rememberMe
+        //setcookie('rememberMe[mail]',$email,  time()  + 3600);
+            setcookie('rememberMe', $user->id, time() + 3600*24*7);
+        }
+        header('Location: ../www/index.php?id='.$user->id);
+    }
+}
+
+else if(isset($_COOKIE['rememberMe'])) {
+    // $email = $_COOKIE['rememberMe[mail]'];
+    // if(isset($_COOKIE['rememberMe[id]'])) {
+    $_SESSION['sess_idUser'] = $_COOKIE['rememberMe'];
+    header('Location: ../www/index.php');
+    //}
+}
+
 echo '
 <body>
 <div id="body2">
@@ -71,7 +113,7 @@ echo '
 
 <div class="sign_titreb2_1">
 <div class="sign_titreb2_2"><p class="joinText">Your Email Address</p>
-</div><div id="champs1"><input name="email" type="text" class="champs" value="{email}" /></div>
+</div><div id="champs1"><input name="email" type="text" class="champs"/></div>
 </div>
 
 <div class="sign_titreb2_11">
@@ -113,34 +155,4 @@ echo '
 </div>
 </body>
 </html>';
-
-// Select the username from the cookie
-//$username = $_COOKIE['AVTool']['username'];
-$cookie_name = 'remember';
-if( isset($_POST['email']) ) {
-    $email = $_POST['email'];
-    //  setcookie($cookie_name,$email, $time + 3600);    
-    $pass  = $_POST['pass']; 
-    $check = $_POST['remember'];  
-    $user  = new user();
-    /*if( (int)$user->controlPassword($email, $pass) == 0 )
-          $messageStack->add('Erreur: email et/ou mot de passe incorrecte', 'error');
-    else {*/
-    $_SESSION['sess_idUser'] = '101';
-    //$_SESSION['sess_idUser'] = $user->id;
-    if($check == 1) { //rememberMe 
-    //setcookie('rememberMe[mail]',$email,  time()  + 3600);        
-        setcookie('rememberMe', $user->id, time() + 3600*24*7);   
-    }
-    header( 'Location: ../www/index.php?id='.$user->id ); 
-}
-//} 
-else if(isset($_COOKIE['rememberMe'])) {
-    // $email = $_COOKIE['rememberMe[mail]'];
-    // if(isset($_COOKIE['rememberMe[id]']))
-    // {
-    $_SESSION['sess_idUser'] = $_COOKIE['rememberMe'];
-    header('Location: ../www/index.php'); 
-    //}
-}
 ?>
