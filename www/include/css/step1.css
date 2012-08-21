@@ -1,0 +1,415 @@
+/**
+ * Copyright (c) STMicroelectronics 2012. All rights reserved
+ *
+ * This code is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This code is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this code. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+select {
+    width:190px;
+    height:16px;
+    background-color:#f1f1e4;
+    border: solid 1px #dcd9d0;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:11px;
+    color:#000000;
+}
+
+input.text {
+    width:188px;
+    height:16px;
+    background-color:#f1f1e4;
+    border: solid 1px #dcd9d0;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:11px;
+    color:#000000;
+}
+
+input.password {
+    width:188px;
+    height:16px;
+    background-color:#f1f1e4;
+    border: solid 1px #dcd9d0;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:11px;
+    color:#000000;
+}
+
+#body-sign {
+    width:1000px;
+    margin:0 auto;
+    background-color:#f6f5f0;
+    padding-top:10px;
+}
+
+#tabhaut {
+    width:1000px;
+    margin:0 auto;
+    background-image:url(../images/signup/bgtabhaut.jpg);
+    background-repeat:repeat-x;
+    height:28px;
+}
+
+#blocprinc{
+    width:990px;
+    margin:0 auto;
+    background-color:#f6f5f0;
+    padding-top:10px; padding-left:10px; float:left; padding-bottom:10px;
+    }
+
+#sign-bloc1{
+    width:210px;
+    margin:0 auto;
+    background-color:#ffffff;
+    padding-top:0px;
+    float:left;
+    height:536px;
+}
+
+#sign-bloc2{
+    width:759px;
+    margin:0 auto;
+    padding-top:0px;
+    padding-left:10px;
+    float:left;
+    height:auto;
+}
+
+#sign-titre1{
+    width:195px;
+    margin:0 auto;
+    padding-top:0px;
+    padding-left: 15px;
+    float:left;
+    height:28px;
+    background-image:url(../images/signup/bgtab1.jpg);
+    background-repeat:no-repeat;
+    line-height:2.2em;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:12px;
+    text-decoration:none;
+    color:#ffffff;
+}
+
+#sign-titre2{
+    width:195px;
+    margin:0 auto;
+    padding-top:24px;
+    padding-left: 15px;
+    float:left;
+    height:auto;
+    line-height:1.3em;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:12px;
+    text-decoration:none;
+    color:#93bd10;
+    font-weight: bold;
+}
+
+#sign-titre3{
+    width:170px;
+    margin:0 auto;
+    padding-top:0px;
+    float:left;
+    background-repeat: no-repeat;
+    margin-left: 14px;
+    margin-top: 11px;
+    padding-left: 5px;
+    height: 52px;
+    line-height: 1.5em;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+}
+
+#sign-titre4{
+    width:222px;
+    margin:0 auto;
+    padding-top:0px;
+    padding-left: 0px;
+    float:left;
+    height:28px;
+}
+
+#btn1{
+    width:74px;
+    margin:0 auto;
+    padding-top:0px;
+    padding-left: 0px;
+    float:left;
+    height:28px; background-image:url(../images/signup/btn1.jpg);
+    line-height:2.2em;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:12px;
+    text-decoration:none; text-align: center;
+    color:#ffffff;
+}
+
+#btn2{
+    width:74px;
+    margin:0 auto;
+    padding-top:0px;
+    padding-left: 0px;
+    float:left;
+    height:28px; background-image:url(../images/signup/btn2.jpg);
+    line-height:2.2em;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:12px;
+    text-decoration:none; text-align: center;
+    color:#94876b;
+}
+
+#btn3{
+    width:74px;
+    margin:0 auto;
+    padding-top:0px;
+    padding-left: 0px;
+    float:left;
+    height:28px;
+    background-image:url(../images/signup/btn2.jpg);
+    line-height:2.2em;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:12px;
+    text-decoration:none; text-align: center;
+    color:#94876b;
+}
+
+#sign-titre5{
+    width:745px;
+    margin:0 auto;
+    padding-top:20px;
+    float:left;
+    height:24px;
+    line-height:2em;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:12px;
+    text-decoration:none;
+    color:#93bd10;
+    padding-left: 15px;
+    font-weight: bold;
+    background-color: #FFFFFF;
+}
+
+#sign-titre6{
+    width:760px;
+    margin:0 auto;
+    padding-top:34px;
+    float:left;
+    height:430px;
+    background-color:#ffffff;
+}
+
+#sign-titre7{
+    width:442px;
+    margin:0 auto;
+    padding-top:0px;
+    float:left;
+    height:16px;
+    padding-left: 0px;
+}
+
+#sign-titre7-11{
+    width:135px;
+    margin:0 auto;
+    padding-top:0px;
+    float:left;
+    height:16px;
+    padding-left:15px;
+    line-height:1.3em;
+}
+
+#sign-titre7-12{
+    width:135px;
+    margin:0 auto;
+    padding-top:0px;
+    float:left;
+    height:16px;
+    padding-left: 15px;
+    line-height:1.3em;
+}
+
+#sign-titre7-13{
+    width:135px;
+    margin:0 auto;
+    padding-top:0px;
+    float:left;
+    height:16px;
+    padding-left: 15px;
+    line-height:1.3em;
+}
+
+#sign-titre7-14{
+    width:135px;
+    margin:0 auto;
+    padding-top:0px;
+    float:left;
+    height:16px;
+    padding-left: 15px;
+    line-height:1.3em;
+}
+
+#champs1{
+    width:258px;
+    height:16px;
+    float:right;
+}
+
+#champs2{
+    width:258px;
+    height:16px;
+    float:right;
+}
+
+#champs3{
+    width:258px;
+    height:16px;
+    float:right;
+}
+
+#champs4{
+    width:258px;
+    height:16px;
+    float:right;
+} 
+
+.champs{
+    width:188px;
+    height:16px;
+    background-color:#f1f1e4;
+    border: solid 1px #dcd9d0;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:11px;
+    color:#000000;
+}
+
+#sign-titre771{
+    width:442px;
+    margin:0 auto;
+    padding-top:10px;
+    float:left;
+    height:16px;
+    padding-left: 0px;
+}
+
+#sign-titre772{
+    width:442px;
+    margin:0 auto;
+    padding-top:41px;
+    float:left;
+    height:16px;
+    padding-left: 0px;
+}
+
+#sign-titre773{
+    width:442px;
+    margin:0 auto;
+    padding-top:10px;
+    float:left;
+    height:16px;
+    padding-left: 0px;
+}
+
+#sign-titre774{
+    width:730px;
+    margin:0 auto;
+    float:left;
+    height:85px;
+    background-image: url(../images/sign/sep.jpg);
+    background-repeat: no-repeat;
+    margin-top: 5px;
+    margin-left: 15px;
+    padding-top: 8px;
+}
+
+#sign-titre78{
+    width:700px;
+    margin:0 auto;
+    padding-top:36px;
+    float:left;
+    height:25px;
+    padding-left: 15px;
+    line-height:1.5em;
+}
+
+#sign-titre8{
+    width:66px;
+    margin:0 auto;
+    margin-bottom:29px;
+    float:right;
+    height:18px;
+    padding-right: 13px;
+    margin-top:0px;
+}
+
+#sign-titre0{
+    width:751px;
+    margin:0 auto;
+    padding-top:15px;
+    float:left;
+    background-color:#ffffff;
+    padding-left: 0px;
+}
+
+.greenTitle{font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:11px; text-decoration:none; color:#93bd10; font-weight:bold;}
+
+.sign03{
+    width:730px;
+    margin:0 auto;
+    float:left;
+    height: auto;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:11px; text-decoration:none; color:#f2751b; font-weight:bold;
+    margin-top: 0px;
+    margin-left: 15px;
+    padding-top: 20px;
+}
+
+.a1{
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:8px;
+    text-decoration:none;
+    color:#928a6e;
+}
+.a2{
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:10px;
+    text-decoration:none;
+    color:#928a6e;
+}
+.a3{
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:12px;
+    text-decoration:none;
+    color:#928a6e;
+}
+.a4{
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:9px; text-decoration:none;
+    color:#928a6e;
+    line-height:1.00;
+    text-align:center;
+}
+
+#date{
+    width:47px;
+    height:42px;
+    margin:0 auto;
+    position: relative;
+    display:block;
+    float:left;
+    padding-left: 0px;
+    padding-top:13px;
+    line-height:1.2em;
+    background-image:url(../www/include/images/index/bg_date.jpg);
+    background-repeat:no-repeat;
+}
