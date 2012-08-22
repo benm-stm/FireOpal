@@ -17,7 +17,7 @@
  */
 
 header("Content-Type: text/html; charset=iso-8859-1");
-require_once('User.class.php');
+require_once('../include/common/User.class.php');
 
 echo '
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -25,7 +25,7 @@ echo '
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <title>Sign up</title>
-<link href="../www/include/css/sign.css" rel="stylesheet" type="text/css" />
+<link href="include/css/sign.css" rel="stylesheet" type="text/css" />
 </head>
 ';
 
@@ -48,7 +48,7 @@ if(isset($_POST['email'])) {
     if(!$user->controlPassword($email, $pass)) {
         $messageStack = '
         <div class="messageStackError">
-        <img src="../www/include/images/ic/error.png" alt="">&nbsp;
+        <img src="include/images/ic/error.png" alt="">&nbsp;
                 Error: wrong email or password
         </div>
         ';
@@ -59,7 +59,7 @@ if(isset($_POST['email'])) {
         //setcookie('rememberMe[mail]',$email,  time()  + 3600);
             setcookie('rememberMe', $user->id, time() + 3600*24*7);
         }
-        header('Location: ../www/index.php?id='.$user->id);
+        header('Location: index.php?id='.$user->id);
     }
 }
 
@@ -67,7 +67,7 @@ else if(isset($_COOKIE['rememberMe'])) {
     // $email = $_COOKIE['rememberMe[mail]'];
     // if(isset($_COOKIE['rememberMe[id]'])) {
     $_SESSION['sess_idUser'] = $_COOKIE['rememberMe'];
-    header('Location: ../www/index.php');
+    header('Location: index.php');
     //}
 }
 

@@ -22,7 +22,7 @@ ini_set('memory_limit', -1);
 ini_set('include_path', ini_get('include_path').PATH_SEPARATOR.dirname(__DIR__).DIRECTORY_SEPARATOR.'include');
 require_once('TestSuite.class.php');
 require_once('TestSuiteManager.class.php');
-require_once('../common/User.class.php');
+require_once('../include/common/User.class.php');
 
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
@@ -47,13 +47,13 @@ $sign = '';
 $Myitems = '';
 
 if(!isset($_SESSION['sess_idUser'])) {
-    $sign    = '<a href="../common/sign.php" class="greenLink">Sign In</a> ';
+    $sign    = '<a href="sign.php" class="greenLink">Sign In</a> ';
     $Myitems = '<span class="signLink">|</span> <a href="http://codex.cro.st.com/" class="greenLink">Codex</a>  ';
 } else {
     $connectedUser = new user();
     $connectedUser->loadFromId($_SESSION['sess_idUser']);
     $welcomeMessage = '<font color="#928A6E" >Welcome '.$connectedUser->title.' '.strtoupper($connectedUser->getAtt('familyName')).'</font>';
-    $sign           = '<span class="signLink" >|</span> <a href="../common/logout.php" class="greenLink">Sign Out</a> ';
+    $sign           = '<span class="signLink" >|</span> <a href="logout.php" class="greenLink">Sign Out</a> ';
 }
 echo '
     <div id="sign">
