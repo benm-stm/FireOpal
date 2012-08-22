@@ -113,8 +113,7 @@ if (isset($_POST['email'])) {
             $error .= '&nbsp;type your password,';
         if ($rpass == '' )
             $error .= '&nbsp;retype your password,&nbsp;';
-        $cross = false;
-    /* $messageStack->add('Il y a des champs vides <br /> ', 'error'); */
+        $cross  = false;
 }
 
 if (strnatcmp($email, $remail) != 0) {
@@ -122,8 +121,7 @@ if (strnatcmp($email, $remail) != 0) {
     $req2 = '<div style="width:20px; float:left;">
             <img src="include/images/signup/puce_erreur.jpg" />
             </div>';
-    $cross = false;
-/*   $messageStack->add('Vérifiez les emails <br />', 'error'); */  
+    $cross  = false;
 }
 
 $Syntaxe='#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,5}$#'; 
@@ -133,7 +131,6 @@ if (!preg_match($Syntaxe, $email)) {
             </div>';
     $error .= '&nbsp;check your email address,&nbsp;'; 
     $cross = false;
-    /* $messageStack->add('Vérifiez votre syntaxe du champ email <br />', 'error'); */   
 }
  
 if ( strnatcmp($pass, $rpass) != 0 ) {
@@ -142,9 +139,7 @@ if ( strnatcmp($pass, $rpass) != 0 ) {
                 <img src="include/images/signup/puce_erreur.jpg" />
             </div>';
     $cross = false;
-    /* $messageStack->add('Vérifiez les mots de passe <br />', 'error'); */
 }
- 
 
 // Input validated, continue
 if ($cross == true) {
@@ -168,23 +163,22 @@ if ($cross == true) {
         //$req2 = '<font color="red" ><strong>!</strong></font>';        
         $error .= '&nbsp;This email address was already used to Sign up,&nbsp;';
         $mailexist = 1 ;
-        //$messageStack->add('check form : '.$error, 'error');
     }   
-} else {}//$messageStack->add('check form : '.$error, 'error'); 
+}
 }
 
 $errorMsg = '';
 if ($error != '') {
     if($mailexist) {
-        $error = str_replace("&nbsp;&nbsp;","&nbsp;",$error) ;
-        if(strrchr($error,",") == ",&nbsp;") $error = substr($error,0,(strlen($error)-7)) ;
+        $error = str_replace("&nbsp;&nbsp;","&nbsp;",$error);
+        if(strrchr($error,",") == ",&nbsp;") $error = substr($error,0,(strlen($error)-7));
         $error = $error."." ;
         $error .= '<br><br><p class="a2" style="font-weight:normal">
                   Want to <a href="sign.php" class="lienvert2">Sign in ?</a><br />
-                  <a href="#" class="lienvert2">Forgot your password ?</a></p>' ;
+                  <a href="#" class="lienvert2">Forgot your password ?</a></p>';
     } else {
-        $error = str_replace("&nbsp;&nbsp;","&nbsp;",$error) ;
-        if(strrchr($error,",") == ",&nbsp;") $error = substr($error,0,(strlen($error)-7)) ;
+        $error = str_replace("&nbsp;&nbsp;","&nbsp;",$error);
+        if(strrchr($error,",") == ",&nbsp;") $error = substr($error,0,(strlen($error)-7));
         $error = $error."." ;
     }
     $errorMsg = 'ERROR: '.$error.'<br><br>';
