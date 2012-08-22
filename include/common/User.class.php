@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this code. If not, see <http://www.gnu.org/licenses/>.
  */
+require_once('/db/connect.php');
 
 class  user {
 
@@ -164,7 +165,7 @@ class  user {
     }
 
     function userExist() {
-        $req = "select  * from users where email='".$this->email."' order by id";
+        $req = "select  * from $this->tableName where email='".$this->email."' order by id";
         $rows = mysql_query($req);
         $nb_ligne = mysql_num_rows($rows);
         if( $nb_ligne > 0 ) {
@@ -177,8 +178,8 @@ class  user {
     function controlPassword($pseudo, $pass) {
         $pseudo = trim($pseudo);
         $pass   = trim($pass);
-        if( $pass != '' and $pseudo != '' ) {
-            $req = "select * from users where email = '".$pseudo."' and password = '".$pass."' and completeRecording = '1' ";
+        if($pass != '' and $pseudo != '') {
+            $req = "select * from $this->tableName where email = '".$pseudo."' and password = '".$pass."' and completeRecording = '1' ";
             $result = mysql_query($req);
             if( mysql_num_rows($result) > 0 ) {
                 $row = mysql_fetch_array($result);
@@ -215,7 +216,8 @@ class  user {
             <body>
                 <table cellspacing="0" cellpadding="0" class="table_parcours" align="center" >
                     <tr>
-                        <td width="438"  align="left"  ><img src="http://www.7ellclub.com/img/tools/7ellclub.jpg" border="0" /> </td>
+                        <td width="438"  align="left"  >
+                        <img src="http://codex.cro.st.com/themes/STTab/images/organization_logo.png" border="0" /> </td>
                     </tr>
                     <tr>
                         <td width="438" bgcolor="#FF8000"  ><font color="#FFFFFF" >Bienvenue</font></td>
