@@ -25,12 +25,24 @@ class ResultManager {
     /**
      * Store the execution result in DB
      *
-     * @param $output
+     * @param Array $output Execution output
      *
      * @return Boolean
      */
     function logNewResult($output) {
         $sql = "INSERT INTO result (output, date) VALUES ('".mysql_real_escape_string(join("\n", $output))."', ".time().")";
+        return mysql_query($sql);
+    }
+
+    /**
+     * Delete an execution result from DB
+     *
+     * @param Integer $id Id of the result to delete
+     *
+     * @return Boolean
+     */
+    function deleteResult($id) {
+        $sql = "DELETE FROM result WHERE id=".$id;
         return mysql_query($sql);
     }
 
@@ -46,7 +58,7 @@ class ResultManager {
         if(mysql_num_rows($result) > 0) {
             $output = '<table>';
             while ($row = mysql_fetch_array($result)) {
-                $output .= "<tr><td>".date(DATE_RFC822, $row['date'])."</td><td><pre>".$row['output']."</pre></td></tr>";
+                $output .= "<tr><td><a href=\"?delete_result=".$row['id']."\" >Delete</a></td><td>".date(DATE_RFC822, $row['date'])."</td><td><pre>".$row['output']."</pre></td></tr>";
             }
             $output .= '</table>';
         }

@@ -19,6 +19,14 @@
 ini_set('include_path', ini_get('include_path').PATH_SEPARATOR.dirname(__DIR__).DIRECTORY_SEPARATOR.'include');
 require_once 'ResultManager.class.php';
 
+$resultManager = new ResultManager();
+
+if (!empty($_REQUEST)) {
+    if (isset($_REQUEST['delete_result']) && !empty($_REQUEST['delete_result'])) {
+        $resultManager->deleteResult($_REQUEST['delete_result']);
+    }
+}
+
 echo '
 <html>
     <head>
@@ -32,7 +40,6 @@ echo '
         <div id="body_skin">
 ';
 
-$resultManager = new ResultManager();
 echo $resultManager->displayResults();
 
 echo '
