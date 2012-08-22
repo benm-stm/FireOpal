@@ -124,6 +124,7 @@ if (isset($_REQUEST['run'])) {
     $testSuite = new TestSuite(substr($_REQUEST['run'], 0, -3));
     $testSuite->run();
     echo 'Result file stored';
+    header("Location: result.php");
 }
 echo '
                             </pre>

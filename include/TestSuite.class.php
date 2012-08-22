@@ -29,6 +29,8 @@
 *        OutOfBoundsException, OverflowException, RangeException, UnderflowException, UnexpectedValueException
 */
 require_once 'Setup.class.php';
+require_once 'ResultManager.class.php';
+
 class TestSuite {
 
     const RSPEC_HTML_FORMATTER          = 1;
@@ -37,7 +39,6 @@ class TestSuite {
     const RSPEC_COLOR                   = 8;
 
     private $name;
-    private $_result;
     private $_testSuiteFile;
     private $_testCasesMap;
 
@@ -58,7 +59,6 @@ class TestSuite {
         } else {
             throw new InvalidArgumentException('TestSuite constructor needs a string parameter. Input was : '.$testSuiteName);
         }
-        $this->_result        = array();
         $this->_testCasesMap  = array();
     }
 
@@ -69,8 +69,9 @@ class TestSuite {
      */
     public function run() {
         $logFile = '../log/resultFile_'.time();
-        exec('ruby '.$this->_testSuiteFile.' --format documentation --out '.$logFile.' 2>&1', $this->_result);
-        file_put_contents($logFile, "Run in ".date("D M j, Y G:i:s T")."\n", FILE_APPEND);
+        exec('ruby '.$this->_testSuiteFile.' --format documentation', $output);
+        $resultManager = new ResultManager();
+        $resultManager->logNewResult($output);
     }
 
     /**
