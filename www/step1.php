@@ -17,7 +17,7 @@
  */
 
 header("Content-Type: text/html; charset=iso-8859-1");
-require_once('User.class.php');
+require_once('../include/common/User.class.php');
 
 echo '
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -27,9 +27,9 @@ echo '
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <title>Automatic validation, Sign Up</title>
 <link rel="stylesheet" type="text/css" href="css/style2.css">
-<link href="../www/include/css/index.css" rel="stylesheet" type="text/css" />
-<link href="../www/include/include/css/style.css" rel="stylesheet" type="text/css" />
-<link href="../www/include/css/step1.css" rel="stylesheet" type="text/css" />
+<link href="include/css/index.css" rel="stylesheet" type="text/css" />
+<link href="include/include/css/style.css" rel="stylesheet" type="text/css" />
+<link href="include/css/step1.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="js/jquery-1.3.2.min.js" ></script>
 <script type="text/javascript" src="js/cookies-bandeau.js" ></script> 
 <script src="include/js/AC_RunActiveContent.js" type="text/javascript"></script>
@@ -44,16 +44,16 @@ $remail = '';
 $mailexist = 0;
 
 $req1 = '<div style="width:20px; float:left;">
-            <img src="../www/include/images/signup/puce_erreur_blc.jpg" />
+            <img src="include/images/signup/puce_erreur_blc.jpg" />
         </div>';
 $req2 = '<div style="width:20px; float:left;">
-            <img src="../www/include/images/signup/puce_erreur_blc.jpg" />
+            <img src="include/images/signup/puce_erreur_blc.jpg" />
         </div>';
 $req3 = '<div style="width:20px; float:left;">
-            <img src="../www/include/images/signup/puce_erreur_blc.jpg" />
+            <img src="include/images/signup/puce_erreur_blc.jpg" />
         </div>';
 $req4 = '<div style="width:20px; float:left;">
-            <img src="../www/include/images/signup/puce_erreur_blc.jpg" />
+            <img src="include/images/signup/puce_erreur_blc.jpg" />
         </div>';
 
 if (isset($_GET['return']) and isset($_SESSION['sess_idUser_temp'])) {
@@ -95,15 +95,15 @@ if (isset($_POST['email'])) {
                     </div>';
         if ($remail == '' )
             $req2 = '<div style="width:20px; float:left;">
-                        <img src="../www/include/images/signup/puce_erreur.jpg" />
+                        <img src="include/images/signup/puce_erreur.jpg" />
                     </div>';
         if ($pass == '' )
             $req3 = '<div style="width:20px; float:left;">
-                        <img src="../www/include/images/signup/puce_erreur.jpg" />
+                        <img src="include/images/signup/puce_erreur.jpg" />
                     </div>';
         if ($rpass == '' )
             $req4 = '<div style="width:20px; float:left;">
-                         <img src="../www/include/images/signup/puce_erreur.jpg" />
+                         <img src="include/images/signup/puce_erreur.jpg" />
                     </div>';
         if ($email == '' )
             $error .= 'Type your email address,';
@@ -120,7 +120,7 @@ if (isset($_POST['email'])) {
 if (strnatcmp($email, $remail) != 0) {
     $error .= '&nbsp;the email you typed is not identical on both lines,&nbsp;';   
     $req2 = '<div style="width:20px; float:left;">
-            <img src="../www/include/images/signup/puce_erreur.jpg" />
+            <img src="include/images/signup/puce_erreur.jpg" />
             </div>';
     $cross = false;
 /*   $messageStack->add('Vérifiez les emails <br />', 'error'); */  
@@ -129,7 +129,7 @@ if (strnatcmp($email, $remail) != 0) {
 $Syntaxe='#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,5}$#'; 
 if (!preg_match($Syntaxe, $email)) {
     $req1 = '<div style="width:20px; float:left;">
-            <img src="../www/include/images/signup/puce_erreur.jpg" />
+            <img src="include/images/signup/puce_erreur.jpg" />
             </div>';
     $error .= '&nbsp;check your email address,&nbsp;'; 
     $cross = false;
@@ -139,7 +139,7 @@ if (!preg_match($Syntaxe, $email)) {
 if ( strnatcmp($pass, $rpass) != 0 ) {
     $error .= '&nbsp;the password you typed is not identical on both lines,&nbsp;';
     $req4 = '<div style="width:20px; float:left;">
-                <img src="../www/include/images/signup/puce_erreur.jpg" />
+                <img src="include/images/signup/puce_erreur.jpg" />
             </div>';
     $cross = false;
     /* $messageStack->add('Vérifiez les mots de passe <br />', 'error'); */
@@ -163,7 +163,7 @@ if ($cross == true) {
         $messageStack->add('Enregistrement reussi <br />', 'success');
     } else {
         $req1 = '<div style="width:20px; float:left;">
-                 <img src="../www/include/images/signup/puce_erreur.jpg" />
+                 <img src="include/images/signup/puce_erreur.jpg" />
                  </div>';
         //$req2 = '<font color="red" ><strong>!</strong></font>';        
         $error .= '&nbsp;This email address was already used to Sign up,&nbsp;';
@@ -202,15 +202,15 @@ echo '
                 </div>
                 <div class="date" id="sign-titre3">
                     <div>
-                    <img src="../www/include/images/signup/puce_vert.jpg" />
+                    <img src="include/images/signup/puce_vert.jpg" />
                     <span class="date">Add test cases</span>
                     </div>
                     <div>
-                    <img src="../www/include/images/signup/puce_vert.jpg"/>
+                    <img src="include/images/signup/puce_vert.jpg"/>
                     <span class="date">Build testsuites</span>
                     </div>
                     <div>
-                    <img src="../www/include/images/signup/puce_vert.jpg" />
+                    <img src="include/images/signup/puce_vert.jpg" />
                     <span class="date">Validate releases</span>
                     </div>
                 </div>
@@ -271,7 +271,7 @@ echo $req4.'
 echo $errorMsg.'
             </div>
             <div id="sign-titre8">
-                <input type="image"  value="Next" id="btnNext" src="../www/include/images/signup/next.jpg" width="66" height="18" border="0" alt="Automatic validation">
+                <input type="image"  value="Next" id="btnNext" src="include/images/signup/next.jpg" width="66" height="18" border="0" alt="Automatic validation">
             </div>
             <div id="sign-titre774">
                 <p class="a2">- Your email will not be visible on the Automatic validation engine<br />
