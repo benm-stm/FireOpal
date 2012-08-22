@@ -29,17 +29,10 @@ class  user {
     var $country;
     var $city;
     var $photo;
-    //var $logo;
     var $typeOrganisation;
-    //var $activityFocus1;
-    //var $activityFocus2;
-    //var $activityFocus3;
-    //var $titleQualification1;
-    //var $titleQualification2;
     var $englishLanguage;
     var $sex;
     var $born;
-    //var $position;
     var $check1;
     var $check2;
     var $check3;
@@ -68,13 +61,7 @@ class  user {
               "country"  =>"country" ,
               "city"  =>"city" ,
               "photo"  =>"photo" ,
-              "logo" => "logo",
               "typeOrganisation"  =>"typeOrganisation" ,
-              "activityFocus1"  =>"activityFocus1" ,
-              "activityFocus2"  =>"activityFocus2" ,
-              "activityFocus3"  =>"activityFocus3" ,
-              "titleQualification1"  =>"titleQualification1" ,
-              "titleQualification2"  =>"titleQualification2" ,
               "englishLanguage"  =>"englishLanguage" ,
               "sex"  =>"sex" ,
               "born"  =>"born" ,
@@ -82,7 +69,6 @@ class  user {
               "check2"  =>"check2" ,
               "check3"  =>"check3" ,
               "check4"  =>"check4" ,
-              "position" => "position",
               "completeRecording"  =>"completeRecording" 
            );
 
