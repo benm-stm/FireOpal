@@ -33,22 +33,12 @@ class  user {
     var $englishLanguage;
     var $sex;
     var $born;
-    var $check1;
-    var $check2;
-    var $check3;
-    var $check4;
     var $completeRecording;    
 
     /**
      * Table name
      */
     var $tableName = 'user';
-
-    /**
-     * Liste des champs de la table user
-     *
-     * @var Liste
-     */
 
     var $attributs = array (
               "id" =>"id" ,
@@ -65,10 +55,6 @@ class  user {
               "englishLanguage"  =>"englishLanguage" ,
               "sex"  =>"sex" ,
               "born"  =>"born" ,
-              "check1"  =>"check1" ,
-              "check2"  =>"check2" ,
-              "check3"  =>"check3" ,
-              "check4"  =>"check4" ,
               "completeRecording"  =>"completeRecording" 
            );
 
@@ -181,11 +167,11 @@ class  user {
     }
 
     function sendMail( $temp_passe, $max ) {
-        $From  = "From:tester@codex.cro.st.com\n";
-        $From .= "MIME-version: 1.0\n";
-        $From .= "Content-type: text/html; charset= iso-8859-1\n";
-        $Sujet = 'Valider votre inscription';
-        $link = ' <a href="http://crx2106.cro.st.com/confirm.php?id1='.$max.'&id2='.$temp_passe.'">Cliquez ici</a>';
+        $From    = "From:tester@codex.cro.st.com\n";
+        $From   .= "MIME-version: 1.0\n";
+        $From   .= "Content-type: text/html; charset= iso-8859-1\n";
+        $Sujet   = 'Valider votre inscription';
+        $link    = ' <a href="http://crx2106.cro.st.com/confirm.php?id1='.$max.'&id2='.$temp_passe.'">Cliquez ici</a>';
         $Message = '
             <html>
             <head>
@@ -215,7 +201,6 @@ class  user {
                         Votre Pseudo : <strong>'.$this->pseudo.'</strong><br>
                         Votre Mot de passe :<strong>'.$this->motPasse.'</strong><br>
                         Pour valider votre compte veuillez '.$link.'<br>
-                        Merci pour votre confiance l\' equipe codex<br><br> 
                         Si vous n\'arrivez pas à cliquer sur le lien veuillez copier coller ce lien dans <br>
                         la barre d\'adresse, merci
                         http://crx2106.cro.st.com/confirm.php?id1='.$max.'&id2='.$temp_passe.'
