@@ -58,9 +58,8 @@ class ResultManager {
         if(mysql_num_rows($result) > 0) {
             $output = '<table border="1"><th>Testsuite</th><th>Run date</th><th>Output</th><th>Download output</th><th>Delete</th>';
             while ($row = mysql_fetch_array($result)) {
-                $testsuite = explode("\n", $row['output']);
-                $testsuite = $testsuite[1];
-                $output .= '
+                $testsuite = $this->getTestSuiteName($row['output']);
+                $output    .= '
 <tr>
     <td>
         '.$testsuite.'
@@ -102,12 +101,24 @@ class ResultManager {
         if(mysql_num_rows($result) > 0) {
             $row = mysql_fetch_array($result);
             header("Content-Type: application/force-download");
-            header('Content-Disposition: filename="result"');
+            header('Content-Disposition: filename="'.$this->getTestSuiteName($row['output']).'_'.$row['date'].'.txt"');
             echo $row['output'];
             echo "\n\n";
             echo "Run in ".date("D M j, Y G:i:s T", $row['date']);
             exit;
         }
+    }
+
+    /**
+     * Get testsuiteName from output
+     *
+     * @param String $output Output of the testsuite execution
+     *
+     * @return String
+     */
+    function getTestSuiteName($output) {
+        $lines = explode("\n", $output);
+        return $lines[1];
     }
 
 }
