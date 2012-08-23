@@ -58,11 +58,32 @@ class ResultManager {
         if(mysql_num_rows($result) > 0) {
             $output = '<table>';
             while ($row = mysql_fetch_array($result)) {
-                $output .= "<tr><td><a href=\"?delete_result=".$row['id']."\" >Delete</a></td><td>".date(DATE_RFC822, $row['date'])."</td><td><pre>".$row['output']."</pre></td></tr>";
+                $output .= "<tr><td><a href=\"?delete_result=".$row['id']."\" >Delete</a></td><td>".date("D M j, Y G:i:s T", $row['date'])."</td><td><pre>".$row['output']."</pre></td><td><a href=\"?download_result=".$row['id']."\" >Download</a></td></tr>";
             }
             $output .= '</table>';
         }
         return $output;
+    }
+
+    /**
+     * Download an execution rsults
+     *
+     * @param Integer $id Id of the result to download
+     *
+     * @return Void
+     */
+    function downloadResult($id) {
+        $sql  = "SELECT * FROM result WHERE id=".$id;
+        $result = mysql_query($sql);
+        if(mysql_num_rows($result) > 0) {
+            $row = mysql_fetch_array($result);
+            header("Content-Type: application/force-download");
+            header('Content-Disposition: filename="result"');
+            echo $row['output'];
+            echo "\n\n";
+            echo "Run in ".date("D M j, Y G:i:s T", $row['date']);
+            exit;
+        }
     }
 
 }

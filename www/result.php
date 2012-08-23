@@ -25,6 +25,9 @@ if (!empty($_REQUEST)) {
     if (isset($_REQUEST['delete_result']) && !empty($_REQUEST['delete_result'])) {
         $resultManager->deleteResult($_REQUEST['delete_result']);
     }
+    if (isset($_REQUEST['download_result']) && !empty($_REQUEST['download_result'])) {
+        $resultManager->downloadResult($_REQUEST['download_result']);
+    }
 }
 
 echo '
