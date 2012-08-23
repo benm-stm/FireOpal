@@ -71,7 +71,8 @@ class TestSuite {
         $logFile = '../log/resultFile_'.time();
         exec('ruby '.$this->_testSuiteFile.' --format documentation', $output);
         $resultManager = new ResultManager();
-        $resultManager->logNewResult($output);
+        $testSuite = file_get_contents($this->_testSuiteFile);
+        $resultManager->logNewResult($output, $testSuite);
     }
 
     /**

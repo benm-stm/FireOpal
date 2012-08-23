@@ -25,12 +25,13 @@ class ResultManager {
     /**
      * Store the execution result in DB
      *
-     * @param Array $output Execution output
+     * @param Array  $output    Execution output
+     * @param String $testSuite Snapshot of the testsuite that gave the output
      *
      * @return Boolean
      */
-    function logNewResult($output) {
-        $sql = "INSERT INTO result (output, date) VALUES ('".mysql_real_escape_string(join("\n", $output))."', ".time().")";
+    function logNewResult($output, $testSuite) {
+        $sql = "INSERT INTO result (output, testsuite, date) VALUES ('".mysql_real_escape_string(join("\n", $output))."', '".mysql_real_escape_string($testSuite)."', ".time().")";
         return mysql_query($sql);
     }
 
@@ -62,7 +63,7 @@ class ResultManager {
                 $output    .= '
 <tr>
     <td>
-        '.$testsuite.'
+        <a href="?download_testsuite='.$row['id'].'" >'.$testsuite.'</a>
     </td>
     <td>
         '.date("D M j, Y G:i:s T", $row['date']).'
@@ -105,6 +106,25 @@ class ResultManager {
             echo $row['output'];
             echo "\n\n";
             echo "Run in ".date("D M j, Y G:i:s T", $row['date']);
+            exit;
+        }
+    }
+
+    /**
+     * Download testsuite corresponding to a result
+     *
+     * @param Integer $id Id of the testsuit's result
+     *
+     * @return Void
+     */
+    function downloadTestSuite($id) {
+        $sql  = "SELECT * FROM result WHERE id=".$id;
+        $result = mysql_query($sql);
+        if(mysql_num_rows($result) > 0) {
+            $row = mysql_fetch_array($result);
+            header("Content-Type: application/force-download");
+            header('Content-Disposition: filename="'.$this->getTestSuiteName($row['output']).'_'.$row['date'].'.rb"');
+            echo $row['testsuite'];
             exit;
         }
     }

@@ -28,6 +28,9 @@ if (!empty($_REQUEST)) {
     if (isset($_REQUEST['download_result']) && !empty($_REQUEST['download_result'])) {
         $resultManager->downloadResult($_REQUEST['download_result']);
     }
+    if (isset($_REQUEST['download_testsuite']) && !empty($_REQUEST['download_testsuite'])) {
+        $resultManager->downloadTestSuite($_REQUEST['download_testsuite']);
+    }
 }
 
 echo '
