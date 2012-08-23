@@ -31,8 +31,6 @@ echo '
 <link href="include/include/css/style.css" rel="stylesheet" type="text/css" />
 <link href="include/css/step1.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="js/jquery-1.3.2.min.js" ></script>
-<script type="text/javascript" src="js/cookies-bandeau.js" ></script> 
-<script src="include/js/AC_RunActiveContent.js" type="text/javascript"></script>
 </head>
 ';
 
@@ -91,7 +89,7 @@ if (isset($_POST['email'])) {
     if ( $email == '' or $remail == '' or $pass == '' or $rpass == ''   ) {
         if ($email == '' )
             $req1 = '<div style="width:20px; float:left;">
-                        <img src="../wwww/include/images/signup/puce_erreur.jpg" />
+                        <img src="include/images/signup/puce_erreur.jpg" />
                     </div>';
         if ($remail == '' )
             $req2 = '<div style="width:20px; float:left;">
@@ -172,7 +170,7 @@ if ($error != '') {
     if($mailexist) {
         $error = str_replace("&nbsp;&nbsp;","&nbsp;",$error);
         if(strrchr($error,",") == ",&nbsp;") $error = substr($error,0,(strlen($error)-7));
-        $error = $error."." ;
+        $error  = $error."." ;
         $error .= '<br><br><p class="a2" style="font-weight:normal">
                   Want to <a href="sign.php" class="lienvert2">Sign in ?</a><br />
                   <a href="#" class="lienvert2">Forgot your password ?</a></p>';
