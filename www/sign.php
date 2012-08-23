@@ -81,24 +81,24 @@ echo '
 <div class="blocsign1-1">
 <div class="sign_titreb1_1">CREATE YOUR ACCOUNT</div>
 <div class="sign_titreb1_2">
-    <img src="../www/include/images/sign/puce2.jpg" width="8" height="8" />
+    <img src="include/images/sign/puce2.jpg" width="8" height="8" />
     <span class="joinText">Add Ruby/webdriver testcases</span></div>
 <div class="sign_titreb1_3">
-    <img src="../www/include/images/sign/puce2.jpg" width="8" height="8" /> 
+    <img src="include/images/sign/puce2.jpg" width="8" height="8" /> 
     <span class="joinText">Set up configuration params</span></div>
 <div class="sign_titreb1_3">
-    <img src="../www/include/images/sign/puce2.jpg" width="8" height="8" />
+    <img src="include/images/sign/puce2.jpg" width="8" height="8" />
     <span class="joinText">Create and run testsuites</span></div>
 <div class="sign_titreb1_3">
-    <img src="../www/include/images/sign/puce2.jpg" width="8" height="8" />
+    <img src="include/images/sign/puce2.jpg" width="8" height="8" />
     <span class="joinText">Command line interface</span></div>
 <div class="sign_titreb1_3">
-    <img src="../www/include/images/sign/puce2.jpg" width="8" height="8" />
+    <img src="include/images/sign/puce2.jpg" width="8" height="8" />
     <span class="joinText">Retrieve testsuites results</span></div>
 <div class="sign_titreb1_4">
     <a href="step1.php">
-    <img src="../www/include/images/sign/joinfree.jpg" width="226" height="41" border="0" /></a>
-    </div><div class="sign_titreb1_5"><img src="../www/include/images/sign/under.jpg" /></div>
+    <img src="include/images/sign/joinfree.jpg" width="226" height="41" border="0" /></a>
+    </div><div class="sign_titreb1_5"><img src="include/images/sign/under.jpg" /></div>
 <div class="sign_titreb1_6"><span class="txtgris" style="font-size:10px;">
 
 </div>
@@ -132,7 +132,7 @@ echo '
   <div id="champs1">
     <div class="sign_titreb2_4">
       <p class="joinText">
-      <input type="image"  value="Next" id="btnNext" src="../www/include/images/sign/login.jpg" width="85" height="18" border="0" alt="sustenn, the Sustainable Development Portal" >
+      <input type="image"  value="Next" id="btnNext" src="include/images/sign/login.jpg" width="85" height="18" border="0" alt="Automatic validation engine, login" >
     </p>
     </div>
   </div>
