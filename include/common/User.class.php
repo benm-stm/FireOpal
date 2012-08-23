@@ -25,14 +25,7 @@ class  user {
     var $surname;
     var $familyName;
     var $organisation;
-    var $title;
-    var $country;
-    var $city;
-    var $photo;
-    var $typeOrganisation;
     var $englishLanguage;
-    var $sex;
-    var $born;
     var $completeRecording;    
 
     /**
@@ -41,21 +34,14 @@ class  user {
     var $tableName = 'user';
 
     var $attributs = array (
-              "id" =>"id" ,
-              "email"   =>"email" ,
-              "password"   =>"password" ,
-              "surname"     =>"surname" ,
-              "familyName"  =>"familyName" ,
-              "organisation"  =>"organisation" ,
-              "title"  =>"title" ,
-              "country"  =>"country" ,
-              "city"  =>"city" ,
-              "photo"  =>"photo" ,
-              "typeOrganisation"  =>"typeOrganisation" ,
-              "englishLanguage"  =>"englishLanguage" ,
-              "sex"  =>"sex" ,
-              "born"  =>"born" ,
-              "completeRecording"  =>"completeRecording" 
+              "id"                => "id",
+              "email"             => "email",
+              "password"          => "password",
+              "surname"           => "surname",
+              "familyName"        => "familyName",
+              "organisation"      => "organisation",
+              "englishLanguage"   => "englishLanguage",
+              "completeRecording" => "completeRecording" 
            );
 
     /**
@@ -65,7 +51,7 @@ class  user {
      */
 
     function  user() {
-     }
+    }
 
     /**
      * Save user 
@@ -74,13 +60,13 @@ class  user {
      */
     function save($id = '') {
     // update a given user
-        if($id!='') {
-            $query="Update $this->tableName  set ";
-            $i=0;
-            foreach( $this->attributs as $att=>$bddatt) {
-                if($i!=0) {
-                    if($this->$att!='') {
-                        $query.=" ".$bddatt."='".$this->$att."',";
+        if ($id != '') {
+            $query = "Update $this->tableName  set ";
+            $i     = 0;
+            foreach ( $this->attributs as $att=>$bddatt) {
+                if ($i != 0) {
+                    if ($this->$att != '') {
+                        $query .= " ".$bddatt."='".$this->$att."',";
                     }
                 }
                 $i++;
@@ -92,21 +78,21 @@ class  user {
         // insert new user given its id
         $query  = "Insert into $this->tableName (";
         $values = " values (";
-        $i = 0;
-        foreach( $this->attributs as $att=>$bddatt) {
-            if($this->$att != '') {
+        $i      = 0;
+        foreach ( $this->attributs as $att=>$bddatt) {
+            if ($this->$att != '') {
                 $query .= $bddatt.",";
-                if($i != 0) {
+                if ($i != 0) {
                     $values .= "'".$this->$att."',";
                 }
             }
             $i++;
         }
-        $query_temp = substr($query,0,strlen($query)-1);
-        $query = $query_temp.")  ";
+        $query_temp  = substr($query,0,strlen($query)-1);
+        $query       = $query_temp.")  ";
         $values_temp = substr($values,0,strlen($values)-1);
-        $values = $values_temp.")  ";
-        $query .= $values ;    
+        $values      = $values_temp.")  ";
+        $query      .= $values ;    
         }
     mysql_query($query);
     }
@@ -117,12 +103,12 @@ class  user {
      * @param Integer $id
      */
     function loadFromId($Id) {
-        $field_names=" * ";
-        $whereClause="WHERE id=$Id ";
-        $query  = "SELECT * FROM ".$this->tableName." ".$whereClause ;
-        $result = mysql_query($query);
-        if($List = mysql_fetch_array($result)) {
-            foreach($this->attributs as $classatt=>$bddatt) {
+        $field_names = " * ";
+        $whereClause = "WHERE id=$Id ";
+        $query       = "SELECT * FROM ".$this->tableName." ".$whereClause ;
+        $result      = mysql_query($query);
+        if ($List = mysql_fetch_array($result)) {
+            foreach ($this->attributs as $classatt=>$bddatt) {
                 $this->$classatt=$List[$bddatt];
             }
         }
@@ -137,10 +123,10 @@ class  user {
     }
 
     function userExist() {
-        $req = "select  * from $this->tableName where email='".$this->email."' order by id";
+        $req  = "select  * from $this->tableName where email='".$this->email."' order by id";
         $rows = mysql_query($req);
         $nb_ligne = mysql_num_rows($rows);
-        if( $nb_ligne > 0 ) {
+        if ( $nb_ligne > 0 ) {
             return true;
         } else {
             return false;
@@ -150,10 +136,10 @@ class  user {
     function controlPassword($pseudo, $pass) {
         $pseudo = trim($pseudo);
         $pass   = trim($pass);
-        if($pass != '' and $pseudo != '') {
-            $req = "select * from $this->tableName where email = '".$pseudo."' and password = '".$pass."' and completeRecording = '1' ";
+        if ($pass != '' and $pseudo != '') {
+            $req    = "select * from $this->tableName where email = '".$pseudo."' and password = '".$pass."' and completeRecording = '1' ";
             $result = mysql_query($req);
-            if( mysql_num_rows($result) > 0 ) {
+            if ( mysql_num_rows($result) > 0 ) {
                 $row = mysql_fetch_array($result);
                 $ID = $row['id'];
                 $this ->loadFromId($ID);
@@ -166,12 +152,12 @@ class  user {
         }
     }
 
-    function sendMail( $temp_passe, $max ) {
+    function sendMail($temp_passe, $max ) {
         $From    = "From:tester@codex.cro.st.com\n";
         $From   .= "MIME-version: 1.0\n";
         $From   .= "Content-type: text/html; charset= iso-8859-1\n";
-        $Sujet   = 'Valider votre inscription';
-        $link    = ' <a href="http://crx2106.cro.st.com/confirm.php?id1='.$max.'&id2='.$temp_passe.'">Cliquez ici</a>';
+        $Sujet   = 'Activate your account';
+        $link    = ' <a href="http://crx2106.cro.st.com/confirm.php?id1='.$max.'&id2='.$temp_passe.'">Click here</a>';
         $Message = '
             <html>
             <head>
@@ -192,18 +178,15 @@ class  user {
                         <img src="http://codex.cro.st.com/themes/STTab/images/organization_logo.png" border="0" /> </td>
                     </tr>
                     <tr>
-                        <td width="438" bgcolor="#FF8000"  ><font color="#FFFFFF" >Bienvenue</font></td>
+                        <td width="438" bgcolor="#FF8000"  ><font color="#FFFFFF" >Welcome</font></td>
                     </tr>
                     <tr >
                         <td width="438" style="padding-left:5px;" >
                         <p class="texte">
-                        Votre E-mail : <strong>'.$this->email.'</strong><br>
-                        Votre Pseudo : <strong>'.$this->pseudo.'</strong><br>
-                        Votre Mot de passe :<strong>'.$this->motPasse.'</strong><br>
-                        Pour valider votre compte veuillez '.$link.'<br>
-                        Si vous n\'arrivez pas à cliquer sur le lien veuillez copier coller ce lien dans <br>
-                        la barre d\'adresse, merci
-                        http://crx2106.cro.st.com/confirm.php?id1='.$max.'&id2='.$temp_passe.'
+                        Your E-mail : <strong>'.$this->email.'</strong><br>
+                        Your username : <strong>'.$this->pseudo.'</strong><br>
+                        Your password :<strong>'.$this->motPasse.'</strong><br>
+                        In order to activate your account, you should '.$link.'<br>
                         </p>
                         </td>
                     </tr> 
