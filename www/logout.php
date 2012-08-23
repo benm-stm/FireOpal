@@ -25,6 +25,6 @@ if (isset($_SESSION['sess_idUser'])) {
         setcookie ("rememberMe", "", time() - 36003600*24*7);
     }
     session_unregister('sess_idUser');
-    header('Location: ../www/index.php'); 
+    header('Location: index.php'); 
 }
 ?>
