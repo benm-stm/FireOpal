@@ -56,12 +56,14 @@ class ResultManager {
         $sql  = "SELECT * FROM result ORDER BY date";
         $result = mysql_query($sql);
         if(mysql_num_rows($result) > 0) {
-            $output = '<table>';
+            $output = '<table border="1"><th>Testsuite</th><th>Run date</th><th>Output</th><th>Download output</th><th>Delete</th>';
             while ($row = mysql_fetch_array($result)) {
+                $testsuite = explode("\n", $row['output']);
+                $testsuite = $testsuite[1];
                 $output .= '
 <tr>
     <td>
-        <a href="?delete_result='.$row['id'].'" >Delete</a>
+        '.$testsuite.'
     </td>
     <td>
         '.date("D M j, Y G:i:s T", $row['date']).'
@@ -76,6 +78,9 @@ class ResultManager {
     </td>
     <td>
         <a href="?download_result='.$row['id'].'" >Download</a>
+    </td>
+    <td>
+        <a href="?delete_result='.$row['id'].'" >Delete</a>
     </td>
 </tr>';
             }
