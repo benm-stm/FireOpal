@@ -39,13 +39,14 @@ class ResultManager {
     /**
      * Store the execution result in DB
      *
-     * @param Array  $output    Execution output
-     * @param String $testSuite Snapshot of the testsuite that gave the output
+     * @param Array  $output        Execution output
+     * @param String $testSuiteName Name of the testsuite
+     * @param String $testSuite     Snapshot of the testsuite that gave the output
      *
      * @return Boolean
      */
-    function logNewResult($output, $testSuite) {
-        $sql = "INSERT INTO result (user, output, testsuite, date) VALUES (".$this->user->getAtt('id').", '".mysql_real_escape_string(join("\n", $output))."', '".mysql_real_escape_string($testSuite)."', ".time().")";
+    function logNewResult($output, $testSuiteName, $testSuite) {
+        $sql = "INSERT INTO result (user, name, output, testsuite, date) VALUES (".$this->user->getAtt('id').", '".$testSuiteName."', '".mysql_real_escape_string(join("\n", $output))."', '".mysql_real_escape_string($testSuite)."', ".time().")";
         return mysql_query($sql);
     }
 
@@ -77,11 +78,10 @@ class ResultManager {
         if($result && mysql_num_rows($result) > 0) {
             $output = '<table border="1"><th>Testsuite</th><th>Run date</th><th>Output</th><th>Download output</th><th>Delete</th>';
             while ($row = mysql_fetch_array($result)) {
-                $testsuite = $this->getTestSuiteName($row['output']);
                 $output    .= '
 <tr>
     <td>
-        <a href="?download_testsuite='.$row['id'].'" >'.$testsuite.'</a>
+        <a href="?download_testsuite='.$row['id'].'" >'.$row['name'].'</a>
     </td>
     <td>
         '.date("D M j, Y G:i:s T", $row['date']).'
@@ -122,7 +122,7 @@ class ResultManager {
         if($result && mysql_num_rows($result) > 0) {
             $row = mysql_fetch_array($result);
             header("Content-Type: application/force-download");
-            header('Content-Disposition: filename="'.$this->getTestSuiteName($row['output']).'_'.$row['date'].'.txt"');
+            header('Content-Disposition: filename="'.$row['name'].'_'.$row['date'].'.txt"');
             echo $row['output'];
             echo "\n\n";
             echo "Run in ".date("D M j, Y G:i:s T", $row['date']);
@@ -145,22 +145,10 @@ class ResultManager {
         if($result && mysql_num_rows($result) > 0) {
             $row = mysql_fetch_array($result);
             header("Content-Type: application/force-download");
-            header('Content-Disposition: filename="'.$this->getTestSuiteName($row['output']).'_'.$row['date'].'.rb"');
+            header('Content-Disposition: filename="'.$row['name'].'_'.$row['date'].'.rb"');
             echo $row['testsuite'];
             exit;
         }
-    }
-
-    /**
-     * Get testsuiteName from output
-     *
-     * @param String $output Output of the testsuite execution
-     *
-     * @return String
-     */
-    function getTestSuiteName($output) {
-        $lines = explode("\n", $output);
-        return $lines[1];
     }
 
 }

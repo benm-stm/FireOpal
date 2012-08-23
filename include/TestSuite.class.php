@@ -71,10 +71,10 @@ class TestSuite {
      */
     public function run() {
         if ($this->_user) {
-            exec('ruby '.$this->_testSuiteFile.' --format documentation', $output);
+            exec('ruby '.$this->_testSuiteFile.' --format documentation 2>&1', $output);
             $resultManager = new ResultManager($this->_user);
             $testSuite = file_get_contents($this->_testSuiteFile);
-            $resultManager->logNewResult($output, $testSuite);
+            $resultManager->logNewResult($output, $this->name, $testSuite);
             return true;
         }
         return false;
