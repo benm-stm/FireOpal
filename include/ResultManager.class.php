@@ -58,7 +58,26 @@ class ResultManager {
         if(mysql_num_rows($result) > 0) {
             $output = '<table>';
             while ($row = mysql_fetch_array($result)) {
-                $output .= "<tr><td><a href=\"?delete_result=".$row['id']."\" >Delete</a></td><td>".date("D M j, Y G:i:s T", $row['date'])."</td><td><pre>".$row['output']."</pre></td><td><a href=\"?download_result=".$row['id']."\" >Download</a></td></tr>";
+                $output .= '
+<tr>
+    <td>
+        <a href="?delete_result='.$row['id'].'" >Delete</a>
+    </td>
+    <td>
+        '.date("D M j, Y G:i:s T", $row['date']).'
+    </td>
+    <td>
+        <fieldset>
+            <legend class="toggler" onclick="toggle_visibility(\'result_output_'.$row['id'].'\'); if (this.innerHTML == \'+\') { this.innerHTML = \'-\'; } else { this.innerHTML = \'+\'; }">+</legend>
+            <span id="result_output_'.$row['id'].'" style="display: none;" >
+                <pre>'.$row['output'].'</pre>
+            </span>
+        </fieldset>
+    </td>
+    <td>
+        <a href="?download_result='.$row['id'].'" >Download</a>
+    </td>
+</tr>';
             }
             $output .= '</table>';
         }

@@ -35,6 +35,7 @@ echo '
     <head>
         <title>Codex automatic validation</title>
         <link href="include/css/index.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="include/scripts/script.js"></script>
     </head>
     <body>
         <div id="header">
