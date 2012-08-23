@@ -22,7 +22,7 @@ ini_set('memory_limit', -1);
 ini_set('include_path', ini_get('include_path').PATH_SEPARATOR.dirname(__DIR__).DIRECTORY_SEPARATOR.'include');
 require_once('TestSuite.class.php');
 require_once('TestSuiteManager.class.php');
-require_once('../include/common/User.class.php');
+require_once('common/User.class.php');
 
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
@@ -43,8 +43,9 @@ echo '
 ';
 
 $welcomeMessage = '';
-$sign = '';
-$Myitems = '';
+$sign           = '';
+$Myitems        = '';
+$connectedUser  = null;
 
 if(!isset($_SESSION['sess_idUser'])) {
     $sign    = '<a href="sign.php" class="greenLink">Sign In</a> ';
@@ -121,10 +122,13 @@ echo '
                             <pre>';
 if (isset($_REQUEST['run'])) {
     // manage request
-    $testSuite = new TestSuite(substr($_REQUEST['run'], 0, -3));
-    $testSuite->run();
-    echo 'Result file stored';
-    header("Location: result.php");
+    $testSuite = new TestSuite(substr($_REQUEST['run'], 0, -3), $connectedUser);
+    $result = $testSuite->run();
+    if ($result) {
+        header("Location: result.php");
+    } else {
+        echo "TestSuite not run\nYou must be logged in to run a testsuite";
+    }
 }
 echo '
                             </pre>

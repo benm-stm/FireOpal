@@ -41,6 +41,7 @@ class TestSuite {
     private $name;
     private $_testSuiteFile;
     private $_testCasesMap;
+    private $_user;
 
     /**
      * Constructor of the class
@@ -51,7 +52,7 @@ class TestSuite {
      *
      * @return Void
      */
-    public function __construct($testSuiteName) {
+    public function __construct($testSuiteName, $user = null) {
         if (!empty($testSuiteName)) {
             $this->name = $testSuiteName;
             $testSuiteManager = new TestSuiteManager();
@@ -60,6 +61,7 @@ class TestSuite {
             throw new InvalidArgumentException('TestSuite constructor needs a string parameter. Input was : '.$testSuiteName);
         }
         $this->_testCasesMap  = array();
+        $this->_user          = $user;
     }
 
     /**
@@ -68,11 +70,14 @@ class TestSuite {
      * @return Void
      */
     public function run() {
-        $logFile = '../log/resultFile_'.time();
-        exec('ruby '.$this->_testSuiteFile.' --format documentation', $output);
-        $resultManager = new ResultManager();
-        $testSuite = file_get_contents($this->_testSuiteFile);
-        $resultManager->logNewResult($output, $testSuite);
+        if ($this->_user) {
+            exec('ruby '.$this->_testSuiteFile.' --format documentation', $output);
+            $resultManager = new ResultManager($this->_user);
+            $testSuite = file_get_contents($this->_testSuiteFile);
+            $resultManager->logNewResult($output, $testSuite);
+            return true;
+        }
+        return false;
     }
 
     /**

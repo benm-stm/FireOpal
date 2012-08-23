@@ -17,10 +17,24 @@
  */
 
 require_once 'common/db/connect.php';
+require_once 'common/User.class.php';
 
 class ResultManager {
 
     const RESULTS_PATH = "../log/";
+
+    var $user;
+
+    /**
+     * Constructor of the class
+     *
+     * @param User $user The connected user
+     *
+     * @return Void
+     */
+    function __construct(User $user) {
+        $this->user = $user;
+    }
 
     /**
      * Store the execution result in DB
@@ -31,7 +45,7 @@ class ResultManager {
      * @return Boolean
      */
     function logNewResult($output, $testSuite) {
-        $sql = "INSERT INTO result (output, testsuite, date) VALUES ('".mysql_real_escape_string(join("\n", $output))."', '".mysql_real_escape_string($testSuite)."', ".time().")";
+        $sql = "INSERT INTO result (user, output, testsuite, date) VALUES (".$this->user->getAtt('id').", '".mysql_real_escape_string(join("\n", $output))."', '".mysql_real_escape_string($testSuite)."', ".time().")";
         return mysql_query($sql);
     }
 
@@ -43,7 +57,9 @@ class ResultManager {
      * @return Boolean
      */
     function deleteResult($id) {
-        $sql = "DELETE FROM result WHERE id=".$id;
+        $sql = "DELETE FROM result
+                WHERE id = ".$id."
+                  AND user = ".$this->user->getAtt('id');
         return mysql_query($sql);
     }
 
@@ -54,9 +70,11 @@ class ResultManager {
      */
     function displayResults() {
         $output = '';
-        $sql  = "SELECT * FROM result ORDER BY date";
+        $sql  = "SELECT * FROM result
+                 WHERE user = ".$this->user->getAtt('id')."
+                 ORDER BY date";
         $result = mysql_query($sql);
-        if(mysql_num_rows($result) > 0) {
+        if($result && mysql_num_rows($result) > 0) {
             $output = '<table border="1"><th>Testsuite</th><th>Run date</th><th>Output</th><th>Download output</th><th>Delete</th>';
             while ($row = mysql_fetch_array($result)) {
                 $testsuite = $this->getTestSuiteName($row['output']);
@@ -97,9 +115,11 @@ class ResultManager {
      * @return Void
      */
     function downloadResult($id) {
-        $sql  = "SELECT * FROM result WHERE id=".$id;
+        $sql  = "SELECT * FROM result
+                 WHERE id = ".$id."
+                   AND user = ".$this->user->getAtt('id');
         $result = mysql_query($sql);
-        if(mysql_num_rows($result) > 0) {
+        if($result && mysql_num_rows($result) > 0) {
             $row = mysql_fetch_array($result);
             header("Content-Type: application/force-download");
             header('Content-Disposition: filename="'.$this->getTestSuiteName($row['output']).'_'.$row['date'].'.txt"');
@@ -118,9 +138,11 @@ class ResultManager {
      * @return Void
      */
     function downloadTestSuite($id) {
-        $sql  = "SELECT * FROM result WHERE id=".$id;
+        $sql  = "SELECT * FROM result
+                 WHERE id = ".$id."
+                   AND user = ".$this->user->getAtt('id');
         $result = mysql_query($sql);
-        if(mysql_num_rows($result) > 0) {
+        if($result && mysql_num_rows($result) > 0) {
             $row = mysql_fetch_array($result);
             header("Content-Type: application/force-download");
             header('Content-Disposition: filename="'.$this->getTestSuiteName($row['output']).'_'.$row['date'].'.rb"');

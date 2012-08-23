@@ -18,19 +18,33 @@
 
 ini_set('include_path', ini_get('include_path').PATH_SEPARATOR.dirname(__DIR__).DIRECTORY_SEPARATOR.'include');
 require_once 'ResultManager.class.php';
+require_once 'common/User.class.php';
 
-$resultManager = new ResultManager();
+if (!isset($_SESSION)) {
+    session_start();
+}
 
-if (!empty($_REQUEST)) {
-    if (isset($_REQUEST['delete_result']) && !empty($_REQUEST['delete_result'])) {
-        $resultManager->deleteResult($_REQUEST['delete_result']);
+if (isset($_SESSION['sess_idUser'])) {
+    $user = new user();
+    $user->loadFromId($_SESSION['sess_idUser']);
+
+    $resultManager = new ResultManager($user);
+
+    if (!empty($_REQUEST)) {
+        if (isset($_REQUEST['delete_result']) && !empty($_REQUEST['delete_result'])) {
+            $resultManager->deleteResult($_REQUEST['delete_result']);
+        }
+        if (isset($_REQUEST['download_result']) && !empty($_REQUEST['download_result'])) {
+            $resultManager->downloadResult($_REQUEST['download_result']);
+        }
+        if (isset($_REQUEST['download_testsuite']) && !empty($_REQUEST['download_testsuite'])) {
+            $resultManager->downloadTestSuite($_REQUEST['download_testsuite']);
+        }
     }
-    if (isset($_REQUEST['download_result']) && !empty($_REQUEST['download_result'])) {
-        $resultManager->downloadResult($_REQUEST['download_result']);
-    }
-    if (isset($_REQUEST['download_testsuite']) && !empty($_REQUEST['download_testsuite'])) {
-        $resultManager->downloadTestSuite($_REQUEST['download_testsuite']);
-    }
+
+    $content = $resultManager->displayResults();
+} else {
+    $content = 'You must be logged in to access to this page';
 }
 
 echo '
@@ -47,7 +61,7 @@ echo '
         <div id="body_skin">
 ';
 
-echo $resultManager->displayResults();
+echo $content;
 
 echo '
         </div>
