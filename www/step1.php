@@ -62,22 +62,6 @@ if (isset($_GET['return']) and isset($_SESSION['sess_idUser_temp'])) {
     session_destroy();
 }
 
-/*if(isset($_SESSION['sess_step'])) 
-{
-
- if((int)$_SESSION['sess_step'] != 1 and  (int)$_SESSION['sess_step'] != 4 )
- tep_redirect('step'.$_SESSION['sess_step'].'.php'); 
-}
-*/
-
-// save 
-if (isset($_SESSION['sess_idUser_temp'])) {
-    $user = new clsUsers();
-    $user->loadFromId($_SESSION['sess_idUser_temp']);
-    $email  = $user->email;
-    $remail = $user->email;
-}
-
 $error = '';
 if (isset($_POST['email'])) {
     $email  = (isset($_POST['email']) ? trim($_POST['email']) : '');
