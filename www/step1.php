@@ -70,7 +70,7 @@ if (isset($_GET['return']) and isset($_SESSION['sess_idUser_temp'])) {
 }
 */
 
-// enregistrement 
+// save 
 if (isset($_SESSION['sess_idUser_temp'])) {
     $user = new clsUsers();
     $user->loadFromId($_SESSION['sess_idUser_temp']);
@@ -122,7 +122,7 @@ if (strnatcmp($email, $remail) != 0) {
     $cross  = false;
 }
 
-$Syntaxe='#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,5}$#'; 
+$Syntaxe = '#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,5}$#'; 
 if (!preg_match($Syntaxe, $email)) {
     $req1 = '<div style="width:20px; float:left;">
             <img src="include/images/signup/puce_erreur.jpg" />
@@ -148,12 +148,10 @@ if ($cross == true) {
     if ($cross == true) {
         $user->password = $pass;
         $user->save();
-        //$_SESSION['sess_idUser_temp'] = $user->getMaxUser();
-        $_SESSION['sess_idUser_temp'] = 1;
+        $_SESSION['sess_idUser_temp'] = $user->getAtt('id');
         $_SESSION['sess_completeRecording'] = 0;
         $_SESSION['sess_step'] = 2;
         header('Location: step2.php');
-        $messageStack->add('Enregistrement reussi <br />', 'success');
     } else {
         $req1 = '<div style="width:20px; float:left;">
                  <img src="include/images/signup/puce_erreur.jpg" />
@@ -183,7 +181,7 @@ if ($error != '') {
 }
 
 echo '
-<body onload="check();check2();check3();check4();">
+<body>
 <form action="step1.php" method="post" enctype="multipart/form-data" >
 <div id="body-sign">
     <div id="blocprinc">
