@@ -136,7 +136,7 @@ class  user {
         $pseudo = trim($pseudo);
         $pass   = trim($pass);
         if ($pass != '' and $pseudo != '') {
-            $req    = "select * from $this->tableName where email = '".$pseudo."' and password = '".$pass."' and completeRecording = '1' ";
+            $req    = "select * from $this->tableName where email = '".$pseudo."' and password = '".$pass."'";// and completeRecording = '1' ";
             $result = mysql_query($req);
             if ( mysql_num_rows($result) > 0 ) {
                 $row = mysql_fetch_array($result);
