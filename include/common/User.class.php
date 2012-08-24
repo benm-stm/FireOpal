@@ -103,13 +103,12 @@ class  user {
      * @param Integer $id
      */
     function loadFromId($Id) {
-        $field_names = " * ";
         $whereClause = "WHERE id=$Id ";
         $query       = "SELECT * FROM ".$this->tableName." ".$whereClause ;
         $result      = mysql_query($query);
         if ($List = mysql_fetch_array($result)) {
             foreach ($this->attributs as $classatt=>$bddatt) {
-                $this->$classatt=$List[$bddatt];
+                $this->$classatt = $List[$bddatt];
             }
         }
     }
@@ -184,8 +183,8 @@ class  user {
                         <td width="438" style="padding-left:5px;" >
                         <p class="texte">
                         Your E-mail : <strong>'.$this->email.'</strong><br>
-                        Your username : <strong>'.$this->pseudo.'</strong><br>
-                        Your password :<strong>'.$this->motPasse.'</strong><br>
+                        Your username : <strong>'.$this->surname.'</strong><br>
+                        Your password :<strong>'.$this->password.'</strong><br>
                         In order to activate your account, you should '.$link.'<br>
                         </p>
                         </td>
