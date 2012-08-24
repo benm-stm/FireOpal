@@ -215,9 +215,6 @@ echo '
                 <div id="btn2">
                     <a href="#" class="a3"><strong>STEP 2</strong></a>
                 </div>
-                <div id="btn3">
-                    <a href="#" class="a3" ><strong>STEP 3</strong></a>
-                </div>
             </div>
             <div id="sign-titre5">
                 ENTER YOUR EMAIL AND CHOOSE YOUR PASSWORD
