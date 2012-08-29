@@ -16,7 +16,7 @@
 ########################################################################
 
 #--- Start summary
-# Add a tracker date reminder
+# Update a tracker date reminder
 #--- End summary
 
 #--- Start tags
