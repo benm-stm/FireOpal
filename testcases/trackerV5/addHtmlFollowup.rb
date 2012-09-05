@@ -48,10 +48,15 @@ describe "TV5 HTML followup" do
         end
     end
     describe "#step" do
-        it "toggle WYSIWYG editor" do
+        it "Select followup HTML format" do
             @driver.find_element(:id, "comment_format_htmlnew").click
+        end
+        it "Write the comment message" do
             @driver.find_element(:id, "tracker_followup_comment_new").clear
             @driver.find_element(:id, "tracker_followup_comment_new").send_keys "<p><b>Une chaîne de caractères<b>"
+            @driver.manage.timeouts.implicit_wait = 10
+        end
+        it "Submit new followup" do
             @driver.find_element(:name, "submit_and_stay").click
         end
         it "Find followup info feed back" do
