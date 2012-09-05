@@ -64,8 +64,8 @@ describe "Add new tracker date reminder" do
         it "Select notification type" do
             notificationType = @driver.find_element(:name, "notif_type")
             notifTypeSelect  = Selenium::WebDriver::Support::Select.new(notificationType)
-            notifValues = ["After", "Before"]
-            $notif_type = notifValues[rand(notifValues.length)]
+            notifValues      = ["After", "Before"]
+            $notif_type      = notifValues[rand(notifValues.length)]
             notifTypeSelect.select_by(:text, $notif_type)
         end
         it "Select the date field on which the reminder will be applied" do
