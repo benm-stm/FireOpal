@@ -19,12 +19,6 @@
 # Add a tracker date reminder
 #--- End summary
 
-#--- Start tags
-# Tracker V5
-# Admin
-# write
-#--- End tags
-
 #--- Start conf params
 # project_name
 # tracker
