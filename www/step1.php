@@ -53,6 +53,15 @@ $req3 = '<div style="width:20px; float:left;">
 $req4 = '<div style="width:20px; float:left;">
             <img src="include/images/signup/puce_erreur_blc.jpg" />
         </div>';
+$req22 = '<div style="width:20px; float:left;">
+         <img src="include/images/signup/puce_erreur_blc.jpg"/>
+         </div>';
+$req33 = '<div style="width:20px; float:left;">
+         <img src="include/images/signup/puce_erreur_blc.jpg"/>
+         </div>';
+$req44 = '<div style="width:20px; float:left;">
+         <img src="include/images/signup/puce_erreur_blc.jpg"/>
+         </div>';
 
 if (isset($_GET['return']) and isset($_SESSION['sess_idUser_temp'])) {
     $user = new user();
@@ -138,11 +147,12 @@ if ($cross == true) {
         $user->familyName   = 'Boytano';//$family;
         $user->organisation = 'fsf';//$organisation;
         $user->save();
+        $user->initWorkSpace();
         $_SESSION['sess_idUser_temp'] = $user->getAtt('id');
         $_SESSION['sess_completeRecording'] = 1;
         $user->sendMail(0, 0);
     //echo "User Successfully registred, check your email";
-    header("location:index.php");
+    //header("location:index.php");
 
     } else {
         $req1 = '<div style="width:20px; float:left;">
@@ -208,8 +218,30 @@ echo '
             </div>
             <div id="sign-titre5">
                 ENTER YOUR EMAIL AND CHOOSE YOUR PASSWORD
-            </div>
-            <div class="date" id="sign-titre6">
+            </div>';
+echo '<div class="date" id="sign-titre6">
+        <div id="sign-titre7"><div id="sign-titre7-11">First Name / Surname *</div>
+        <div class="champs1">';
+echo $req22.'
+        <input id="surname" name="surname" type="text"  />
+        </div>
+    </div>
+    <div id="sign-titre771">
+        <div id="sign-titre7-12">Last Name / Family Name *</div>
+        <div class="champs1">';
+echo $req33.'
+            <input id="family" name="family" type="text" />
+      </div>
+    </div>
+    <div id="sign-titre771">
+      <div id="sign-titre7-13">Organisation *</div>
+      <div class="champs1">';
+echo $req44.'
+          <input id="organisation" name="organisation" type="text"  />
+      </div>
+
+';
+echo ' <div class="date" id="sign-titre6">
                 <div id="sign-titre7">
                     <div id="sign-titre7-11">
                         Enter your email*
