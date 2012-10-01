@@ -250,7 +250,7 @@ echo $req4.'
 echo $errorMsg.'
             </div>
             <div id="sign-titre8">
-                <input type="image"  value="Next" id="btnNext" src="include/images/signup/next.jpg" width="66" height="18" border="0" alt="Automatic validation">
+                <input type="image"  value="Next" id="btnNext" src="include/images/sign/validate.jpg" width="80" height="28" border="0" alt="FireOpal">
             </div>
             <div id="sign-titre774">
                 <p class="a2">- Your email will not be visible on the Automatic validation engine<br />
