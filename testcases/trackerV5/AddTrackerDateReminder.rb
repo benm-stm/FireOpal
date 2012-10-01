@@ -19,12 +19,6 @@
 # Add a tracker date reminder
 #--- End summary
 
-#--- Start tags
-# Tracker V5
-# Admin
-# write
-#--- End tags
-
 #--- Start conf params
 # project_name
 # tracker
@@ -55,17 +49,23 @@ describe "Add new tracker date reminder" do
         it "Select Ugroups to be notified" do
             ugroups      = @driver.find_element(:name, "reminder_ugroup[]")
             ugroupsMSBox = Selenium::WebDriver::Support::Select.new(ugroups)
-            ugroupsMSBox.select_by(:text, 'project_members')
+            ugroupsList  = Array.new
+            ugroupsMSBox.options.each do |elm|
+                #puts elm.attribute("value")
+                ugroupsList.push elm.text
+            end
+            $ugroup_name = ugroupsList[rand(ugroupsList.length)]
+            ugroupsMSBox.select_by(:text, $ugroup_name)
         end
         it "Specify distance in days" do
             @driver.find_element(:name, "distance").clear
-            @driver.find_element(:name, "distance").send_keys Time.now.to_i
+            @driver.find_element(:name, "distance").send_keys rand(90)
         end
         it "Select notification type" do
             notificationType = @driver.find_element(:name, "notif_type")
             notifTypeSelect  = Selenium::WebDriver::Support::Select.new(notificationType)
-            notifValues = ["After", "Before"]
-            $notif_type = notifValues[rand(notifValues.length)]
+            notifValues      = ["After", "Before"]
+            $notif_type      = notifValues[rand(notifValues.length)]
             notifTypeSelect.select_by(:text, $notif_type)
         end
         it "Select the date field on which the reminder will be applied" do

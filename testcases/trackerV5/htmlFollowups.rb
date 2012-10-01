@@ -16,43 +16,53 @@
 ########################################################################
 
 #--- Start summary
-# Delete a tracker date reminder
+# support HTML followups
+# Add new html followup
+# Update a given followup
+# Masschange
 #--- End summary
 
 #--- Start tags
 # Tracker V5
-# Admin
 # write
 #--- End tags
 
-#--- Start dependency list
-# trackerV5/UpdateTrackerDateReminder.rb
-#--- End dependency list
-
 #--- Start conf params
-# host
-# tracker_id
+# project_name
+# tracker_name
 #--- End conf params
 
-describe "Delete a tracker date reminder" do
+describe "TV5 HTML followup" do
     describe "#precondition" do
-        it "Open notifications management interface" do
-            $link = @setup['host']['value'] + '/plugins/tracker/?tracker=' + @setup['tracker_id']['value'] + '&func=notifications'
-            @driver.navigate.to $link
+        it "Find my personal page" do
+            @driver.find_element(:link, "My Personal Page").click
         end
-        it "Find a reminder to update" do
-            @driver.find_element(:id, "delete_reminder")
+        it "Find project" do
+            @driver.find_element(:link, @setup['project_name']['value']).click
+        end
+        it "Find tracker service" do
+            @driver.find_element(:link, "Trackers").click
+        end
+        it "Find target tracker" do
+            @driver.find_element(:link, @setup['tracker_name']['value']).click
+        end
+        it "Find the first artifact" do
+            @driver.find_element(:css, "img[alt=\"#1\"]").click
         end
     end
     describe "#step" do
-        it "Click on delete reminder button" do
-            @driver.find_element(:id, "delete_reminder").click
+        it "Check html format radio button" do
+            @driver.find_element(:id, "comment_format_htmlnew").click
         end
-        it "Confirm the deletion" do
-            @driver.find_element(:name, "confirm_delete").click
+        it "Write followup content" do
+            @driver.find_element(:id, "tracker_followup_comment_new").clear
+            @driver.find_element(:id, "tracker_followup_comment_new").send_keys "Yet another <b>html</b> followup"
         end
-        it "Verify feedback message" do
-            @driver.find_element(:class, "feedback_info").text.should include("Date Reminder successfully deleted")
+        it "Submit new followup" do
+            @driver.find_element(:xpath, "(//input[@name='submit_and_stay'])[2]").click
+        end
+        it "Find new followup info feed back" do
+            @driver.find_element(:class, "feedback_info").text.should include("Successfully Updated")
         end
     end
 end
