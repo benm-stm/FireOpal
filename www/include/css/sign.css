@@ -1,0 +1,302 @@
+/**
+ * Copyright (c) STMicroelectronics 2012. All rights reserved
+ *
+ * This code is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This code is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this code. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+@charset "utf-8";
+/* CSS Document */
+body{
+    padding:0;
+    margin:0;
+    margin-top:100px;
+    background-color:#e3e3c9;
+    float:inherit;
+}
+#body2{
+    width:1000px;
+    margin:0 auto;
+    background-color:#f6f5f0;
+    padding-top:10px;
+}
+#body2 #blocsign{
+    width:1000px;
+    height:496px;
+    padding:0;
+    background-color:#f6f5f0;
+    float:left;
+}
+
+#body2 #blocsign #blocsign1-1{
+    width:485px;
+    height:auto;
+    padding:0;
+    margin:0 auto;
+    float:left;
+    background-color:#FFFFFF;
+    margin-left: 10px;
+    padding-bottom:0px;
+}
+
+#body2 #blocsign #blocsign2-1{
+    width:487px;
+    height:auto;
+    padding:0;
+    margin-left:10px;
+    display:block;
+    float:left;
+}
+
+a{
+outline:none;
+}
+
+.forgetLink{
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:11px;
+    text-decoration:none;
+    color:#928a6e;
+}
+
+.forgetLink:hover{
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:11px;
+text-decoration:none;
+color:#629628;
+}
+
+.joinText{
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:11px;
+text-decoration:none;
+color:#192a24;}
+
+a.joinText:hover{
+color:#699b20;
+}
+
+.blocsign1-1{
+    border: solid 1px;
+    border-color:#ebebd9;
+    width:483px;
+    height:455px;
+    padding:0;
+    margin:0 auto;
+    float:left;
+    background-color:#FFFFFF;
+}
+
+#body2 #blocsign #blocsign2-2{
+    width:485px;
+    height:170px;
+    padding:0;
+    margin-left:0px;
+    display:block;
+    float:left;
+    background-color:#ffffff;
+}
+
+#sign_titreb1{
+    width:470px;
+    height:27px;
+    margin:0 auto;
+    float:left;
+    background-image: url(../images/sign/bg_top2.jpg);
+    background-repeat:no-repeat;
+    padding-left: 15px;
+    line-height:2.2em;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:12px;
+    text-decoration:none;
+    color:#ffffff;
+}
+
+.sign_titreb1_1{
+    width:auto;
+    height:auto;
+    margin:0 auto;
+    float:left;
+    margin-left: 13px;
+    margin-top:25px;
+    line-height:1em;
+    font-size:12px;
+    text-decoration:none;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    color:#93bd10;
+    font-weight:bold;
+}
+
+.sign_titreb1_2{
+    width:300px;
+    height:auto;
+    margin:0 auto;
+    float:left;
+    margin-left: 134px;
+    margin-top:40px;
+    line-height:1em;
+}
+
+.sign_titreb1_3{
+    width:300px;
+    height:auto;
+    margin:0 auto;
+    float:left;
+    margin-left: 134px;
+    margin-top:5px;
+    line-height:1em;
+}
+
+.sign_titreb1_4{
+    width:320px;
+    height:41px;
+    margin:0 auto;
+    float:left;
+    margin-left: 124px;
+    margin-top:40px;
+    line-height:1em;
+}
+
+.sign_titreb1_5{
+    width:40px;
+    height:49px;
+    margin:0 auto;
+    float:left;
+    /* margin-left: 82px;*/
+    margin-left: 40px;
+    margin-top:19px;
+    line-height:1em;
+}
+
+.sign_titreb1_6{
+    width:320px;
+    height:49px;
+    margin:0 auto;
+    float:left;
+    margin-left: 0px;
+    margin-top:19px;
+    line-height:1em;
+}
+
+.sign_titreb2_1{
+    width:350px;
+    height:auto;
+    margin:0 auto;
+    float:left;
+    margin-left: 46px;
+    margin-top:60px;
+    line-height:1em;
+}
+
+.sign_titreb2_11{
+    width:350px;
+    height:auto;
+    margin:0 auto;
+    float:left;
+    margin-left: 46px;
+    margin-top:14px;
+    line-height:1em;
+}
+
+.sign_titreb2_7{
+    width:350px;
+    height:auto;
+    margin:0 auto;
+    float:left;
+    margin-left: 46px;
+    margin-top:37px;
+    line-height:1em;
+}
+
+.sign_titreb2_6{
+    width:350px;
+    height:auto;
+    margin:0 auto;
+    float:left;
+    margin-left: 46px;
+    margin-top:55px;
+    line-height:1em;
+}
+
+
+.sign_titreb2_2{
+    width:150px;
+    height:auto;
+    margin:0 auto;
+    float:left;
+    margin-left: 0px;
+    margin-top:0px;
+    line-height:1em;
+}
+
+.sign_titreb2_4{
+    width:188px;
+    height:auto;
+    margin:0 auto;
+    float:right;
+    margin-left: 0px;
+    margin-top:0px;
+    line-height:1em;
+}
+.sign_titreb2_3{
+    width:350px;
+    height:auto;
+    margin:0 auto;
+    float:left;
+    margin-left: 81px;
+    margin-top:55px;
+    line-height:1em;
+}
+
+.sign_titreb2_5{
+    width:350px;
+    height:auto;
+    margin:0 auto;
+    float:left;
+    margin-left: 46px;
+    margin-top:10px;
+    line-height:1em;
+}
+
+.txtgris{
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:12px;
+    color:#949494;
+    font-weight:bold;
+}
+
+#sign_titreb51{
+    width:470px;
+    height:27px;
+    margin:0 auto;
+    float:left;
+    background-image: url(../images/sign/bg_top2.jpg);
+    background-repeat:no-repeat;
+    padding-left: 15px;
+    line-height:2.2em;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:12px;
+    text-decoration:none;
+    color:#ffffff;
+}
+
+.champs{
+    width:188px;
+    height:16px;
+    background-color:#f1f1e4;
+    border: solid 1px #dcd9d0;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:11px;
+    color:#000000;
+    float: right;
+}

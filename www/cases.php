@@ -33,7 +33,7 @@ require_once 'TestSuite.class.php';
 require_once 'TestSuiteManager.class.php';
 require_once 'TestCaseManager.class.php';
 require_once 'LogManager.class.php';
-$logger = new LogManager( "log.txt", LogManager::DEBUG);
+$logger = new LogManager( "../log/log.txt", LogManager::DEBUG);
 $testSuiteManager = new TestSuiteManager();
 $testSuiteManager->setLogger($logger);
 $testCaseManager = new TestCaseManager();

@@ -22,6 +22,7 @@ ini_set('memory_limit', -1);
 ini_set('include_path', ini_get('include_path').PATH_SEPARATOR.dirname(__DIR__).DIRECTORY_SEPARATOR.'include');
 require_once('TestSuite.class.php');
 require_once('TestSuiteManager.class.php');
+require_once('common/User.class.php');
 
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
@@ -29,15 +30,55 @@ header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
+if (!isset($_SESSION)) {
+    session_start();
+}
+//var_dump($_SESSION);
+
 echo '
 <html>
     <head>
         <title>Codex automatic validation</title>
         <link href="include/css/index.css" rel="stylesheet" type="text/css" />
+';
+
+$welcomeMessage = '';
+$sign           = '';
+$Myitems        = '';
+$connectedUser  = null;
+
+if(!isset($_SESSION['sess_idUser'])) {
+    $sign    = '<a href="sign.php" class="greenLink">Sign In</a> ';
+    $Myitems = '<span class="signLink">|</span> <a href="http://codex.cro.st.com/" class="greenLink">Codex</a>  ';
+} else {
+    $connectedUser = new user();
+    $connectedUser->loadFromId($_SESSION['sess_idUser']);
+    $welcomeMessage = '<font color="#928A6E" >Welcome '.$connectedUser->getAtt('surname').' '.strtoupper($connectedUser->getAtt('familyName')).'</font>';
+    $sign           = '<span class="signLink" >|</span> <a href="logout.php" class="greenLink">Sign Out</a> ';
+}
+echo '
+    <div id="sign">
+        <div id="sepcoin"></div>
+        <div id="bloctop">
+            <div id="right">
+                <div id="bloctext1" style="width:500px;" align="right" >
+                    <font class="welcomeLink">'.$welcomeMessage.'</font>
+                    '.$sign.'
+                    '.$Myitems.'
+                    <span class="signLink">|</span> <a href="http://rspec.info/" class="signLink">RSpec</a>
+                    <span class="signLink">|</span> <a href="http://seleniumhq.org/docs/03_webdriver.html" class="signLink">Selenium WebDriver Documentation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+';
+
+echo '
     </head>
     <body>
         <div id="header">
             <a href="cases.php" class="community">Manage testsuites</a>
+            <a href="result.php" class="community">View execution results</a>
         </div>
         <div id="body_skin">
             <table width="100%">
@@ -82,9 +123,13 @@ echo '
                             <pre>';
 if (isset($_REQUEST['run'])) {
     // manage request
-    $testSuite = new TestSuite(substr($_REQUEST['run'], 0, -3));
-    $testSuite->run();
-    echo 'Result file stored';
+    $testSuite = new TestSuite(substr($_REQUEST['run'], 0, -3), $connectedUser);
+    $result = $testSuite->run();
+    if ($result) {
+        header("Location: result.php");
+    } else {
+        echo "TestSuite not run\nYou must be logged in to run a testsuite";
+    }
 }
 echo '
                             </pre>
@@ -95,5 +140,4 @@ echo '
         </div>
     </body>
 </html>';
-
 ?>
