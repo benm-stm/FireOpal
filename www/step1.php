@@ -97,7 +97,9 @@ if (isset($_POST['email'])) {
             $error .= '&nbsp;retype your password,&nbsp;';
         $cross  = false;
 }
+/*******************/
 
+/********************/
 if (strnatcmp($email, $remail) != 0) {
     $error .= '&nbsp;the email you typed is not identical on both lines,&nbsp;';   
     $req2 = '<div style="width:20px; float:left;">
@@ -123,6 +125,7 @@ if ( strnatcmp($pass, $rpass) != 0 ) {
     $cross = false;
 }
 
+
 // Input validated, continue
 if ($cross == true) {
     $user = new user();
@@ -131,11 +134,16 @@ if ($cross == true) {
         $cross = false;
     if ($cross == true) {
         $user->password = $pass;
+        $user->surname      = 'Brian';//$surname;
+        $user->familyName   = 'Boytano';//$family;
+        $user->organisation = 'fsf';//$organisation;
         $user->save();
         $_SESSION['sess_idUser_temp'] = $user->getAtt('id');
-        $_SESSION['sess_completeRecording'] = 0;
-        $_SESSION['sess_step'] = 2;
-        header('Location: step2.php');
+        $_SESSION['sess_completeRecording'] = 1;
+        $user->sendMail(0, 0);
+    //echo "User Successfully registred, check your email";
+    header("location:index.php");
+
     } else {
         $req1 = '<div style="width:20px; float:left;">
                  <img src="include/images/signup/puce_erreur.jpg" />
