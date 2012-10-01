@@ -56,7 +56,7 @@ describe "Browse to approval table menu" do
             @runner.find_element(:id, "approval_table_reminder_checkbox").attribute("value").should eq("off")
         end
     end
-    describe "#step" do
+    describe "#regression" do
         it "Hint add reminder button" do
             if @runner.find_element(:id, "approval_table_reminder_checkbox").attribute("value") == "off"
                 @runner.find_element(:id, "approval_table_reminder_checkbox").click

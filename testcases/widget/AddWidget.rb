@@ -39,7 +39,7 @@ describe "Add a widget to My dashboard" do
             @runner.manage.timeouts.implicit_wait = 5
         end
     end
-    describe "#step" do
+    describe "#regression" do
         it "Find my personal page" do
             @runner.find_element(:link, "My Personal Page").click
         end

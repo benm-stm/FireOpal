@@ -43,7 +43,7 @@ describe "Browse to approval table menu" do
             # @TODO
         end
     end
-    describe "#step" do
+    describe "#regression" do
         it "Reminder is on" do
             @runner.find_element(:name, "reminder").attribute("value").should == "on"
         end

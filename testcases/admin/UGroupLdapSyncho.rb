@@ -54,7 +54,7 @@ describe "Synchronize UGroup with LDAP group" do
             @runner.find_element(:link, "« Go back to the user groups list").click
         end
     end
-    describe "#step" do
+    describe "#regression" do
         it "Enable directory group binding" do
             @runner.find_element(:link, "- Set Directory group binding").click
             @runner.find_element(:id, "group_add").clear

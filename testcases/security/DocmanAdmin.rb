@@ -44,7 +44,7 @@ describe "Non-docman admin can NOT do any administration action" do
             @runner.navigate.to $link
         end
     end
-    describe "#step" do
+    describe "#regression" do
         it "Display an error message:You do not have sufficient access rights to administrate the document manager" do
             (@runner.find_element(:class, "feedback_error").text.include? "You do not have sufficient access rights to administrate the document manager").should be_true
         end

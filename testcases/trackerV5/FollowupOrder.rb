@@ -47,7 +47,7 @@ describe "Order of followups is saved" do
             @runner.find_element(:css, "img[alt=\"invert order of follow-up comments\"]").click
         end
     end
-    describe "#step" do
+    describe "#regression" do
         it "The followup order is saved" do
             @runner.navigate.to @@orderLink
             @runner.find_element(:tag_name => "body").text.should_not eq(@@order)

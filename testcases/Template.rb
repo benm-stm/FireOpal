@@ -50,7 +50,7 @@ describe "Testcase name" do
             @runner.find_element(:name, "button_example").click
         end
     end
-    describe "#step" do
+    describe "#regression" do
         it "Test the wrong title of the page" do
             (@runner.title).should == "wrong title"
         end

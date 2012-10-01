@@ -50,7 +50,7 @@ describe "TV5 HTML followup" do
             @runner.find_element(:css, "img[alt=\"#1\"]").click
         end
     end
-    describe "#step" do
+    describe "#regression" do
         it "Check html format radio button" do
             @runner.find_element(:id, "comment_format_htmlnew").click
         end

@@ -50,7 +50,7 @@ describe "Deletes a given project disk quota" do
             @runner.find_element(:link, "Project quota").click
         end
     end
-    describe "#step" do
+    describe "#regression" do
         it "Select Project disk quota to delete" do
             @runner.find_element(:xpath, "(//input[@value='"+@params['disk_quota_project_id']['value']+"'])").click
         end

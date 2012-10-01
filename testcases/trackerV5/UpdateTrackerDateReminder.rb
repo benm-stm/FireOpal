@@ -44,7 +44,7 @@ describe "Update a tracker date reminder" do
             @runner.find_element(:id, "update_reminder")
         end
     end
-    describe "#step" do
+    describe "#regression" do
         it "Click on update reminder button" do
             @runner.find_element(:id, "update_reminder").click
         end

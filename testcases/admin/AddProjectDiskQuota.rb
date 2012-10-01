@@ -46,7 +46,7 @@ describe "Add disk quota for a given project" do
             @runner.find_element(:link, "Project quota").click
         end
     end
-    describe "#step" do
+    describe "#regression" do
         it "Clear the project name field" do
             @runner.find_element(:id, "project").clear
         end

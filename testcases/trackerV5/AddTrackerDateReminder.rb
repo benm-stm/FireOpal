@@ -42,7 +42,7 @@ describe "Add new tracker date reminder" do
             @runner.find_element(:link, "Notifications").click
         end
     end
-    describe "#step" do
+    describe "#regression" do
         it "Hint add reminder button" do
             @runner.find_element(:id, "add_reminder").click
         end

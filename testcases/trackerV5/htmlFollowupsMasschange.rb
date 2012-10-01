@@ -44,7 +44,7 @@ describe "TV5 HTML Masschange" do
             @runner.find_element(:link, @params['tracker_name']['value']).click
         end
     end
-    describe "#step" do
+    describe "#regression" do
         it "Apply Masschange for all artifacts" do
             @runner.find_element(:xpath, "//form[@id='tracker_report_query_form']/div[2]").click
             @runner.find_element(:css, "#tracker_renderer_options_menu_handle > img[alt=\"/themes/Tuleap/images/ic/dropdown_panel_handler_button.png\"]").click

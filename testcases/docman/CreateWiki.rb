@@ -36,7 +36,7 @@ describe "Create a new document wiki" do
             @runner.navigate.to $link
         end
     end
-    describe "#step" do
+    describe "#regression" do
         it "Find Create a New Document link" do
             @runner.find_element(:class, "docman_item_icon").click
             @runner.find_element(:class, "docman_item_option_newdocument").click

@@ -61,7 +61,7 @@ describe "Put user login in a user binded open list" do
             @runner.find_element(:name, "submit_and_stay").click
         end
     end
-    describe "#step" do
+    describe "#regression" do
         it "User login is accepted in open list" do
             @runner.find_element(:css, "a.closebutton")
         end

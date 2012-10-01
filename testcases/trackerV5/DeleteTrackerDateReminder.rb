@@ -44,7 +44,7 @@ describe "Delete a tracker date reminder" do
             @runner.find_element(:id, "delete_reminder")
         end
     end
-    describe "#step" do
+    describe "#regression" do
         it "Click on delete reminder button" do
             @runner.find_element(:id, "delete_reminder").click
         end

@@ -40,7 +40,7 @@ describe "FileAdmin"do
             (@runner.find_element(:id, "feedback").text.include? "Permission Denied").should be_false
         end
     end
-    describe "#step"do
+    describe "#regression"do
         it "Try to access to file admin section"do
             $link = @params['host']['value'] + '/file/admin/?group_id=' + @params['project_id']['value']
             @runner.navigate.to $link
