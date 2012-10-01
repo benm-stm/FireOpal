@@ -38,24 +38,24 @@
 describe "Testcase name" do
     describe "#precondition" do
         it "Clear the first field" do
-            @driver.find_element(:name, "form_element_example_1").clear
+            @runner.find_element(:name, "form_element_example_1").clear
         end
         it "Fill the first field" do
-            @driver.find_element(:name, "form_element_example_1").send_keys @setup['user']['value']
+            @runner.find_element(:name, "form_element_example_1").send_keys @setup['user']['value']
         end
         it "Fill another field" do
-            @driver.find_element(:name, "form_element_example_2").send_keys @setup['password']['value']
+            @runner.find_element(:name, "form_element_example_2").send_keys @setup['password']['value']
         end
         it "Click on a button" do
-            @driver.find_element(:name, "button_example").click
+            @runner.find_element(:name, "button_example").click
         end
     end
     describe "#step" do
         it "Test the wrong title of the page" do
-            (@driver.title).should == "wrong title"
+            (@runner.title).should == "wrong title"
         end
         it "Test the correct title of the page" do
-            (@driver.title).should == "good tiltle"
+            (@runner.title).should == "good tiltle"
         end
     end
 end

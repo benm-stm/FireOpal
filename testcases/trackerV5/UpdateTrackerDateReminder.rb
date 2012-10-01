@@ -38,18 +38,18 @@ describe "Update a tracker date reminder" do
     describe "#precondition" do
         it "Open notifications management interface" do
             $link = @setup['host']['value'] + '/plugins/tracker/?tracker=' + @setup['tracker_id']['value'] + '&func=notifications'
-            @driver.navigate.to $link
+            @runner.navigate.to $link
         end
         it "Find a reminder to update" do
-            @driver.find_element(:id, "update_reminder")
+            @runner.find_element(:id, "update_reminder")
         end
     end
     describe "#step" do
         it "Click on update reminder button" do
-            @driver.find_element(:id, "update_reminder").click
+            @runner.find_element(:id, "update_reminder").click
         end
         it "Select Ugroups to be notified" do
-            ugroups      = @driver.find_element(:name, "reminder_ugroup[]")
+            ugroups      = @runner.find_element(:name, "reminder_ugroup[]")
             ugroupsMSBox = Selenium::WebDriver::Support::Select.new(ugroups)
             ugroupsList  = Array.new
             ugroupsMSBox.options.each do |elm|
@@ -60,22 +60,22 @@ describe "Update a tracker date reminder" do
             ugroupsMSBox.select_by(:text, $ugroup_name)
         end
         it "Specify distance in days" do
-            @driver.find_element(:name, "distance").clear
-            @driver.find_element(:name, "distance").send_keys rand(90)
+            @runner.find_element(:name, "distance").clear
+            @runner.find_element(:name, "distance").send_keys rand(90)
         end
         it "Select notification type" do
-            notificationType = @driver.find_element(:name, "notif_type")
+            notificationType = @runner.find_element(:name, "notif_type")
             notifTypeSelect  = Selenium::WebDriver::Support::Select.new(notificationType)
             notifTypeSelect.select_by(:text, 'After')
         end
         it "Submit the updated values of the tracker date reminder" do
-            @driver.find_element(:css, "td > input[name=\"submit\"]").click
+            @runner.find_element(:css, "td > input[name=\"submit\"]").click
         end
         it "Verify feedback message" do
             begin
-                @driver.find_element(:class, "feedback_info").text.should include("Date Reminder successfully updated")
+                @runner.find_element(:class, "feedback_info").text.should include("Date Reminder successfully updated")
             rescue
-                @driver.find_element(:class, "feedback_error").text.should include("Cannot duplicate Date Reminder")
+                @runner.find_element(:class, "feedback_error").text.should include("Cannot duplicate Date Reminder")
             end
         end
     end

@@ -83,7 +83,7 @@ class TestCase {
         $exampleGroupFooter = "#---- End test case ".$this->name." ----\n\n";
         $exampleGroup       = $exampleGroupHeader."    describe \"".$this->name."\" do\n\n";
         $exampleGroup       .= "        before(:all) do\n";
-        $exampleGroup       .= "            @driver.navigate.to @setup['host']['value'] + '/my/'\n";
+        $exampleGroup       .= "            @runner.navigate.to @setup['host']['value'] + '/my/'\n";
         $exampleGroup       .= "        end\n\n";
         try {
             $exampleGroup .= $this->getContent();

@@ -33,31 +33,31 @@ describe "Create a new document wiki" do
     #The project "gpig" should exist and "simplex" should be a document writer
         it "Find Documents link" do
             $link = @setup['host']['value'] + '/plugins/docman/?group_id=' + @setup['project_id']['value']
-            @driver.navigate.to $link
+            @runner.navigate.to $link
         end
     end
     describe "#step" do
         it "Find Create a New Document link" do
-            @driver.find_element(:class, "docman_item_icon").click
-            @driver.find_element(:class, "docman_item_option_newdocument").click
+            @runner.find_element(:class, "docman_item_icon").click
+            @runner.find_element(:class, "docman_item_option_newdocument").click
         end
         it "Put the title" do
-            @driver.find_element(:id, "title").clear
-            @driver.find_element(:id, "title").send_keys "new_wiki"
+            @runner.find_element(:id, "title").clear
+            @runner.find_element(:id, "title").send_keys "new_wiki"
         end
         it "Select the type wiki" do
-            @driver.find_element(:id, "item_item_type_5").click
+            @runner.find_element(:id, "item_item_type_5").click
         end
         it "Put the wiki name" do
-            @driver.find_element(:name, "item[wiki_page]").clear
-            @driver.find_element(:name, "item[wiki_page]").send_keys "new_wiki"
+            @runner.find_element(:name, "item[wiki_page]").clear
+            @runner.find_element(:name, "item[wiki_page]").send_keys "new_wiki"
         end
         it "Create the document" do
             #is there a better way to select this button?
-            @driver.find_element(:xpath, "(//input[@value='Create document'])").click
+            @runner.find_element(:xpath, "(//input[@value='Create document'])").click
         end
         it "verify the returned text" do
-            (@driver.find_element(:class, "feedback_info").text.include? "Permissions successfully updated.").should be_true
+            (@runner.find_element(:class, "feedback_info").text.include? "Permissions successfully updated.").should be_true
         end
     end
 end

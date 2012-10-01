@@ -32,39 +32,39 @@
 describe "TV5 HTML followup" do
     describe "#precondition" do
         it "Find my personal page" do
-            @driver.find_element(:link, "My Personal Page").click
+            @runner.find_element(:link, "My Personal Page").click
         end
         it "Find project" do
-            @driver.find_element(:link, @setup['project_name']['value']).click
+            @runner.find_element(:link, @setup['project_name']['value']).click
         end
         it "Find tracker service" do
-            @driver.find_element(:link, "Trackers").click
+            @runner.find_element(:link, "Trackers").click
         end
         it "Find target tracker" do
-            @driver.find_element(:link, @setup['tracker']['value']).click
+            @runner.find_element(:link, @setup['tracker']['value']).click
         end
         it "Find the first artifact" do
-            @driver.find_element(:css, "img[alt=\"#1\"]").click
+            @runner.find_element(:css, "img[alt=\"#1\"]").click
         end
     end
     describe "#step" do
         it "Select followup HTML format" do
-            @driver.find_element(:id, "comment_format_htmlnew").click
+            @runner.find_element(:id, "comment_format_htmlnew").click
         end
         it "Write the comment message" do
-            @driver.find_element(:id, "tracker_followup_comment_new").clear
-            @driver.find_element(:id, "tracker_followup_comment_new").send_keys "<p><b>Une chaîne de caractères<b>"
-            @driver.manage.timeouts.implicit_wait = 10
+            @runner.find_element(:id, "tracker_followup_comment_new").clear
+            @runner.find_element(:id, "tracker_followup_comment_new").send_keys "<p><b>Une chaîne de caractères<b>"
+            @runner.manage.timeouts.implicit_wait = 10
         end
         it "Submit new followup" do
-            @driver.find_element(:name, "submit_and_stay").click
+            @runner.find_element(:name, "submit_and_stay").click
         end
         it "Find followup info feed back" do
             #Should be replace by :
             # wait = Selenium::WebDriver::Wait.new(:timeout => 30)
-            # wait.until { @driver.find_element(:class => "feedback_info") }
-            @driver.manage.timeouts.implicit_wait = 30
-            @driver.find_element(:class, "feedback_info").text.should include("Successfully Updated")
+            # wait.until { @runner.find_element(:class => "feedback_info") }
+            @runner.manage.timeouts.implicit_wait = 30
+            @runner.find_element(:class, "feedback_info").text.should include("Successfully Updated")
         end
     end
 end

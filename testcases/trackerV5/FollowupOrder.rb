@@ -32,25 +32,25 @@ describe "Order of followups is saved" do
     describe "#precondition" do
         it "Open the artifct" do
             @@artifactLink = @setup['host']['value'] + '/plugins/tracker/?aid='+ @setup['artifact_id']['value']
-            @driver.navigate.to @@artifactLink
+            @runner.navigate.to @@artifactLink
         end
         it "Get the followup order" do
-            $trackerId = @driver.find_element(:id, "tracker_id").attribute("value")
+            $trackerId = @runner.find_element(:id, "tracker_id").attribute("value")
             @@orderLink = @setup['host']['value'] + '/plugins/tracker/comments_order.php?tracker_id='+ $trackerId
-            @driver.navigate.to @@orderLink
-            @@order = @driver.find_element(:tag_name => "body").text
+            @runner.navigate.to @@orderLink
+            @@order = @runner.find_element(:tag_name => "body").text
         end
         it "Get back to the artifact" do
-            @driver.navigate.to @@artifactLink
+            @runner.navigate.to @@artifactLink
         end
         it "Invert the order" do
-            @driver.find_element(:css, "img[alt=\"invert order of follow-up comments\"]").click
+            @runner.find_element(:css, "img[alt=\"invert order of follow-up comments\"]").click
         end
     end
     describe "#step" do
         it "The followup order is saved" do
-            @driver.navigate.to @@orderLink
-            @driver.find_element(:tag_name => "body").text.should_not eq(@@order)
+            @runner.navigate.to @@orderLink
+            @runner.find_element(:tag_name => "body").text.should_not eq(@@order)
         end
     end
 end

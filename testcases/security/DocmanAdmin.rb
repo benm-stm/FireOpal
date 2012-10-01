@@ -31,22 +31,22 @@
 describe "Non-docman admin can NOT do any administration action" do
     describe "#precondition" do
         it "Find my personal page"do
-            @driver.find_element(:link, "My Personal Page").click
+            @runner.find_element(:link, "My Personal Page").click
         end
         it "Find project"do
-            @driver.find_element(:link, @setup['project']['value']).click
+            @runner.find_element(:link, @setup['project']['value']).click
         end
         it "Test if the user is a project member" do
-            (@driver.find_element(:class, "contenttable").text.include? "Permission Denied").should be_false
+            (@runner.find_element(:class, "contenttable").text.include? "Permission Denied").should be_false
         end
         it "Try to access to docman admin section" do
             $link = @setup['host']['value'] + '/plugins/docman/?group_id=' + @setup ['project_id']['value'] + '&action=admin'
-            @driver.navigate.to $link
+            @runner.navigate.to $link
         end
     end
     describe "#step" do
         it "Display an error message:You do not have sufficient access rights to administrate the document manager" do
-            (@driver.find_element(:class, "feedback_error").text.include? "You do not have sufficient access rights to administrate the document manager").should be_true
+            (@runner.find_element(:class, "feedback_error").text.include? "You do not have sufficient access rights to administrate the document manager").should be_true
         end
     end
 end

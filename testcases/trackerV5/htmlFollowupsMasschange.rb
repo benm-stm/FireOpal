@@ -32,37 +32,37 @@
 describe "TV5 HTML Masschange" do
     describe "#precondition" do
         it "Find my personal page" do
-            @driver.find_element(:link, "My Personal Page").click
+            @runner.find_element(:link, "My Personal Page").click
         end
         it "Find project" do
-            @driver.find_element(:link, @setup['project_name']['value']).click
+            @runner.find_element(:link, @setup['project_name']['value']).click
         end
         it "Find tracker service" do
-            @driver.find_element(:link, "Trackers").click
+            @runner.find_element(:link, "Trackers").click
         end
         it "Find target tracker" do
-            @driver.find_element(:link, @setup['tracker_name']['value']).click
+            @runner.find_element(:link, @setup['tracker_name']['value']).click
         end
     end
     describe "#step" do
         it "Apply Masschange for all artifacts" do
-            @driver.find_element(:xpath, "//form[@id='tracker_report_query_form']/div[2]").click
-            @driver.find_element(:css, "#tracker_renderer_options_menu_handle > img[alt=\"/themes/Tuleap/images/ic/dropdown_panel_handler_button.png\"]").click
-            @driver.find_element(:link, "Masschange").click
-            @driver.find_element(:id, "masschange_btn_all").click
+            @runner.find_element(:xpath, "//form[@id='tracker_report_query_form']/div[2]").click
+            @runner.find_element(:css, "#tracker_renderer_options_menu_handle > img[alt=\"/themes/Tuleap/images/ic/dropdown_panel_handler_button.png\"]").click
+            @runner.find_element(:link, "Masschange").click
+            @runner.find_element(:id, "masschange_btn_all").click
         end
         it "Check html format radio button" do
-            @driver.find_element(:id, "comment_format_htmlmass_change").click
+            @runner.find_element(:id, "comment_format_htmlmass_change").click
         end
         it "Write masschange followup content" do
-            @driver.find_element(:id, "artifact_masschange_followup_comment").clear
-            @driver.find_element(:id, "artifact_masschange_followup_comment").send_keys "<b>HTML Mass Change</b>"
+            @runner.find_element(:id, "artifact_masschange_followup_comment").clear
+            @runner.find_element(:id, "artifact_masschange_followup_comment").send_keys "<b>HTML Mass Change</b>"
         end
         it "Submit masschange" do
-            @driver.find_element(:css, "#masschange_form > input[type=\"submit\"]").click
+            @runner.find_element(:css, "#masschange_form > input[type=\"submit\"]").click
         end
         it "Find followup info feed back" do
-            @driver.find_element(:class, "feedback_info").text.should include("Successfully Updated")
+            @runner.find_element(:class, "feedback_info").text.should include("Successfully Updated")
         end
     end
 end

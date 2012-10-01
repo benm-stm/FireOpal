@@ -175,7 +175,7 @@ class TestSuite {
             $content .= "        @setup  = JSON.parse('".$set."')\n";
             $content .= "        @valid.setup(@setup)\n";
             $content .= "        @valid.login()\n";
-            $content .= "        @driver = @valid.getdriver\n";
+            $content .= "        @runner = @valid.getdriver\n";
             $content .= "    end\n\n";
             $rspecFileObj->fwrite($content);
         } else {
@@ -222,19 +222,19 @@ class TestSuite {
             $content .= "class Configuration\n\n";
             $content .= "    def setup(setup)\n";
             $content .= "        @setup  = setup\n";
-            $content .= "        @driver = Selenium::WebDriver.for :remote,";
+            $content .= "        @runner = Selenium::WebDriver.for :remote,";
             $content .= " :url => \"http://#{@setup['client']['value']}:4444/wd/hub\",";
             $content .= " :desired_capabilities => @setup['browser']['value'].to_sym\n";
-            $content .= "        @driver.get @setup['host']['value']\n";
-            $content .= "        @driver.manage.timeouts.implicit_wait = 30\n";
+            $content .= "        @runner.get @setup['host']['value']\n";
+            $content .= "        @runner.manage.timeouts.implicit_wait = 30\n";
             $content .= "    end\n\n";
-            $content .= "    def teardown\n        @driver.quit\n    end\n\n";
+            $content .= "    def teardown\n        @runner.quit\n    end\n\n";
             $content .= "    def login\n";
-            $content .= "        @driver.navigate.to @setup['host']['value'] + '/my/'\n";
-            $content .= "        @driver.find_element(:name, \"form_loginname\").send_keys @setup['user']['value']\n";
-            $content .= "        @driver.find_element(:name, \"form_pw\").send_keys @setup['password']['value']\n";
-            $content .= "        @driver.find_element(:name, \"login\").click\n    end\n\n";
-            $content .= "    def getdriver\n        @driver\n    end\n\n";
+            $content .= "        @runner.navigate.to @setup['host']['value'] + '/my/'\n";
+            $content .= "        @runner.find_element(:name, \"form_loginname\").send_keys @setup['user']['value']\n";
+            $content .= "        @runner.find_element(:name, \"form_pw\").send_keys @setup['password']['value']\n";
+            $content .= "        @runner.find_element(:name, \"login\").click\n    end\n\n";
+            $content .= "    def getdriver\n        @runner\n    end\n\n";
             $content .= "end\n\n";
             $testSuiteFileObj->fwrite($content);
         } else {

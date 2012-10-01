@@ -33,43 +33,43 @@ describe "Put user login in a user binded open list" do
     describe "#precondition" do
         it "Open the artifct" do
             $link = @setup['host']['value'] + '/plugins/tracker/?aid='+ @setup['artifact_id']['value']
-            @driver.navigate.to $link
+            @runner.navigate.to $link
         end
         it "Clear the open list" do
             $more = true
             while $more
                 begin
-                    @driver.find_element(:css, "a.closebutton").click
+                    @runner.find_element(:css, "a.closebutton").click
                 rescue
                     $more = false
                 end
             end
-            @driver.find_element(:class, "maininput").clear
+            @runner.find_element(:class, "maininput").clear
         end
         it "Fill the open list" do
-            @driver.find_element(:class, "maininput").send_keys @setup['user']['value'] + ","
+            @runner.find_element(:class, "maininput").send_keys @setup['user']['value'] + ","
             begin
-                @driver.find_element(:css, "a.closebutton")
+                @runner.find_element(:css, "a.closebutton")
             rescue
-                @driver.find_element(:css, "em").click
+                @runner.find_element(:css, "em").click
             end
         end
         it "Verify that the open list is filled correctly" do
-            @driver.find_element(:css, "a.closebutton")
+            @runner.find_element(:css, "a.closebutton")
         end
         it "Submit the artifact update" do
-            @driver.find_element(:name, "submit_and_stay").click
+            @runner.find_element(:name, "submit_and_stay").click
         end
     end
     describe "#step" do
         it "User login is accepted in open list" do
-            @driver.find_element(:css, "a.closebutton")
+            @runner.find_element(:css, "a.closebutton")
         end
         it "Artifact successfully updated or no changes" do
             begin
-                @driver.find_element(:class, "feedback_info").text.should include("Successfully Updated")
+                @runner.find_element(:class, "feedback_info").text.should include("Successfully Updated")
             rescue
-                @driver.find_element(:class, "feedback_info").text.should include("No changes for artifact")
+                @runner.find_element(:class, "feedback_info").text.should include("No changes for artifact")
             end
         end
     end

@@ -37,7 +37,7 @@ describe "Browse to approval table menu" do
     describe "#precondition" do
         it "Open the approval table" do
             $link = @setup['host']['value'] + '/plugins/docman/?group_id=' + @setup['project_id']['value'] + '&action=approval_create&id=' + @setup['docman_root_id']['value']
-            @driver.navigate.to $link
+            @runner.navigate.to $link
         end
         it "Verify that user can update the aproval table" do
             # @TODO
@@ -45,22 +45,22 @@ describe "Browse to approval table menu" do
     end
     describe "#step" do
         it "Reminder is on" do
-            @driver.find_element(:name, "reminder").attribute("value").should == "on"
+            @runner.find_element(:name, "reminder").attribute("value").should == "on"
         end
         it "Change form values" do
-            @driver.find_element(:name, "reminder").click
-            @driver.find_element(:name, "reminder").click
-            Selenium::WebDriver::Support::Select.new(@driver.find_element(:id, "period")).select_by(:text, "Weeks")
-            $value = @driver.find_element(:name, "occurence").attribute("value").to_i + 1
-            @driver.find_element(:name, "occurence").clear
-            @driver.find_element(:name, "occurence").send_keys $value
-            @driver.find_element(:xpath, "//input[@value='Update']").click
+            @runner.find_element(:name, "reminder").click
+            @runner.find_element(:name, "reminder").click
+            Selenium::WebDriver::Support::Select.new(@runner.find_element(:id, "period")).select_by(:text, "Weeks")
+            $value = @runner.find_element(:name, "occurence").attribute("value").to_i + 1
+            @runner.find_element(:name, "occurence").clear
+            @runner.find_element(:name, "occurence").send_keys $value
+            @runner.find_element(:xpath, "//input[@value='Update']").click
         end
         it "Verify that the occurence has been updated" do
-            $value = @driver.find_element(:name, "occurence").attribute("value").to_i.should == $value * 7
+            $value = @runner.find_element(:name, "occurence").attribute("value").to_i.should == $value * 7
         end
         it "Check update feedback" do
-            @driver.find_element(:class, "feedback_info").text.should include("Table settings updated.")
+            @runner.find_element(:class, "feedback_info").text.should include("Table settings updated.")
         end
     end
 end

@@ -27,27 +27,27 @@
 describe "Add new tracker date reminder" do
     describe "#precondition" do
         it "Find my personal page" do
-            @driver.find_element(:link, "My Personal Page").click
+            @runner.find_element(:link, "My Personal Page").click
         end
         it "Find project" do
-            @driver.find_element(:link, @setup['project_name']['value']).click
+            @runner.find_element(:link, @setup['project_name']['value']).click
         end
         it "Find tracker service" do
-            @driver.find_element(:link, "Trackers").click
+            @runner.find_element(:link, "Trackers").click
         end
         it "Find target tracker" do
-            @driver.find_element(:link, @setup['tracker']['value']).click
+            @runner.find_element(:link, @setup['tracker']['value']).click
         end
         it "Find notifications management interface" do
-            @driver.find_element(:link, "Notifications").click
+            @runner.find_element(:link, "Notifications").click
         end
     end
     describe "#step" do
         it "Hint add reminder button" do
-            @driver.find_element(:id, "add_reminder").click
+            @runner.find_element(:id, "add_reminder").click
         end
         it "Select Ugroups to be notified" do
-            ugroups      = @driver.find_element(:name, "reminder_ugroup[]")
+            ugroups      = @runner.find_element(:name, "reminder_ugroup[]")
             ugroupsMSBox = Selenium::WebDriver::Support::Select.new(ugroups)
             ugroupsList  = Array.new
             ugroupsMSBox.options.each do |elm|
@@ -58,18 +58,18 @@ describe "Add new tracker date reminder" do
             ugroupsMSBox.select_by(:text, $ugroup_name)
         end
         it "Specify distance in days" do
-            @driver.find_element(:name, "distance").clear
-            @driver.find_element(:name, "distance").send_keys rand(90)
+            @runner.find_element(:name, "distance").clear
+            @runner.find_element(:name, "distance").send_keys rand(90)
         end
         it "Select notification type" do
-            notificationType = @driver.find_element(:name, "notif_type")
+            notificationType = @runner.find_element(:name, "notif_type")
             notifTypeSelect  = Selenium::WebDriver::Support::Select.new(notificationType)
             notifValues      = ["After", "Before"]
             $notif_type      = notifValues[rand(notifValues.length)]
             notifTypeSelect.select_by(:text, $notif_type)
         end
         it "Select the date field on which the reminder will be applied" do
-            fieldDate   = @driver.find_element(:name, "reminder_field_date")
+            fieldDate   = @runner.find_element(:name, "reminder_field_date")
             optionCount = fieldDate.find_elements(:tag_name=>"option")
             optionList  = Array.new
             optionCount.each do |el|
@@ -80,10 +80,10 @@ describe "Add new tracker date reminder" do
             fieldDateSelect.select_by(:text, $field_name)
         end
         it "Submit new tracker date reminder" do
-            @driver.find_element(:css, "td > input[name=\"submit\"]").click
+            @runner.find_element(:css, "td > input[name=\"submit\"]").click
         end
         it "Find new reminder info feed back" do
-            @driver.find_element(:class, "feedback_info").text.should include("Date Reminder successfully added")
+            @runner.find_element(:class, "feedback_info").text.should include("Date Reminder successfully added")
         end
     end
 end

@@ -31,22 +31,22 @@
 describe "FileAdmin"do
     describe "#precondition"do
         it "Find my personal page"do
-            @driver.find_element(:link, "My Personal Page").click
+            @runner.find_element(:link, "My Personal Page").click
         end
         it "Find project"do
-            @driver.find_element(:link, @setup['project']['value']).click
+            @runner.find_element(:link, @setup['project']['value']).click
         end
         it "Test if the user is a project member"do
-            (@driver.find_element(:id, "feedback").text.include? "Permission Denied").should be_false
+            (@runner.find_element(:id, "feedback").text.include? "Permission Denied").should be_false
         end
     end
     describe "#step"do
         it "Try to access to file admin section"do
             $link = @setup['host']['value'] + '/file/admin/?group_id=' + @setup['project_id']['value']
-            @driver.navigate.to $link
+            @runner.navigate.to $link
         end
         it "Display an error message:don't have sufficient access right."do
-            (@driver.find_element(:class, "feedback").text.include? "Permission Denied").should be_true
+            (@runner.find_element(:class, "feedback").text.include? "Permission Denied").should be_true
         end
     end
 end

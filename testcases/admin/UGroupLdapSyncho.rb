@@ -32,47 +32,47 @@
 describe "Synchronize UGroup with LDAP group" do
     describe "#precondition" do
         it "Find my personal page" do
-            @driver.find_element(:link, "My Personal Page").click
+            @runner.find_element(:link, "My Personal Page").click
         end
         it "Find project" do
-            @driver.find_element(:link, @setup['project_name']['value']).click
+            @runner.find_element(:link, @setup['project_name']['value']).click
         end
         it "Find administration service" do
-            @driver.get(@base_url + "/projects/admin/")
-            @driver.find_element(:xpath, "(//a[contains(text(),'Admin')])[3]").click
+            @runner.get(@base_url + "/projects/admin/")
+            @runner.find_element(:xpath, "(//a[contains(text(),'Admin')])[3]").click
         end
         it "Find UGroup Admin section" do
-            @driver.find_element(:link, "User Groups Admin").click
+            @runner.find_element(:link, "User Groups Admin").click
         end
         it "Create a new empty UGroup" do
-            @driver.find_element(:link, "Create a New User Group").click
-            @driver.find_element(:name, "ugroup_name").clear
-            @driver.find_element(:name, "ugroup_name").send_keys "testers"
-            @driver.find_element(:name, "ugroup_description").clear
-            @driver.find_element(:name, "ugroup_description").send_keys "Test UGroup"
-            @driver.find_element(:xpath, "//input[@value='Create User Group']").click
-            @driver.find_element(:link, "« Go back to the user groups list").click
+            @runner.find_element(:link, "Create a New User Group").click
+            @runner.find_element(:name, "ugroup_name").clear
+            @runner.find_element(:name, "ugroup_name").send_keys "testers"
+            @runner.find_element(:name, "ugroup_description").clear
+            @runner.find_element(:name, "ugroup_description").send_keys "Test UGroup"
+            @runner.find_element(:xpath, "//input[@value='Create User Group']").click
+            @runner.find_element(:link, "« Go back to the user groups list").click
         end
     end
     describe "#step" do
         it "Enable directory group binding" do
-            @driver.find_element(:link, "- Set Directory group binding").click
-            @driver.find_element(:id, "group_add").clear
-            @driver.find_element(:id, "group_add").send_keys "CODEX_ST_TUNIS"
+            @runner.find_element(:link, "- Set Directory group binding").click
+            @runner.find_element(:id, "group_add").clear
+            @runner.find_element(:id, "group_add").send_keys "CODEX_ST_TUNIS"
         end
         it "Enable Automatic LDAP synchronization" do
-           @driver.find_element(:id, "synchronize").click
+           @runner.find_element(:id, "synchronize").click
         end
         it "Submit UGroup details" do
-            @driver.find_element(:name, "submit").click
+            @runner.find_element(:name, "submit").click
         end
         it "Confirm Added/Removed users" do
             #@Todo check GUI elements here 
-            @driver.find_element(:name, "submit").click
+            @runner.find_element(:name, "submit").click
         end
         it "Confirm Added/Removed users" do
             #@Todo check GUI elements here 
-            @driver.find_element(:link, "User Groups Admin").click
+            @runner.find_element(:link, "User Groups Admin").click
         end
     end
 end

@@ -38,27 +38,27 @@
 describe "Deletes a given project disk quota" do
     describe "#precondition" do
         it "Find my personal page" do
-            @driver.find_element(:link, "My Personal Page").click
+            @runner.find_element(:link, "My Personal Page").click
         end
         it "Find Admin link" do
-            @driver.find_element(:xpath, "//a[@href='/admin/']").click
+            @runner.find_element(:xpath, "//a[@href='/admin/']").click
         end
         it "Find Statistics link" do
-            @driver.find_element(:link, "Statistics").click
+            @runner.find_element(:link, "Statistics").click
         end
         it "Find project quota link" do
-            @driver.find_element(:link, "Project quota").click
+            @runner.find_element(:link, "Project quota").click
         end
     end
     describe "#step" do
         it "Select Project disk quota to delete" do
-            @driver.find_element(:xpath, "(//input[@value='"+@setup['disk_quota_project_id']['value']+"'])").click
+            @runner.find_element(:xpath, "(//input[@value='"+@setup['disk_quota_project_id']['value']+"'])").click
         end
         it "Perform project disk quota deletion" do
-            @driver.find_element(:xpath, "(//input[@type='submit'])[3]").click
+            @runner.find_element(:xpath, "(//input[@type='submit'])[3]").click
         end
         it "Find Project quota deletion feed back" do
-            @driver.find_element(:class, "feedback_info").text.should include("Quota deleted for")
+            @runner.find_element(:class, "feedback_info").text.should include("Quota deleted for")
         end
     end
 end
