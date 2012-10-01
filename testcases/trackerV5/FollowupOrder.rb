@@ -31,12 +31,12 @@
 describe "Order of followups is saved" do
     describe "#precondition" do
         it "Open the artifct" do
-            @@artifactLink = @setup['host']['value'] + '/plugins/tracker/?aid='+ @setup['artifact_id']['value']
+            @@artifactLink = @params['host']['value'] + '/plugins/tracker/?aid='+ @params['artifact_id']['value']
             @runner.navigate.to @@artifactLink
         end
         it "Get the followup order" do
             $trackerId = @runner.find_element(:id, "tracker_id").attribute("value")
-            @@orderLink = @setup['host']['value'] + '/plugins/tracker/comments_order.php?tracker_id='+ $trackerId
+            @@orderLink = @params['host']['value'] + '/plugins/tracker/comments_order.php?tracker_id='+ $trackerId
             @runner.navigate.to @@orderLink
             @@order = @runner.find_element(:tag_name => "body").text
         end

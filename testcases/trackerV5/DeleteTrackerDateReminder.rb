@@ -37,7 +37,7 @@
 describe "Delete a tracker date reminder" do
     describe "#precondition" do
         it "Open notifications management interface" do
-            $link = @setup['host']['value'] + '/plugins/tracker/?tracker=' + @setup['tracker_id']['value'] + '&func=notifications'
+            $link = @params['host']['value'] + '/plugins/tracker/?tracker=' + @params['tracker_id']['value'] + '&func=notifications'
             @runner.navigate.to $link
         end
         it "Find a reminder to update" do

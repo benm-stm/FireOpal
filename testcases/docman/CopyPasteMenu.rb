@@ -34,7 +34,7 @@ describe "Display of paste in menu" do
             @runner.find_element(:link, "My Personal Page").click
         end
         it "Enter the project" do
-            @runner.find_element(:link, @setup['project_name']['value']).click
+            @runner.find_element(:link, @params['project_name']['value']).click
         end
         it "Enter the documents service" do
             @runner.find_element(:link, "Documents").click

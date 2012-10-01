@@ -34,13 +34,13 @@ describe "Non-docman admin can NOT do any administration action" do
             @runner.find_element(:link, "My Personal Page").click
         end
         it "Find project"do
-            @runner.find_element(:link, @setup['project']['value']).click
+            @runner.find_element(:link, @params['project']['value']).click
         end
         it "Test if the user is a project member" do
             (@runner.find_element(:class, "contenttable").text.include? "Permission Denied").should be_false
         end
         it "Try to access to docman admin section" do
-            $link = @setup['host']['value'] + '/plugins/docman/?group_id=' + @setup ['project_id']['value'] + '&action=admin'
+            $link = @params['host']['value'] + '/plugins/docman/?group_id=' + @params ['project_id']['value'] + '&action=admin'
             @runner.navigate.to $link
         end
     end

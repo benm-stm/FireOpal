@@ -35,7 +35,7 @@ describe "Synchronize UGroup with LDAP group" do
             @runner.find_element(:link, "My Personal Page").click
         end
         it "Find project" do
-            @runner.find_element(:link, @setup['project_name']['value']).click
+            @runner.find_element(:link, @params['project_name']['value']).click
         end
         it "Find administration service" do
             @runner.get(@base_url + "/projects/admin/")

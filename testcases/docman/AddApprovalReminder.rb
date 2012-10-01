@@ -35,7 +35,7 @@ describe "Browse to approval table menu" do
             @runner.find_element(:link, "My Personal Page").click
         end
         it "Find project" do
-            @runner.find_element(:link, @setup['project']['value']).click
+            @runner.find_element(:link, @params['project']['value']).click
         end
         it "Find document service" do
             @runner.find_element(:link, "Documents").click

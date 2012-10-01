@@ -52,7 +52,7 @@ describe "Deletes a given project disk quota" do
     end
     describe "#step" do
         it "Select Project disk quota to delete" do
-            @runner.find_element(:xpath, "(//input[@value='"+@setup['disk_quota_project_id']['value']+"'])").click
+            @runner.find_element(:xpath, "(//input[@value='"+@params['disk_quota_project_id']['value']+"'])").click
         end
         it "Perform project disk quota deletion" do
             @runner.find_element(:xpath, "(//input[@type='submit'])[3]").click

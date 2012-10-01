@@ -51,7 +51,7 @@ describe "Add disk quota for a given project" do
             @runner.find_element(:id, "project").clear
         end
         it "Write the project name" do
-            @runner.find_element(:id, "project").send_keys @setup['disk_quota_project_id']['value']
+            @runner.find_element(:id, "project").send_keys @params['disk_quota_project_id']['value']
         end
         #        it "Select project from autcomplete suggestions" do
         #            @runner.find_element(:css, "li.selected").click
@@ -60,7 +60,7 @@ describe "Add disk quota for a given project" do
             @runner.find_element(:id, "requester").clear
         end
         it "Write the disk quota requester name" do
-            @runner.find_element(:id, "requester").send_keys @setup['disk_quota_requester']['value']
+            @runner.find_element(:id, "requester").send_keys @params['disk_quota_requester']['value']
         end
         #it "Select requester from autcomplete suggestions" do
         #    @runner.find_element(:xpath, "//body/div[4]/ul/li").click

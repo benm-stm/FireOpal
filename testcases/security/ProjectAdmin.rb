@@ -34,7 +34,7 @@ describe "Non-project admin"do
             @runner.find_element(:link, "My Personal Page").click
         end
         it "Find project"do
-            @runner.find_element(:link, @setup['project']['value']).click
+            @runner.find_element(:link, @params['project']['value']).click
         end
         it "Test if the user is a project member"do
             (@runner.find_element(:id, "feedback").text.include? "Permission Denied").should be_false
@@ -42,7 +42,7 @@ describe "Non-project admin"do
     end
     describe "#step" do
         it "Try to access to project admin section"do
-            $link = @setup['host']['value'] + '/project/admin/?group_id=' + @setup['project_id']['value']
+            $link = @params['host']['value'] + '/project/admin/?group_id=' + @params['project_id']['value']
             @runner.navigate.to $link
         end
         it "Display an error message: Insufficient Group Access"do

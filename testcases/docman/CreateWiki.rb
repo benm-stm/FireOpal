@@ -32,7 +32,7 @@ describe "Create a new document wiki" do
     describe "#precondition" do
     #The project "gpig" should exist and "simplex" should be a document writer
         it "Find Documents link" do
-            $link = @setup['host']['value'] + '/plugins/docman/?group_id=' + @setup['project_id']['value']
+            $link = @params['host']['value'] + '/plugins/docman/?group_id=' + @params['project_id']['value']
             @runner.navigate.to $link
         end
     end

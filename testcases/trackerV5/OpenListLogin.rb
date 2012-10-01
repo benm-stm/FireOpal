@@ -32,7 +32,7 @@
 describe "Put user login in a user binded open list" do
     describe "#precondition" do
         it "Open the artifct" do
-            $link = @setup['host']['value'] + '/plugins/tracker/?aid='+ @setup['artifact_id']['value']
+            $link = @params['host']['value'] + '/plugins/tracker/?aid='+ @params['artifact_id']['value']
             @runner.navigate.to $link
         end
         it "Clear the open list" do
@@ -47,7 +47,7 @@ describe "Put user login in a user binded open list" do
             @runner.find_element(:class, "maininput").clear
         end
         it "Fill the open list" do
-            @runner.find_element(:class, "maininput").send_keys @setup['user']['value'] + ","
+            @runner.find_element(:class, "maininput").send_keys @params['user']['value'] + ","
             begin
                 @runner.find_element(:css, "a.closebutton")
             rescue

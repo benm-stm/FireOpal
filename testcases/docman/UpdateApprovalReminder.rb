@@ -36,7 +36,7 @@
 describe "Browse to approval table menu" do
     describe "#precondition" do
         it "Open the approval table" do
-            $link = @setup['host']['value'] + '/plugins/docman/?group_id=' + @setup['project_id']['value'] + '&action=approval_create&id=' + @setup['docman_root_id']['value']
+            $link = @params['host']['value'] + '/plugins/docman/?group_id=' + @params['project_id']['value'] + '&action=approval_create&id=' + @params['docman_root_id']['value']
             @runner.navigate.to $link
         end
         it "Verify that user can update the aproval table" do

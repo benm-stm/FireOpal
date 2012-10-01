@@ -83,7 +83,7 @@ class TestCase {
         $exampleGroupFooter = "#---- End test case ".$this->name." ----\n\n";
         $exampleGroup       = $exampleGroupHeader."    describe \"".$this->name."\" do\n\n";
         $exampleGroup       .= "        before(:all) do\n";
-        $exampleGroup       .= "            @runner.navigate.to @setup['host']['value'] + '/my/'\n";
+        $exampleGroup       .= "            @runner.navigate.to @params['host']['value'] + '/my/'\n";
         $exampleGroup       .= "        end\n\n";
         try {
             $exampleGroup .= $this->getContent();
@@ -138,7 +138,7 @@ class TestCase {
                 while ($testCaseFileObj->valid()) {
                     $line = $testCaseFileObj->fgets();
                     // get all usages of setup params in $line
-                    // call to a setup param is done using this syntax @setup['param']['value']
+                    // call to a setup param is done using this syntax @params['param']['value']
                     $found = preg_match_all('/setup\[["\']([^w+]*)["\']\]\[["\']value["\']\]/', $line, $matches);
                     if ($found) {
                         foreach ($matches[1] as $match) {

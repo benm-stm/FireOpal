@@ -41,10 +41,10 @@ describe "Testcase name" do
             @runner.find_element(:name, "form_element_example_1").clear
         end
         it "Fill the first field" do
-            @runner.find_element(:name, "form_element_example_1").send_keys @setup['user']['value']
+            @runner.find_element(:name, "form_element_example_1").send_keys @params['user']['value']
         end
         it "Fill another field" do
-            @runner.find_element(:name, "form_element_example_2").send_keys @setup['password']['value']
+            @runner.find_element(:name, "form_element_example_2").send_keys @params['password']['value']
         end
         it "Click on a button" do
             @runner.find_element(:name, "button_example").click

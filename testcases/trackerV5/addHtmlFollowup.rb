@@ -35,13 +35,13 @@ describe "TV5 HTML followup" do
             @runner.find_element(:link, "My Personal Page").click
         end
         it "Find project" do
-            @runner.find_element(:link, @setup['project_name']['value']).click
+            @runner.find_element(:link, @params['project_name']['value']).click
         end
         it "Find tracker service" do
             @runner.find_element(:link, "Trackers").click
         end
         it "Find target tracker" do
-            @runner.find_element(:link, @setup['tracker']['value']).click
+            @runner.find_element(:link, @params['tracker']['value']).click
         end
         it "Find the first artifact" do
             @runner.find_element(:css, "img[alt=\"#1\"]").click
