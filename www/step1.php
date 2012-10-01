@@ -152,7 +152,7 @@ if ($cross == true) {
         $_SESSION['sess_completeRecording'] = 1;
         $user->sendMail(0, 0);
     //echo "User Successfully registred, check your email";
-    //header("location:index.php");
+    header("location:index.php");
 
     } else {
         $req1 = '<div style="width:20px; float:left;">
