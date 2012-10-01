@@ -151,6 +151,18 @@ class  user {
         }
     }
 
+    function initWorkSpace() {
+        if ($this->userExist()) {
+            if (@mkdir ("../workspaces/".$this->familyName)) {
+                echo "Workspace initiliazed successfully";
+                return true;
+            } else {
+                echo "Something went wrong when trying to setup workspace";
+                return false;
+            }
+        }
+    }
+
     function sendMail($temp_passe, $max ) {
         $From    = "From:tester@codex.cro.st.com\n";
         $From   .= "MIME-version: 1.0\n";
