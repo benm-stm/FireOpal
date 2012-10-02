@@ -243,38 +243,38 @@ echo $reqOrganisation.'
       </div>
 ';
 echo ' <div class="date" id="sign-titre6">
-                <div id="sign-titre7">
-                    <div id="sign-titre7-11">
+                <div id="sign-titre771">
+                    <div id="sign-titre7-15">
                         Enter your email*
                     </div>
-                    <div id="champs1">';
+                    <div class="champs1">';
 echo $req1.'
                         <input name="email" type="text" class="champs"/>
                     </div>
                 </div>
                 <div id="sign-titre771">
-                    <div id="sign-titre7-12">
+                    <div id="sign-titre7-15">
                         Retype your email*
                     </div> 
-                <div id="champs2">';
+                <div class="champs2">';
 echo $req2.'
                     <input name="remail" type="text" class="champs"/>
                 </div>
             </div>
             <div id="sign-titre772">
-                <div id="sign-titre7-13">
+                <div id="sign-titre7-15">
                     Enter your password*
                 </div> 
-                <div id="champs3">';
+                <div class="champs3">';
 echo $req3.'
                     <input name="pass" type="password" class="champs" value="" />
                 </div>
             </div>
             <div id="sign-titre773">
-                <div id="sign-titre7-14">
+                <div id="sign-titre7-15">
                     Retype your password*
                 </div> 
-                <div id="champs4">';
+                <div class="champs4">';
 echo $req4.'
                     <input name="rpass" type="password" class="champs" value="" />
                 </div>

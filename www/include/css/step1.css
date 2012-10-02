@@ -266,6 +266,10 @@ input.password {
     height:16px;
     padding-left: 15px;
     line-height:1.3em;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:10px;
+    text-decoration:none;
+    color:#928a6e;
 }
 
 #champs1{
