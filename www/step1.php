@@ -53,13 +53,13 @@ $req3 = '<div style="width:20px; float:left;">
 $req4 = '<div style="width:20px; float:left;">
             <img src="include/images/signup/puce_erreur_blc.jpg" />
         </div>';
-$req22 = '<div style="width:20px; float:left;">
+$reqSurname = '<div style="width:20px; float:left;">
          <img src="include/images/signup/puce_erreur_blc.jpg"/>
          </div>';
-$req33 = '<div style="width:20px; float:left;">
+$reqFamilyName = '<div style="width:20px; float:left;">
          <img src="include/images/signup/puce_erreur_blc.jpg"/>
          </div>';
-$req44 = '<div style="width:20px; float:left;">
+$reqOrganisation = '<div style="width:20px; float:left;">
          <img src="include/images/signup/puce_erreur_blc.jpg"/>
          </div>';
 
@@ -106,9 +106,11 @@ if (isset($_POST['email'])) {
             $error .= '&nbsp;retype your password,&nbsp;';
         $cross  = false;
 }
-/*******************/
 
-/********************/
+    $organisation  = (isset($_POST['organisation']) ? trim($_POST['organisation']) : '');
+    $surname       = (isset($_POST['surname']) ? trim($_POST['surname']) : '');
+    $family        = (isset($_POST['family']) ? trim($_POST['family']) : '');
+
 if (strnatcmp($email, $remail) != 0) {
     $error .= '&nbsp;the email you typed is not identical on both lines,&nbsp;';   
     $req2 = '<div style="width:20px; float:left;">
@@ -137,32 +139,31 @@ if ( strnatcmp($pass, $rpass) != 0 ) {
 
 // Input validated, continue
 if ($cross == true) {
-    $user = new user();
+    $user        = new user();
     $user->email = $email;
     if ($user->userExist())
         $cross = false;
-    if ($cross == true) {
-        $user->password = $pass;
-        $user->surname      = 'Brian';//$surname;
-        $user->familyName   = 'Boytano';//$family;
-        $user->organisation = 'fsf';//$organisation;
-        $user->save();
-        $user->initWorkSpace();
-        $_SESSION['sess_idUser_temp'] = $user->getAtt('id');
-        $_SESSION['sess_completeRecording'] = 1;
-        $user->sendMail(0, 0);
-    //echo "User Successfully registred, check your email";
-    header("location:index.php");
-
-    } else {
-        $req1 = '<div style="width:20px; float:left;">
-                 <img src="include/images/signup/puce_erreur.jpg" />
-                 </div>';
-        //$req2 = '<font color="red" ><strong>!</strong></font>';        
-        $error .= '&nbsp;This email address was already used to Sign up,&nbsp;';
-        $mailexist = 1 ;
-    }   
-}
+        if ($cross == true) {
+            $user->password     = $pass;
+            $user->surname      = $surname;
+            $user->familyName   = $family;
+            $user->organisation = $organisation;
+            $user->save();
+            $user->initWorkSpace();
+            $_SESSION['sess_idUser_temp']       = $user->getAtt('id');
+            $_SESSION['sess_completeRecording'] = 1;
+            $user->sendMail(0, 0);
+            //echo "User Successfully registred, check your email";
+            header("location:index.php");
+        } else {
+            $req1 = '<div style="width:20px; float:left;">
+            <img src="include/images/signup/puce_erreur.jpg" />
+            </div>';
+            //$req2 = '<font color="red" ><strong>!</strong></font>';
+            $error .= '&nbsp;This email address was already used to Sign up,&nbsp;';
+            $mailexist = 1 ;
+        }
+    }
 }
 
 $errorMsg = '';
@@ -220,26 +221,26 @@ echo '
                 ENTER YOUR EMAIL AND CHOOSE YOUR PASSWORD
             </div>';
 echo '<div class="date" id="sign-titre6">
-        <div id="sign-titre7"><div id="sign-titre7-11">First Name / Surname *</div>
+        <div id="sign-titre7">
+        <div id="sign-titre7-15">First Name / Surname *</div>
         <div class="champs1">';
-echo $req22.'
-        <input id="surname" name="surname" type="text"  />
+echo $reqSurname.'
+        <input id="surname" name="surname" type="text" class="champs"/>
         </div>
     </div>
     <div id="sign-titre771">
-        <div id="sign-titre7-12">Last Name / Family Name *</div>
+        <div id="sign-titre7-15">Last Name / Family Name *</div>
         <div class="champs1">';
-echo $req33.'
-            <input id="family" name="family" type="text" />
+echo $reqFamilyName.'
+            <input id="family" name="family" type="text" class="champs"/>
       </div>
     </div>
     <div id="sign-titre771">
-      <div id="sign-titre7-13">Organisation *</div>
+      <div id="sign-titre7-15">Organisation</div>
       <div class="champs1">';
-echo $req44.'
-          <input id="organisation" name="organisation" type="text"  />
+echo $reqOrganisation.'
+          <input id="organisation" name="organisation" type="text" class="champs"/>
       </div>
-
 ';
 echo ' <div class="date" id="sign-titre6">
                 <div id="sign-titre7">
