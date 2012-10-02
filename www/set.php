@@ -50,7 +50,7 @@ if (!empty($content['error'])) {
 echo '
 <html>
     <head>
-        <title>Codex automatic validation (update config)</title>
+        <title>Fire Opal (update config)</title>
         <link href="include/css/index.css" rel="stylesheet" type="text/css" />
     </head>
     <body>

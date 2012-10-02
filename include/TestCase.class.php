@@ -139,7 +139,7 @@ class TestCase {
                     $line = $testCaseFileObj->fgets();
                     // get all usages of setup params in $line
                     // call to a setup param is done using this syntax @params['param']['value']
-                    $found = preg_match_all('/setup\[["\']([^w+]*)["\']\]\[["\']value["\']\]/', $line, $matches);
+                    $found = preg_match_all('/params\[["\']([^w+]*)["\']\]\[["\']value["\']\]/', $line, $matches);
                     if ($found) {
                         foreach ($matches[1] as $match) {
                             $this->_setupParamsMap[] = $match;

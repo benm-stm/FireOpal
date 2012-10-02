@@ -25,7 +25,7 @@ echo '
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
-<title>Automatic validation, Sign Up</title>
+<title>Fire Opal, Sign Up</title>
 <link rel="stylesheet" type="text/css" href="css/style2.css">
 <link href="include/css/index.css" rel="stylesheet" type="text/css" />
 <link href="include/include/css/style.css" rel="stylesheet" type="text/css" />
@@ -286,7 +286,7 @@ echo $errorMsg.'
                 <input type="image"  value="Next" id="btnNext" src="include/images/sign/validate.jpg" width="80" height="28" border="0" alt="FireOpal">
             </div>
             <div id="sign-titre774">
-                <p class="a2">- Your email will not be visible on the Automatic validation engine<br />
+                <p class="a2">- Your email will not be visible on the Fire Opal engine<br />
                 - Mandatory information fields *<br /><br />
                 </p>
                 <p class="a2">- Please read our <span class="greenLink">

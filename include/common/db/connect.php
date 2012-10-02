@@ -18,8 +18,8 @@
 
 define('DB_SERVER', 'localhost'); 
 define('DB_SERVER_USERNAME','root');
-define('DB_SERVER_PASSWORD', '');
-define('DB_DATABASE', 'automaticvalidation');
+define('DB_SERVER_PASSWORD', 'roottoor');
+define('DB_DATABASE', 'fireopal');
 define('USE_PCONNECT', 'true');
 
 function connect() {  

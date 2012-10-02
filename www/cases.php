@@ -110,7 +110,7 @@ if (!empty($error)) {
 echo '
 <html>
     <head>
-        <title>Codex automatic validation</title>
+        <title>Fire Opal</title>
         <link href="include/css/index.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="include/scripts/script.js"></script>
     </head>

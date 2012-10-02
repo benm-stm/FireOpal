@@ -132,7 +132,7 @@ echo '
   <div id="champs1">
     <div class="sign_titreb2_4">
       <p class="joinText">
-      <input type="image"  value="Next" id="btnNext" src="include/images/sign/login.jpg" width="85" height="18" border="0" alt="Automatic validation engine, login" >
+      <input type="image"  value="Next" id="btnNext" src="include/images/sign/login.jpg" width="85" height="18" border="0" alt="Fire Opal engine, login" >
     </p>
     </div>
   </div>
