@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `surname` varchar(100) DEFAULT NULL,
   `familyName` varchar(100) DEFAULT NULL,
   `organisation` varchar(100) DEFAULT NULL,
-  `title` varchar(100) DEFAULT NULL,
+  `login` varchar(100) DEFAULT NULL,
   `country` int(11) DEFAULT NULL,
   `city` varchar(100) DEFAULT NULL,
   `photo` varchar(100) DEFAULT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- Table `user` content
 --
 
-INSERT INTO `user` (`id`, `email`, `password`, `surname`, `familyName`, `organisation`, `title`, `country`, `city`, `photo`, `typeOrganisation`, `activityFocus`, `titleQualification`, `englishLanguage`, `sex`, `born`, `check1`, `check2`, `check3`, `check4`, `completeRecording`) VALUES
+INSERT INTO `user` (`id`, `email`, `password`, `surname`, `familyName`, `organisation`, `login`, `country`, `city`, `photo`, `typeOrganisation`, `activityFocus`, `titleQualification`, `englishLanguage`, `sex`, `born`, `check1`, `check2`, `check3`, `check4`, `completeRecording`) VALUES
 (1, 'toto@laposte.net', 'aaa', 'xxxx', 'xxxxx', 'xx', 'xxxx', 74, '1', '52830.jpg', 1, '1', 1, 'no', 'female', '1974', 1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------

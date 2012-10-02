@@ -25,7 +25,7 @@ class  user {
     var $surname;
     var $familyName;
     var $organisation;
-    var $englishLanguage;
+    var $login;
     var $completeRecording;    
 
     /**
@@ -40,7 +40,7 @@ class  user {
               "surname"           => "surname",
               "familyName"        => "familyName",
               "organisation"      => "organisation",
-              "englishLanguage"   => "englishLanguage",
+              "login"             => "login",
               "completeRecording" => "completeRecording" 
            );
 
@@ -122,7 +122,7 @@ class  user {
     }
 
     function userExist() {
-        $req  = "select  * from $this->tableName where email='".$this->email."' order by id";
+        $req  = "select  * from $this->tableName where login = '".$this->login."' order by id";
         $rows = mysql_query($req);
         $nb_ligne = mysql_num_rows($rows);
         if ( $nb_ligne > 0 ) {
@@ -154,7 +154,7 @@ class  user {
     function initWorkSpace() {
         if ($this->userExist()) {
             if (@mkdir ("../workspaces/".$this->familyName)) {
-                echo "Workspace initiliazed successfully";
+                echo"Workspace initiliazed successfully";
                 return true;
             } else {
                 echo "Something went wrong when trying to setup workspace";

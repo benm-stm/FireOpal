@@ -74,17 +74,17 @@ if (isset($_GET['return']) and isset($_SESSION['sess_idUser_temp'])) {
 $error = '';
 if (isset($_POST['email'])) {
     $email  = (isset($_POST['email']) ? trim($_POST['email']) : '');
-    $remail = (isset($_POST['remail']) ? trim($_POST['remail']) : '');
+    $login  = (isset($_POST['login']) ? trim($_POST['login']) : '');
     $pass   = (isset($_POST['pass']) ? trim($_POST['pass']) : '');
     $rpass  = (isset($_POST['rpass']) ? trim($_POST['rpass']) : '');
     $cross  = true;
 
-    if ( $email == '' or $remail == '' or $pass == '' or $rpass == ''   ) {
+    if ( $email == '' or $login == '' or $pass == '' or $rpass == '') {
         if ($email == '' )
             $req1 = '<div style="width:20px; float:left;">
                         <img src="include/images/signup/puce_erreur.jpg" />
                     </div>';
-        if ($remail == '' )
+        if ($login == '' )
             $req2 = '<div style="width:20px; float:left;">
                         <img src="include/images/signup/puce_erreur.jpg" />
                     </div>';
@@ -98,8 +98,8 @@ if (isset($_POST['email'])) {
                     </div>';
         if ($email == '' )
             $error .= 'Type your email address,';
-        if ($remail == '' )
-            $error .='&nbsp;retype your email address,';
+        if ($login == '' )
+            $error .= '&nbsp;Type your login,';
         if ($pass == '' )
             $error .= '&nbsp;type your password,';
         if ($rpass == '' )
@@ -111,13 +111,13 @@ if (isset($_POST['email'])) {
     $surname       = (isset($_POST['surname']) ? trim($_POST['surname']) : '');
     $family        = (isset($_POST['family']) ? trim($_POST['family']) : '');
 
-if (strnatcmp($email, $remail) != 0) {
+/*if (strnatcmp($email, $remail) != 0) {
     $error .= '&nbsp;the email you typed is not identical on both lines,&nbsp;';   
     $req2 = '<div style="width:20px; float:left;">
             <img src="include/images/signup/puce_erreur.jpg" />
             </div>';
     $cross  = false;
-}
+}*/
 
 $Syntaxe = '#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,5}$#'; 
 if (!preg_match($Syntaxe, $email)) {
@@ -136,11 +136,11 @@ if ( strnatcmp($pass, $rpass) != 0 ) {
     $cross = false;
 }
 
-
 // Input validated, continue
 if ($cross == true) {
     $user        = new user();
     $user->email = $email;
+    $user->login = $login;
     if ($user->userExist())
         $cross = false;
         if ($cross == true) {
@@ -160,7 +160,7 @@ if ($cross == true) {
             <img src="include/images/signup/puce_erreur.jpg" />
             </div>';
             //$req2 = '<font color="red" ><strong>!</strong></font>';
-            $error .= '&nbsp;This email address was already used to Sign up,&nbsp;';
+            $error .= '&nbsp;This login was already used to Sign up,&nbsp;';
             $mailexist = 1 ;
         }
     }
@@ -254,11 +254,11 @@ echo $req1.'
                 </div>
                 <div id="sign-titre771">
                     <div id="sign-titre7-15">
-                        Retype your email*
+                        Enter your login*
                     </div> 
                 <div class="champs2">';
 echo $req2.'
-                    <input name="remail" type="text" class="champs"/>
+                    <input id="login" name="login" type="text" class="champs"/>
                 </div>
             </div>
             <div id="sign-titre772">
