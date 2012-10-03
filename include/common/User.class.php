@@ -26,7 +26,8 @@ class  user {
     var $familyName;
     var $organisation;
     var $login;
-    var $completeRecording;    
+    var $completeRecording;
+    var $dbHandler;
 
     /**
      * Table name
@@ -51,6 +52,7 @@ class  user {
      */
 
     function  user() {
+        $this->dbHandler = DBHandler::getInstance();
     }
 
     /**
@@ -73,7 +75,7 @@ class  user {
             }
             $query_temp = substr($query,0,strlen($query)-1);
             $query      = $query_temp."  where id='".$id."'";
-            mysql_query($query);
+            $this->dbHandler->query($query);
         } else {
         // insert new user given its id
         $query  = "Insert into $this->tableName (";
@@ -94,7 +96,7 @@ class  user {
         $values      = $values_temp.")  ";
         $query      .= $values ;    
         }
-    mysql_query($query);
+    $this->dbHandler->query($query);
     }
 
     /**
@@ -105,8 +107,9 @@ class  user {
     function loadFromId($Id) {
         $whereClause = "WHERE id=$Id ";
         $query       = "SELECT * FROM ".$this->tableName." ".$whereClause ;
-        $result      = mysql_query($query);
-        if ($List = mysql_fetch_array($result)) {
+        $result      = $this->dbHandler->query($query);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        if ($List = $result->fetch()) {
             foreach ($this->attributs as $classatt=>$bddatt) {
                 $this->$classatt = $List[$bddatt];
             }
@@ -123,7 +126,7 @@ class  user {
 
     function userExist() {
         $req  = "select  * from $this->tableName where login = '".$this->login."' order by id";
-        $rows = mysql_query($req);
+        $rows = $this->dbHandler->query($req);
         $nb_ligne = mysql_num_rows($rows);
         if ( $nb_ligne > 0 ) {
             return true;
@@ -137,7 +140,7 @@ class  user {
         $pass   = trim($pass);
         if ($pass != '' and $pseudo != '') {
             $req    = "select * from $this->tableName where login = '".$pseudo."' and password = '".$pass."'";// and completeRecording = '1' ";
-            $result = mysql_query($req);
+            $result = $this->dbHandler->query($req);
             if ( mysql_num_rows($result) > 0 ) {
                 $row = mysql_fetch_array($result);
                 $ID = $row['id'];
