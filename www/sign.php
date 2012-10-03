@@ -36,35 +36,35 @@ $messageStack = '';
 if (!isset($_SESSION)) {
     session_start();
 }
-if(isset($_POST['email'])) {
-    $email = $_POST['email'];
-    // setcookie($cookie_name,$email, $time + 3600);
+if (isset($_POST['login'])) {
+    $login = $_POST['login'];
+    // setcookie($cookie_name,$login, $time + 3600);
     $pass  = $_POST['pass'];
-    if(isset($_POST['remember']) && !empty($_POST['email'])) {
+    if (isset($_POST['remember']) && !empty($_POST['login'])) {
         $check = $_POST['remember'];
     }
     $user  = new user();
 
-    if(!$user->controlPassword($email, $pass)) {
+    if (!$user->controlPassword($login, $pass)) {
         $messageStack = '
         <div class="messageStackError">
         <img src="include/images/ic/error.png" alt="">&nbsp;
-                Error: wrong email or password
+                Error: wrong login or password
         </div>
         ';
     } else {
         $_SESSION['sess_idUser'] = $user->id;
         if($check == 1) {
         //rememberMe
-        //setcookie('rememberMe[mail]',$email,  time()  + 3600);
+        //setcookie('rememberMe[mail]',$login,  time()  + 3600);
             setcookie('rememberMe', $user->id, time() + 3600*24*7);
         }
         header('Location: index.php?id='.$user->id);
     }
 }
 
-else if(isset($_COOKIE['rememberMe'])) {
-    // $email = $_COOKIE['rememberMe[mail]'];
+else if (isset($_COOKIE['rememberMe'])) {
+    // $login = $_COOKIE['rememberMe[mail]'];
     // if(isset($_COOKIE['rememberMe[id]'])) {
     $_SESSION['sess_idUser'] = $_COOKIE['rememberMe'];
     header('Location: index.php');
@@ -113,7 +113,7 @@ echo '
 
 <div class="sign_titreb2_1">
 <div class="sign_titreb2_2"><p class="joinText">Your login</p>
-</div><div id="champs1"><input name="email" type="text" class="champs"/></div>
+</div><div id="champs1"><input name="login" type="text" class="champs"/></div>
 </div>
 
 <div class="sign_titreb2_11">
@@ -143,8 +143,8 @@ echo '
 <div class="sign_titreb2_7">
   <div id="champs1">
     <div class="sign_titreb2_4">
-      <p class="joinText2"><a href="#" class="forgetLink" style="font-size:9px">Forgot your password ?</a><br />
-        <a href="#" class="forgetLink" style="font-size:9px">Forgot your email address ?</a></p>
+      <p class="joinText2"><a href="#" class="forgetLink" style="font-size:9px">Forgot your password?</a><br />
+        <a href="#" class="forgetLink" style="font-size:9px">Forgot your login?</a></p>
     </div>
   </div>
 </div>
