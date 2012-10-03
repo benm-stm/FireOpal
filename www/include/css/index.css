@@ -309,3 +309,20 @@ text-decoration:none;
 .button a:hover {
 background:url(../images/sign/bckg.png) no-repeat;
 }
+
+.resultHeader{
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:14px;
+    text-decoration:none;
+    color:#FFFFFF;
+    background-color:#629628;
+    font-weight:bold;
+}
+
+.resultHeader:hover{
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:14px;
+text-decoration:none;
+color:#FFFFFF;
+background-color:#FF6600;
+}
