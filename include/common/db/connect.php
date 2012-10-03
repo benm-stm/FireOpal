@@ -16,18 +16,33 @@
  * along with FireOpal. If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('DB_SERVER', 'localhost'); 
-define('DB_SERVER_USERNAME','root');
-define('DB_SERVER_PASSWORD', 'roottoor');
-define('DB_DATABASE', 'fireopal');
-define('USE_PCONNECT', 'true');
+class DBHandler {
 
-function connect() {  
-if(@mysql_connect(DB_SERVER, DB_SERVER_USERNAME, DB_SERVER_PASSWORD) or die(utf8_encode("Failure while connecting to the server")) )
-    if( @mysql_select_db(DB_DATABASE) or die (utf8_encode("Failure while connecting to the database")))
-        return true;
-    else
-        return false;
+    const DB_SERVER          = 'localhost';
+    const DB_SERVER_USERNAME = 'root';
+    const DB_SERVER_PASSWORD = '';
+    const DB_DATABASE        = 'fireopal';
+
+    private static $instance;
+
+    /**
+     * Class Const
+     */
+    private function __construct() {
+
+    }
+
+    /**
+     * Retrieve a DBHandler instance
+     *
+     * @return $instance;
+     */
+    public static function getInstance() {
+        if (!self::$instance) {
+            self::$instance = new PDO("mysql:host=".self::DB_SERVER.";dbname=".self::DB_DATABASE, self::DB_SERVER_USERNAME, self::DB_SERVER_PASSWORD);
+            self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        }
+        return self::$instance;
+    }
 }
-connect();
 ?>
