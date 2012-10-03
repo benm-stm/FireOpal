@@ -60,7 +60,7 @@ pre {
 #body_skin{
     width:1200px;
     margin:0 auto;
-    background-color:#D1E1F8;
+    background-color:#FFFFFF;
     padding-top:40px;
 }
 #block_config{
@@ -141,13 +141,13 @@ pre {
     margin-left:25px;
     left:0px; text-align:center;
     font:bold 11px/23px Verdana, Arial, Helvetica, sans-serif;
-    color:#0099FF;
+    color: #FFFFFF;
     text-transform:uppercase;
     text-decoration:none;
     width: 250px;
     padding: 5px;
-    background-color: #f7f7f7;
-    border: 1px solid #b7b7b7;
+    background-color: #629628;/*#f7f7f7;*/
+    border: 1px solid #f7f7f7;
     margin-bottom:30px;
 }
 #header_clear{
@@ -189,8 +189,29 @@ pre {
 font-family:Verdana, Arial, Helvetica, sans-serif;
 font-size:11px;
 text-decoration:none;
-color:#629628;
+color:##FF6600;
 }
+.fieldset{
+    border-color:#629628;
+    border-style: solid;
+}
+
+.fieldsetTitle{
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:14px;
+    text-decoration:none;
+    color:#928a6e;
+    font-weight:bold;
+}
+
+
+.fieldsetTitle:hover{
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:14px;
+text-decoration:none;
+color:#FF6600;
+}
+
 
 .greenLink{
 font-family:Verdana, Arial, Helvetica, sans-serif;

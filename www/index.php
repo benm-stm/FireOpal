@@ -35,13 +35,13 @@ header("Keep-Alive: timeout=300");
 if (!isset($_SESSION)) {
     session_start();
 }
-//var_dump($_SESSION);
 
 echo '
 <html>
     <head>
-        <title>Fire Opal</title>
+        <title>FireOpal</title>
         <link href="include/css/index.css" rel="stylesheet" type="text/css" />
+        <link href="include/css/sign.css" rel="stylesheet" type="text/css" />
 ';
 
 $welcomeMessage = '';
@@ -88,8 +88,8 @@ echo '
                     <td width="10%" nowrap="nowrap">
                         <form action="" method="POST">
                             <div id="submit_panel"><input type="submit" value="Run !" /></div>
-                            <fieldset>
-                                <legend><b>Testsuites</b></legend>
+                            <fieldset class="fieldset">
+                                <legend><span class="fieldsetTitle">Testsuites</span></legend>
                                 <ul id="menu">';
 
 $testSuiteManager = new TestSuiteManager();
@@ -108,7 +108,7 @@ echo '
 
 if (isset($_REQUEST['details'])) {
     echo '
-                        <fieldset>
+                        <fieldset class="fieldset">
                             <legend><b>'.$_REQUEST['details'].' details</b></legend>
                             <pre>';
     $testSuite = new TestSuite(substr($_REQUEST['details'], 0, -3));
@@ -120,8 +120,8 @@ if (isset($_REQUEST['details'])) {
 echo '
                     </td>
                     <td width="90%">
-                        <fieldset>
-                            <legend>Results</legend>
+                        <fieldset class="fieldset">
+                            <legend><span class="fieldsetTitle">Results</span></legend>
                             <pre>';
 if (isset($_REQUEST['run'])) {
     // manage request
