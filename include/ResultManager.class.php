@@ -24,6 +24,7 @@ class ResultManager {
     const RESULTS_PATH = "../log/";
 
     var $user;
+    var $dbHandler;
 
     /**
      * Constructor of the class
@@ -34,6 +35,7 @@ class ResultManager {
      */
     function __construct(User $user) {
         $this->user = $user;
+        $this->dbHandler = DBHandler::getInstance();
     }
 
     /**
@@ -47,7 +49,7 @@ class ResultManager {
      */
     function logNewResult($output, $testSuiteName, $testSuite) {
         $sql = "INSERT INTO result (user, name, output, testsuite, date) VALUES (".$this->user->getAtt('id').", '".$testSuiteName."', '".mysql_real_escape_string(join("\n", $output))."', '".mysql_real_escape_string($testSuite)."', ".time().")";
-        return mysql_query($sql);
+        return $this->dbHandler->query($sql);
     }
 
     /**
@@ -61,7 +63,7 @@ class ResultManager {
         $sql = "DELETE FROM result
                 WHERE id = ".$id."
                   AND user = ".$this->user->getAtt('id');
-        return mysql_query($sql);
+        return $this->dbHandler->query($sql);
     }
 
     /**
@@ -74,41 +76,49 @@ class ResultManager {
         $sql  = "SELECT * FROM result
                  WHERE user = ".$this->user->getAtt('id')."
                  ORDER BY date";
-        $result = mysql_query($sql);
-        if($result && mysql_num_rows($result) > 0) {
-            $output = '<table border="1"><th>Testsuite</th><th>Run date</th><th>Output</th><th>Download output</th><th>Delete</th>';
-            while ($row = mysql_fetch_array($result)) {
+        $result = $this->dbHandler->query($sql);
+        if($result && $result->rowCount() > 0) {
+            $output = '<div><br><table>
+            <tr>
+            <td class="resultHeader">Testsuite</td>
+            <td class="resultHeader">Run date</td>
+            <td class="resultHeader">Output</td>
+            <td class="resultHeader">Download output</td>
+            <td class="resultHeader">Delete</td>
+            </tr>';
+            $result->setFetchMode(PDO::FETCH_OBJ);
+            while ($row = $result->fetch()) {
                 $output    .= '
 <tr>
     <td>
-        <a href="?download_testsuite='.$row['id'].'" >'.$row['name'].'</a>
+        <a href="?download_testsuite='.$row->id.'" >'.$row->name.'</a>
     </td>
     <td>
-        '.date("D M j, Y G:i:s T", $row['date']).'
+        '.date("D M j, Y G:i:s T", $row->date).'
     </td>
     <td>
         <fieldset>
-            <legend class="toggler" onclick="toggle_visibility(\'result_output_'.$row['id'].'\'); if (this.innerHTML == \'+\') { this.innerHTML = \'-\'; } else { this.innerHTML = \'+\'; }">+</legend>
-            <span id="result_output_'.$row['id'].'" style="display: none;" >
-                <pre>'.$row['output'].'</pre>
+            <legend class="toggler" onclick="toggle_visibility(\'result_output_'.$row->id.'\'); if (this.innerHTML == \'+\') { this.innerHTML = \'-\'; } else { this.innerHTML = \'+\'; }">+</legend>
+            <span id="result_output_'.$row->id.'" style="display: none;" >
+                <pre>'.$row->output.'</pre>
             </span>
         </fieldset>
     </td>
     <td>
-        <a href="?download_result='.$row['id'].'" >Download</a>
+        <a href="?download_result='.$row->id.'" >Download</a>
     </td>
     <td>
-        <a href="?delete_result='.$row['id'].'" >Delete</a>
+        <a href="?delete_result='.$row->id.'" >Delete</a>
     </td>
 </tr>';
             }
-            $output .= '</table>';
+            $output .= '</table></div>';
         }
         return $output;
     }
 
     /**
-     * Download an execution rsults
+     * Download an execution results
      *
      * @param Integer $id Id of the result to download
      *
@@ -118,14 +128,15 @@ class ResultManager {
         $sql  = "SELECT * FROM result
                  WHERE id = ".$id."
                    AND user = ".$this->user->getAtt('id');
-        $result = mysql_query($sql);
-        if($result && mysql_num_rows($result) > 0) {
-            $row = mysql_fetch_array($result);
+        $result = $this->dbHandler->query($sql);
+        if($result && $result->rowCount() > 0) {
+            $result->setFetchMode(PDO::FETCH_OBJ);
+            $row = $result->fetch();
             header("Content-Type: application/force-download");
-            header('Content-Disposition: filename="'.$row['name'].'_'.$row['date'].'.txt"');
-            echo $row['output'];
+            header('Content-Disposition: filename="'.$row->name.'_'.$row->date.'.txt"');
+            echo $row->output;
             echo "\n\n";
-            echo "Run in ".date("D M j, Y G:i:s T", $row['date']);
+            echo "Run in ".date("D M j, Y G:i:s T", $row->date);
             exit;
         }
     }
@@ -138,15 +149,16 @@ class ResultManager {
      * @return Void
      */
     function downloadTestSuite($id) {
-        $sql  = "SELECT * FROM result
-                 WHERE id = ".$id."
+        $sql    = "SELECT * FROM result
+                   WHERE id = ".$id."
                    AND user = ".$this->user->getAtt('id');
-        $result = mysql_query($sql);
-        if($result && mysql_num_rows($result) > 0) {
-            $row = mysql_fetch_array($result);
+        $result = $this->dbHandler->query($sql);
+        if($result && $result->rowCount() > 0) {
+            $result->setFetchMode(PDO::FETCH_OBJ);
+            $row = $result->fetch();
             header("Content-Type: application/force-download");
-            header('Content-Disposition: filename="'.$row['name'].'_'.$row['date'].'.rb"');
-            echo $row['testsuite'];
+            header('Content-Disposition: filename="'.$row->name.'_'.$row->date.'.rb"');
+            echo $row->testsuite;
             exit;
         }
     }
