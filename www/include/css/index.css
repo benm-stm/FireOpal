@@ -220,16 +220,16 @@ color:#FF6600;
 
 .greenLink{
 font-family:Verdana, Arial, Helvetica, sans-serif;
-font-size:11px;
+font-size:12px;
 text-decoration:none;
 color:#629628;
 }
 
 .greenLink:hover{
 font-family:Verdana, Arial, Helvetica, sans-serif;
-font-size:11px;
+font-size:12px;
 text-decoration:none;
-color:#000000;
+color:#FF6600;
 }
 
 .welcomeLink{
@@ -285,4 +285,27 @@ color:#629628;
     text-decoration:none;
     color:#928a6e;
     font-weight:bold;
+}
+.textField{
+    width:200px;
+    height:18px;
+    background-color:#f1f1e4;
+    border: solid 1px #dcd9d0;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:12px;
+    color:#000000;
+    float: right;
+}
+.button a {
+display:block;
+width:150px;
+line-height:50px;
+text-align:center;
+vertical-align:middle;
+background:url(../images/sign/bckg.png) no-repeat;
+color:white;
+text-decoration:none;
+}
+.button a:hover {
+background:url(../images/sign/bckg.png) no-repeat;
 }

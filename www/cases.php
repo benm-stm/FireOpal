@@ -155,8 +155,6 @@ if (!empty($testsuites)) {
                                     </tr>';
     }
 
-
-
     echo '
                                 </table>
                             </fieldset>
@@ -171,7 +169,7 @@ echo '
                                 <legend class="toggler" onclick="toggle_visibility(\'testsuite_container\')"><b>New testsuite</b></legend>
                                 <table id="testsuite_container">
                                     <tr>
-                                        <td align="center"><b><font size="2">Availables test cases</font></b>';
+                                        <td align="center"><b><span class="greenLink">Availables test cases</span></b>';
 echo $testCaseManager->displayFileSystem("../testcases");
 echo '
                                         </td>
@@ -180,7 +178,7 @@ echo '
                                             <input type="button" value="Add >>>" onClick="AddtestCases()">
                                         </td>
 
-                                        <td align="center"><font size="2"><b>Dispatched test cases</b></font>
+                                        <td align="center"><b><span class="greenLink">Dispatched test cases</span></b></font>
                                             <select align=top id="testcases_to_add" name="testcases_to_add" size=10  style="width:320px" multiple="multiple">
                                                 <option value="10">----------------------</option>
                                             </select>
@@ -194,9 +192,10 @@ echo '
                                     document.EditTestSuiteForm.testcases_to_add.options.length = 0;
                                 </script>
                                 <table nowrap>
+                                <tr><td>&nbsp;</td></tr>
                                     <tr>
-                                        <td>Testsuite name:</td>
-                                        <td><input name="testsuite_name"/></td>
+                                        <td class="greenLink"><b>Testsuite name:</b></td>
+                                        <td><input name="testsuite_name" type="text" class="textField"/></td>
                                     </tr>
                                     <tr>
                                         <!-- For the moment we don\'t use the description
