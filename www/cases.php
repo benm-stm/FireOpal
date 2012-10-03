@@ -126,7 +126,7 @@ echo '
             <table>
                 <tr>
                     <td id="block_config">
-                        <fieldset>
+                        <fieldset class="fieldset">
                             <legend class="toggler" onclick="toggle_visibility(\'menu\')">
                                 <b>Config</b></legend>
                             <ul id="menu">';
@@ -144,7 +144,7 @@ $testsuites = $testSuiteManager->searchTestsuites();
 if (!empty($testsuites)) {
     echo '
                         <form name="LoadTestSuiteForm" action="" method="POST">
-                            <fieldset>
+                            <fieldset class="fieldset">
                                 <legend class="toggler" onclick="toggle_visibility(\'load_container\')"><b>Load testsuite</b></legend>
                                 <table id="load_container" nowrap>';
     foreach($testsuites as $testsuite => $testcases) {
@@ -167,7 +167,7 @@ if (!empty($testsuites)) {
 }
 echo '
                         <form name="EditTestSuiteForm" action="" method="POST" onSubmit="generateTestSuite()">
-                            <fieldset>
+                            <fieldset class="fieldset">
                                 <legend class="toggler" onclick="toggle_visibility(\'testsuite_container\')"><b>New testsuite</b></legend>
                                 <table id="testsuite_container">
                                     <tr>
@@ -214,7 +214,7 @@ echo '
 if (!empty($testsuites)) {
     echo '
                         <form action="" method="POST">
-                            <fieldset>
+                            <fieldset class="fieldset">
                                 <legend class="toggler" onclick="toggle_visibility(\'delete_container\')"><b>Delete testsuites</b></legend>
                                 <table id="delete_container" nowrap>';
     foreach($testsuites as $testsuite => $testcases) {
