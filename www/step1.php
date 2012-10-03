@@ -2,18 +2,18 @@
 /**
  * Copyright (c) STMicroelectronics 2012. All rights reserved
  *
- * FireOpal is free software; you can redistribute it and/or modify
+ * This code is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * FireOpal is distributed in the hope that it will be useful,
+ * This code is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with FireOpal. If not, see <http://www.gnu.org/licenses/>.
+ * along with this code. If not, see <http://www.gnu.org/licenses/>.
  */
 
 header("Content-Type: text/html; charset=iso-8859-1");
@@ -190,8 +190,8 @@ echo '
     <div id="blocprinc">
         <div id="sign-bloc1">
             <div id="sign-titre1"><strong>SIGN UP</strong></div>
-                <div id="sign-titre2">3 QUICK STEPS <br/>
-                    <span class="greenTitle">enabling you to:</span>
+                <div id="sign-titre2"> FireOpal <br/>
+                    <span class="greenTitle">enable you to:</span>
                 </div>
                 <div class="date" id="sign-titre3">
                     <div>
@@ -210,15 +210,10 @@ echo '
             </div>
             <div id="sign-bloc2">
                 <div id="sign-titre4">
-                <div id="btn1">
-                    <strong>STEP 1</strong>
-                </div>
-                <div id="btn2">
-                    <a href="#" class="a3"><strong>STEP 2</strong></a>
-                </div>
+                 <div id="sign-titre1"><strong>Who are you?</strong></div>
             </div>
             <div id="sign-titre5">
-                ENTER YOUR EMAIL AND CHOOSE YOUR PASSWORD
+                ENTER YOUR LOGIN AND CHOOSE YOUR PASSWORD
             </div>';
 echo '<div class="date" id="sign-titre6">
         <div id="sign-titre7">
@@ -289,11 +284,6 @@ echo $errorMsg.'
                 <p class="a2">- Your email will not be visible on the Fire Opal engine<br />
                 - Mandatory information fields *<br /><br />
                 </p>
-                <p class="a2">- Please read our <span class="greenLink">
-                <a href="#" class="greenLink">Privacy Policy</a></span>
-                to find out how we use your data. You must also read our
-                <a href="#" class="greenLink">Terms of Service</a>.<br />
-                &nbsp;&nbsp;By submitting this form, you are agreeing that you have read and understood.</p>
             </div>
         </div>
     </div>
