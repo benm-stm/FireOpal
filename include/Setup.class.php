@@ -235,7 +235,7 @@ class Setup {
             if ($element['type'] == 'password') {
                 $element['value'] = '';
             }
-            $content .= '<li><span title="'.$element['description'].'"><label for="'.$name.'">'.$name.':</label><input id="'.$name.'" type="'.$element['type'].'" name="'.$name.'" value="'.$element['value'].'" '.$readOnly.' /></span>';
+            $content .= '<li><span title="'.$element['description'].'" class="confElement"><label for="'.$name.'">'.$name.':</label><input id="'.$name.'" type="'.$element['type'].'" name="'.$name.'" value="'.$element['value'].'" '.$readOnly.' /></span>';
             if (!$readOnly && (!in_array($name, $mandatory))) {
                 $content .= ' delete<input type="checkbox" name="delete[]" value="'.$name.'" />';
             }

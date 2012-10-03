@@ -204,7 +204,6 @@ color:##FF6600;
     font-weight:bold;
 }
 
-
 .fieldsetTitle:hover{
 font-family:Verdana, Arial, Helvetica, sans-serif;
 font-size:14px;
@@ -212,6 +211,12 @@ text-decoration:none;
 color:#FF6600;
 }
 
+.confElement{
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:13px;
+    text-decoration:none;
+    color:#928a6e;
+}
 
 .greenLink{
 font-family:Verdana, Arial, Helvetica, sans-serif;

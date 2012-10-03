@@ -67,21 +67,21 @@ echo '
                 <tr>
                     <td nowrap>
                         <form action="" method="POST">
-                            <fieldset>
-                                <legend><b>Config</b></legend>
+                            <fieldset class="fieldset">
+                                <legend><span class="fieldsetTitle">Config</span></legend>
                                 <ul id="menu"><li class="">
                                     '.$form.'
                                 </ul> 
                             </fieldset>
-                            <fieldset>
-                                <legend><b>New value</b></legend>
+                            <fieldset class="fieldset">
+                                <legend><span class="fieldsetTitle">New value</span></legend>
                                 <table>
                                     <tr>
-                                        <td>Name</td>
+                                        <td class="confElement">Name</td>
                                         <td><input name="new_name" /></td>
                                     </tr>
                                     <tr>
-                                        <td>Type</td>
+                                        <td class="confElement">Type</td>
                                         <td>
                                             <select name="new_type">
                                                 <option value="text" >Text</option>
@@ -90,7 +90,7 @@ echo '
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Description</td>
+                                        <td class="confElement">Description</td>
                                         <td><input name="new_description" /></td>
                                     </tr>
                                 </table>
