@@ -112,7 +112,7 @@ echo '
 <form action="sign.php" method="post" enctype="multipart/form-data" >
 
 <div class="sign_titreb2_1">
-<div class="sign_titreb2_2"><p class="joinText">Your Email Address</p>
+<div class="sign_titreb2_2"><p class="joinText">Your login</p>
 </div><div id="champs1"><input name="email" type="text" class="champs"/></div>
 </div>
 
