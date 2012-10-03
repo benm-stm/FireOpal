@@ -7,13 +7,13 @@ This is a solution to run automatic tests using Selenium webdriver
 
 LICENSE
 =======
-This code is distributed under the GPL v2 Licence. See the file COPYING for details.
+FireOpal is distributed under the GPL v2 Licence. See the file COPYING for details.
 
 INSTALLATION
 ============
 
-Before installing, you need to understand that this code deals with three different machines:
-1- The machine from which you may launch tests having a webserver on which this code is deployed. Let's call it "Launcher machine".
+Before installing, you need to understand that FireOpal deals with three different machines:
+1- The machine from which you may launch tests having a webserver on which FireOpal is deployed. Let's call it "Launcher machine".
 2- The machine on which web application to be tested is deployed. Let's call it "Server machine".
 3- The machine from which tests will be executed on a browser, we use a web browser installed on it. Let's call it "Client machine".
 
@@ -28,7 +28,7 @@ On Launcher machine:
 
     You may need to install other packages using "gem install <package_name>" like json or other.
 
-    Put this code on that machine and point the root of the webserver on "www" folder
+    Put FireOpal on that machine and point the root of the webserver on "www" folder
 
 On Client machine:
 
