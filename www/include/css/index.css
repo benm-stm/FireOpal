@@ -296,19 +296,19 @@ color:#629628;
     color:#000000;
     float: right;
 }
-.button a {
-display:block;
-width:150px;
-line-height:50px;
-text-align:center;
-vertical-align:middle;
-background:url(../images/sign/bckg.png) no-repeat;
-color:white;
-text-decoration:none;
-}
-.button a:hover {
-background:url(../images/sign/bckg.png) no-repeat;
-}
+.runButton {
+    width:150px;
+    height:45px;
+    background-image: url(../images/sign/background.jpg);
+    cursor:pointer;
+    border: none;
+    color:#FFFFFF;
+    text-align:center;
+    vertical-align:middle;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:12px;
+    font-weight:bold;
+    }
 
 .resultHeader{
     font-family:Verdana, Arial, Helvetica, sans-serif;
@@ -325,4 +325,25 @@ font-size:14px;
 text-decoration:none;
 color:#FFFFFF;
 background-color:#FF6600;
+}
+#resultLink a{
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:12px;
+text-decoration:none;
+color:#629628;
+font-weight:bold;
+}
+#resultLink a:hover{
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:13px;
+text-decoration:none;
+color: #FF6600;
+font-weight:bold;
+}
+#resultDate{
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:11px;
+text-decoration:none;
+color: #928a6e;
+font-weight:bold;
 }

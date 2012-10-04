@@ -2,18 +2,18 @@
 /**
  * Copyright (c) STMicroelectronics 2011. All rights reserved
  *
- * FireOpal is free software; you can redistribute it and/or modify
+ * This code is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * FireOpal is distributed in the hope that it will be useful,
+ * This code is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with FireOpal. If not, see <http://www.gnu.org/licenses/>.
+ * along with this code. If not, see <http://www.gnu.org/licenses/>.
  */
 
 ini_set('display_errors', 'on');
@@ -76,8 +76,16 @@ echo '
 ';
 
 echo '
+        <script>
+            function displayRunButton() {
+                document.getElementById("submit_panel").innerHTML = \'<input type="button" name="button" value="Run !" onclick="formSubmit()" class="runButton"/>\';
+            }
+            function formSubmit() {
+                document.getElementById("run").submit();
+            }
+        </script>
     </head>
-    <body>
+    <body onLoad="displayRunButton()">
         <div id="header">
             <a href="cases.php" class="community">Manage testsuites</a>
             <a href="result.php" class="community">View execution results</a>
@@ -86,8 +94,10 @@ echo '
             <table width="100%">
                 <tr>
                     <td width="10%" nowrap="nowrap">
-                        <form action="" method="POST">
-                            <div id="submit_panel"><input type="submit" value="Run !" /></div>
+                        <form id="run" action="" method="POST">
+                            <div id="submit_panel">
+                                <noscript><input type="submit" value="Run !" /></noscript>
+                            </div>
                             <fieldset class="fieldset">
                                 <legend><span class="fieldsetTitle">Testsuites</span></legend>
                                 <ul id="menu">';
