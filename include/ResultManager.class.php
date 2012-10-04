@@ -90,24 +90,24 @@ class ResultManager {
             while ($row = $result->fetch()) {
                 $output    .= '
 <tr>
-    <td>
+    <td id="resultLink">
         <a href="?download_testsuite='.$row->id.'" >'.$row->name.'</a>
     </td>
-    <td>
+    <td id="resultDate">
         '.date("D M j, Y G:i:s T", $row->date).'
     </td>
     <td>
-        <fieldset>
+        <fieldset class="fieldset">
             <legend class="toggler" onclick="toggle_visibility(\'result_output_'.$row->id.'\'); if (this.innerHTML == \'+\') { this.innerHTML = \'-\'; } else { this.innerHTML = \'+\'; }">+</legend>
             <span id="result_output_'.$row->id.'" style="display: none;" >
                 <pre>'.$row->output.'</pre>
             </span>
         </fieldset>
     </td>
-    <td>
+    <td id="resultLink">
         <a href="?download_result='.$row->id.'" >Download</a>
     </td>
-    <td>
+    <td id="resultLink">
         <a href="?delete_result='.$row->id.'" >Delete</a>
     </td>
 </tr>';
