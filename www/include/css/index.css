@@ -299,7 +299,8 @@ color:#629628;
 .runButton {
     width:150px;
     height:45px;
-    background-image: url(../images/sign/background.jpg);
+    margin-top:5px;
+    margin-bottom:10px;
     cursor:pointer;
     border: none;
     color:#FFFFFF;
@@ -308,7 +309,37 @@ color:#629628;
     font-family:Verdana, Arial, Helvetica, sans-serif;
     font-size:12px;
     font-weight:bold;
+
+    background-color:#F2751B!important;
+    padding:8px 16px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    display:inline-block;
     }
+
+.casesButton {
+    width:150px;
+    height:45px;
+    margin-top:10px;
+    cursor:pointer;
+    border: none;
+    color:#FFFFFF;
+    text-align:center;
+    vertical-align:middle;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:12px;
+    font-weight:bold;
+
+    background-color:#F2751B!important;
+    padding:8px 16px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    display:inline-block;
+    }
+
+.casesButton:hover {
+    background-color:#f3a541!important;
+}
 
 .resultHeader{
     font-family:Verdana, Arial, Helvetica, sans-serif;

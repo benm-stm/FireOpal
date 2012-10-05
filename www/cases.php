@@ -159,7 +159,7 @@ if (!empty($testsuites)) {
                                 </table>
                             </fieldset>
                             <div id="submit_panel">
-                                <input type="button" name="load" value="Load !" onClick="loadTestCases()">
+                                <input type="button" name="load" value="Load !" onclick="loadTestCases()" class="casesButton">
                             </div>
                         </form>';
 }
@@ -206,7 +206,7 @@ echo '
                                 </table>
                             </fieldset>
                             <div id="submit_panel_1"> </div><div id="submit_panel">
-                                <input id="generate" type="submit" value="Generate !" />
+                                <input id="generate" type="submit" value="Generate !" class="casesButton"/>
                             </div>
                         </form>';
 
@@ -226,7 +226,7 @@ if (!empty($testsuites)) {
     echo '
                                 </table>
                             </fieldset>
-                            <div id="submit_panel"><input type="submit" value="Delete !" /></div>
+                            <div id="submit_panel"><input type="submit" value="Delete !" class="casesButton"/></div>
                         </form>';
 }
 
