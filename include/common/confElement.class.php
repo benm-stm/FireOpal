@@ -21,7 +21,7 @@ require_once('User.class.php');
 class confElement {
 
     private $dbHandler;
-    private $user;
+    private $userId;
 
     /**
      * Table name
@@ -36,9 +36,8 @@ class confElement {
 
     function  confElement($userId) {
         $this->dbHandler = DBHandler::getInstance();
-        $connectedUser   = new user();
-        $this->user      =  $connectedUser->loadFromId($userId);
-        var_dump($this->user);
+        $this->userId    = $userId;
+        var_dump($userId);
     }
 
     /**
@@ -77,7 +76,7 @@ class confElement {
     }
 
     function isConfElementExistant($ConfEltName) {
-        $req  = "select  * from $this->tableName where name = '".$ConfEltName."' and userId = '".$this->user->getAtt('id')."' order by id";
+        $req  = "select  * from $this->tableName where name = '".$ConfEltName."' and userId = '".$this->$userId."' order by id";
         $rows = $this->dbHandler->query($req);
         $nb_ligne = mysql_num_rows($rows);
         if ( $nb_ligne > 0 ) {
