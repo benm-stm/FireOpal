@@ -52,7 +52,9 @@ class  user {
      */
 
     function  user() {
-        $this->dbHandler = DBHandler::getInstance();
+        $this->dbHandler    = DBHandler::getInstance();
+        $this->setupManager = new SetupManager($this->id, $this->dbHandler);
+        var_dump($this->setupManager);
     }
 
     /**
@@ -127,8 +129,7 @@ class  user {
     function userExist() {
         $req  = "select  * from $this->tableName where login = '".$this->login."' order by id";
         $rows = $this->dbHandler->query($req);
-        $nb_ligne = mysql_num_rows($rows);
-        if ( $nb_ligne > 0 ) {
+        if ( $rows->rowCount() > 0 ) {
             return true;
         } else {
             return false;
@@ -141,9 +142,10 @@ class  user {
         if ($pass != '' and $pseudo != '') {
             $req    = "select * from $this->tableName where login = '".$pseudo."' and password = '".$pass."'";// and completeRecording = '1' ";
             $result = $this->dbHandler->query($req);
-            if ( mysql_num_rows($result) > 0 ) {
-                $row = mysql_fetch_array($result);
-                $ID = $row['id'];
+            if ( $result->rowCount() > 0 ) {
+                $result->setFetchMode(PDO::FETCH_OBJ);
+                $row = $result->fetch();
+                $ID = $row->id;
                 $this ->loadFromId($ID);
                 return 1;
             } else {
