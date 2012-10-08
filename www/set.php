@@ -18,6 +18,9 @@
 
 ini_set('include_path', ini_get('include_path').PATH_SEPARATOR.dirname(__DIR__).DIRECTORY_SEPARATOR.'include');
 require_once 'Setup.class.php';
+if (!isset($_SESSION)) {
+    session_start();
+}
 $setup = new Setup();
 if (!empty($_REQUEST)) {
     $setup->store($_REQUEST);
@@ -95,7 +98,7 @@ echo '
                                     </tr>
                                 </table>
                             </fieldset>
-                            <div id="submit_panel"><input type="submit" value="Update !" /></div>
+                            <div id="submit_panel"><input type="submit" value="Update !" class="casesButton"/></div>
                         </form>
                     </td>
                 </tr>

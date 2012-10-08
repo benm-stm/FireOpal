@@ -175,7 +175,7 @@ echo '
                                         </td>
 
                                         <td style="vertical-align:middle">
-                                            <input type="button" value="Add >>>" onClick="AddtestCases()">
+                                            <input type="button" value="Add >>>" onClick="AddtestCases()"  class="testSuitesButton">
                                         </td>
 
                                         <td align="center"><b><span class="greenLink">Dispatched test cases</span></b></font>
@@ -184,7 +184,7 @@ echo '
                                             </select>
                                         </td>
                                         <td style="vertical-align:middle">
-                                            <input type="button" value="Remove >>>" onClick="RemoveTestCase()">
+                                            <input type="button" value="Remove >>>" onClick="RemoveTestCase()"  class="testSuitesButton">
                                         </td>
                                     </tr>
                                 </table>
