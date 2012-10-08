@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with FireOpal. If not, see <http://www.gnu.org/licenses/>.
  */
+require_once('common/confElement.class.php');
 
 class Setup {
 
@@ -244,6 +245,59 @@ class Setup {
         return array("form" => $content, "error" => $this->error, "info" => $this->info);
     }
 
+    function prepareNewSetupElement($request) {
+        $newName        = null;
+        $newType        = null;
+        $newDescription = null;
+        $newConfElement = array();
+        if ($request && is_array($request)) {
+            foreach ($request as $name => $value) {
+                if (isset($value)) {
+                    switch ($name) {
+                        case "new_name" :
+                            if ($value != 'new_name' &&
+                                $value != 'new_type' &&
+                                $value != 'new_description' &&
+                                $value != 'delete') {
+                                $newName = $value;
+                            } else {
+                                $this->error[] = "Name is reserved or already exist";
+                            }
+                            break;
+                        case "new_type" :
+                            if (!empty($value)) {
+                                if ($value == 'text' || $value == 'password') {
+                                    $newType = $value;
+                                } else {
+                                    $this->error[] = "Type must be either 'text' or 'password' '".$value."' ".$name;
+                                }
+                            }
+                            break;
+                        case "new_description" :
+                            $newDescription = $value;
+                            break;
+                    }
+                }
+            }
+        }
+        if ($newName && $newType && $newDescription) {
+            $newConfElement['name']        = $newName;
+            $newConfElement['value']       = "";
+            $newConfElement['description'] = $newDescription;
+            $newConfElement['type']        = $newType;
+        } elseif ($newName || $newDescription) {
+            $this->error[] = "Both Name & Description are mandatory for a new value";
+        }
+        return $newConfElement;
+    }
+
+    function storeInDB($userId, $request) {
+        $confElement = new confElement($userId);
+        $newConfElement = $this->prepareNewSetupElement($request);
+        if (!empty($newConfElement)) {
+            $confElement->saveElement($userId, $newConfElement['name'], $newConfElement['value'], $newConfElement['type'], $newConfElement['description']);
+        }
+    }
 }
 
 ?>
