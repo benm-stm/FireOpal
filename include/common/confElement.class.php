@@ -38,16 +38,18 @@ class confElement {
     function  confElement($userId) {
         $this->dbHandler = DBHandler::getInstance();
         $this->userId    = $userId;
-        var_dump($userId);
     }
 
-    function saveElement($userId, $name, $value, $description = '') {
+    function saveElement($userId, $name, $value, $type = '', $description = '') {
+        if (empty($type)) {
+            $type = 'undefined';
+        }
         if (!empty($description)) {
             $query  = "Insert into $this->tableName (`userId`, `name`, `type`, `value`, `Description`)";
-            $values = " values ('".$userId."','".$name."', 'undefined', '".$value."','".$description."')";
+            $values = " values ('".$userId."','".$name."', '".$type."', '".$value."','".$description."')";
         } else {
             $query  = "Insert into $this->tableName (`userId`, `name`, `type`, `value`)";
-            $values = " values ('".$userId."','".$name."', 'undefined', '".$value."')";
+            $values = " values ('".$userId."','".$name."', '".$type."', '".$value."')";
         }
         $query .= $values;
         $this->dbHandler->query($query);
@@ -118,7 +120,7 @@ class confElement {
         } else {
             return false;
         }
-     }
+    }
 
 }
 ?>
