@@ -16,6 +16,7 @@
  * along with FireOpal. If not, see <http://www.gnu.org/licenses/>.
  */
 require_once('db/connect.php');
+require_once('confElement.class.php');
 
 class  user {
 
@@ -53,8 +54,6 @@ class  user {
 
     function  user() {
         $this->dbHandler    = DBHandler::getInstance();
-        $this->setupManager = new SetupManager($this->id, $this->dbHandler);
-        var_dump($this->setupManager);
     }
 
     /**
@@ -99,6 +98,19 @@ class  user {
         $query      .= $values ;    
         }
     $this->dbHandler->query($query);
+    $this->initUserConfElements($this->dbHandler->lastInsertId());
+    }
+
+    /**
+     * Init conf elements for a given user
+     *
+     * @param Integer $userId
+     */
+    private function initUserConfElements($userId) {
+        $confElement = new confElement($userId);
+        foreach ($confElement::$confTemplate as $element=>$value) {
+            $confElement->saveElement($userId, $element, $value);
+        }
     }
 
     /**
@@ -158,8 +170,8 @@ class  user {
 
     function initWorkSpace() {
         if ($this->userExist()) {
-            if (@mkdir ("../workspaces/".$this->familyName)) {
-                echo"Workspace initiliazed successfully";
+            if (@mkdir("../workspaces/".$this->familyName)) {
+                echo "Workspace initiliazed successfully";
                 return true;
             } else {
                 echo "Something went wrong when trying to setup workspace";
@@ -209,9 +221,9 @@ class  user {
                 </table>
             </body>
         </html>
-    ';
+        ';
     @mail($this->email,$Sujet,$Message,$From);
-}
+    }
 
 }
 ?>
