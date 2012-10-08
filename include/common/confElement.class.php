@@ -22,6 +22,7 @@ class confElement {
 
     private $dbHandler;
     private $userId;
+    public static $confTemplate = array('host' => 'http://localhost', 'client' => '107.0.0.1', 'browser' => 'firefox', 'user' => 'admin', 'password' => '*****', 'project' => 'Codex', 'project_id' => '101');
 
     /**
      * Table name
@@ -40,13 +41,46 @@ class confElement {
         var_dump($userId);
     }
 
+    function saveElement($userId, $name, $value, $description = '') {
+        if (!empty($description)) {
+            $query  = "Insert into $this->tableName (`userId`, `name`, `type`, `value`, `Description`)";
+            $values = " values ('".$userId."','".$name."', 'undefined', '".$value."','".$description."')";
+        } else {
+            $query  = "Insert into $this->tableName (`userId`, `name`, `type`, `value`)";
+            $values = " values ('".$userId."','".$name."', 'undefined', '".$value."')";
+        }
+        $query .= $values;
+        $this->dbHandler->query($query);
+    }
+
     /**
      * Save user configuration
      *
      * @param Integer $userId 
      */
-    function save($userId = '') {
-    }
+    /*function save($userId = '', $request) {
+        // insert new conf element binded to a given user
+        $query  = "Insert into $this->tableName (";
+        $values = " values (";
+        //$i      = 0;
+        foreach ($request as $att=>$bddatt) {
+            //if ($this->$att != '') {
+                $query .= $bddatt.",";
+                var_dump($query);
+               // if ($i != 0) {
+                    //$values .= "'".$this->$att."',";
+                //}
+            //}
+            //$i++;
+        }
+        $query_temp  = substr($query,0,strlen($query)-1);
+        $query       = $query_temp.")  ";
+        $values_temp = substr($values,0,strlen($values)-1);
+        $values      = $values_temp.")  ";
+        $query      .= $values ;
+        }
+    $this->dbHandler->query($query);
+    }*/
 
     /**
      * Load a configuration element given its Id
