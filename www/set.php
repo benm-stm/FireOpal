@@ -24,6 +24,7 @@ if (!isset($_SESSION)) {
 $setup = new Setup();
 if (!empty($_REQUEST)) {
     $setup->store($_REQUEST);
+    $setup->storeInDB($_SESSION['sess_idUser'], $_REQUEST);
     if (isset($_REQUEST['delete']) && !empty($_REQUEST['delete'])) {
         $setup->delete($_REQUEST['delete']);
     }
@@ -112,4 +113,5 @@ echo '
         </div>
     </body>
 </html>';
+
 ?>
