@@ -60,12 +60,16 @@ echo '
         <div id="header">';
 echo $info;
 echo $error;
-echo '
-            <a href="cases.php" class="community"><< Go back</a>
+echo '  <a href="cases.php" class="community"><< Go back</a>
         </div>
         <div id="header_clear">
         </div>
-        <div id="body_skin">
+        <div id="body_skin">';
+
+if(!isset($_SESSION['sess_idUser'])) {
+    echo '<span class="signLink">You must be logged in to access to this page  >> </span> <a href="sign.php" class="greenLink">Sign In</a> ';
+} else {
+    echo '
             <table>
                 <tr>
                     <td nowrap>
@@ -102,9 +106,10 @@ echo '
                         </form>
                     </td>
                 </tr>
-            </table>
+            </table>';
+}
+echo '
         </div>
     </body>
 </html>';
-
 ?>
