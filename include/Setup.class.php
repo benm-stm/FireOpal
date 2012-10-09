@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with FireOpal. If not, see <http://www.gnu.org/licenses/>.
  */
+require_once('common/confElement.class.php');
 
 class Setup {
 
@@ -244,6 +245,102 @@ class Setup {
         return array("form" => $content, "error" => $this->error, "info" => $this->info);
     }
 
+    function prepareNewSetupElement($request) {
+        $newName        = null;
+        $newType        = null;
+        $newDescription = null;
+        $newConfElement = array();
+        if ($request && is_array($request)) {
+            foreach ($request as $name => $value) {
+                if (isset($value)) {
+                    switch ($name) {
+                        case "new_name" :
+                            if ($value != 'new_name' &&
+                                $value != 'new_type' &&
+                                $value != 'new_description' &&
+                                $value != 'delete') {
+                                $newName = $value;
+                            } else {
+                                $this->error[] = "Name is reserved or already exist";
+                            }
+                            break;
+                        case "new_type" :
+                            if (!empty($value)) {
+                                if ($value == 'text' || $value == 'password') {
+                                    $newType = $value;
+                                } else {
+                                    $this->error[] = "Type must be either 'text' or 'password' '".$value."' ".$name;
+                                }
+                            }
+                            break;
+                        case "new_description" :
+                            $newDescription = $value;
+                            break;
+                    }
+                }
+            }
+        }
+        if ($newName && $newType && $newDescription) {
+            $newConfElement['name']        = $newName;
+            $newConfElement['value']       = "";
+            $newConfElement['description'] = $newDescription;
+            $newConfElement['type']        = $newType;
+        } elseif ($newName || $newDescription) {
+            $this->error[] = "Both Name & Description are mandatory for a new value";
+        }
+        return $newConfElement;
+    }
+
+    function storeInDB($userId, $request) {
+        $confElement = new confElement($userId);
+        $newConfElement = $this->prepareNewSetupElement($request);
+        if (!empty($newConfElement)) {
+            try {
+                $confElement->saveElement($userId, $newConfElement['name'], $newConfElement['value'], $newConfElement['type'], $newConfElement['description']);
+            } catch(PDOException $e) {
+                $this->error[] = $e->getMessage();
+            }
+        }
+        if ($request && is_array($request)) {
+            foreach ($request as $name => $value) {
+                if (isset($value)) {
+                    if ($value != 'new_name' && $value != 'new_type' && $value != 'new_description' && $value != 'delete') {
+                        try {
+                            $confElement->updateElement($userId, $name, $value);
+                        } catch(PDOException $e) {
+                            $this->error[] = $e->getMessage();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Delete setup items from DB
+     *
+     * @param Array $items Names of items to delete
+     *
+     * @return void
+     */
+    function deleteFromDB($userId, $names) {
+        $confElement = new confElement($userId);
+        $mandatory   = array('host', 'client', 'browser', 'user', 'password', 'project', 'project_id');
+        foreach ($names as $name) {
+            if (!(in_array($name, $mandatory))) {
+                try {
+                    $removedConfElement = $confElement->deleteElement($userId, $name);
+                    if (!$removedConfElement) {
+                        $this->error[] = "Impossible to delete ".$name;
+                    } else {
+                        $this->info[] = "Entrie(s) deleted";
+                    }
+                } catch(PDOException $e) {
+                    $this->error[] = $e->getMessage();
+                }
+            }
+        }
+    }
 }
 
 ?>

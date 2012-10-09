@@ -38,49 +38,29 @@ class confElement {
     function  confElement($userId) {
         $this->dbHandler = DBHandler::getInstance();
         $this->userId    = $userId;
-        var_dump($userId);
     }
 
-    function saveElement($userId, $name, $value, $description = '') {
+    function saveElement($userId, $name, $value, $type = '', $description = '') {
+        if (empty($type)) {
+            $type = 'undefined';
+        }
         if (!empty($description)) {
             $query  = "Insert into $this->tableName (`userId`, `name`, `type`, `value`, `Description`)";
-            $values = " values ('".$userId."','".$name."', 'undefined', '".$value."','".$description."')";
+            $values = " values ('".$userId."','".$name."', '".$type."', '".$value."','".$description."')";
         } else {
             $query  = "Insert into $this->tableName (`userId`, `name`, `type`, `value`)";
-            $values = " values ('".$userId."','".$name."', 'undefined', '".$value."')";
+            $values = " values ('".$userId."','".$name."', '".$type."', '".$value."')";
         }
         $query .= $values;
         $this->dbHandler->query($query);
     }
 
-    /**
-     * Save user configuration
-     *
-     * @param Integer $userId 
-     */
-    /*function save($userId = '', $request) {
-        // insert new conf element binded to a given user
-        $query  = "Insert into $this->tableName (";
-        $values = " values (";
-        //$i      = 0;
-        foreach ($request as $att=>$bddatt) {
-            //if ($this->$att != '') {
-                $query .= $bddatt.",";
-                var_dump($query);
-               // if ($i != 0) {
-                    //$values .= "'".$this->$att."',";
-                //}
-            //}
-            //$i++;
+    function updateElement($userId, $name, $value) {
+        if (!empty($value)) {
+            $query  = "UPDATE $this->tableName SET `value` = '$value' WHERE `userId` = $userId and `name` = '$name'";
+            return $this->dbHandler->exec($query);
         }
-        $query_temp  = substr($query,0,strlen($query)-1);
-        $query       = $query_temp.")  ";
-        $values_temp = substr($values,0,strlen($values)-1);
-        $values      = $values_temp.")  ";
-        $query      .= $values ;
-        }
-    $this->dbHandler->query($query);
-    }*/
+    }
 
     /**
      * Load a configuration element given its Id
@@ -92,6 +72,21 @@ class confElement {
         $query       = "SELECT * FROM ".$this->tableName." ".$whereClause ;
         return $this->dbHandler->query($query);
     }
+
+    /**
+     * Delete a configuration element given its name and its user id
+     *
+     */
+    function deleteElement($userId, $name) {
+        $name  = $this->dbHandler->quote($name);
+        $sql   = "DELETE FROM $this->tableName WHERE `userId` = :userId AND `name` = :name";
+        $sth   = $this->dbHandler->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $count = $sth->execute(array(':userId' => $userId, ':name' => $name));
+        if ($count > 0) {
+          return TRUE;
+        }
+        return FALSE;
+}
 
     function getName() {
         return $this->name;
@@ -118,7 +113,7 @@ class confElement {
         } else {
             return false;
         }
-     }
+    }
 
 }
 ?>
