@@ -9,12 +9,3 @@ CREATE TABLE IF NOT EXISTS `user` (
   `surname` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
-
---
--- Table `user` content
---
-
-INSERT INTO `user` (`login`, `password`, `surname`) VALUES
-('toto', 'aaa', 'toto');
-
--------------------------------------------------------------------
