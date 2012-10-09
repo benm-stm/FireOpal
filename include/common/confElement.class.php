@@ -73,6 +73,21 @@ class confElement {
         return $this->dbHandler->query($query);
     }
 
+    /**
+     * Delete a configuration element given its name and its user id
+     *
+     */
+    function deleteElement($userId, $name) {
+        $name  = $this->dbHandler->quote($name);
+        $sql   = "DELETE FROM $this->tableName WHERE `userId` = :userId AND `name` = :name";
+        $sth   = $this->dbHandler->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $count = $sth->execute(array(':userId' => $userId, ':name' => $name));
+        if ($count > 0) {
+          return TRUE;
+        }
+        return FALSE;
+}
+
     function getName() {
         return $this->name;
     }

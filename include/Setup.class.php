@@ -316,7 +316,31 @@ class Setup {
         }
     }
 
-
+    /**
+     * Delete setup items from DB
+     *
+     * @param Array $items Names of items to delete
+     *
+     * @return void
+     */
+    function deleteFromDB($userId, $names) {
+        $confElement = new confElement($userId);
+        $mandatory   = array('host', 'client', 'browser', 'user', 'password', 'project', 'project_id');
+        foreach ($names as $name) {
+            if (!(in_array($name, $mandatory))) {
+                try {
+                    $removedConfElement = $confElement->deleteElement($userId, $name);
+                    if (!$removedConfElement) {
+                        $this->error[] = "Impossible to delete ".$name;
+                    } else {
+                        $this->info[] = "Entrie(s) deleted";
+                    }
+                } catch(PDOException $e) {
+                    $this->error[] = $e->getMessage();
+                }
+            }
+        }
+    }
 }
 
 ?>
