@@ -63,12 +63,12 @@ class confElement {
     }
 
     /**
-     * Load a configuration element given its Id
+     * Load a configuration element given User Id
      *
-     * @param Integer $id
+     * @param Integer $userId
      */
-    function getConfElemenyById($Id) {
-        $whereClause = "WHERE id=$Id ";
+    function getConfElemenyByUserId($userId) {
+        $whereClause = "WHERE `userId` = $userId ";
         $query       = "SELECT * FROM ".$this->tableName." ".$whereClause ;
         return $this->dbHandler->query($query);
     }
