@@ -219,6 +219,24 @@ class Setup {
     }
 
     /**
+     * Load the setup for a given user
+     *
+     * @return Array
+     */
+    function loadUserConf($userId) {
+        $fullConf = array();
+        try {
+            $confElement = new confElement($userId);
+            $userConf    = $confElement->getConfElemenyByUserId($userId);
+            $userConf->setFetchMode(PDO::FETCH_ASSOC);
+            $fullConf = $userConf->fetch();
+        } catch(PDOException $e) {
+            $this->error[] = $e->getMessage();
+        }
+        return $fullConf;
+    }
+
+    /**
      * Display setup form
      *
      * @param Boolean $readOnly Dsplay in read only if true
