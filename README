@@ -25,8 +25,14 @@ On Launcher machine:
 
     > gem install selenium-webdriver
     > gem install rspec
+    
+    You have to install mysql and its dependancies
+    > gem install mysql -- --with-mysql-config=/usr/lib64/mysql/mysql_config 
+    > gem install php5-mysql
 
     You may need to install other packages using "gem install <package_name>" like json or other.
+    
+      
 
     Put FireOpal on that machine and point the root of the webserver on "www" folder
 
