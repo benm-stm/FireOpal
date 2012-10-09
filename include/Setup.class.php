@@ -295,7 +295,11 @@ class Setup {
         $confElement = new confElement($userId);
         $newConfElement = $this->prepareNewSetupElement($request);
         if (!empty($newConfElement)) {
-            $confElement->saveElement($userId, $newConfElement['name'], $newConfElement['value'], $newConfElement['type'], $newConfElement['description']);
+            try {
+                $confElement->saveElement($userId, $newConfElement['name'], $newConfElement['value'], $newConfElement['type'], $newConfElement['description']);
+            } catch(PDOException $e) {
+                $this->error[] = $e->getMessage();
+            }
         }
         if ($request && is_array($request)) {
             foreach ($request as $name => $value) {
