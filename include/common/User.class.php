@@ -21,13 +21,9 @@ require_once('confElement.class.php');
 class  user {
 
     var $id;
-    var $email;
+    var $login;
     var $password; 
     var $surname;
-    var $familyName;
-    var $organisation;
-    var $login;
-    var $completeRecording;
     var $dbHandler;
 
     /**
@@ -37,13 +33,9 @@ class  user {
 
     var $attributs = array (
               "id"                => "id",
-              "email"             => "email",
               "password"          => "password",
               "surname"           => "surname",
-              "familyName"        => "familyName",
-              "organisation"      => "organisation",
-              "login"             => "login",
-              "completeRecording" => "completeRecording" 
+              "login"             => "login"
            );
 
     /**
@@ -170,7 +162,7 @@ class  user {
 
     function initWorkSpace() {
         if ($this->userExist()) {
-            if (@mkdir("../workspaces/".$this->familyName)) {
+            if (@mkdir("../workspaces/".$this->login)) {
                 echo "Workspace initiliazed successfully";
                 return true;
             } else {
@@ -179,51 +171,5 @@ class  user {
             }
         }
     }
-
-    function sendMail($temp_passe, $max ) {
-        $From    = "From:tester@codex.cro.st.com\n";
-        $From   .= "MIME-version: 1.0\n";
-        $From   .= "Content-type: text/html; charset= iso-8859-1\n";
-        $Sujet   = 'Activate your account';
-        $link    = ' <a href="http://crx2106.cro.st.com/confirm.php?id1='.$max.'&id2='.$temp_passe.'">Click here</a>';
-        $Message = '
-            <html>
-            <head>
-                <style type="text/css" >
-                    .table_parcours{
-                    border-top:#002222 1px solid;
-                    border-left:#002222 1px solid;
-                    border-right:#002222 1px solid;
-                    border-bottom:#002222 1px solid;
-                    font-family:Arial, Helvetica, sans-serif 12px;
-                    }
-                </style>
-            </head>
-            <body>
-                <table cellspacing="0" cellpadding="0" class="table_parcours" align="center" >
-                    <tr>
-                        <td width="438"  align="left"  >
-                        <img src="http://codex.cro.st.com/themes/STTab/images/organization_logo.png" border="0" /> </td>
-                    </tr>
-                    <tr>
-                        <td width="438" bgcolor="#FF8000"  ><font color="#FFFFFF" >Welcome</font></td>
-                    </tr>
-                    <tr >
-                        <td width="438" style="padding-left:5px;" >
-                        <p class="texte">
-                        Your E-mail : <strong>'.$this->email.'</strong><br>
-                        Your username : <strong>'.$this->surname.'</strong><br>
-                        Your password :<strong>'.$this->password.'</strong><br>
-                        In order to activate your account, you should '.$link.'<br>
-                        </p>
-                        </td>
-                    </tr> 
-                </table>
-            </body>
-        </html>
-        ';
-    @mail($this->email,$Sujet,$Message,$From);
-    }
-
 }
 ?>

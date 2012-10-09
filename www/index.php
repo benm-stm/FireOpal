@@ -55,7 +55,7 @@ if(!isset($_SESSION['sess_idUser'])) {
 } else {
     $connectedUser = new user();
     $connectedUser->loadFromId($_SESSION['sess_idUser']);
-    $welcomeMessage = '<font color="#928A6E" >Welcome '.$connectedUser->getAtt('surname').' '.strtoupper($connectedUser->getAtt('familyName')).'</font>';
+    $welcomeMessage = '<font color="#928A6E" >Welcome '.$connectedUser->getAtt('login').'</font>';
     $sign           = '<span class="signLink" >|</span> <a href="logout.php" class="greenLink">Sign Out</a> ';
 }
 echo '

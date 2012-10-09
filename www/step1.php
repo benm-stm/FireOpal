@@ -36,10 +36,9 @@ echo '
 
 $action = (isset($_POST['action']) ? $_POST['action'] : 'nothing');
 $type = (isset($_POST['type']) ? $_POST['type'] : '');
-$email = '';
-$remail = '';
 
-$mailexist = 0;
+
+$loginExist = 0;
 
 $req1 = '<div style="width:20px; float:left;">
             <img src="include/images/signup/puce_erreur_blc.jpg" />
@@ -56,12 +55,7 @@ $req4 = '<div style="width:20px; float:left;">
 $reqSurname = '<div style="width:20px; float:left;">
          <img src="include/images/signup/puce_erreur_blc.jpg"/>
          </div>';
-$reqFamilyName = '<div style="width:20px; float:left;">
-         <img src="include/images/signup/puce_erreur_blc.jpg"/>
-         </div>';
-$reqOrganisation = '<div style="width:20px; float:left;">
-         <img src="include/images/signup/puce_erreur_blc.jpg"/>
-         </div>';
+
 
 if (isset($_GET['return']) and isset($_SESSION['sess_idUser_temp'])) {
     $user = new user();
@@ -72,18 +66,13 @@ if (isset($_GET['return']) and isset($_SESSION['sess_idUser_temp'])) {
 }
 
 $error = '';
-if (isset($_POST['email'])) {
-    $email  = (isset($_POST['email']) ? trim($_POST['email']) : '');
+if (isset($_POST['login'])) {
     $login  = (isset($_POST['login']) ? trim($_POST['login']) : '');
     $pass   = (isset($_POST['pass']) ? trim($_POST['pass']) : '');
     $rpass  = (isset($_POST['rpass']) ? trim($_POST['rpass']) : '');
     $cross  = true;
 
-    if ( $email == '' or $login == '' or $pass == '' or $rpass == '') {
-        if ($email == '' )
-            $req1 = '<div style="width:20px; float:left;">
-                        <img src="include/images/signup/puce_erreur.jpg" />
-                    </div>';
+    if ($login == '' or $pass == '' or $rpass == '') {
         if ($login == '' )
             $req2 = '<div style="width:20px; float:left;">
                         <img src="include/images/signup/puce_erreur.jpg" />
@@ -96,8 +85,6 @@ if (isset($_POST['email'])) {
             $req4 = '<div style="width:20px; float:left;">
                          <img src="include/images/signup/puce_erreur.jpg" />
                     </div>';
-        if ($email == '' )
-            $error .= 'Type your email address,';
         if ($login == '' )
             $error .= '&nbsp;Type your login,';
         if ($pass == '' )
@@ -107,27 +94,9 @@ if (isset($_POST['email'])) {
         $cross  = false;
 }
 
-    $organisation  = (isset($_POST['organisation']) ? trim($_POST['organisation']) : '');
     $surname       = (isset($_POST['surname']) ? trim($_POST['surname']) : '');
-    $family        = (isset($_POST['family']) ? trim($_POST['family']) : '');
 
-/*if (strnatcmp($email, $remail) != 0) {
-    $error .= '&nbsp;the email you typed is not identical on both lines,&nbsp;';   
-    $req2 = '<div style="width:20px; float:left;">
-            <img src="include/images/signup/puce_erreur.jpg" />
-            </div>';
-    $cross  = false;
-}*/
 
-$Syntaxe = '#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,5}$#'; 
-if (!preg_match($Syntaxe, $email)) {
-    $req1 = '<div style="width:20px; float:left;">
-            <img src="include/images/signup/puce_erreur.jpg" />
-            </div>';
-    $error .= '&nbsp;check your email address,&nbsp;'; 
-    $cross = false;
-}
- 
 if ( strnatcmp($pass, $rpass) != 0 ) {
     $error .= '&nbsp;the password you typed is not identical on both lines,&nbsp;';
     $req4 = '<div style="width:20px; float:left;">
@@ -139,21 +108,17 @@ if ( strnatcmp($pass, $rpass) != 0 ) {
 // Input validated, continue
 if ($cross == true) {
     $user        = new user();
-    $user->email = $email;
     $user->login = $login;
     if ($user->userExist())
         $cross = false;
         if ($cross == true) {
             $user->password     = $pass;
             $user->surname      = $surname;
-            $user->familyName   = $family;
-            $user->organisation = $organisation;
             $user->save();
             $user->initWorkSpace();
             $_SESSION['sess_idUser_temp']       = $user->getAtt('id');
             $_SESSION['sess_completeRecording'] = 1;
-            $user->sendMail(0, 0);
-            //echo "User Successfully registred, check your email";
+            //echo "User Successfully registred";
             header("location:index.php");
         } else {
             $req1 = '<div style="width:20px; float:left;">
@@ -161,14 +126,14 @@ if ($cross == true) {
             </div>';
             //$req2 = '<font color="red" ><strong>!</strong></font>';
             $error .= '&nbsp;This login was already used to Sign up,&nbsp;';
-            $mailexist = 1 ;
+            $loginExist = 1 ;
         }
     }
 }
 
 $errorMsg = '';
 if ($error != '') {
-    if($mailexist) {
+    if($loginExist) {
         $error = str_replace("&nbsp;&nbsp;","&nbsp;",$error);
         if(strrchr($error,",") == ",&nbsp;") $error = substr($error,0,(strlen($error)-7));
         $error  = $error."." ;
@@ -222,31 +187,8 @@ echo '<div class="date" id="sign-titre6">
 echo $reqSurname.'
         <input id="surname" name="surname" type="text" class="champs"/>
         </div>
-    </div>
-    <div id="sign-titre771">
-        <div id="sign-titre7-15">Last Name / Family Name *</div>
-        <div class="champs1">';
-echo $reqFamilyName.'
-            <input id="family" name="family" type="text" class="champs"/>
-      </div>
-    </div>
-    <div id="sign-titre771">
-      <div id="sign-titre7-15">Organisation</div>
-      <div class="champs1">';
-echo $reqOrganisation.'
-          <input id="organisation" name="organisation" type="text" class="champs"/>
-      </div>
-';
+    </div>';
 echo ' <div class="date" id="sign-titre6">
-                <div id="sign-titre771">
-                    <div id="sign-titre7-15">
-                        Enter your email*
-                    </div>
-                    <div class="champs1">';
-echo $req1.'
-                        <input name="email" type="text" class="champs"/>
-                    </div>
-                </div>
                 <div id="sign-titre771">
                     <div id="sign-titre7-15">
                         Enter your login*
@@ -281,8 +223,7 @@ echo $errorMsg.'
                 <input type="image"  value="Next" id="btnNext" src="include/images/sign/validate.jpg" width="80" height="28" border="0" alt="FireOpal">
             </div>
             <div id="sign-titre774">
-                <p class="a2">- Your email will not be visible on the Fire Opal engine<br />
-                - Mandatory information fields *<br /><br />
+                <p class="a2">-Mandatory information fields *<br /><br />
                 </p>
             </div>
         </div>
