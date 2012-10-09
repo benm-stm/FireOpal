@@ -55,34 +55,12 @@ class confElement {
         $this->dbHandler->query($query);
     }
 
-    /**
-     * Save user configuration
-     *
-     * @param Integer $userId 
-     */
-    /*function save($userId = '', $request) {
-        // insert new conf element binded to a given user
-        $query  = "Insert into $this->tableName (";
-        $values = " values (";
-        //$i      = 0;
-        foreach ($request as $att=>$bddatt) {
-            //if ($this->$att != '') {
-                $query .= $bddatt.",";
-                var_dump($query);
-               // if ($i != 0) {
-                    //$values .= "'".$this->$att."',";
-                //}
-            //}
-            //$i++;
+    function updateElement($userId, $name, $value) {
+        if (!empty($value)) {
+            $query  = "UPDATE $this->tableName SET `value` = '$value' WHERE `userId` = $userId and `name` = '$name'";
+            return $this->dbHandler->exec($query);
         }
-        $query_temp  = substr($query,0,strlen($query)-1);
-        $query       = $query_temp.")  ";
-        $values_temp = substr($values,0,strlen($values)-1);
-        $values      = $values_temp.")  ";
-        $query      .= $values ;
-        }
-    $this->dbHandler->query($query);
-    }*/
+    }
 
     /**
      * Load a configuration element given its Id

@@ -297,7 +297,22 @@ class Setup {
         if (!empty($newConfElement)) {
             $confElement->saveElement($userId, $newConfElement['name'], $newConfElement['value'], $newConfElement['type'], $newConfElement['description']);
         }
+        if ($request && is_array($request)) {
+            foreach ($request as $name => $value) {
+                if (isset($value)) {
+                    if ($value != 'new_name' && $value != 'new_type' && $value != 'new_description' && $value != 'delete') {
+                        try {
+                            $confElement->updateElement($userId, $name, $value);
+                        } catch(PDOException $e) {
+                            $this->error[] = $e->getMessage();
+                        }
+                    }
+                }
+            }
+        }
     }
+
+
 }
 
 ?>
