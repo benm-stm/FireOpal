@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` varchar(100) DEFAULT NULL,
   `surname` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 --
 -- Table `user` content
