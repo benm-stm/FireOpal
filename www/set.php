@@ -22,6 +22,7 @@ if (!isset($_SESSION)) {
     session_start();
 }
 $setup = new Setup();
+
 if (!empty($_REQUEST)) {
     $setup->store($_REQUEST);
     $setup->storeInDB($_SESSION['sess_idUser'], $_REQUEST);
@@ -33,6 +34,7 @@ if (!empty($_REQUEST)) {
 
 $content = $setup->display();
 $form    = $content['form'];
+// $form = $setup->displayUserConf($_SESSION['sess_idUser']);
 
 $info = "";
 if (!empty($content['info'])) {

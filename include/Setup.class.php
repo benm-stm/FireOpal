@@ -227,13 +227,20 @@ class Setup {
         $fullConf = array();
         try {
             $confElement = new confElement($userId);
-            $userConf    = $confElement->getConfElemenyByUserId($userId);
-            $userConf->setFetchMode(PDO::FETCH_ASSOC);
-            $fullConf = $userConf->fetch();
+            $userConf    = $confElement->getConfElementsByUserId($userId);
+            if($userConf && $userConf->rowCount() > 0) {
+                $elements = $userConf->fetchAll(PDO::FETCH_OBJ);
+                foreach ($elements as $element) {
+                    $fullConf[$element->name]['label']       = $element->name;
+                    $fullConf[$element->name]['value']       = $element->value;
+                    $fullConf[$element->name]['type']        = $element->type;
+                    $fullConf[$element->name]['description'] = $element->Description;
+                }
+            }
         } catch(PDOException $e) {
             $this->error[] = $e->getMessage();
         }
-        return $fullConf;
+    return $fullConf;
     }
 
     /**
@@ -261,6 +268,37 @@ class Setup {
             $content .= '</li>';
         }
         return array("form" => $content, "error" => $this->error, "info" => $this->info);
+    }
+
+    /**
+     * Display user setup form
+     *
+     * @param Boolean $readOnly Dsplay in read only if true
+     *
+     * @return String
+     */
+    function displayUserConf($userId, $readOnly = false) {
+        $elements = $this->loadUserConf($userId);
+        $content = '';
+        if ($readOnly) {
+            $readOnly = 'readonly="readonly"';
+        }
+        $mandatory = array('host', 'client', 'browser', 'user', 'password', 'project', 'project_id');
+        foreach ($elements as $name => $element) {
+            if ($element['type'] == 'password') {
+                $element['value'] = '';
+            }
+            $content .= '<li><span title="'.$element['description'].'" class="confElement">';
+            $content .= '<label for="'.$name.'">'.$name.':</label>';
+            $content .= '<input id="'.$name.'" type="'.$element['type'].'" name="'.$name.'" value="'.$element['value'].'" '.$readOnly.' />';
+            $content .= '</span>';
+            if (!$readOnly && (!in_array($name, $mandatory))) {
+                $content .= ' delete<input type="checkbox" name="delete[]" value="'.$name.'" />';
+            }
+            $content .= '</li>';
+
+        }
+        return $content;
     }
 
     function prepareNewSetupElement($request) {
