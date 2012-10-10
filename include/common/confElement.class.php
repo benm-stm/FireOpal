@@ -67,7 +67,7 @@ class confElement {
      *
      * @param Integer $userId
      */
-    function getConfElemenyByUserId($userId) {
+    function getConfElementsByUserId($userId) {
         $whereClause = "WHERE `userId` = $userId ";
         $query       = "SELECT * FROM ".$this->tableName." ".$whereClause ;
         return $this->dbHandler->query($query);
