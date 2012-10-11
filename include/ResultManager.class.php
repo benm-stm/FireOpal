@@ -48,8 +48,12 @@ class ResultManager {
      * @return Boolean
      */
     function logNewResult($output, $testSuiteName, $testSuite) {
-        $sql = "INSERT INTO result (user, name, output, testsuite, date) VALUES (".$this->user->getAtt('id').", '".$testSuiteName."', '".mysql_real_escape_string(join("\n", $output))."', '".mysql_real_escape_string($testSuite)."', ".time().")";
-        return $this->dbHandler->query($sql);
+        try {
+            $sql = "INSERT INTO result (user, name, output, testsuite, date) VALUES (".$this->user->getAtt('id').", ".$this->dbHandler->quote($testSuiteName).", ".$this->dbHandler->quote(join("\n", $output)).", ".$this->dbHandler->quote($testSuite).", ".time().")";
+            return $this->dbHandler->query($sql);
+        } catch (Exception $e) {
+            var_dump($e);
+        }
     }
 
     /**

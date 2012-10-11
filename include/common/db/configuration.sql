@@ -1,4 +1,10 @@
-﻿CREATE TABLE IF NOT EXISTS `configuration` (
+﻿--
+-- table `configuration` structure
+--
+
+DROP TABLE IF EXISTS `configuration`;
+
+CREATE TABLE IF NOT EXISTS `configuration` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `userId` int(11) NOT NULL,
   `name` varchar(128) NOT NULL,

@@ -20,7 +20,7 @@ class DBHandler {
 
     const DB_SERVER          = 'localhost';
     const DB_SERVER_USERNAME = 'root';
-    const DB_SERVER_PASSWORD = '';
+    const DB_SERVER_PASSWORD = 'roottoor';
     const DB_DATABASE        = 'fireopal';
 
     private static $instance;
