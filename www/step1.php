@@ -16,7 +16,6 @@
  * along with this code. If not, see <http://www.gnu.org/licenses/>.
  */
 
-header("Content-Type: text/html; charset=iso-8859-1");
 require_once('../include/common/User.class.php');
 
 echo '
