@@ -146,11 +146,26 @@ class  user {
         if ($pass != '' and $pseudo != '') {
             $req    = "select * from $this->tableName where login = '".$pseudo."' and password = '".$pass."'";// and completeRecording = '1' ";
             $result = $this->dbHandler->query($req);
-            if ( $result->rowCount() > 0 ) {
-                $result->setFetchMode(PDO::FETCH_OBJ);
-                $row = $result->fetch();
+            $result->setFetchMode(PDO::FETCH_OBJ);
+            if ($row = $result->fetch()) {
                 $ID = $row->id;
-                $this ->loadFromId($ID);
+                foreach ($this->attributs as $classatt => $bddatt) {
+                    switch ($classatt) {
+                    case 'id':
+                        var_dump($row->id);
+                        $this->setAtt('id',$row->id);
+                    break;
+                    case 'password':
+                        $this->setAtt('password',$row->password);
+                    break;
+                    case 'surname':
+                        $this->setAtt('surname',$row->surname);
+                    break;
+                    case 'login':
+                        $this->setAtt('login',$row->login);
+                    break;
+                }
+            }
                 return 1;
             } else {
                 return 0;
