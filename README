@@ -25,6 +25,8 @@ On Launcher machine:
 
     > gem install selenium-webdriver
     > gem install rspec
+    > gem install rspec_junit_formatter
+    > gem install builder
     
     You have to install mysql and its dependancies
     > gem install mysql -- --with-mysql-config=/usr/lib64/mysql/mysql_config 
