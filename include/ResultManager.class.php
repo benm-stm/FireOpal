@@ -137,7 +137,7 @@ class ResultManager {
                  WHERE id = ".$id."
                    AND user = ".$this->user->getAtt('id');
         $result = $this->dbHandler->query($sql);
-        if($result && $result->rowCount() > 0) {
+        if($result) {
             $result->setFetchMode(PDO::FETCH_OBJ);
             $row = $result->fetch();
             header("Content-Type: application/force-download");
