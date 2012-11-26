@@ -82,7 +82,7 @@ class ResultManager {
                  ORDER BY date";
         try {
             $result = $this->dbHandler->query($sql);
-                if($result && $result->rowCount() > 0) {
+                if($result) {
                 $output = '<div><br><table>
                 <tr>
                 <td class="resultHeader">Testsuite</td>
