@@ -110,9 +110,38 @@ class ResultManager {
             <fieldset class="fieldset">
                 <legend class="toggler" onclick="toggle_visibility(\'result_output_'.$row->id.'\'); if (this.innerHTML == \'+\') { this.innerHTML = \'-\'; } else { this.innerHTML = \'+\'; }">+</legend>
                 <span id="result_output_'.$row->id.'" style="display: none;" >';
-        //@todo put this stuff in a dedicated method
-        //@todo clean up, retrieve xsl stuff from dedicated file
 
+        $output .= '<pre>'.$this->processResult($row->output).'</pre>';
+        //$output .= '<pre>'.$row->output.'</pre>';
+        $output .=  '</span>
+            </fieldset>
+        </td>
+        <td id="resultLink">
+            <a href="?download_result='.$row->id.'" >Download</a>
+        </td>
+        <td id="resultLink">
+            <a href="?delete_result='.$row->id.'" >Delete</a>
+        </td>
+    </tr>';
+                }
+                $output .= '</table></div>';
+            }
+        } catch(PDOException $e) {
+            $this->error[] = $e->getMessage();
+        }
+
+        return $output;
+    }
+
+    /**
+     * Render HTML output of a given testuite XML result
+     * @todo clean up, retrieve xsl stuff from dedicated file
+     *
+     * @param String $$output JUNIT XML output
+     *
+     * @return String
+     */
+    function processResult($output) {
 $xslString = '<?xml version="1.0" encoding="UTF-8"?>
 <html xsl:version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml">
     <body style="width:650px;font-family:Arial;font-size:11pt;background-color:#EEEEEE">
@@ -154,32 +183,11 @@ $xslString = '<?xml version="1.0" encoding="UTF-8"?>
     </body>
 </html>
 ';
-        $xmlDoc = simplexml_load_string($row->output);
+        $xmlDoc = simplexml_load_string($output);
         $xslDoc = simplexml_load_string($xslString);
         $proc   = new XSLTProcessor;
         $proc->importStyleSheet($xslDoc);
-        $htmlResult = $proc->transformToXML($xmlDoc);
-        $output    .= '<pre>'.$htmlResult.'</pre>';
-        //$output .= '<pre>'.$row->output.'</pre>';
-
-        $output .=  '</span>
-            </fieldset>
-        </td>
-        <td id="resultLink">
-            <a href="?download_result='.$row->id.'" >Download</a>
-        </td>
-        <td id="resultLink">
-            <a href="?delete_result='.$row->id.'" >Delete</a>
-        </td>
-    </tr>';
-                }
-                $output .= '</table></div>';
-            }
-        } catch(PDOException $e) {
-            $this->error[] = $e->getMessage();
-        }
-
-        return $output;
+        return $proc->transformToXML($xmlDoc);
     }
 
     /**
