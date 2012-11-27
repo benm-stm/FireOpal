@@ -196,9 +196,8 @@ $xslString = '<?xml version="1.0" encoding="UTF-8"?>
         </table>
     <br/>
         <xsl:for-each select="testsuite/testcase">
-            <div style="background-color:teal;color:white;padding:4px">
-                <span style="font-weight:bold"><xsl:value-of select="name"/></span>
-                * <xsl:value-of select="failure"/>
+            <div style="background-color:#ff6600;color:white;padding:4px">
+                <span style="font-weight:bold"><xsl:value-of select="@name"/></span>
             </div>
             <div style="margin-left:20px;margin-bottom:1em;font-size:10pt">
                 <xsl:value-of select="failure"/>
