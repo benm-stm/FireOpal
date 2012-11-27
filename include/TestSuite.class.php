@@ -71,7 +71,7 @@ class TestSuite {
      */
     public function run() {
         if ($this->_user) {
-            exec('rspec '.$this->_testSuiteFile.' -r rspec_junit_formatter --format RspecJunitFormatter 2>&1', $output);
+            exec('rspec '.$this->_testSuiteFile.' -r rspec_junit_formatter --format RspecJunitFormatter ', $output);
             $resultManager = new ResultManager($this->_user);
             $testSuite = file_get_contents($this->_testSuiteFile);
             $resultManager->logNewResult($output, $this->name, $testSuite);
