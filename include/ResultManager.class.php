@@ -141,21 +141,22 @@ class ResultManager {
      */
     function displayTestsuiteHealth($output) {
         $health  = '<span>';
-        $xmlDoc = simplexml_load_string($output);
-        if (!$xmlDoc) {
-            //@todo, this is just for debug, we need to hundle unvalid xml schema and display the right img
-            $health .= '<img src="https://raw.github.com/jenkinsci/jenkins/master/war/src/main/webapp/images/48x48/health-80plus.png">';
-        } else {
-            $failures = "";
-            $xmlFailures = $xmlDoc->xpath('/testsuite/testcase/failure');
-            while(list( , $node) = each($xmlFailures)) {
-                $failures .= "<br/>".$node;
-            }
-            //if (intval($xmlDoc->failures)) {
-            if (!empty($failures)) {
-                $health .= '<img src="https://raw.github.com/jenkinsci/jenkins/master/war/src/main/webapp/images/48x48/health-00to19.png">';
-            }
+    $xmlDoc = simplexml_load_string($output);
+    if (!$xmlDoc) {
+    /*@todo, this is just for debug, we need to hundle unvalid xml schema and display the right img*/
+    $health .= '<img src="https://raw.github.com/jenkinsci/jenkins/master/war/src/main/webapp/images/48x48/health-80plus.png">';
+    } else {
+        $failures = "";
+        $xmlDoc2 = $xmlDoc->xpath('/testsuite/testcase/failure');
+        while(list( , $node) = each($xmlDoc2)) {
+            $failures .= "<br/>".$node;
         }
+        //if (intval($xmlDoc->failures)) {
+        if (!empty($failures)) {
+            $health .= '<img src="https://raw.github.com/jenkinsci/jenkins/master/war/src/main/webapp/images/48x48/health-00to19.png">';
+        }
+
+    }
         $health .= '</span>';
         return $health;
     }
@@ -178,15 +179,15 @@ $xslString = '<?xml version="1.0" encoding="UTF-8"?>
         <xsl:variable name="failureCount" select="sum(testsuite/@failures)"/>
         <xsl:variable name="timeCount" select="sum(testsuite/@time)"/>
         <xsl:variable name="successRate" select="($testCount - $failureCount - $errorCount) div $testCount"/>
-        <table border="0" cellpadding="5" cellspacing="2" width="85%">
-            <tr bgcolor="#629628" valign="top">
+        <table border="0" cellpadding="5" cellspacing="2" width="95%">
+            <tr style="background-color:#629628;color:white;valign:top;font-size:12pt">
                 <td><strong>Tests</strong></td>
                 <td><strong>Failures</strong></td>
                 <td><strong>Errors</strong></td>
                 <td><strong>Success rate</strong></td>
                 <td><strong>Time</strong></td>
             </tr>
-            <tr bgcolor="#FFEBCD" valign="top">
+            <tr style="background-color:#629628;color:white;valign:top">
                 <td><xsl:value-of select="$testCount"/></td>
                 <td><xsl:value-of select="$failureCount"/></td>
                 <td><xsl:value-of select="$errorCount"/></td>
@@ -197,12 +198,16 @@ $xslString = '<?xml version="1.0" encoding="UTF-8"?>
     <br/>
         <xsl:for-each select="testsuite/testcase">
             <div style="background-color:#ff6600;color:white;padding:4px">
-                <span style="font-weight:bold"><xsl:value-of select="@name"/></span>
+                <span style="font-weight:bold"><xsl:value-of select="@name"/> (<xsl:value-of select="@time"/>s)</span>
             </div>
-            <div style="margin-left:20px;margin-bottom:1em;font-size:10pt">
-                <xsl:value-of select="failure"/>
+            <div style="margin-left:20px;margin-bottom:1em"><br/>
+                <span style="background-color:#ff0000;font-size:12pt;color:white"><b>Failure</b><br/> </span>
+            <xsl:for-each select="failure">
+                 <span style="font-style:italic;font-size:10pt"><b>Type:   </b><xsl:value-of select="@type"/><br/></span>
+                   <span style="font-style:italic;font-size:10pt"><b>Message:</b> <xsl:value-of select="@message"/><br/></span>
+            </xsl:for-each>
                 <span style="font-style:italic">
-                    <xsl:value-of select="failure"/>
+                    <xsl:value-of select="error"/>
                 </span>
             </div>
         </xsl:for-each>
