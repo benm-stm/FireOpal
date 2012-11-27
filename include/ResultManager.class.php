@@ -133,7 +133,7 @@ class ResultManager {
     }
 
      /**
-     * Retrieve testsuite health status 
+     * Retrieve testsuite health status
      *
      * @param String $output JUNIT XML output
      *
@@ -141,7 +141,21 @@ class ResultManager {
      */
     function displayTestsuiteHealth($output) {
         $health  = '<span>';
-        $health .= '<img src="https://raw.github.com/jenkinsci/jenkins/master/war/src/main/webapp/images/48x48/health-80plus.png">';
+        $xmlDoc = simplexml_load_string($output);
+        if (!$xmlDoc) {
+            //@todo, this is just for debug, we need to hundle unvalid xml schema and display the right img
+            $health .= '<img src="https://raw.github.com/jenkinsci/jenkins/master/war/src/main/webapp/images/48x48/health-80plus.png">';
+        } else {
+            $failures = "";
+            $xmlFailures = $xmlDoc->xpath('/testsuite/testcase/failure');
+            while(list( , $node) = each($xmlFailures)) {
+                $failures .= "<br/>".$node;
+            }
+            //if (intval($xmlDoc->failures)) {
+            if (!empty($failures)) {
+                $health .= '<img src="https://raw.github.com/jenkinsci/jenkins/master/war/src/main/webapp/images/48x48/health-00to19.png">';
+            }
+        }
         $health .= '</span>';
         return $health;
     }
