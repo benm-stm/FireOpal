@@ -103,8 +103,7 @@ class ResultManager {
         <td id="resultDate">
             '.date("D M j, Y G:i:s T", $row->date).'
         </td>
-    <td >
-        <span><img src="https://raw.github.com/jenkinsci/jenkins/master/war/src/main/webapp/images/48x48/health-80plus.png"></span>
+    <td >'.$this->displayTestsuiteHealth($row->output).'
     </td>
         <td>
             <fieldset class="fieldset">
@@ -133,11 +132,25 @@ class ResultManager {
         return $output;
     }
 
+     /**
+     * Retrieve testsuite health status 
+     *
+     * @param String $output JUNIT XML output
+     *
+     * @return String
+     */
+    function displayTestsuiteHealth($output) {
+        $health  = '<span>';
+        $health .= '<img src="https://raw.github.com/jenkinsci/jenkins/master/war/src/main/webapp/images/48x48/health-80plus.png">';
+        $health .= '</span>';
+        return $health;
+    }
+
     /**
      * Render HTML output of a given testuite XML result
      * @todo clean up, retrieve xsl stuff from dedicated file
      *
-     * @param String $$output JUNIT XML output
+     * @param String $output JUNIT XML output
      *
      * @return String
      */
