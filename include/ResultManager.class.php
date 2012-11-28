@@ -163,6 +163,24 @@ class ResultManager {
     }
 
     /**
+     * Retrieve testsuite regression status
+     *
+     * @return Array
+     */
+    function getTestsuiteRegression() {
+        /*foreach ($testCases as $testCase) {
+            $regression = FALSE;
+            if ($testCase->isOld()) {
+                if (($testCase->getStatus() == 'FAILURE') && ($testCase->getLastOldExecution() == 'SUCCESS')) {
+                        $regression = TRUE;
+                }
+            }
+            $regressionArray[$testCase] = $regression;
+        }*/
+    }
+
+
+    /**
      * Render HTML output of a given testuite XML result
      * @todo clean up, retrieve xsl stuff from dedicated file
      *
