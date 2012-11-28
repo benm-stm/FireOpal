@@ -155,10 +155,9 @@ class ResultManager {
         if (!empty($failures)) {
             $health .= '<img src="https://raw.github.com/jenkinsci/jenkins/master/war/src/main/webapp/images/48x48/health-00to19.png">';
         } else {
-        $health .= '<img src="https://raw.github.com/jenkinsci/jenkins/master/war/src/main/webapp/images/48x48/health-80plus.png">';
+            $health .= '<img src="https://raw.github.com/jenkinsci/jenkins/master/war/src/main/webapp/images/48x48/health-80plus.png">';
         }
     }
-
         $health .= '</span>';
         return $health;
     }
@@ -199,14 +198,14 @@ $xslString = '<?xml version="1.0" encoding="UTF-8"?>
         </table>
     <br/>
         <xsl:for-each select="testsuite/testcase">
-            <div style="color:white;padding:4px">
-<xsl:choose>
-<xsl:when test="failure"><br/><span style="background-color:#ff0000;font-weight:bold"><xsl:value-of select="@name"/> (<xsl:value-of select="@time"/>s)</span><br/><br/><span style="background-color:#ff0000;font-size:12pt;color:white"><b>Failure</b><br/></span></xsl:when>
-<xsl:otherwise><br/><span style="background-color:#4DBD33;font-weight:bold"><xsl:value-of select="@name"/> (<xsl:value-of select="@time"/>s)</span><br/><br/><span style="background-color:#4DBD33;font-size:12pt;color:white"><b>Success</b><br/> </span></xsl:otherwise>
-</xsl:choose>
-<xsl:for-each select="failure">
-                 <span style="font-style:italic;font-size:10pt"><b>Type:   </b><xsl:value-of select="@type"/><br/></span>
-                   <span style="font-style:italic;font-size:10pt"><b>Message:</b> <xsl:value-of select="@message"/><br/></span>
+            <div style="color:white;padding-bottom:10px">
+            <xsl:choose>
+                <xsl:when test="failure"><br/><div style="background-color:#ff0000;font-weight:bold"><xsl:value-of select="@name"/> (<xsl:value-of select="@time"/>s)</div><div style="background-color:#000000;font-size:11pt;color:white"><b>Status:    Failure</b><br/></div></xsl:when>
+                <xsl:otherwise><br/><div style="background-color:#4DBD33;font-weight:bold"><xsl:value-of select="@name"/> (<xsl:value-of select="@time"/>s)</div><div style="background-color:#000000;font-size:11pt;color:white"><b>Status:    Success</b><br/><br/> </div></xsl:otherwise>
+            </xsl:choose>
+            <xsl:for-each select="failure">
+                 <div style="background-color:#000000;font-size:11pt"><br/><b>Type:    </b><xsl:value-of select="@type"/><br/></div>
+                   <div style="background-color:#000000;font-size:11pt"><b>Message:    </b> <xsl:value-of select="@message"/><br/></div><br/>
             </xsl:for-each>
                 <span style="font-style:italic">
                     <xsl:value-of select="error"/>
