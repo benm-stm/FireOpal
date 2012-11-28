@@ -109,9 +109,11 @@ class ResultManager {
             <fieldset class="fieldset">
                 <legend class="toggler" onclick="toggle_visibility(\'result_output_'.$row->id.'\'); if (this.innerHTML == \'+\') { this.innerHTML = \'-\'; } else { this.innerHTML = \'+\'; }">+</legend>
                 <span id="result_output_'.$row->id.'" style="display: none;" >';
-
-        $output .= '<pre>'.$this->processResult($row->output).'</pre>';
-        //$output .= '<pre>'.$row->output.'</pre>';
+        if ($this->validateXML($row->output)) {
+            $output .= '<pre>'.$this->validateXML($row->output).'</pre>';
+        } else  {
+                $output .=  '<pre>'.$this->processResult($row->output).'</pre>';
+        }
         $output .=  '</span>
             </fieldset>
         </td>
@@ -140,12 +142,12 @@ class ResultManager {
      * @return String
      */
     function displayTestsuiteHealth($output) {
-        $health  = '<span>';
-    $xmlDoc = simplexml_load_string($output);
-    if (!$xmlDoc) {
+        $health = '<span>';
+    if ($this->validateXML($output)) {
         /*@todo, this is just for debug, we need to hundle unvalid xml schema and display the right img*/
-        $health .= '<img src="https://raw.github.com/jenkinsci/jenkins/master/war/src/main/webapp/images/48x48/health-80plus.png">';
+        $health .= '<img src="https://raw.github.com/jenkinsci/jenkins/master/war/src/main/webapp/images/48x48/health-20to39.png">';
     } else {
+        $xmlDoc = simplexml_load_string($output);
         $failures = "";
         $xmlDoc2 = $xmlDoc->xpath('/testsuite/testcase/failure');
         while(list( , $node) = each($xmlDoc2)) {
@@ -238,6 +240,26 @@ $xslString = '<?xml version="1.0" encoding="UTF-8"?>
         $proc   = new XSLTProcessor;
         $proc->importStyleSheet($xslDoc);
         return $proc->transformToXML($xmlDoc);
+    }
+
+    /**
+     * Check if testsuite output is a  valid XML
+     *
+     * @param String $output JUNIT XML output
+     *
+     * @return string
+     */
+    function validateXML($output) {
+        $errorString = "";
+        libxml_use_internal_errors(true);
+        $xml = simplexml_load_string($output);
+        if (!$xml) {
+            $errorString .= "There is something wrong with testsuite output: <br/>";
+            foreach (libxml_get_errors() as $error) {
+                $errorString .= "<br/>*) ".$error->message;
+            }
+        }
+        return $errorString;
     }
 
     /**
