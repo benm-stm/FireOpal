@@ -52,7 +52,26 @@ class ResultManager {
             $sql = "INSERT INTO result (user, name, output, testsuite, date) VALUES (".$this->user->getAtt('id').", ".$this->dbHandler->quote($testSuiteName).", ".$this->dbHandler->quote(join("\n", $output)).", ".$this->dbHandler->quote($testSuite).", ".time().")";
             return $this->dbHandler->query($sql);
         } catch (Exception $e) {
-            var_dump($e);
+           echo $e->getMessage();
+        }
+    }
+
+    /**
+     * Store the execution result a given testcase in DB
+     *
+     * @param String $testcase_id    Id of the testcase
+     * @param String $testsuite_id   Id of the testsuite that gave the output
+     * @param String $testCaseOutput Execution output
+     * @param String $status         Status of the testcase
+     *
+     * @return Boolean
+     */
+    function logTestCaseResult($testcase_id, $testsuite_id, $testCaseOutput, $status) {
+        try {
+            $sql = "INSERT INTO testcase_result ( testcase_id, testsuite_id, status, output, date) VALUES (".$this->dbHandler->quote($testcase_id).", ".$this->dbHandler->quote($testsuite_id).", ".$this->dbHandler->quote($status).", ".$this->dbHandler->quote($testCaseOutput).", ".time().")";
+            return $this->dbHandler->query($sql);
+        } catch (Exception $e) {
+            echo $e->getMessage();
         }
     }
 
@@ -93,6 +112,7 @@ class ResultManager {
                 <td class="resultHeader">Download output</td>
                 <td class="resultHeader">Delete</td>
                 </tr>';
+
                 $result->setFetchMode(PDO::FETCH_OBJ);
                 while ($row = $result->fetch()) {
                     $output    .= '
