@@ -35,7 +35,7 @@ class TestCase {
      * @return Void
      */
     public function __construct($name, $fileinfo = null) {
-        $this->id               = "";
+        $this->id               = md5_file(TestCaseManager::TESTCASES_PATH);
         $this->name             = $name;
         $this->_dependenciesMap = array();
         $this->_setupParamsMap  = array();
