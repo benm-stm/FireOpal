@@ -359,6 +359,15 @@ class TestSuite {
         return $this->name;
     }
 
+    /**
+     * Set the testcases map for a given testSuite 
+     * 
+     * @param Array $testCasesArray
+     */
+    public function setTestSuiteTestCasesMap($testCasesArray) {
+        $this->_testCasesMap = $testCasesArray;
+    }
+
 }
 
 ?>

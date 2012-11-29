@@ -18,6 +18,7 @@
 
 require_once 'common/db/connect.php';
 require_once 'common/User.class.php';
+require_once 'TestSuiteManager.class.php';
 
 class ResultManager {
 
@@ -190,15 +191,19 @@ class ResultManager {
      * @return Array
      */
     function getTestsuiteRegression() {
-        /*foreach ($testCases as $testCase) {
+        $testSuiteManager = new TestSuiteManager();
+        $testSuite = new TestSuite("tt");
+        $testCasesArray   =  $testSuiteManager->getTestCasesHashs($testSuite);
+        foreach ($testCasesArray as $key => $testCase) {
             $regression = FALSE;
-            if ($testCase->isOld()) {
-                if (($testCase->getStatus() == 'FAILURE') && ($testCase->getLastOldExecution() == 'SUCCESS')) {
-                        $regression = TRUE;
+            /*if ($testCase->getStatus() == 'FAILURE') {
+                if ($testCase->getLastOldExecution()) {
+                    $regression = TRUE;
                 }
-            }
+            }*/
             $regressionArray[$testCase] = $regression;
-        }*/
+        }
+        return $regressionArray;
     }
 
 

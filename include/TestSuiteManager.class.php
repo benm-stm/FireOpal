@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with FireOpal. If not, see <http://www.gnu.org/licenses/>.
  */
+require_once 'TestSuite.class.php';
 
 class TestSuiteManager {
 
@@ -165,7 +166,23 @@ class TestSuiteManager {
             var_dump($e);
         }
     }
-
+    
+    /**
+     * Retreives testCases hashs from db for given testSuite
+     *
+     * @param TestSuite $testSuite    Target test suite to populate
+     * 
+     * @return Array
+     */
+    function getTestCasesHashs($testSuite) {
+        $this->dbHandler = DBHandler::getInstance();
+        $sql    = "SELECT id FROM testcase WHERE testsuite_id like '%".$testSuite->getTestSuiteName()."%'";
+        $result = $this->dbHandler->query($sql);
+        if($result && $result->rowCount() > 0) {
+            return $result->fetchAll(PDO::FETCH_COLUMN, 0);
+        }
+        return array();
+    }
 }
 
 ?>

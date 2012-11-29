@@ -74,6 +74,19 @@ class TestCaseManager {
         return $testcases;
     }
 
+    /**
+     * Returns the status of a given testcase hash
+     *
+     * @param String $testCaseHash 
+     *
+     * @return Boolean
+     */
+    function getLastOldExecution($testCaseHash) {
+        //TODO
+        return True;
+    }
+
+
 }
 
 ?>
