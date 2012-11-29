@@ -97,9 +97,9 @@ class ResultManager {
      */
     function displayResults() {
         $output = '';
-        $sql  = "SELECT * FROM result
-                 WHERE user = ".$this->user->getAtt('id')."
-                 ORDER BY date";
+        $sql    = "SELECT * FROM result
+                   WHERE user = ".$this->user->getAtt('id')."
+                   ORDER BY date";
 
         try {
             $result = $this->dbHandler->query($sql);
@@ -156,6 +156,35 @@ class ResultManager {
     }
 
      /**
+     * Retrieve execution trace for a given test case: status, output,...
+     * $testCaseName would look like this: 'First_test widget/AddWidget Add a widget to My dashboard#precondition Find my personal page'
+     *
+     * @param String $output       Test suite JUNIT XML output
+     * @param String $testCaseName The name of the test case name
+     *
+     * @return Array
+     */
+    function displayTestCaseResult($output, $testCaseName) {
+        $result = array();
+        if (!$this->validateXML($output)) {
+            $xmlDoc = simplexml_load_string($output);
+            //Cannot use classname node instead, i need to retrieve the Rspec stuff instead of file path
+            $testCase = $xmlDoc->testcase['name'];
+            //@todo propoerly compare strings
+            if ($testCase = $testCaseName) {
+                if ($xmlDoc->testcase->failure || $xmlDoc->testcase->error) {
+                    //@todo check for regression here
+                    $result['status'] = "F";
+                } else {
+                    $result['status'] = "P";
+                }
+                $result['output'] = $xmlDoc->testcase->asXML();
+            }
+        }
+        return ($result);
+    }
+
+     /**
      * Retrieve testsuite health status
      *
      * @param String $output JUNIT XML output
@@ -168,9 +197,9 @@ class ResultManager {
         /*@todo, this is just for debug, we need to hundle unvalid xml schema and display the right img*/
         $health .= '<img src="https://raw.github.com/jenkinsci/jenkins/master/war/src/main/webapp/images/48x48/health-20to39.png">';
     } else {
-        $xmlDoc = simplexml_load_string($output);
+        $xmlDoc   = simplexml_load_string($output);
         $failures = "";
-        $xmlDoc2 = $xmlDoc->xpath('/testsuite/testcase/failure');
+        $xmlDoc2  = $xmlDoc->xpath('/testsuite/testcase/failure');
         while(list( , $node) = each($xmlDoc2)) {
             $failures .= "<br/>".$node;
         }
