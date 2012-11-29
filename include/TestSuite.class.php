@@ -350,6 +350,15 @@ class TestSuite {
         return $content;
     }
 
+    /**
+     * Retreives the testsuite name
+     * 
+     * @return String
+     */
+    public function getTestSuiteName() {
+        return $this->name;
+    }
+
 }
 
 ?>

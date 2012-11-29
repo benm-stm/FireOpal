@@ -21,6 +21,7 @@ class TestSuiteManager {
     private $info  = array();
     private $error = array();
     protected $logger;
+    protected $dbHandler;
 
     public static $testSuitesLocation = "testsuites";
 
@@ -34,7 +35,7 @@ class TestSuiteManager {
      */
     public function setLogger($logger) {
         $this->logger = $logger;
-  }
+    }
 
     /**
      * Retrieves test suites location
@@ -89,7 +90,7 @@ class TestSuiteManager {
 
     /**
      * Populate the collection of test case objects of a given test Suite
-     * from an array that contains test cased path
+     * from an array that contains test cases path
      *
      * @param TestSuite $testSuite     Target test suite to populate
      * @param Array     $testCaseArray List of testcases to attach to the testsuite
@@ -113,6 +114,7 @@ class TestSuiteManager {
                         $this->error[] = $exception->getMessage();
                     }
                     $testSuite->attach($testCase, $isDependency);
+                    $this->storeTestCase($testCase, $testSuite);
                 } else {
                     $this->error[] = 'Testcase "'.$test.'" were removed due to an incompatible tag';
                 }
@@ -143,6 +145,24 @@ class TestSuiteManager {
                     throw new OutOfRangeException('An error occured while applying dependencies: Test cases "'.$entryPoint.'" and "'.$dependency.'" dependencies may lead to a deadlock situation.');
                 }
             }
+        }
+    }
+
+    /**
+     * Store testCases into DB
+     *
+     * @param TestCase  $testCase     TestCase to store
+     * @param TestSuite $testSuite    Target test suite to populate
+     * 
+     * @return Void
+     */
+    function storeTestCase($testCase, $testSuite) {
+        $this->dbHandler = DBHandler::getInstance();
+        try {
+            $sql = "INSERT INTO testcase (id, filename, testsuite_id) VALUES (".$this->dbHandler->quote($testCase->id).", ".$this->dbHandler->quote($testCase->name).", ".$this->dbHandler->quote($testSuite->getTestSuiteName()).")";
+            return $this->dbHandler->query($sql);
+        } catch (Exception $e) {
+            var_dump($e);
         }
     }
 

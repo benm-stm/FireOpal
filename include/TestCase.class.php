@@ -35,7 +35,6 @@ class TestCase {
      * @return Void
      */
     public function __construct($name, $fileinfo = null) {
-        $this->id               = md5_file(TestCaseManager::TESTCASES_PATH);
         $this->name             = $name;
         $this->_dependenciesMap = array();
         $this->_setupParamsMap  = array();
@@ -46,6 +45,7 @@ class TestCase {
         } else {
             $this->_testCaseFile = new SplFileInfo($this->filePath.$this->name.'.rb');
         }
+        $this->id               = md5_file($this->filePath.$this->name.'.rb');
         if (!$this->_testCaseFile->isFile()) {
             throw new RuntimeException ("The test case file referenced by SplFileInfo object doesn't exist or is not a regular file.");
         }
