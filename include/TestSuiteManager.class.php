@@ -166,7 +166,7 @@ class TestSuiteManager {
             var_dump($e);
         }
     }
-    
+
     /**
      * Retreives testCases hashs from db for given testSuite
      *
@@ -182,6 +182,17 @@ class TestSuiteManager {
             return $result->fetchAll(PDO::FETCH_COLUMN, 0);
         }
         return array();
+    }
+
+     /**
+     * Return TestSuite 
+     *
+     * @param String $name The testsuite name
+     * 
+     * @return TestSuite
+     */
+    function getTestSuite($name) {
+        return new TestSuite($name);
     }
 }
 
