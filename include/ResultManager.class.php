@@ -24,6 +24,9 @@ class ResultManager {
 
     const RESULTS_PATH = "../log/";
 
+    const STATUS_FAILURE = "FAILURE";
+    const STATUS_PASS    = "PASS";
+
     var $user;
     var $dbHandler;
 
@@ -174,9 +177,9 @@ class ResultManager {
             if ($testCase = $testCaseName) {
                 if ($xmlDoc->testcase->failure || $xmlDoc->testcase->error) {
                     //@todo check for regression here
-                    $result['status'] = "F";
+                    $result['status'] = self::STATUS_FAILURE;
                 } else {
-                    $result['status'] = "P";
+                    $result['status'] = self::STATUS_PASS;
                 }
                 $result['output'] = $xmlDoc->testcase->asXML();
             }
@@ -225,7 +228,7 @@ class ResultManager {
         $testCasesArray   =  $testSuiteManager->getTestCasesHashs($testSuite);
         foreach ($testCasesArray as $key => $testCase) {
             $regression = FALSE;
-            /*if ($testCase->getStatus() == 'FAILURE') {
+            /*if ($testCase->getStatus() == self::STATUS_FAILURE) {
                 if ($testCase->getLastOldExecution()) {
                     $regression = TRUE;
                 }
