@@ -218,18 +218,46 @@ class TestCase {
     }
 
     /**
+     * Returns if a given testcase had already an execution
+     *
+     * @param TestCase $testcase 
+     *
+     * @return Boolean
+     */
+    function hasAnExecution() {
+        $this->dbHandler = DBHandler::getInstance();
+        $sql  = "SELECT NULL FROM testcase_result
+                 WHERE testcase_id = ".$this->dbHandler->quote($this->id);
+        $result = $this->dbHandler->query($sql);
+        if($result && $result->rowCount() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+     /**
      * Returns the status of a given testcase hash
      *
      * @param TestCase $testcase 
      *
      * @return Boolean
      */
-    function getLastOldExecution() {
-        //TODO
-        return True;
+    function getLastOldExecutionStatus() {
+        $this->dbHandler = DBHandler::getInstance();
+        $sql  = "SELECT status FROM testcase_result
+                 WHERE testcase_id = ".$this->dbHandler->quote($this->id)." ORDER BY date DESC";
+        $result = $this->dbHandler->query($sql);
+        if($result && $result->rowCount() > 0) {
+            $result->setFetchMode(PDO::FETCH_OBJ);
+            $row = $result->fetch();
+            if ($row->status == ResultManager::STATUS_FAILURE) {
+                return false;
+            } 
+        } 
+        return true;
     }
-
-
 }
+
 
 ?>

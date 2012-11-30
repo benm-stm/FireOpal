@@ -234,11 +234,11 @@ class ResultManager {
             $regression = FALSE;
             $testCase = $testCaseManager->getTestCaseByHash($testCaseHash);
             if (is_a($testCase, 'TestCase')) {
-                //if ($testCase->getStatus() == self::STATUS_FAILURE) { {
-                    if ($testCase->getLastOldExecution()) {
+                if ($testCase->hasAnExecution()) {
+                    if (($testCase->getStatus() == self::STATUS_PASS) && ($testCase->getLastOldExecution() == self::STATUS_FAILURE)) {
                         $regression = TRUE;
                     }
-                //}
+                }
                 //To be modified to 
                 //$regressionArray[$testCase] = $regression;
                 $regressionArray[$testCase->id] = $regression;
