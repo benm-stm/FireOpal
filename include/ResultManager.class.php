@@ -101,7 +101,6 @@ class ResultManager {
      */
     function displayResults() {
         $output = '';
-        var_dump($this->getTestsuiteRegression()); exit;
         $sql    = "SELECT * FROM result
                    WHERE user = ".$this->user->getAtt('id')."
                    ORDER BY date";
