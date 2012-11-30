@@ -16,9 +16,12 @@
  * along with FireOpal. If not, see <http://www.gnu.org/licenses/>.
  */
 
+require_once 'TestCase.class.php';
+
 class TestCaseManager {
 
     const TESTCASES_PATH = "../testcases/";
+    protected $dbHandler;
 
     /**
      * Create a recursive filesytem iterator
@@ -75,18 +78,22 @@ class TestCaseManager {
     }
 
     /**
-     * Returns the status of a given testcase hash
+     * Returns testcase given its hash 
      *
-     * @param String $testCaseHash 
-     *
-     * @return Boolean
+     * @return TestCase
      */
-    function getLastOldExecution($testCaseHash) {
-        //TODO
-        return True;
+    function getTestCaseByHash($testCaseHash) {
+        $this->dbHandler = DBHandler::getInstance();
+        $sql  = "SELECT * FROM testcase
+                 WHERE id = ".$this->dbHandler->quote($testCaseHash);
+        $result = $this->dbHandler->query($sql);
+        if($result) {
+            $result->setFetchMode(PDO::FETCH_OBJ);
+            $row = $result->fetch();
+            return new TestCase($row->filename, null, $testCaseHash);
+        } 
+        return;
     }
-
-
 }
 
 ?>

@@ -31,10 +31,11 @@ class TestCase {
      *
      * @param String $name     The test case name
      * @param String $fileinfo The path to the physical ruby test case file
+     * @param String $id       The hash of test case file
      *
      * @return Void
      */
-    public function __construct($name, $fileinfo = null) {
+    public function __construct($name, $fileinfo = null, $id = null) {
         $this->name             = $name;
         $this->_dependenciesMap = array();
         $this->_setupParamsMap  = array();
@@ -45,7 +46,13 @@ class TestCase {
         } else {
             $this->_testCaseFile = new SplFileInfo($this->filePath.$this->name.'.rb');
         }
-        $this->id               = md5_file($this->filePath.$this->name.'.rb');
+
+        if (!empty($id)) {
+            $this->id = $id;
+        } else {
+            $this->id               = md5_file($this->filePath.$this->name.'.rb');
+        }
+
         if (!$this->_testCaseFile->isFile()) {
             throw new RuntimeException ("The test case file referenced by SplFileInfo object doesn't exist or is not a regular file.");
         }
@@ -209,6 +216,19 @@ class TestCase {
         // TODO: Check tags compatibility
         return true;
     }
+
+    /**
+     * Returns the status of a given testcase hash
+     *
+     * @param TestCase $testcase 
+     *
+     * @return Boolean
+     */
+    function getLastOldExecution() {
+        //TODO
+        return True;
+    }
+
 
 }
 

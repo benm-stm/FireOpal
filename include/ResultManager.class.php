@@ -19,6 +19,7 @@
 require_once 'common/db/connect.php';
 require_once 'common/User.class.php';
 require_once 'TestSuiteManager.class.php';
+require_once 'TestCaseManager.class.php';
 
 class ResultManager {
 
@@ -100,6 +101,7 @@ class ResultManager {
      */
     function displayResults() {
         $output = '';
+        var_dump($this->getTestsuiteRegression()); exit;
         $sql    = "SELECT * FROM result
                    WHERE user = ".$this->user->getAtt('id')."
                    ORDER BY date";
@@ -224,16 +226,24 @@ class ResultManager {
      */
     function getTestsuiteRegression() {
         $testSuiteManager = new TestSuiteManager();
-        $testSuite = new TestSuite("tt");
+        $testSuite = $testSuiteManager->getTestSuite('tt');
         $testCasesArray   =  $testSuiteManager->getTestCasesHashs($testSuite);
-        foreach ($testCasesArray as $key => $testCase) {
+
+        $testCaseManager = new TestCaseManager();
+
+        foreach ($testCasesArray as $key => $testCaseHash) {
             $regression = FALSE;
-            /*if ($testCase->getStatus() == self::STATUS_FAILURE) {
-                if ($testCase->getLastOldExecution()) {
-                    $regression = TRUE;
-                }
-            }*/
-            $regressionArray[$testCase] = $regression;
+            $testCase = $testCaseManager->getTestCaseByHash($testCaseHash);
+            if (is_a($testCase, 'TestCase')) {
+                //if ($testCase->getStatus() == self::STATUS_FAILURE) { {
+                    if ($testCase->getLastOldExecution()) {
+                        $regression = TRUE;
+                    }
+                //}
+                //To be modified to 
+                //$regressionArray[$testCase] = $regression;
+                $regressionArray[$testCase->id] = $regression;
+            }
         }
         return $regressionArray;
     }
