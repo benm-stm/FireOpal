@@ -63,7 +63,11 @@ class TestCase {
      *
      * @return String
      */
-    public function getContent() {
+    public function getContent($rspecStructure = NULL) {
+        if(!empty($rspecStructure)){
+            $rspecMap = array();
+            $rspecElements = 0;
+        }
         $testCaseFileObj = new SplFileObject($this->_testCaseFile);
         $testCaseFileContent = "";
         if ($testCaseFileObj->isReadable()) {
@@ -72,12 +76,40 @@ class TestCase {
                 $trimmedLine = trim($line);
                 if (!empty($trimmedLine) && !preg_match("/^#/", $trimmedLine)) {
                     $testCaseFileContent .= "        ".$line;
+                    if(!empty($rspecStructure)){
+                        //@todo manage this stuff in a dedicated method
+                        if (preg_match("/^describe/", strtolower($trimmedLine))) {
+                        /* this suppose that you are parsing something like:
+                           describe "#precondition" do */
+                        $exampleLabel = explode('"', $trimmedLine);
+                        $rspecMap[$rspecElements]['key']   = 'describe';
+                        $rspecMap[$rspecElements]['label'] = $exampleLabel[1];
+                        $rspecElements++;
+                        } elseif (preg_match("/^it/", strtolower($trimmedLine))) {
+                        /* this suppose that you are parsing something like:
+                           it "Create new wiki" do */
+                        $exampleLabel = explode('"', $trimmedLine);
+                        $rspecMap[$rspecElements]['key']   = 'it';
+                        $rspecMap[$rspecElements]['label'] = $exampleLabel[1];
+                        $rspecElements++;
+                        }
+                    }
                 }
             }
         } else {
             throw new LogicException('Unable to retrieve file content. Test case file "'.$testCaseFileObj.'" is not readable.');
         }
-        return $testCaseFileContent;
+        if(!empty($rspecStructure)){
+            return $rspecMap;
+        } else {
+            return $testCaseFileContent;
+        }
+    }
+
+    public function retrieveRspecStructure() {
+    //echo $this->name;
+    $rspecStructure = true;
+    print_r($this->getContent($rspecStructure));
     }
 
     /**
@@ -89,9 +121,9 @@ class TestCase {
         $exampleGroupHeader = "#---- Test case ".$this->name." ----\n";
         $exampleGroupFooter = "#---- End test case ".$this->name." ----\n\n";
         $exampleGroup       = $exampleGroupHeader."    describe \"".$this->name."\" do\n\n";
-        $exampleGroup       .= "        before(:all) do\n";
-        $exampleGroup       .= "            @runner.navigate.to @params['host']['value'] + '/my/'\n";
-        $exampleGroup       .= "        end\n\n";
+        $exampleGroup      .= "        before(:all) do\n";
+        $exampleGroup      .= "            @runner.navigate.to @params['host']['value'] + '/my/'\n";
+        $exampleGroup      .= "        end\n\n";
         try {
             $exampleGroup .= $this->getContent();
         } catch (LogicException $e) {
@@ -220,7 +252,7 @@ class TestCase {
     /**
      * Returns if a given testcase had already an execution
      *
-     * @param TestCase $testcase 
+     * @param TestCase $testcase
      *
      * @return Boolean
      */
@@ -239,7 +271,7 @@ class TestCase {
      /**
      * Returns the status of a given testcase hash
      *
-     * @param TestCase $testcase 
+     * @param TestCase $testcase
      *
      * @return Boolean
      */
@@ -253,8 +285,8 @@ class TestCase {
             $row = $result->fetch();
             if ($row->status == ResultManager::STATUS_FAILURE) {
                 return false;
-            } 
-        } 
+            }
+        }
         return true;
     }
 }
