@@ -66,7 +66,7 @@ class TestCase {
     public function getContent($rspecStructure = NULL) {
         if(!empty($rspecStructure)){
             $rspecMap = array();
-            $rspecElements = 0;
+                $rspecElements = 0;
         }
         $testCaseFileObj = new SplFileObject($this->_testCaseFile);
         $testCaseFileContent = "";
@@ -79,19 +79,19 @@ class TestCase {
                     if(!empty($rspecStructure)){
                         //@todo manage this stuff in a dedicated method
                         if (preg_match("/^describe/", strtolower($trimmedLine))) {
-                        /* this suppose that you are parsing something like:
-                           describe "#precondition" do */
-                        $exampleLabel = explode('"', $trimmedLine);
-                        $rspecMap[$rspecElements]['key']   = 'describe';
-                        $rspecMap[$rspecElements]['label'] = $exampleLabel[1];
-                        $rspecElements++;
+                            /* This suppose that you are parsing something like:
+                               describe "#precondition" do */
+                            $exampleLabel = explode('"', $trimmedLine);
+                            $rspecMap[$rspecElements]['key']   = 'describe';
+                            $rspecMap[$rspecElements]['label'] = $exampleLabel[1];
+                            $rspecElements++;
                         } elseif (preg_match("/^it/", strtolower($trimmedLine))) {
-                        /* this suppose that you are parsing something like:
-                           it "Create new wiki" do */
-                        $exampleLabel = explode('"', $trimmedLine);
-                        $rspecMap[$rspecElements]['key']   = 'it';
-                        $rspecMap[$rspecElements]['label'] = $exampleLabel[1];
-                        $rspecElements++;
+                            /* This suppose that you are parsing something like:
+                               it "Create new wiki" do */
+                            $exampleLabel = explode('"', $trimmedLine);
+                            $rspecMap[$rspecElements]['key']   = 'it';
+                            $rspecMap[$rspecElements]['label'] = $exampleLabel[1];
+                            $rspecElements++;
                         }
                     }
                 }
@@ -107,9 +107,30 @@ class TestCase {
     }
 
     public function retrieveRspecStructure() {
-    //echo $this->name;
-    $rspecStructure = true;
-    print_r($this->getContent($rspecStructure));
+        //Any refactoring is welcome, this is the worst piece of code i've ever wrote; #sick!
+        //you can concat $this->name to the test case label if you need it...
+        $rspecStructure  = true;
+        $rspecTest       = array();
+        $rspecTestCases  = $this->getContent($rspecStructure);
+        $rspecTestString = '';
+        $describeDepth   = 0;
+        foreach ($rspecTestCases as $index => $content) {
+            if ($content['key'] == 'describe') {
+                if (!$describeDepth) {
+                    //just tp keep the index of the root describe statement
+                    $parentDescribeIndex = $index;
+                }
+                $describeDepth ++;
+                if ($describeDepth > 1) {
+                    //prepare string for the next statement
+                    $rspecTestString = $rspecTestCases[$parentDescribeIndex]['label'];
+                }
+                $rspecTestString .= $content['label'];
+            } elseif ($content['key'] == 'it') {
+                $rspecTest[] = $rspecTestString.' '.$content['label'];
+            }
+        }
+        return $rspecTest;
     }
 
     /**
@@ -121,9 +142,9 @@ class TestCase {
         $exampleGroupHeader = "#---- Test case ".$this->name." ----\n";
         $exampleGroupFooter = "#---- End test case ".$this->name." ----\n\n";
         $exampleGroup       = $exampleGroupHeader."    describe \"".$this->name."\" do\n\n";
-        $exampleGroup      .= "        before(:all) do\n";
-        $exampleGroup      .= "            @runner.navigate.to @params['host']['value'] + '/my/'\n";
-        $exampleGroup      .= "        end\n\n";
+        $exampleGroup       .= "        before(:all) do\n";
+        $exampleGroup       .= "            @runner.navigate.to @params['host']['value'] + '/my/'\n";
+        $exampleGroup       .= "        end\n\n";
         try {
             $exampleGroup .= $this->getContent();
         } catch (LogicException $e) {
