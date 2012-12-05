@@ -105,12 +105,20 @@ class TestCaseManager {
     function rspecPrettyFormat($testCaseName) {
         $testCaseObj    = new TestCase($testCaseName);
         $rspecStructure = $testCaseObj->retrieveRspecStructure();
-    $rspecOutput    = '<br><pre>ClassName     : '.$testCaseObj->name.'.rb';
-    $rspecOutput   .= '<br><br>'.count($rspecStructure).' Rspec examples: <br>';
-        foreach ($rspecStructure as $testString) {
-        $rspecOutput .= '<span>'.$testString.'</span><br>';
-    }
-    $rspecOutput   .= '<br></pre>';
+        $rspecOutput    = '<br><pre>ClassName     : '.$testCaseObj->name.'.rb';
+        $rspecOutput   .= '<br><br><b>'.count($rspecStructure).' Rspec examples:</b> <br><br>';
+            foreach ($rspecStructure as $testString) {
+            $rspecOutput .= '<span style="padding: 25px;">'.$testString.'</span><br>';
+        }
+        $rspecOutput .= '<br>';
+        $dependencies = $testCaseObj->getDependencies();
+        if(!empty($dependencies)){
+            $rspecOutput .= '<b>Dependency list</b>:<br><br>';
+            foreach ($dependencies as $deps) {
+                $rspecOutput .= '<span style="padding: 25px;">'.$deps.'</span><br>';
+            }
+        }
+        $rspecOutput .= '<br></pre>';
         return $rspecOutput;
     }
 }
