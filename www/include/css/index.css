@@ -53,8 +53,8 @@ label {
 tr {
     vertical-align:top;
 }
-pre { 
-    background-color: lightgray; 
+pre {
+    background-color: lightgray;
 }
 
 #body_skin{
@@ -107,10 +107,10 @@ pre {
 }
 
 #sign #toplien #testsuite{
-    width:93px; 
-    height:22px; 
-    float:left; 
-    position:relative; 
+    width:93px;
+    height:22px;
+    float:left;
+    position:relative;
     display:block;
 }
 
@@ -137,7 +137,7 @@ pre {
 #header a.community{
     display:block;
     float:left;
-    height:22px; 
+    height:22px;
     margin-left:25px;
     left:0px; text-align:center;
     font:bold 11px/23px Verdana, Arial, Helvetica, sans-serif;
@@ -189,13 +189,38 @@ pre {
 font-family:Verdana, Arial, Helvetica, sans-serif;
 font-size:11px;
 text-decoration:none;
-color:##FF6600;
+color:#FF6600;
 }
 .fieldset{
     border-color:#629628;
     border-style: solid;
 }
-
+.testCaseDetail{
+    border-color: #FF6600;
+    border-style: solid;
+}
+.testCaseDetailstoggler {
+    cursor:pointer;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:16px;
+    text-decoration:none;
+    color:#928a6e;
+    font-weight:bold;
+    margin-left:100px;
+    margin-right:10px
+}
+.testCaseDetailsTitle {
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:15px;
+    text-decoration:none;
+    /*color:#629628;*/
+    color:#000000;
+    background-color:#FF6600;
+    font-weight:bold;
+    padding-left: 15px;
+    padding-right: 10px;
+    padding-top: 5px;
+}
 .fieldsetTitle{
     font-family:Verdana, Arial, Helvetica, sans-serif;
     font-size:14px;
@@ -274,7 +299,7 @@ color:#629628;
     color:yellow;
     font-weight:normal;
     background-color:black;
-    display:none; 
+    display:none;
 }
 /* }}} */
 

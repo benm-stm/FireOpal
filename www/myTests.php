@@ -30,7 +30,7 @@ echo '
     <body>
         <div id="header">
             <a href="index.php" class="community"> << Go back</a>
-        </div>     
+        </div>
         <div id="body_skin">
             <div><br>';
 
@@ -41,12 +41,10 @@ foreach ($fsIterator as $entry) {
     if (!$entry->isDir()) {
         $testCase       = substr($entry->getPathname(), strlen(TestCaseManager::TESTCASES_PATH));
         $testCaseString = substr($testCase, 0, strlen($testCase)-3);
-        echo '<br><span class="toggler" onclick="toggle_visibility(\'test_output_'.$testCase.'\'); if (this.innerHTML == \'+\') { this.innerHTML = \'-\'; } else { this.innerHTML = \'+\'; }">+</span>'.$testCaseString.'<br/>';
+        echo '<br><span class="testCaseDetailstoggler" onclick="toggle_visibility(\'test_output_'.$testCase.'\'); if (this.innerHTML == \'+\') { this.innerHTML = \'-\'; } else { this.innerHTML = \'+\'; }">+</span><span class="testCaseDetailsTitle">'.$testCaseString.'</span><br/>';
 
-        $spanContent    = '<span id="test_output_'.$testCase.'" style="display: none;" >';
-        $testCaseObj    = new TestCase($testCaseString);
-        $rspecStructure = $testCaseObj->retrieveRspecStructure();
-        $spanContent   .= $rspecStructure;
+        $spanContent    = '<span class="testCaseDetail" id="test_output_'.$testCase.'" style="display: none;" >';
+        $spanContent   .= $testCaseManager->rspecPrettyFormat($testCaseString);
         $spanContent   .= '</span>';
         echo $spanContent;
             }
@@ -56,4 +54,4 @@ echo '      </div>
         </div>
     </body>
 </html>';
-?> 
+?>

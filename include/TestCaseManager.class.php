@@ -36,7 +36,7 @@ class TestCaseManager {
 
     /**
      * Recursivly creates a basic HTML tree of a given directory, then render a select input with the file system content starting from this given node.
-     * Visited directories are in dispalyed as bold and disabled select options, if you remove SELF_FIRST option, visited directories are ignored: 
+     * Visited directories are in dispalyed as bold and disabled select options, if you remove SELF_FIRST option, visited directories are ignored:
      * Obviously, they are heading nodes and the iterator object doesn't return them automatically.
      * $entry is an SPLFileInfo object, default getFilename() method would return the absolute path of the file; Since you need only the filename,
      * you have to set the KEY_AS_FILENAME constant to the iterator constructor.
@@ -52,7 +52,7 @@ class TestCaseManager {
             if ($entry->isDir()) {
                 $output .= '<option value="'.substr($entry->getPathname(), strlen(TestCaseManager::TESTCASES_PATH)).'" disabled></b>'.$entry->getFilename().'</b></option>';
             } else {
-                $output .= '<option value="'.substr($entry->getPathname(), strlen(TestCaseManager::TESTCASES_PATH)).'">&nbsp;&nbsp;&nbsp;&nbsp;'.$entry->getFilename().'</option>';
+                $output .= '<option value="'.substr($entry->getPathname(), strlen(TestCaseManager::TESTCASES_PATH)).'">&nbsp;&nbsp;&nbsp;&nbsp;<a href="lightbox/images/examples/image-2.jpg" rel="lightbox">'.$entry->getFilename().'</a></option>';
             }
         }
         $output .= '<select>';
@@ -78,7 +78,7 @@ class TestCaseManager {
     }
 
     /**
-     * Returns testcase given its hash 
+     * Returns testcase given its hash
      *
      * @return TestCase
      */
@@ -91,8 +91,27 @@ class TestCaseManager {
             $result->setFetchMode(PDO::FETCH_OBJ);
             $row = $result->fetch();
             return new TestCase($row->filename, null, $testCaseHash);
-        } 
+        }
         return;
+    }
+
+    /**
+     * Display test case as HTML output
+     *
+     * @param String $name     The test case name
+     *
+     * @return String
+     */
+    function rspecPrettyFormat($testCaseName) {
+        $testCaseObj    = new TestCase($testCaseName);
+        $rspecStructure = $testCaseObj->retrieveRspecStructure();
+    $rspecOutput    = '<br><pre>ClassName     : '.$testCaseObj->name.'.rb';
+    $rspecOutput   .= '<br><br>'.count($rspecStructure).' Rspec examples: <br>';
+        foreach ($rspecStructure as $testString) {
+        $rspecOutput .= '<span>'.$testString.'</span><br>';
+    }
+    $rspecOutput   .= '<br></pre>';
+        return $rspecOutput;
     }
 }
 
