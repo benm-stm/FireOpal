@@ -113,7 +113,7 @@ class TestCaseManager {
         $rspecOutput .= '<br>';
         $dependencies = $testCaseObj->getDependencies();
         if(!empty($dependencies)){
-            $rspecOutput .= '<b>Dependency list</b>:<br><br>';
+            $rspecOutput .= '<b>'.count($dependencies).' test(s) in the dependency list</b>:<br><br>';
             foreach ($dependencies as $deps) {
                 $rspecOutput .= '<span style="padding: 25px;">'.$deps.'</span><br>';
             }
