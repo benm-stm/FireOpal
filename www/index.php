@@ -89,6 +89,7 @@ echo '
         <div id="header">
             <a href="cases.php" class="community">Manage testsuites</a>
             <a href="result.php" class="community">View execution results</a>
+            <a href="myTests.php" class="community">Available TestCases</a>
         </div>
         <div id="body_skin">
             <table width="100%">
