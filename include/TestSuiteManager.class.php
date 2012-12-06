@@ -154,24 +154,27 @@ class TestSuiteManager {
      *
      * @param TestCase  $testCase     TestCase to store
      * @param TestSuite $testSuite    Target test suite to populate
-     * 
+     *
      * @return Void
      */
     function storeTestCase($testCase, $testSuite) {
+        $rspecStructure = $testCase->retrieveRspecStructure();
         $this->dbHandler = DBHandler::getInstance();
+        foreach ($rspecStructure as $testString) {
         try {
-            $sql = "INSERT INTO testcase (id, filename, testsuite_id) VALUES (".$this->dbHandler->quote($testCase->id).", ".$this->dbHandler->quote($testCase->name).", ".$this->dbHandler->quote($testSuite->getTestSuiteName()).")";
-            return $this->dbHandler->query($sql);
+            $sql = "INSERT INTO testcase (id, filename, rspec_label, testsuite_id) VALUES (".$this->dbHandler->quote($testCase->id).", ".$this->dbHandler->quote($testCase->name).", ".$this->dbHandler->quote($testString).", ".$this->dbHandler->quote($testSuite->getTestSuiteName()).")";
+            $this->dbHandler->query($sql);
         } catch (Exception $e) {
-            var_dump($e);
+            echo $e->getMessage();
         }
+    }
     }
 
     /**
      * Retreives testCases hashs from db for given testSuite
      *
      * @param TestSuite $testSuite    Target test suite to populate
-     * 
+     *
      * @return Array
      */
     function getTestCasesHashs($testSuite) {
@@ -185,10 +188,10 @@ class TestSuiteManager {
     }
 
      /**
-     * Return TestSuite 
+     * Return TestSuite
      *
      * @param String $name The testsuite name
-     * 
+     *
      * @return TestSuite
      */
     function getTestSuite($name) {
