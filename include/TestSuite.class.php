@@ -75,6 +75,11 @@ class TestSuite {
             $resultManager = new ResultManager($this->_user);
             $testSuite = file_get_contents($this->_testSuiteFile);
             $resultManager->logNewResult($output, $this->name, $testSuite);
+            $testCases = $this->getTestCases();
+            //do not loop on dependencies
+            foreach ($testCases as $key => $tcName) {
+               $resultManager->prepareTestCaseResult($tcName, $output, $this->name);
+            }
             return true;
         }
         return false;
@@ -249,7 +254,7 @@ class TestSuite {
      */
     function storeTestSuiteDetails() {
         $testSuiteFileObj = $this->_testSuiteFile->openFile('a');
-        if ($this->_testSuiteFile->isWritable()) { 
+        if ($this->_testSuiteFile->isWritable()) {
             //Conf storage
             $setup = new Setup();
             $setup->storeConf($this->_testSuiteFile->getPathname());
@@ -352,7 +357,7 @@ class TestSuite {
 
     /**
      * Retreives the testsuite name
-     * 
+     *
      * @return String
      */
     public function getTestSuiteName() {
@@ -360,8 +365,8 @@ class TestSuite {
     }
 
     /**
-     * Set the testcases map for a given testSuite 
-     * 
+     * Set the testcases map for a given testSuite
+     *
      * @param Array $testCasesArray
      */
     public function setTestSuiteTestCasesMap($testCasesArray) {

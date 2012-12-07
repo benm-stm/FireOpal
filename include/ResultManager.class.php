@@ -71,12 +71,34 @@ class ResultManager {
      *
      * @return Boolean
      */
-    function logTestCaseResult($testcase_id, $testsuite_id, $testCaseOutput, $status) {
+    function logTestCaseResult($testcase_id, $testsuite_id, $testCaseOutput, $rspecLabel, $status) {
+
         try {
-            $sql = "INSERT INTO testcase_result ( testcase_id, testsuite_id, status, output, date) VALUES (".$this->dbHandler->quote($testcase_id).", ".$this->dbHandler->quote($testsuite_id).", ".$this->dbHandler->quote($status).", ".$this->dbHandler->quote($testCaseOutput).", ".time().")";
+            $sql = "INSERT INTO testcase_result ( testcase_id, testsuite_id, rspec_label, status, output, date) VALUES (".$this->dbHandler->quote($testcase_id).", ".$this->dbHandler->quote($testsuite_id).", ".$this->dbHandler->quote($rspecLabel).", ".$this->dbHandler->quote($status).", ".$this->dbHandler->quote($testCaseOutput).", ".time().")";
             return $this->dbHandler->query($sql);
         } catch (Exception $e) {
             echo $e->getMessage();
+        }
+    }
+
+    /**
+     * retrieve the execution result of a given testcase
+     *
+     * @param String $tcName        Name the testcase
+     * @param String $output        Execution output of the testsuite
+     * @param String $testsuiteName Name of the testsuite that gave the output
+     *
+     * @return Boolean
+     */
+    function prepareTestCaseResult($tcName, $output, $testsuiteName) {
+        //For the moment use testsuite name as Id...
+        $testCase = new TestCase(substr($tcName, 0, -3));
+        $rspecStructure = $testCase->retrieveRspecStructure();
+        foreach ($rspecStructure as $key => $rspecLabel) {
+            $rspecResult = $this->displayTestCaseResult($output, $rspecLabel);
+            $status      = $rspecResult['status'];
+            $rspecOutput = $rspecResult['output'];
+            $this->logTestCaseResult($testCase->id, $testsuiteName, $rspecOutput,  $rspecLabel, $status);
         }
     }
 
@@ -112,43 +134,41 @@ class ResultManager {
                 <tr>
                 <td class="resultHeader">Testsuite</td>
                 <td class="resultHeader">Run date</td>
-        <td class="resultHeader">Health</td>
+                <td class="resultHeader">Health</td>
                 <td class="resultHeader">Output</td>
                 <td class="resultHeader">Download output</td>
                 <td class="resultHeader">Delete</td>
                 </tr>';
-
                 $result->setFetchMode(PDO::FETCH_OBJ);
                 while ($row = $result->fetch()) {
-                    $output    .= '
-    <tr>
-        <td id="resultLink">
-            <a href="?download_testsuite='.$row->id.'" >'.$row->name.'</a>
-        </td>
-        <td id="resultDate">
-            '.date("D M j, Y G:i:s T", $row->date).'
-        </td>
-    <td >'.$this->displayTestsuiteHealth($row->output).'
-    </td>
-        <td>
-            <fieldset class="fieldset">
-                <legend class="toggler" onclick="toggle_visibility(\'result_output_'.$row->id.'\'); if (this.innerHTML == \'+\') { this.innerHTML = \'-\'; } else { this.innerHTML = \'+\'; }">+</legend>
-                <span id="result_output_'.$row->id.'" style="display: none;" >';
-        if ($this->validateXML($row->output)) {
-            $output .= '<pre>'.$this->validateXML($row->output).'</pre>';
-        } else  {
-                $output .=  '<pre>'.$this->processResult($row->output).'</pre>';
-        }
-        $output .=  '</span>
-            </fieldset>
-        </td>
-        <td id="resultLink">
-            <a href="?download_result='.$row->id.'" >Download</a>
-        </td>
-        <td id="resultLink">
-            <a href="?delete_result='.$row->id.'" >Delete</a>
-        </td>
-    </tr>';
+                    $output    .= '<tr>
+                    <td id="resultLink">
+                        <a href="?download_testsuite='.$row->id.'" >'.$row->name.'</a>
+                    </td>
+                    <td id="resultDate">
+                        '.date("D M j, Y G:i:s T", $row->date).'
+                    </td>
+                    <td >'.$this->displayTestsuiteHealth($row->output).'
+                    </td>
+                    <td>
+                        <fieldset class="fieldset">
+                            <legend class="toggler" onclick="toggle_visibility(\'result_output_'.$row->id.'\'); if (this.innerHTML == \'+\') { this.innerHTML = \'-\'; } else { this.innerHTML = \'+\'; }">+</legend>
+                            <span id="result_output_'.$row->id.'" style="display: none;" >';
+                    if ($this->validateXML($row->output)) {
+                        $output .= '<pre>'.$this->validateXML($row->output).'</pre>';
+                    } else  {
+                            $output .=  '<pre>'.$this->processResult($row->output).'</pre>';
+                    }
+                    $output .=  '</span>
+                        </fieldset>
+                    </td>
+                    <td id="resultLink">
+                        <a href="?download_result='.$row->id.'" >Download</a>
+                    </td>
+                    <td id="resultLink">
+                        <a href="?delete_result='.$row->id.'" >Delete</a>
+                    </td>
+                    </tr>';
                 }
                 $output .= '</table></div>';
             }
@@ -197,23 +217,23 @@ class ResultManager {
      */
     function displayTestsuiteHealth($output) {
         $health = '<span>';
-    if ($this->validateXML($output)) {
-        /*@todo, this is just for debug, we need to hundle unvalid xml schema and display the right img*/
-        $health .= '<img src="https://raw.github.com/jenkinsci/jenkins/master/war/src/main/webapp/images/48x48/health-20to39.png">';
-    } else {
-        $xmlDoc   = simplexml_load_string($output);
-        $failures = "";
-        $xmlDoc2  = $xmlDoc->xpath('/testsuite/testcase/failure');
-        while(list( , $node) = each($xmlDoc2)) {
-            $failures .= "<br/>".$node;
-        }
-        //if (intval($xmlDoc->failures)) {
-        if (!empty($failures)) {
-            $health .= '<img src="https://raw.github.com/jenkinsci/jenkins/master/war/src/main/webapp/images/48x48/health-00to19.png">';
+        if ($this->validateXML($output)) {
+            /*@todo, this is just for debug, we need to hundle unvalid xml schema and display the right img*/
+            $health .= '<img src="https://raw.github.com/jenkinsci/jenkins/master/war/src/main/webapp/images/48x48/health-20to39.png">';
         } else {
-            $health .= '<img src="https://raw.github.com/jenkinsci/jenkins/master/war/src/main/webapp/images/48x48/health-80plus.png">';
+            $xmlDoc   = simplexml_load_string($output);
+            $failures = "";
+            $xmlDoc2  = $xmlDoc->xpath('/testsuite/testcase/failure');
+            while(list( , $node) = each($xmlDoc2)) {
+                $failures .= "<br/>".$node;
+            }
+            //if (intval($xmlDoc->failures)) {
+            if (!empty($failures)) {
+                $health .= '<img src="https://raw.github.com/jenkinsci/jenkins/master/war/src/main/webapp/images/48x48/health-00to19.png">';
+            } else {
+                $health .= '<img src="https://raw.github.com/jenkinsci/jenkins/master/war/src/main/webapp/images/48x48/health-80plus.png">';
+            }
         }
-    }
         $health .= '</span>';
         return $health;
     }
@@ -227,9 +247,7 @@ class ResultManager {
         $testSuiteManager = new TestSuiteManager();
         $testSuite = $testSuiteManager->getTestSuite('tt');
         $testCasesArray   =  $testSuiteManager->getTestCasesHashs($testSuite);
-
         $testCaseManager = new TestCaseManager();
-
         foreach ($testCasesArray as $key => $testCaseHash) {
             $regression = FALSE;
             $testCase = $testCaseManager->getTestCaseByHash($testCaseHash);
@@ -239,14 +257,13 @@ class ResultManager {
                         $regression = TRUE;
                     }
                 }
-                //To be modified to 
+                //To be modified to
                 //$regressionArray[$testCase] = $regression;
                 $regressionArray[$testCase->id] = $regression;
             }
         }
         return $regressionArray;
     }
-
 
     /**
      * Render HTML output of a given testuite XML result
