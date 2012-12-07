@@ -91,11 +91,12 @@ class ResultManager {
      * @return Boolean
      */
     function prepareTestCaseResult($tcName, $output, $testsuiteName) {
+    $xmlOutput = join("\n", $output);
         //For the moment use testsuite name as Id...
         $testCase = new TestCase(substr($tcName, 0, -3));
         $rspecStructure = $testCase->retrieveRspecStructure();
         foreach ($rspecStructure as $key => $rspecLabel) {
-            $rspecResult = $this->displayTestCaseResult($output, $rspecLabel);
+            $rspecResult = $this->displayTestCaseResult($xmlOutput, $rspecLabel);
             $status      = $rspecResult['status'];
             $rspecOutput = $rspecResult['output'];
             $this->logTestCaseResult($testCase->id, $testsuiteName, $rspecOutput,  $rspecLabel, $status);
