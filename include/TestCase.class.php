@@ -64,10 +64,10 @@ class TestCase {
      * @return String
      */
     public function getContent($rspecStructure = NULL) {
-        if(!empty($rspecStructure)){
-            $rspecMap = array();
-                $rspecElements = 0;
-        }
+    if(!empty($rspecStructure)){
+        $rspecMap = array();
+            $rspecElements = 0;
+    }
         $testCaseFileObj = new SplFileObject($this->_testCaseFile);
         $testCaseFileContent = "";
         if ($testCaseFileObj->isReadable()) {
@@ -76,61 +76,61 @@ class TestCase {
                 $trimmedLine = trim($line);
                 if (!empty($trimmedLine) && !preg_match("/^#/", $trimmedLine)) {
                     $testCaseFileContent .= "        ".$line;
-                    if(!empty($rspecStructure)){
-                        //@todo manage this stuff in a dedicated method
-                        if (preg_match("/^describe/", strtolower($trimmedLine))) {
-                            /* This suppose that you are parsing something like:
-                               describe "#precondition" do */
-                            $exampleLabel = explode('"', $trimmedLine);
-                            $rspecMap[$rspecElements]['key']   = 'describe';
-                            $rspecMap[$rspecElements]['label'] = $exampleLabel[1];
-                            $rspecElements++;
-                        } elseif (preg_match("/^it/", strtolower($trimmedLine))) {
-                            /* This suppose that you are parsing something like:
-                               it "Create new wiki" do */
-                            $exampleLabel = explode('"', $trimmedLine);
-                            $rspecMap[$rspecElements]['key']   = 'it';
-                            $rspecMap[$rspecElements]['label'] = $exampleLabel[1];
-                            $rspecElements++;
-                        }
-                    }
+                if(!empty($rspecStructure)){
+                //@todo manage this stuff in a dedicated method
+                if (preg_match("/^describe/", strtolower($trimmedLine))) {
+                /* This suppose that you are parsing something like:
+                   describe "#precondition" do */
+                $exampleLabel = explode('"', $trimmedLine);
+                $rspecMap[$rspecElements]['key']   = 'describe';
+                $rspecMap[$rspecElements]['label'] = $exampleLabel[1];
+                $rspecElements++;
+                } elseif (preg_match("/^it/", strtolower($trimmedLine))) {
+                /* This suppose that you are parsing something like:
+                   it "Create new wiki" do */
+                $exampleLabel = explode('"', $trimmedLine);
+                $rspecMap[$rspecElements]['key']   = 'it';
+                $rspecMap[$rspecElements]['label'] = $exampleLabel[1];
+                $rspecElements++;
+                }
+            }
                 }
             }
         } else {
             throw new LogicException('Unable to retrieve file content. Test case file "'.$testCaseFileObj.'" is not readable.');
         }
-        if(!empty($rspecStructure)){
-            return $rspecMap;
-        } else {
-            return $testCaseFileContent;
-        }
+    if(!empty($rspecStructure)){
+        return $rspecMap;
+    } else {
+        return $testCaseFileContent;
+    }
     }
 
     public function retrieveRspecStructure() {
-        //Any refactoring is welcome, this is the worst piece of code i've ever wrote; #sick!
-        //you can concat $this->name to the test case label if you need it...
-        $rspecStructure  = true;
-        $rspecTest       = array();
-        $rspecTestCases  = $this->getContent($rspecStructure);
-        $rspecTestString = '';
-        $describeDepth   = 0;
+    //Any refactoring is welcome, this is the worst piece of code i've ever wrote; #sick!
+    //you can concat $this->name to the test case label if you need it...
+    $rspecStructure  = true;
+    $rspecTest       = array();
+    $rspecTestCases  = $this->getContent($rspecStructure);
+    $rspecTestString = '';
+    $describeDepth   = 0;
         foreach ($rspecTestCases as $index => $content) {
             if ($content['key'] == 'describe') {
-                if (!$describeDepth) {
-                    //just tp keep the index of the root describe statement
-                    $parentDescribeIndex = $index;
-                }
-                $describeDepth ++;
-                if ($describeDepth > 1) {
-                    //prepare string for the next statement
-                    $rspecTestString = $rspecTestCases[$parentDescribeIndex]['label'];
-                }
-                $rspecTestString .= $content['label'];
-            } elseif ($content['key'] == 'it') {
-                $rspecTest[] = $rspecTestString.' '.$content['label'];
+            if (!$describeDepth) {
+                //just tp keep the index of the root describe statement
+                $parentDescribeIndex = $index;
             }
+        $describeDepth ++;
+                if ($describeDepth > 1) {
+            //prepare string for the next statement
+            $rspecTestString = $rspecTestCases[$parentDescribeIndex]['label'];
         }
-        return $rspecTest;
+        $rspecTestString .= $content['label'];
+        } elseif ($content['key'] == 'it') {
+        $rspecTest[] = $rspecTestString.' '.$content['label'];
+        }
+    }
+    return $rspecTest;
     }
 
     /**
@@ -310,7 +310,22 @@ class TestCase {
         }
         return true;
     }
-}
 
+    function getLastOldExecutionStatusByRspecLabel($rspecLabel) {
+        $this->dbHandler = DBHandler::getInstance();
+        $sql  = "SELECT status FROM testcase_result
+                 WHERE rspec_label = ".$this->dbHandler->quote($rspecLabel)." ORDER BY date DESC";
+        $result = $this->dbHandler->query($sql);
+        if($result) {
+            $result->setFetchMode(PDO::FETCH_OBJ);
+            $row = $result->fetch();
+            //if ($row->status == ResultManager::STATUS_FAILURE) {
+        if ($row->status == "FAILURE") {
+        return false;
+            }
+        }
+        return true;
+    }
+}
 
 ?>
