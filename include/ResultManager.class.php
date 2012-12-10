@@ -123,6 +123,7 @@ class ResultManager {
      * @return String
      */
     function displayResults() {
+        //$this->getTestsuiteRegression('ttt');
         $output = '';
         $sql    = "SELECT * FROM result
                    WHERE user = ".$this->user->getAtt('id')."
@@ -170,6 +171,7 @@ class ResultManager {
                         <a href="?delete_result='.$row->id.'" >Delete</a>
                     </td>
                     </tr>';
+        $regression = $this->getTestsuiteRegression($row->name);
                 }
                 $output .= '</table></div>';
             }
@@ -244,9 +246,10 @@ class ResultManager {
      *
      * @return Array
      */
-    function getTestsuiteRegression() {
-        $testSuiteManager = new TestSuiteManager();
-        $testSuite = $testSuiteManager->getTestSuite('tt');
+    function getTestsuiteRegression($testSuiteName) {
+       /*
+    $testSuiteManager = new TestSuiteManager();
+        $testSuite = $testSuiteManager->getTestSuite('ttt');
         $testCasesArray   =  $testSuiteManager->getTestCasesHashs($testSuite);
         $testCaseManager = new TestCaseManager();
         foreach ($testCasesArray as $key => $testCaseHash) {
@@ -263,7 +266,31 @@ class ResultManager {
                 $regressionArray[$testCase->id] = $regression;
             }
         }
+        return $regressionArray;*/
+
+        $testSuiteManager = new TestSuiteManager();
+        $testSuite     = $testSuiteManager->getTestSuite($testSuiteName);
+        $testCasesArray  = $testSuite->getTestCases();
+        $testCaseManager = new TestCaseManager();
+        $regressionArray = array();
+
+        if(!empty($testCasesArray)) {
+            foreach ($testCasesArray as $key => $testCaseName) {
+                $regression     = FALSE;
+                $testCase       = new TestCase(substr($testCaseName, 0, -3));
+                $rspecStructure = $testCase->retrieveRspecStructure();
+                foreach ($rspecStructure as $rspeckey => $rspecLabel) {
+                $lastExec = $testCase->getLastOldExecutionStatusByRspecLabel($rspecLabel);
+                /* echo $rspecLabel." -- ".$lastExec."<br>";*/
+                if(!$lastExec) {
+                    $regression = TRUE;
+                    $regressionArray[$testCaseName][$rspecLabel] = $regression;
+                    }
+                }
+            }
+        //var_dump($regressionArray);
         return $regressionArray;
+        }
     }
 
     /**
