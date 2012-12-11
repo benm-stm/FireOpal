@@ -123,12 +123,10 @@ class ResultManager {
      * @return String
      */
     function displayResults() {
-        //$this->getTestsuiteRegression('ttt');
         $output = '';
         $sql    = "SELECT * FROM result
                    WHERE user = ".$this->user->getAtt('id')."
                    ORDER BY date";
-
         try {
             $result = $this->dbHandler->query($sql);
                 if($result) {
@@ -142,7 +140,15 @@ class ResultManager {
                 <td class="resultHeader">Delete</td>
                 </tr>';
                 $result->setFetchMode(PDO::FETCH_OBJ);
-                while ($row = $result->fetch()) {
+                $row1 = $result->fetchAll();
+                foreach ($row1 as $testsuite) {
+                    //var_dump($testsuite);
+                            echo $testsuite->name."<br>";
+                    echo $testsuite->id."<br>";
+                    echo $testsuite->date."<br>";
+                $regression = $this->getTestsuiteRegression($testsuite->name);
+                }
+        while ($row = $result->fetch()) {
                     $output    .= '<tr>
                     <td id="resultLink">
                         <a href="?download_testsuite='.$row->id.'" >'.$row->name.'</a>
@@ -150,7 +156,7 @@ class ResultManager {
                     <td id="resultDate">
                         '.date("D M j, Y G:i:s T", $row->date).'
                     </td>
-                    <td >'.$this->displayTestsuiteHealth($row->output).'
+                    <td >'.$this->displayTestsuiteHealth($row).'
                     </td>
                     <td>
                         <fieldset class="fieldset">
@@ -171,7 +177,7 @@ class ResultManager {
                         <a href="?delete_result='.$row->id.'" >Delete</a>
                     </td>
                     </tr>';
-        $regression = $this->getTestsuiteRegression($row->name);
+                //$regression = $this->getTestsuiteRegression($row->name);
                 }
                 $output .= '</table></div>';
             }
@@ -214,11 +220,12 @@ class ResultManager {
      /**
      * Retrieve testsuite health status
      *
-     * @param String $output JUNIT XML output
+     * @param PDOStatement A result row containing the JUNIT XML output
      *
      * @return String
      */
-    function displayTestsuiteHealth($output) {
+    function displayTestsuiteHealth($resultRow) {
+        $output = $resultRow->output;
         $health = '<span>';
         if ($this->validateXML($output)) {
             /*@todo, this is just for debug, we need to hundle unvalid xml schema and display the right img*/
@@ -247,50 +254,56 @@ class ResultManager {
      * @return Array
      */
     function getTestsuiteRegression($testSuiteName) {
-       /*
-    $testSuiteManager = new TestSuiteManager();
-        $testSuite = $testSuiteManager->getTestSuite('ttt');
-        $testCasesArray   =  $testSuiteManager->getTestCasesHashs($testSuite);
-        $testCaseManager = new TestCaseManager();
-        foreach ($testCasesArray as $key => $testCaseHash) {
-            $regression = FALSE;
-            $testCase = $testCaseManager->getTestCaseByHash($testCaseHash);
-            if (is_a($testCase, 'TestCase')) {
-                if ($testCase->hasAnExecution()) {
-                    if (($testCase->getStatus() == self::STATUS_PASS) && ($testCase->getLastOldExecution() == self::STATUS_FAILURE)) {
-                        $regression = TRUE;
-                    }
-                }
-                //To be modified to
-                //$regressionArray[$testCase] = $regression;
-                $regressionArray[$testCase->id] = $regression;
-            }
-        }
-        return $regressionArray;*/
-
+        //@todo Clean up debug stuff
         $testSuiteManager = new TestSuiteManager();
-        $testSuite     = $testSuiteManager->getTestSuite($testSuiteName);
-        $testCasesArray  = $testSuite->getTestCases();
-        $testCaseManager = new TestCaseManager();
-        $regressionArray = array();
-
+        $testSuite        = $testSuiteManager->getTestSuite($testSuiteName);
+        $testCasesArray   = $testSuite->getTestCases();
+        $testCaseManager  = new TestCaseManager();
+        $regressionArray  = array();
+        //PDO::setAttribute("PDO::MYSQL_ATTR_USE_BUFFERED_QUERY", true);
         if(!empty($testCasesArray)) {
             foreach ($testCasesArray as $key => $testCaseName) {
                 $regression     = FALSE;
                 $testCase       = new TestCase(substr($testCaseName, 0, -3));
                 $rspecStructure = $testCase->retrieveRspecStructure();
                 foreach ($rspecStructure as $rspeckey => $rspecLabel) {
+                    if (!empty($rspecLabel)) {
+                        try {
+                            unset($result);
+                            $sqlSting = "SELECT FROM_UNIXTIME(date) as Date, status as Status FROM testcase_result
+                                         WHERE rspec_label = ".$this->dbHandler->quote($rspecLabel)." ORDER BY date DESC";
+                            $result   = $this->dbHandler->query($sqlSting);
+                            $result->setFetchMode(PDO::FETCH_OBJ);
+                            $rows     = $result->fetchAll();
+                            echo "<br>".$rspecLabel." :  <br> ----> " ;echo $sqlSting." :  <br><br><br>" ;
+                            echo $rows[0]->Date."-+-";
+                            echo $rows[0]->Status."<br>";
+                            echo $rows[1]->Date."-+-";
+                            echo $rows[1]->Status."<br>";
+                            //ther would be a regression if execution at 'T-1' has Passed Status and execution at 'T' has Failure status
+                        } catch (Exception $e) {
+                           echo $e->getMessage();
+                        }
+                    }
+                }
+            }
+        }
+    /*if(!empty($testCasesArray)) {
+            foreach ($testCasesArray as $key => $testCaseName) {
+                $regression = FALSE;
+                $testCase = new TestCase(substr($testCaseName, 0, -3));
+                $rspecStructure = $testCase->retrieveRspecStructure();
+                foreach ($rspecStructure as $rspeckey => $rspecLabel) {
                 $lastExec = $testCase->getLastOldExecutionStatusByRspecLabel($rspecLabel);
-                /* echo $rspecLabel." -- ".$lastExec."<br>";*/
+                 echo $rspecLabel." -- ".$lastExec."<br>";
                 if(!$lastExec) {
                     $regression = TRUE;
                     $regressionArray[$testCaseName][$rspecLabel] = $regression;
                     }
                 }
             }
-        //var_dump($regressionArray);
         return $regressionArray;
-        }
+    */
     }
 
     /**
