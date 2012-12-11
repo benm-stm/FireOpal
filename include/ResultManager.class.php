@@ -140,44 +140,38 @@ class ResultManager {
                 <td class="resultHeader">Delete</td>
                 </tr>';
                 $result->setFetchMode(PDO::FETCH_OBJ);
-                $row1 = $result->fetchAll();
-                foreach ($row1 as $testsuite) {
-                    //var_dump($testsuite);
-                            echo $testsuite->name."<br>";
-                    echo $testsuite->id."<br>";
-                    echo $testsuite->date."<br>";
-                $regression = $this->getTestsuiteRegression($testsuite->name);
-                }
-        while ($row = $result->fetch()) {
+                $row = $result->fetchAll();
+                foreach ($row as $testsuite) {
+                    $regression = $this->getTestsuiteRegression($testsuite->name);
                     $output    .= '<tr>
                     <td id="resultLink">
-                        <a href="?download_testsuite='.$row->id.'" >'.$row->name.'</a>
+                        <a href="?download_testsuite='.$testsuite->id.'" >'.$testsuite->name.'</a>
                     </td>
                     <td id="resultDate">
-                        '.date("D M j, Y G:i:s T", $row->date).'
+                        '.date("D M j, Y G:i:s T", $testsuite->date).'
                     </td>
-                    <td >'.$this->displayTestsuiteHealth($row).'
+                    <td >'.$this->displayTestsuiteHealth($testsuite).'
                     </td>
                     <td>
                         <fieldset class="fieldset">
-                            <legend class="toggler" onclick="toggle_visibility(\'result_output_'.$row->id.'\'); if (this.innerHTML == \'+\') { this.innerHTML = \'-\'; } else { this.innerHTML = \'+\'; }">+</legend>
-                            <span id="result_output_'.$row->id.'" style="display: none;" >';
-                    if ($this->validateXML($row->output)) {
-                        $output .= '<pre>'.$this->validateXML($row->output).'</pre>';
+                            <legend class="toggler" onclick="toggle_visibility(\'result_output_'.$testsuite->id.'\'); if (this.innerHTML == \'+\') { this.innerHTML = \'-\'; } else { this.innerHTML = \'+\'; }">+</legend>
+                            <span id="result_output_'.$testsuite->id.'" style="display: none;" >';
+                    if ($this->validateXML($testsuite->output)) {
+                        $output .= '<pre>'.$this->validateXML($testsuite->output).'</pre>';
                     } else  {
-                            $output .=  '<pre>'.$this->processResult($row->output).'</pre>';
+                            $output .=  '<pre>'.$this->processResult($testsuite->output).'</pre>';
                     }
                     $output .=  '</span>
                         </fieldset>
                     </td>
                     <td id="resultLink">
-                        <a href="?download_result='.$row->id.'" >Download</a>
+                        <a href="?download_result='.$testsuite->id.'" >Download</a>
                     </td>
                     <td id="resultLink">
-                        <a href="?delete_result='.$row->id.'" >Delete</a>
+                        <a href="?delete_result='.$testsuite->id.'" >Delete</a>
                     </td>
                     </tr>';
-                //$regression = $this->getTestsuiteRegression($row->name);
+
                 }
                 $output .= '</table></div>';
             }
