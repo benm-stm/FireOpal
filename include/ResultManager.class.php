@@ -143,6 +143,9 @@ class ResultManager {
                 $row = $result->fetchAll();
                 foreach ($row as $testsuite) {
                     $regression = $this->getTestsuiteRegression($testsuite->name);
+            if (!empty($regression)) {
+            echo "There is a regression within test suite ".$testsuite->name;
+            }
                     $output    .= '<tr>
                     <td id="resultLink">
                         <a href="?download_testsuite='.$testsuite->id.'" >'.$testsuite->name.'</a>
@@ -264,17 +267,22 @@ class ResultManager {
                     if (!empty($rspecLabel)) {
                         try {
                             unset($result);
-                            $sqlSting = "SELECT FROM_UNIXTIME(date) as Date, status as Status FROM testcase_result
+                            $sqlString = "SELECT testsuite_id as Testsuite, FROM_UNIXTIME(date) as Date, status as Status FROM testcase_result
                                          WHERE rspec_label = ".$this->dbHandler->quote($rspecLabel)." ORDER BY date DESC";
-                            $result   = $this->dbHandler->query($sqlSting);
+                            $result   = $this->dbHandler->query($sqlString);
                             $result->setFetchMode(PDO::FETCH_OBJ);
                             $rows     = $result->fetchAll();
-                            echo "<br>".$rspecLabel." :  <br> ----> " ;echo $sqlSting." :  <br><br><br>" ;
-                            echo $rows[0]->Date."-+-";
-                            echo $rows[0]->Status."<br>";
-                            echo $rows[1]->Date."-+-";
-                            echo $rows[1]->Status."<br>";
-                            //ther would be a regression if execution at 'T-1' has Passed Status and execution at 'T' has Failure status
+                            // echo "<br>".$rspecLabel." :  <br> ----> " ;
+                            //echo $rows[0]->testsuite; echo  $rows[1]->Testsuite;
+                            if ($rows[0]->Status == ResultManager::STATUS_FAILURE && $rows[1]->Status == ResultManager::STATUS_PASS) {
+                                //echo $rows[0]->Date."-+-";
+                                //echo $rows[0]->Status."<br>";
+                                 /*echo $rows[1]->Date."-+-<br>";
+                                   echo $rows[1]->Status."<br>";*/
+                                $regression = TRUE;
+                                $regressionArray[$testCaseName][$rspecLabel] = $regression;
+                            }
+                            //there would be a regression if execution at 'T-1' has Passed Status and execution at 'T' has Failure status
                         } catch (Exception $e) {
                            echo $e->getMessage();
                         }
@@ -282,22 +290,21 @@ class ResultManager {
                 }
             }
         }
-    /*if(!empty($testCasesArray)) {
-            foreach ($testCasesArray as $key => $testCaseName) {
-                $regression = FALSE;
-                $testCase = new TestCase(substr($testCaseName, 0, -3));
-                $rspecStructure = $testCase->retrieveRspecStructure();
-                foreach ($rspecStructure as $rspeckey => $rspecLabel) {
-                $lastExec = $testCase->getLastOldExecutionStatusByRspecLabel($rspecLabel);
-                 echo $rspecLabel." -- ".$lastExec."<br>";
-                if(!$lastExec) {
-                    $regression = TRUE;
-                    $regressionArray[$testCaseName][$rspecLabel] = $regression;
+        /*if(!empty($testCasesArray)) {
+                foreach ($testCasesArray as $key => $testCaseName) {
+                    $regression = FALSE;
+                    $testCase = new TestCase(substr($testCaseName, 0, -3));
+                    $rspecStructure = $testCase->retrieveRspecStructure();
+                    foreach ($rspecStructure as $rspeckey => $rspecLabel) {
+                    $lastExec = $testCase->getLastOldExecutionStatusByRspecLabel($rspecLabel);
+                     echo $rspecLabel." -- ".$lastExec."<br>";
+                    if(!$lastExec) {
+                        $regression = TRUE;
+                        $regressionArray[$testCaseName][$rspecLabel] = $regression;
+                        }
                     }
-                }
-            }
+                }    */
         return $regressionArray;
-    */
     }
 
     /**
@@ -428,4 +435,4 @@ $xslString = '<?xml version="1.0" encoding="UTF-8"?>
 
 }
 
-?>
+?> 
