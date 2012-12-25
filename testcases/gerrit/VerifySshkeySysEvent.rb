@@ -16,43 +16,45 @@
 ########################################################################
 
 #--- Start summary
-# Delete a tracker date reminder
+# Delete Repository
 #--- End summary
 
 #--- Start tags
-# Tracker V5
-# Admin
-# write
+# Project
 #--- End tags
 
 #--- Start dependency list
-# trackerV5/UpdateTrackerDateReminder.rb
+# gerrit/AddNewSSHKey.rb
 #--- End dependency list
 
 #--- Start conf params
 # host
-# tracker_id
 #--- End conf params
 
-describe "Delete a tracker date reminder" do
-    describe "#precondition" do
-        it "Open notifications management interface" do
-            $link = @params['host']['value'] + '/plugins/tracker/?tracker=' + @params['tracker_id']['value'] + '&func=notifications'
-            @runner.navigate.to $link
+describe "Verify SSH key System event" do
+        before(:all) do
+            @runner.navigate.to @params['host']['value'] + '/my/'
         end
-        it "Find a reminder to update" do
-            @runner.find_element(:id, "delete_reminder")
-        end
-    end
-    describe "#regression" do
-        it "Click on delete reminder button" do
-            @runner.find_element(:id, "delete_reminder").click
-        end
-        it "Confirm the deletion" do
-            @runner.find_element(:name, "confirm_delete").click
-        end
-        it "Verify feedback message" do
-            @runner.find_element(:class, "feedback_info").text.should include("Date Reminder successfully deleted")
-        end
-    end
+        describe "Verify SSH-key system event" do
+                it "Go to Admin" do
+                    @runner.find_element(:link, "Admin").click
+                end
+                it "Go to system event monitor" do
+                    @runner.find_element(:link, "System events monitor").click
+                end
+                it "Chooses the Edit key option" do
+					@runner.find_element(:xpath,"//select[@name='filter_type[]']/option[@value='EDIT_SSH_KEYS']").click
+                end
+                it "Clicks on the filter button" do
+					@runner.find_element(:name, "filter").click
+                end
+                it "Verify the consumption of the event" do
+					event_id = @runner.find_element(:xpath, "//*[@id='admin-system-events']/form/table[1]/tbody/tr[1]/td[1]").text
+					event_done = @runner.find_element(:xpath, "//*[@id='admin-system-events']/form/table[1]/tbody/tr[1]/td[4]").text
+					while event_done != "DONE" do
+						@runner.find_element(:name, "filter").click
+						event_done = @runner.find_element(:xpath,"//td[text()='#{event_id}']/ancestor::tr/td[4]").text;
+					end
+                end
+       end
 end
