@@ -27,7 +27,6 @@ class ResultManager {
 
     const STATUS_FAILURE = "FAILURE";
     const STATUS_PASS    = "PASS";
-
     var $user;
     var $dbHandler;
 
@@ -72,9 +71,14 @@ class ResultManager {
      * @return Boolean
      */
     function logTestCaseResult($testcase_id, $testsuite_id, $testCaseOutput, $rspecLabel, $status) {
-
         try {
-            $sql = "INSERT INTO testcase_result ( testcase_id, testsuite_id, rspec_label, status, output, date) VALUES (".$this->dbHandler->quote($testcase_id).", ".$this->dbHandler->quote($testsuite_id).", ".$this->dbHandler->quote($rspecLabel).", ".$this->dbHandler->quote($status).", ".$this->dbHandler->quote($testCaseOutput).", ".time().")";
+            $sql = "INSERT INTO testcase_result ( testcase_id, testsuite_id, rspec_label, status, output, date) VALUES ("
+                    .$this->dbHandler->quote($testcase_id).", "
+                    .$this->dbHandler->quote($testsuite_id).", "
+                    .$this->dbHandler->quote($rspecLabel).", "
+                    .$this->dbHandler->quote($status).", "
+                    .$this->dbHandler->quote($testCaseOutput).", "
+                    .time().")";
             return $this->dbHandler->query($sql);
         } catch (Exception $e) {
             echo $e->getMessage();
@@ -91,7 +95,7 @@ class ResultManager {
      * @return Boolean
      */
     function prepareTestCaseResult($tcName, $output, $testsuiteName) {
-    $xmlOutput = join("\n", $output);
+        $xmlOutput = join("\n", $output);
         //For the moment use testsuite name as Id...
         $testCase = new TestCase(substr($tcName, 0, -3));
         $rspecStructure = $testCase->retrieveRspecStructure();
@@ -113,7 +117,7 @@ class ResultManager {
     function deleteResult($id) {
         $sql = "DELETE FROM result
                 WHERE id = ".$id."
-                  AND user = ".$this->user->getAtt('id');
+                AND user = ".$this->user->getAtt('id');
         return $this->dbHandler->query($sql);
     }
 
@@ -129,7 +133,7 @@ class ResultManager {
                    ORDER BY date";
         try {
             $result = $this->dbHandler->query($sql);
-                if($result) {
+            if($result) {
                 $output = '<div><br><table>
                 <tr>
                 <td class="resultHeader">Testsuite</td>
@@ -143,9 +147,9 @@ class ResultManager {
                 $row = $result->fetchAll();
                 foreach ($row as $testsuite) {
                     $regression = $this->getTestsuiteRegression($testsuite->name);
-            if (!empty($regression)) {
-            echo "There is a regression within test suite ".$testsuite->name;
-            }
+                    if (!empty($regression)) {
+                        echo "There is a regression within test suite ".$testsuite->name;
+                    }
                     $output    .= '<tr>
                     <td id="resultLink">
                         <a href="?download_testsuite='.$testsuite->id.'" >'.$testsuite->name.'</a>
@@ -174,14 +178,12 @@ class ResultManager {
                         <a href="?delete_result='.$testsuite->id.'" >Delete</a>
                     </td>
                     </tr>';
-
                 }
                 $output .= '</table></div>';
             }
         } catch(PDOException $e) {
             $this->error[] = $e->getMessage();
         }
-
         return $output;
     }
 
@@ -316,50 +318,50 @@ class ResultManager {
      * @return String
      */
     function processResult($output) {
-$xslString = '<?xml version="1.0" encoding="UTF-8"?>
-<html xsl:version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml">
-    <body style="width:650px;font-family:Arial;font-size:11pt;background-color:#EEEEEE">
-        <h2>Summary</h2>
-        <xsl:variable name="testCount" select="sum(testsuite/@tests)"/>
-        <xsl:variable name="errorCount" select="sum(testsuite/@errors)"/>
-        <xsl:variable name="failureCount" select="sum(testsuite/@failures)"/>
-        <xsl:variable name="timeCount" select="sum(testsuite/@time)"/>
-        <xsl:variable name="successRate" select="($testCount - $failureCount - $errorCount) div $testCount"/>
-        <table border="0" cellpadding="5" cellspacing="2" width="95%">
-            <tr style="background-color:#629628;color:white;valign:top;font-size:12pt">
-                <td><strong>Tests</strong></td>
-                <td><strong>Failures</strong></td>
-                <td><strong>Errors</strong></td>
-                <td><strong>Success rate</strong></td>
-                <td><strong>Time</strong></td>
-            </tr>
-            <tr style="background-color:#629628;color:white;valign:top">
-                <td><xsl:value-of select="$testCount"/></td>
-                <td><xsl:value-of select="$failureCount"/></td>
-                <td><xsl:value-of select="$errorCount"/></td>
-                <td><xsl:value-of select="$successRate"/></td>
-                <td><xsl:value-of select="$timeCount"/></td>
-            </tr>
-        </table>
-    <br/>
-        <xsl:for-each select="testsuite/testcase">
-            <div style="color:white;padding-bottom:10px">
-            <xsl:choose>
-                <xsl:when test="failure"><br/><div style="background-color:#ff0000;font-weight:bold"><xsl:value-of select="@name"/> (<xsl:value-of select="@time"/>s)</div><div style="background-color:#000000;font-size:11pt;color:white"><b>Status:    Failure</b><br/></div></xsl:when>
-                <xsl:otherwise><br/><div style="background-color:#4DBD33;font-weight:bold"><xsl:value-of select="@name"/> (<xsl:value-of select="@time"/>s)</div><div style="background-color:#000000;font-size:11pt;color:white"><b>Status:    Success</b><br/><br/> </div></xsl:otherwise>
-            </xsl:choose>
-            <xsl:for-each select="failure">
-                 <div style="background-color:#000000;font-size:11pt"><br/><b>Type:    </b><xsl:value-of select="@type"/><br/></div>
-                   <div style="background-color:#000000;font-size:11pt"><b>Message:    </b> <xsl:value-of select="@message"/><br/></div><br/>
-            </xsl:for-each>
-                <span style="font-style:italic">
-                    <xsl:value-of select="error"/>
-                </span>
-            </div>
-        </xsl:for-each>
-    </body>
-</html>
-';
+        $xslString = '<?xml version="1.0" encoding="UTF-8"?>
+        <html xsl:version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml">
+            <body style="width:650px;font-family:Arial;font-size:11pt;background-color:#EEEEEE">
+                <h2>Summary</h2>
+                <xsl:variable name="testCount" select="sum(testsuite/@tests)"/>
+                <xsl:variable name="errorCount" select="sum(testsuite/@errors)"/>
+                <xsl:variable name="failureCount" select="sum(testsuite/@failures)"/>
+                <xsl:variable name="timeCount" select="sum(testsuite/@time)"/>
+                <xsl:variable name="successRate" select="($testCount - $failureCount - $errorCount) div $testCount"/>
+                <table border="0" cellpadding="5" cellspacing="2" width="95%">
+                    <tr style="background-color:#629628;color:white;valign:top;font-size:12pt">
+                        <td><strong>Tests</strong></td>
+                        <td><strong>Failures</strong></td>
+                        <td><strong>Errors</strong></td>
+                        <td><strong>Success rate</strong></td>
+                        <td><strong>Time</strong></td>
+                    </tr>
+                    <tr style="background-color:#629628;color:white;valign:top">
+                        <td><xsl:value-of select="$testCount"/></td>
+                        <td><xsl:value-of select="$failureCount"/></td>
+                        <td><xsl:value-of select="$errorCount"/></td>
+                        <td><xsl:value-of select="$successRate"/></td>
+                        <td><xsl:value-of select="$timeCount"/></td>
+                    </tr>
+                </table>
+            <br/>
+                <xsl:for-each select="testsuite/testcase">
+                    <div style="color:white;padding-bottom:10px">
+                    <xsl:choose>
+                        <xsl:when test="failure"><br/><div style="background-color:#ff0000;font-weight:bold"><xsl:value-of select="@name"/> (<xsl:value-of select="@time"/>s)</div><div style="background-color:#000000;font-size:11pt;color:white"><b>Status:    Failure</b><br/></div></xsl:when>
+                        <xsl:otherwise><br/><div style="background-color:#4DBD33;font-weight:bold"><xsl:value-of select="@name"/> (<xsl:value-of select="@time"/>s)</div><div style="background-color:#000000;font-size:11pt;color:white"><b>Status:    Success</b><br/><br/> </div></xsl:otherwise>
+                    </xsl:choose>
+                    <xsl:for-each select="failure">
+                         <div style="background-color:#000000;font-size:11pt"><br/><b>Type:    </b><xsl:value-of select="@type"/><br/></div>
+                           <div style="background-color:#000000;font-size:11pt"><b>Message:    </b> <xsl:value-of select="@message"/><br/></div><br/>
+                    </xsl:for-each>
+                        <span style="font-style:italic">
+                            <xsl:value-of select="error"/>
+                        </span>
+                    </div>
+                </xsl:for-each>
+            </body>
+        </html>
+        ';
         $xmlDoc = simplexml_load_string($output);
         $xslDoc = simplexml_load_string($xslString);
         $proc   = new XSLTProcessor;
@@ -397,7 +399,7 @@ $xslString = '<?xml version="1.0" encoding="UTF-8"?>
     function downloadResult($id) {
         $sql  = "SELECT * FROM result
                  WHERE id = ".$id."
-                   AND user = ".$this->user->getAtt('id');
+                 AND user = ".$this->user->getAtt('id');
         $result = $this->dbHandler->query($sql);
         if($result) {
             $result->setFetchMode(PDO::FETCH_OBJ);
