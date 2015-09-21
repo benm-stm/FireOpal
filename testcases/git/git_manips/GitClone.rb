@@ -1,5 +1,4 @@
-########################################################################
-# Copyright (c) STMicroelectronics 2012. All rights reserved           #
+#copyright (c) STMicroelectronics 2012. All rights reserved           #
 #                                                                      #
 # FireOpal is free software; you can redistribute it and/or modify    #
 # it under the terms of the GNU General Public License as published by #
@@ -16,43 +15,34 @@
 ########################################################################
 
 #--- Start summary
-# Delete a tracker date reminder
+# Push content in repo
 #--- End summary
 
 #--- Start tags
-# Tracker V5
-# Admin
-# write
+# Project
 #--- End tags
 
 #--- Start dependency list
-# trackerV5/UpdateTrackerDateReminder.rb
+# git/CreateRepo.rb
+# gerrit/VerifySshkeySysEvent.rb
 #--- End dependency list
 
 #--- Start conf params
 # host
-# tracker_id
 #--- End conf params
 
-describe "Delete a tracker date reminder" do
-    describe "#precondition" do
-        it "Open notifications management interface" do
-            $link = @params['host']['value'] + '/plugins/tracker/?tracker=' + @params['tracker_id']['value'] + '&func=notifications'
-            @runner.navigate.to $link
-        end
-        it "Find a reminder to update" do
-            @runner.find_element(:id, "delete_reminder")
-        end
-    end
-    describe "#regression" do
-        it "Click on delete reminder button" do
-            @runner.find_element(:id, "delete_reminder").click
-        end
-        it "Confirm the deletion" do
-            @runner.find_element(:name, "confirm_delete").click
-        end
-        it "Verify feedback message" do
-            @runner.find_element(:class, "feedback_info").text.should include("Date Reminder successfully deleted")
-        end
+describe "Clone content from a repo" do
+
+	it "clone the repo " do
+		#--- Needed params
+		project = @params['project']['value']
+		repo_name = @params['repo_name']['value']
+		
+		system "ssh-agent sh -c 'ssh-add /var/www/.ssh/id_rsa; cd ../tmp_tests; git clone ssh://gitolite@codex-dev.cro.st.com/#{project}/#{repo_name}.git'"
+        if $?.exitstatus == 0
+			puts "Cloning success"
+		else
+			puts "Cloning failure"
+		end
     end
 end

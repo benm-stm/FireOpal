@@ -16,43 +16,42 @@
 ########################################################################
 
 #--- Start summary
-# Delete a tracker date reminder
+# git plugin activation for tuleap
 #--- End summary
 
 #--- Start tags
-# Tracker V5
-# Admin
-# write
 #--- End tags
 
 #--- Start dependency list
-# trackerV5/UpdateTrackerDateReminder.rb
 #--- End dependency list
 
 #--- Start conf params
 # host
-# tracker_id
 #--- End conf params
 
-describe "Delete a tracker date reminder" do
-    describe "#precondition" do
-        it "Open notifications management interface" do
-            $link = @params['host']['value'] + '/plugins/tracker/?tracker=' + @params['tracker_id']['value'] + '&func=notifications'
-            @runner.navigate.to $link
+describe "Activate Git Plugin By Admin" do
+
+        before(:all) do
+            @runner.navigate.to @params['host']['value'] + '/my/'
         end
-        it "Find a reminder to update" do
-            @runner.find_element(:id, "delete_reminder")
-        end
-    end
-    describe "#regression" do
-        it "Click on delete reminder button" do
-            @runner.find_element(:id, "delete_reminder").click
-        end
-        it "Confirm the deletion" do
-            @runner.find_element(:name, "confirm_delete").click
-        end
-        it "Verify feedback message" do
-            @runner.find_element(:class, "feedback_info").text.should include("Date Reminder successfully deleted")
-        end
-    end
+        describe "Activate Git Plugin" do
+                it "Go to  Admin" do
+                    @runner.find_element(:link, "Admin").click
+                end
+                it  "Click on Plugins Configuration link" do
+                    @runner.find_element(:link, "Plugins Administration").click
+                end
+		it "Activate the git plugin and vefrify the update" do
+                      verif = @runner.find_element(:xpath, "//td[span//text()[contains(., 'Git Plugin')]]/ancestor::tr/td[2]/span[@class='']").text
+                    	case verif 
+                           when "yes"
+                                @runner.find_element(:xpath, "//td[span//text()[contains(., 'Git Plugin')]]/ancestor::tr/td[2]/span[@class='']/a").click
+                                update_content = @runner.find_element(:xpath, "//*[@id='feedback']/ul/li/code[1]").text
+                                update_content.should == "/etc/tuleap/forgeupgrade/config.ini."
+ 
+                           when "no"
+                        	puts "the plugin is actived"
+                      end
+                end
+        end 
 end

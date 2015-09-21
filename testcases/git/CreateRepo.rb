@@ -16,43 +16,42 @@
 ########################################################################
 
 #--- Start summary
-# Delete a tracker date reminder
+# Repository Creation
 #--- End summary
 
 #--- Start tags
-# Tracker V5
-# Admin
-# write
+# Project 
 #--- End tags
-
-#--- Start dependency list
-# trackerV5/UpdateTrackerDateReminder.rb
-#--- End dependency list
 
 #--- Start conf params
 # host
-# tracker_id
 #--- End conf params
 
-describe "Delete a tracker date reminder" do
-    describe "#precondition" do
-        it "Open notifications management interface" do
-            $link = @params['host']['value'] + '/plugins/tracker/?tracker=' + @params['tracker_id']['value'] + '&func=notifications'
-            @runner.navigate.to $link
+describe "Create repository" do
+
+        before(:all) do
+            @runner.navigate.to @params['host']['value'] + '/my/'
         end
-        it "Find a reminder to update" do
-            @runner.find_element(:id, "delete_reminder")
-        end
-    end
-    describe "#regression" do
-        it "Click on delete reminder button" do
-            @runner.find_element(:id, "delete_reminder").click
-        end
-        it "Confirm the deletion" do
-            @runner.find_element(:name, "confirm_delete").click
-        end
-        it "Verify feedback message" do
-            @runner.find_element(:class, "feedback_info").text.should include("Date Reminder successfully deleted")
-        end
-    end
+        describe "Create repo" do
+                it "Open project" do
+					@runner.find_element(:id, "navbar-project").click
+                    @runner.find_element(:link, project_name = @params['project_name']['value']).click
+                end 
+                it "Go To Git service" do
+                    @runner.find_element(:link, "Git").click
+                end
+                it "verify of repo existance" do
+					verif = @runner.find_elements(:link, @params['repo_name']['value']).size
+					if verif > 0
+						puts "repo exist"
+					else 
+						@runner.find_element(:id, "repo_name").clear
+						@runner.find_element(:id, "repo_name").send_keys @params['repo_name']['value']
+						@runner.find_element(:id, "repo_add").click
+						puts "repo created"
+					end
+				end
+        end 
 end
+    
+
